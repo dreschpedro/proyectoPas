@@ -1,4 +1,4 @@
-import Usuario from "../models/Usuario.js";
+import Usuario_model from "../models/Usuario_model.js";
 import generarId from "../helpers/generarId.js"
 import generarJWT from "../helpers/generarJWT.js";
 
@@ -6,14 +6,14 @@ const registrar = async (req, res) => {
   // evitar registros duplicados, en realidad lo valida mongoose, pero es para mandar un msj claro al usuario
   const { email } = req.body;
 
-  const existeUsuario = await Usuario.findOne({ email });
+  const existeUsuario = await Usuario_model.findOne({ email });
   if (existeUsuario) {
     const error = new Error("Usuario ya registrado");
     return res.status(400).json({ msg: error.message })
   }
 
   try {
-    const usuario = new Usuario(req.body);
+    const usuario = new Usuario_model(req.body);
     usuario.token = generarId();
     const usuarioAlmacenado = await usuario.save();
     res.json(usuarioAlmacenado)
@@ -26,7 +26,7 @@ const registrar = async (req, res) => {
 const autenticar = async (req, res) => {
   const { email, password } = req.body;
   // comprobar si el usuario existe
-  const usuario = await Usuario.findOne({ email });
+  const usuario = await Usuario_model.findOne({ email });
   if (!usuario) {
     const error = new Error("El usuario no existe");
     return res.status(404).json({ msg: error.message })
@@ -54,7 +54,7 @@ const autenticar = async (req, res) => {
 
 const confirmar = async (req, res) => {
   const { token } = req.params
-  const usuarioConfirmar = await Usuario.findOne({ token })
+  const usuarioConfirmar = await Usuario_model.findOne({ token })
   if (!usuarioConfirmar) {
     const error = new Error("Token de usuario no valido");
     return res.status(403).json({ msg: error.message })
