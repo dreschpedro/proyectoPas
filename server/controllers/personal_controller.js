@@ -1,28 +1,29 @@
 import Personal_model from "../models/personal.js"
 
-
+// FUNCIONALIDADES
 // consulta de todos los registros
 const listar_personal = async (req, res) => {
   const personal = await Personal_model.find()
   res.json(personal)
 }
 
+// consulta por un registro (por id)
 const obtener_personal = async (req, res) => {
-  const personal_id = req.params.id;
+  const personal_id = req.params.id; //busca segun el id registrado en la BD
   const personal = await Personal_model.findById(personal_id);
 
-  if (!personal) {
-    const mensaje= 'No se encontró el registro solicitado';
+  if (!personal) { // si no existe ese id, envia mensaje de error
+    const mensaje = 'No se encontró el registro solicitado';
     return res.status(404).send(mensaje);
   }
-
-  res.json(personal);
+  res.json(personal); //muestra todos los registros
 }
 
+// registro de Personal
 const registrar_personal = async (req, res) => {
 
   try {
-    const personal_body = new Personal_model(req.body); // registro personal
+    const personal_body = new Personal_model(req.body);
     const personal_almacenado = await personal_body.save();
     res.json(personal_almacenado);
 
@@ -33,14 +34,18 @@ const registrar_personal = async (req, res) => {
     res.status(500).json({ error: mensaje_error });
   }
 };
-//modificar registro
+
+// modifica los datos buscando por id
 const modificar_personal = async (req, res) => {
   const personal_id = req.params.id;
-  const personal = await Personal_model.findById(personal_id)
+  const personal = await Personal_model.findById(personal_id);
 
-  if (!personal) res.send("El Personal no se encuentra")
+  if (!personal) res.send("El personal no se encuentra")
   personal.nombre = req.body.nombre;
-  personal.autor = req.body.autor;
+  personal.ntelefono = req.body.ntelefono;
+  personal.cuilt = req.body.cuilt;
+  personal.especialidad = req.body.especialidad;
+  personal.dni = req.body.dni;
 
   try {
     const personal_almacenado = await personal.save();
@@ -48,17 +53,25 @@ const modificar_personal = async (req, res) => {
   } catch (error) {
     console.log(error)
   }
-  res.json(personal)
 }
 
+// elimina por id
 const eliminar_personal = async (req, res) => {
   const personal_id = req.params.id;
   const personal = await Personal_model.findById(personal_id)
-  personal.deleteOne()
-  res.send('Personal eliminado')
+
+  if (personal) { // si encuentra el personal (id) -> lo elimina
+    personal.deleteOne()
+    res.send('Personal eliminado')
+  } else { // si no encuentra el personal (id) -> envia mensaje de error
+    const mensaje = 'No se encontró el Personal solicitado';
+    return res.status(404).send(mensaje);
+  }
 
 }
 
+
+// exports
 export {
   listar_personal,
   obtener_personal,

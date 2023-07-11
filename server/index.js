@@ -1,7 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import coneccionDB from './config/db.js';
-import routerLibro from './routers/libroRouter.js';
 import routerInfo from './routers/infoRouter.js';
 import routerUsuario from './routers/usuarioRouter.js';
 import routerPersonal from './routers/personalRouter.js';
@@ -20,7 +19,6 @@ app.get('/', (req, res) => {
 
 app.use('/api/personal', routerPersonal)
 app.use('/api/usuarios', routerUsuario)
-app.use('/api/libros/', routerLibro)
 app.use('/api/info/', routerInfo)
 
 
