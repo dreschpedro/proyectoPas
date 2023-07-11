@@ -1,18 +1,18 @@
 import express from "express";
 import {
-    listaInfos,
-    obtenerinfo,
-    registrarInfo,
-    modificarinfo,
-    eliminarinfo
+    listar_info,
+    obtener_info,
+    registrar_info,
+    modificar_info,
+    eliminar_info
 } from '../controllers/infoControllers.js'
 
 const router=express.Router();
 
-router.get('/', listaInfos);
-router.get('/:id', obtenerinfo);
-router.post('/registrar', registrarInfo);
-router.put('/:id', modificarinfo);
-router.delete('/:id', eliminarinfo)
+router.get('/', listar_info);
+router.get('/:id', obtener_info);
+router.post('/registrar', registrar_info);
+router.put('/:id', modificar_info);
+router.delete('/:id', eliminar_info)
 
 export default router

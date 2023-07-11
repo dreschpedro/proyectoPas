@@ -25,7 +25,7 @@ const registrar_personal = async (req, res) => {
   try {
     const personal_body = new Personal_model(req.body);
     const personal_almacenado = await personal_body.save();
-    res.json(personal_almacenado);
+    res.json({ message: "Personal creado", personal_almacenado });
 
   } catch (error) {
     console.log(error);
@@ -49,7 +49,7 @@ const modificar_personal = async (req, res) => {
 
   try {
     const personal_almacenado = await personal.save();
-    res.json(personal_almacenado)
+    res.json({ message: "Personal Modificado", personal_almacenado });
   } catch (error) {
     console.log(error)
   }
