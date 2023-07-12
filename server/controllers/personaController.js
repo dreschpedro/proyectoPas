@@ -42,10 +42,10 @@ const modificar_persona = async (req, res) => {
 
     if (!persona) res.send("El Registro no se encuentra")
     persona.nombre = req.body.nombre;
-    persona.ntelefono = req.body.ntelefono;
     persona.cuilt = req.body.cuilt;
-    persona.especialidad = req.body.especialidad;
     persona.dni = req.body.dni;
+    persona.domicilio = req.body.domicilio;
+    persona.nDeTelefono = req.body.nDeTelefono;
 
     try {
         const persona_almacenado = await persona.save();
