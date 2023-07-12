@@ -25,12 +25,12 @@ const registrar_institucion = async (req, res) => {
     try {
         const institucion_body = new inst_model(req.body);
         const institucion_almacenado = await institucion_body.save();
-        res.json({ message: "institucion creado", institucion_almacenado });
+        res.json({ message: "Institucion creada", institucion_almacenado });
 
     } catch (error) {
         console.log(error);
 
-        const mensaje_error = 'Ocurrió un error al registrar el institucion';
+        const mensaje_error = 'Ocurrió un error al registrar la Institución';
         res.status(500).json({ error: mensaje_error });
     }
 };
@@ -59,7 +59,7 @@ const eliminar_institucion = async (req, res) => {
 
     if (institucion) { // si encuentra la institucion (id) -> lo elimina
         institucion.deleteOne()
-        res.send('Institucion eliminada')
+        res.send('Institucion eliminada');
     } else { // si no encuentra el institucion (id) -> envia mensaje de error
         const mensaje = 'No se encontró el Institucion solicitada';
         return res.status(404).send(mensaje);

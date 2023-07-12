@@ -6,6 +6,7 @@ import coneccionDB from './config/db.js';
 // rutas
 import routerPersonal from './routers/personalRouter.js';
 import routerInfo from './routers/infoRouter.js';
+import routerInstit from './routers/institucRouter.js';
 import routerUsuario from './routers/usuarioRouter.js';
 
 dotenv.config();
@@ -23,7 +24,9 @@ app.get('/', (req, res) => {
 
 app.use('/personal', routerPersonal)
 app.use('/info/', routerInfo)
+app.use('/institucion/', routerInstit)
 // app.use('/usuario', routerUsuario)
+
 
 app.listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}`)
