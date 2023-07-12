@@ -2,34 +2,35 @@ import mongoose from "mongoose";
 import bcrypt from 'bcrypt';
 
 
-const usuarioSchema = mongoose.Schema({
-    nombre: {
-        type: String,
-        required: true,
-        trim: true,
+const usuarioSchema = mongoose.Schema(
+    {
+        nombre: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        password: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        email: {
+            type: String,
+            required: true,
+            trim: true,
+            unique: true
+        },
+        token: {
+            type: String,
+        },
+        confirmado: {   // confirmar el email de confirmacion de usuario
+            type: Boolean,
+            default: false
+        },
+        rol: {
+            type: String, required: true, trim: true
+        }
     },
-    password: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        trim: true,
-        unique: true
-    },
-    token: {
-        type: String,
-    },
-    confirmado: {   // confirmar el email de confirmacion de usuario
-        type: Boolean,
-        default: false
-    },
-    rol: {
-        type: String, required: true, trim: true
-    }
-},
     {
         timestamps: true  // crea dos columnas mas una de creado y otra de actualizado
     });
@@ -40,7 +41,7 @@ usuarioSchema.pre('save', async function (next) { // uso function porque  si apl
         next();
     }
 
-    const salt = await bcrypt.genSalt(10) // metodo genSalt genera el has - 10 son las rondas esa es la por defecto para que sea seguro el hash
+    const salt = await bcrypt.genSalt(10) // metodo genSalt genera el hash - 10 son las rondas esa es la por defecto para que sea seguro el hash
     // luego que se genera ese salt accede a todos los datos que se estan mandando para guardar en la BD
     this.password = await bcrypt.hash(this.password, salt) // THIS HACE REFERENCIA AL OBJETO DEL USUARIO
     // lo que hace la sentencia anterior es hashear el password, el metodo toma dos parametros 

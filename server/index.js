@@ -31,7 +31,7 @@ app.use('/institucion/', routerInstit)
 app.use('/persona', routerPerson)
 app.use('/producto', routerProducto)
 app.use('/servicio', routerServicio)
-// app.use('/usuario', routerUsuario)
+app.use('/usuario', routerUsuario)
 
 
 app.listen(port, () => {
