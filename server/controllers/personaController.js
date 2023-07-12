@@ -1,57 +1,81 @@
-import Persona from "../models/Persona.js" // es necesario instanciar modelo Personas para registrar Personas
+import Persona_model from "../models/Persona_model.js"
 
+// FUNCIONALIDADES
 // consulta de todos los registros
-const listaPersonas= async (req,res)=>{
-    const persona = await Persona.find()
-    res.json(persona)
-  }
-// consulta por id
-const obtenerPersona= async (req,res)=>{
-    const persona = await Persona.findById(req.params.id)
+const listar_persona = async (req, res) => {
+    const persona = await Persona_model.find()
     res.json(persona)
 }
 
-const registrarPersona= async (req,res)=>{
-    const persona = new Persona(req.body) // registro un Persona
+// consulta por un registro (por id)
+const obtener_persona = async (req, res) => {
+    const persona_id = req.params.id; //busca segun el id registrado en la BD
+    const persona = await Persona_model.findById(persona_id);
+
+    if (!persona) { // si no existe ese id, envia mensaje de error
+        const mensaje = 'No se encontró el registro solicitado';
+        return res.status(404).send(mensaje);
+    }
+    res.json(persona); //muestra todos los registros
+}
+
+// registro de Persona
+const registrar_persona = async (req, res) => {
 
     try {
-        const personaAlmacenado = await Persona.save();
-        res.json(personaAlmacenado)
+        const persona_body = new Persona_model(req.body);
+        const persona_almacenado = await persona_body.save();
+        res.json({ message: "Registro creado", persona_almacenado });
+
+    } catch (error) {
+        console.log(error);
+
+        const mensaje_error = 'Ocurrió un error al registrar la Persona';
+        res.status(500).json({ error: mensaje_error });
+    }
+};
+
+// modifica los datos buscando por id
+const modificar_persona = async (req, res) => {
+    const persona_id = req.params.id;
+    const persona = await Persona_model.findById(persona_id);
+
+    if (!persona) res.send("El Registro no se encuentra")
+    persona.nombre = req.body.nombre;
+    persona.ntelefono = req.body.ntelefono;
+    persona.cuilt = req.body.cuilt;
+    persona.especialidad = req.body.especialidad;
+    persona.dni = req.body.dni;
+
+    try {
+        const persona_almacenado = await persona.save();
+        res.json({ message: "Registro Modificado", persona_almacenado });
     } catch (error) {
         console.log(error)
     }
 }
-//modificar registro
-const modificarPersona= async (req,res)=>{
-    const persona = await Persona.findById(req.params.id)
 
-    if (!persona) res.send ("el Persona no se encuentra")
-    Persona.nombre=req.body.nombre;
-    Persona.cuilt=req.body.cuilt;
-    Persona.dni=req.body.dni;
-    Persona.domicilio=req.body.domicilio;
-    Persona.nDeTelefono=req.body.nDeTelefono;
-    
-    try {
-        const personaAlmacenado = await Persona.save();
-        res.json(personaAlmacenado)
-    } catch (error) {
-        console.log(error)
+// elimina por id
+const eliminar_persona = async (req, res) => {
+    const persona_id = req.params.id;
+    const persona = await Persona_model.findById(persona_id)
+
+    if (persona) { // si encuentra el persona (id) -> lo elimina
+        persona.deleteOne()
+        res.send('Registro eliminado')
+    } else { // si no encuentra el persona (id) -> envia mensaje de error
+        const mensaje = 'No se encontró el registro solicitado';
+        return res.status(404).send(mensaje);
     }
-    res.json(Persona)
-}
-
-const eliminarPersona= async (req,res)=>{
-    const Persona = await Persona.findById(req.params.id)
-    Persona.deleteOne()
-    res.send('Persona eliminado')
 
 }
 
+
+// exports
 export {
-    listaPersonas,
-    obtenerPersona,
-    registrarPersona,
-    modificarPersona,
-    eliminarPersona,
+    listar_persona,
+    obtener_persona,
+    registrar_persona,
+    modificar_persona,
+    eliminar_persona
 }

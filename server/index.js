@@ -7,6 +7,7 @@ import coneccionDB from './config/db.js';
 import routerPersonal from './routers/personalRouter.js';
 import routerInfo from './routers/infoRouter.js';
 import routerInstit from './routers/institucRouter.js';
+import routerPerson from './routers/persona_router.js';
 import routerUsuario from './routers/usuarioRouter.js';
 
 dotenv.config();
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 app.use('/personal', routerPersonal)
 app.use('/info/', routerInfo)
 app.use('/institucion/', routerInstit)
+app.use('/persona', routerPerson)
 // app.use('/usuario', routerUsuario)
 
 

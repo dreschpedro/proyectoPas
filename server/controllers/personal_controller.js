@@ -25,7 +25,7 @@ const registrar_personal = async (req, res) => {
   try {
     const personal_body = new Personal_model(req.body);
     const personal_almacenado = await personal_body.save();
-    res.json({ message: "Personal creado", personal_almacenado });
+    res.json({ message: "Registro creado", personal_almacenado });
 
   } catch (error) {
     console.log(error);
@@ -40,7 +40,7 @@ const modificar_personal = async (req, res) => {
   const personal_id = req.params.id;
   const personal = await Personal_model.findById(personal_id);
 
-  if (!personal) res.send("El personal no se encuentra")
+  if (!personal) res.send("El Registro no se encuentra")
   personal.nombre = req.body.nombre;
   personal.ntelefono = req.body.ntelefono;
   personal.cuilt = req.body.cuilt;
@@ -49,7 +49,7 @@ const modificar_personal = async (req, res) => {
 
   try {
     const personal_almacenado = await personal.save();
-    res.json({ message: "Personal Modificado", personal_almacenado });
+    res.json({ message: "Registro Modificado", personal_almacenado });
   } catch (error) {
     console.log(error)
   }
@@ -62,9 +62,9 @@ const eliminar_personal = async (req, res) => {
 
   if (personal) { // si encuentra el personal (id) -> lo elimina
     personal.deleteOne()
-    res.send('Personal eliminado')
+    res.send('Registro eliminado')
   } else { // si no encuentra el personal (id) -> envia mensaje de error
-    const mensaje = 'No se encontró el Personal solicitado';
+    const mensaje = 'No se encontró el Registro solicitado';
     return res.status(404).send(mensaje);
   }
 

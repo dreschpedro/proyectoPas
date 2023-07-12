@@ -20,5 +20,5 @@ const personaSchema = mongoose.Schema({
         timestamps: true
     }
 );
-const Persona = mongoose.model('Persona', personaSchema);
-export default Persona;
+const Persona_model = mongoose.model('Persona', personaSchema);
+export default Persona_model;
