@@ -7,7 +7,7 @@ import {
     eliminar_info
 } from '../controllers/infoControllers.js'
 
-const router=express.Router();
+const router = express.Router();
 
 router.get('/', listar_info);
 router.get('/:id', obtener_info);
