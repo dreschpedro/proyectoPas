@@ -21,9 +21,9 @@ app.get('/', (req, res) => {
     res.send(`Estas en Inicio`);
 });
 
-app.use('/api/personal', routerPersonal)
-app.use('/api/info/', routerInfo)
-app.use('/api/usuario', routerUsuario)
+app.use('/personal', routerPersonal)
+app.use('/info/', routerInfo)
+// app.use('/usuario', routerUsuario)
 
 app.listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}`)

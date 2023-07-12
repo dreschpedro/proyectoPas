@@ -1,54 +1,78 @@
-import Inst from "../models/Info.js" // es necesario instanciar modelo Inst para registrar Insts
+import inst_model from "../models/Institucion_model.js"
 
+// FUNCIONALIDADES
 // consulta de todos los registros
-const listaInst= async (req,res)=>{
-    const inst = await Inst.find()
-    res.json(inst)
-  }
-// consulta por id
-const obtenerInst= async (req,res)=>{
-    const inst = await Inst.findById(req.params.id)
-    res.json(inst)
+const listar_institucion = async (req, res) => {
+    const institucion = await inst_model.find()
+    res.json(institucion)
 }
 
-const registrarInst= async (req,res)=>{
-    const inst = new Inst(req.body) // registro un Inst
+// consulta por un registro (por id)
+const obtener_institucion = async (req, res) => {
+    const institucion_id = req.params.id; //busca segun el id registrado en la BD
+    const institucion = await inst_model.findById(institucion_id);
+
+    if (!institucion) { // si no existe ese id, envia mensaje de error
+        const mensaje = 'No se encontró el registro solicitado';
+        return res.status(404).send(mensaje);
+    }
+    res.json(institucion); //muestra todos los registros
+}
+
+// registro de institucion
+const registrar_institucion = async (req, res) => {
 
     try {
-        const instAlmacenado = await Inst.save();
-        res.json(instAlmacenado)
+        const institucion_body = new inst_model(req.body);
+        const institucion_almacenado = await institucion_body.save();
+        res.json({ message: "institucion creado", institucion_almacenado });
+
+    } catch (error) {
+        console.log(error);
+
+        const mensaje_error = 'Ocurrió un error al registrar el institucion';
+        res.status(500).json({ error: mensaje_error });
+    }
+};
+
+// modifica los datos buscando por id
+const modificar_institucion = async (req, res) => {
+    const institucion_id = req.params.id;
+    const institucion = await inst_model.findById(institucion_id);
+
+    if (!institucion) res.send("La Institución no se encuentra")
+    institucion.nombre = req.body.nombre;
+    institucion.encargado = req.body.encargado;
+
+    try {
+        const institucion_almacenado = await institucion.save();
+        res.json({ message: "Datos modificados", institucion_almacenado });
     } catch (error) {
         console.log(error)
     }
 }
-//modificar registro
-const modificarInst= async (req,res)=>{
-    const inst = await Inst.findById(req.params.id)
 
-    if (!inst) res.send ("el Inst no se encuentra")
-    Inst.nombre=req.body.nombre;
-    Inst.gerente=req.body.gerente;
-    
-    try {
-        const instAlmacenado = await Inst.save();
-        res.json(instAlmacenado)
-    } catch (error) {
-        console.log(error)
+// elimina por id
+const eliminar_institucion = async (req, res) => {
+    const institucion_id = req.params.id;
+    const institucion = await inst_model.findById(institucion_id)
+
+    if (institucion) { // si encuentra la institucion (id) -> lo elimina
+        institucion.deleteOne()
+        res.send('Institucion eliminada')
+    } else { // si no encuentra el institucion (id) -> envia mensaje de error
+        const mensaje = 'No se encontró el Institucion solicitada';
+        return res.status(404).send(mensaje);
     }
-    res.json(Inst)
-}
-
-const eliminarInst= async (req,res)=>{
-    const inst = await Inst.findById(req.params.id)
-    inst.deleteOne()
-    res.send('Inst eliminado')
 
 }
 
+
+// exports
 export {
-    listaInst,
-    obtenerInst,
-    registrarInst,
-    modificarInst,
-    eliminarInst,
+    listar_institucion,
+    obtener_institucion,
+    registrar_institucion,
+    modificar_institucion,
+    eliminar_institucion
 }

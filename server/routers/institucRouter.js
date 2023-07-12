@@ -7,7 +7,7 @@ import {
     eliminarInst
 } from '../controllers/institucionControllers.js'
 
-const router=express.Router();
+const router = express.Router();
 
 router.get('/', listaInst);
 router.get('/:id', obtenerInst);

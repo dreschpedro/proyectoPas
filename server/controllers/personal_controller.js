@@ -1,4 +1,4 @@
-import Personal_model from "../models/personal.js"
+import Personal_model from "../models/Personal_model.js"
 
 // FUNCIONALIDADES
 // consulta de todos los registros
