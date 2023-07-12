@@ -52,7 +52,7 @@ const autenticar = async (req, res) => {
   }
 }
 
-const confirmar = async (req, res) => {
+const confirmar = async (req, res) => { // el token pasa como parámetro en la ruta -> /confirmar/:token
   const { token } = req.params
   const usuarioConfirmar = await Usuario_model.findOne({ token })
   if (!usuarioConfirmar) {
