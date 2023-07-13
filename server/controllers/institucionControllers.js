@@ -4,7 +4,7 @@ import inst_model from "../models/Institucion_model.js"
 // consulta de todos los registros
 const listar_institucion = async (req, res) => {
     const institucion = await inst_model.find()
-    res.json(institucion)
+    return res.status(200).json(institucion)
 }
 
 // consulta por un registro (por id)
@@ -16,7 +16,7 @@ const obtener_institucion = async (req, res) => {
         const mensaje = 'No se encontró el registro solicitado';
         return res.status(404).send(mensaje);
     }
-    res.json(institucion); //muestra todos los registros
+    return res.status(200).json(institucion); //muestra todos los registros
 }
 
 // registro de institucion
@@ -25,13 +25,13 @@ const registrar_institucion = async (req, res) => {
     try {
         const institucion_body = new inst_model(req.body);
         const institucion_almacenado = await institucion_body.save();
-        res.json({ message: "Institucion creada", institucion_almacenado });
+        return res.status(200).json({ message: "Institucion creada", institucion_almacenado });
 
     } catch (error) {
         console.log(error);
 
         const mensaje_error = 'Ocurrió un error al registrar la Institución';
-        res.status(500).json({ error: mensaje_error });
+        return res.status(500).json({ error: mensaje_error });
     }
 };
 
@@ -46,7 +46,7 @@ const modificar_institucion = async (req, res) => {
 
     try {
         const institucion_almacenado = await institucion.save();
-        res.json({ message: "Datos modificados", institucion_almacenado });
+        return res.status(200).json({ message: "Datos modificados", institucion_almacenado });
     } catch (error) {
         console.log(error)
     }
@@ -59,7 +59,7 @@ const eliminar_institucion = async (req, res) => {
 
     if (institucion) { // si encuentra la institucion (id) -> lo elimina
         institucion.deleteOne()
-        res.send('Institucion eliminada');
+        return res.status(200).send('Institucion eliminada');
     } else { // si no encuentra el institucion (id) -> envia mensaje de error
         const mensaje = 'No se encontró el Institucion solicitada';
         return res.status(404).send(mensaje);

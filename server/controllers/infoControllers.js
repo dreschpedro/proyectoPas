@@ -1,10 +1,10 @@
-import Info_model from "../models/Info_model.js"
+import Info_model from "../models/Info.models.js"
 
 // FUNCIONALIDADES
 // consulta de todos los registros
 const listar_info = async (req, res) => {
     const info = await Info_model.find()
-    res.json(info)
+    return res.status(200).json(info)
 }
 
 // consulta por un registro (por id)
@@ -16,7 +16,7 @@ const obtener_info = async (req, res) => {
         const mensaje = 'No se encontró el registro solicitado';
         return res.status(404).send(mensaje);
     }
-    res.json(info); //muestra todos los registros
+    return res.status(200).json(info); //muestra todos los registros
 }
 
 // registro de info
@@ -25,13 +25,13 @@ const registrar_info = async (req, res) => {
     try {
         const info_body = new Info_model(req.body);
         const info_almacenado = await info_body.save();
-        res.json({ message: "Registro creado!", info_almacenado });
+        return res.status(200).json({ message: "Registro creado!", info_almacenado });
 
     } catch (error) {
         console.log(error);
 
         const mensaje_error = 'Ocurrió un error al registrar el info';
-        res.status(500).json({ error: mensaje_error });
+        return res.status(500).json({ error: mensaje_error });
     }
 };
 
@@ -49,7 +49,7 @@ const modificar_info = async (req, res) => {
 
     try {
         const info_almacenado = await info.save();
-        res.json({ message: "registro modificado", info_almacenado });
+        return res.status(200).json({ message: "Registro modificado", info_almacenado });
     } catch (error) {
         console.log(error)
     }
@@ -62,7 +62,7 @@ const eliminar_info = async (req, res) => {
 
     if (info) { // si encuentra el info (id) -> lo elimina
         info.deleteOne()
-        res.send('info eliminado')
+        return res.status(200).send('info eliminado')
     } else { // si no encuentra el info (id) -> envia mensaje de error
         const mensaje = 'No se encontró el info solicitado';
         return res.status(404).send(mensaje);

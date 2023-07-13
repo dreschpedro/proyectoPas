@@ -4,7 +4,7 @@ import Servicio_model from "../models/Servicio_model.js"
 // consulta de todos los registros
 const listar_servicio = async (req, res) => {
     const servicio = await Servicio_model.find()
-    res.json(servicio)
+    return res.status(200).json(servicio)
 }
 
 // consulta por un registro (por id)
@@ -16,7 +16,7 @@ const obtener_servicio = async (req, res) => {
         const mensaje = 'No se encontró el registro solicitado';
         return res.status(404).send(mensaje);
     }
-    res.json(servicio); //muestra todos los registros
+    return res.status(200).json(servicio); //muestra todos los registros
 }
 
 // registro de servicio
@@ -25,7 +25,7 @@ const registrar_servicio = async (req, res) => {
     try {
         const servicio_body = new Servicio_model(req.body);
         const servicio_almacenado = await servicio_body.save();
-        res.json({ message: "Registro creado", servicio_almacenado });
+        return res.status(200).json({ message: "Registro creado", servicio_almacenado });
 
     } catch (error) {
         console.log(error);
@@ -49,7 +49,7 @@ const modificar_servicio = async (req, res) => {
 
     try {
         const servicio_almacenado = await servicio.save();
-        res.json({ message: "Registro Modificado", servicio_almacenado });
+        return res.status(200).json({ message: "Registro Modificado", servicio_almacenado });
     } catch (error) {
         console.log(error)
     }
@@ -62,7 +62,7 @@ const eliminar_servicio = async (req, res) => {
 
     if (servicio) { // si encuentra el servicio (id) -> lo elimina
         servicio.deleteOne()
-        res.send('Registro eliminado')
+        return res.send('Registro eliminado')
     } else { // si no encuentra el servicio (id) -> envia mensaje de error
         const mensaje = 'No se encontró el registro solicitado';
         return res.status(404).send(mensaje);

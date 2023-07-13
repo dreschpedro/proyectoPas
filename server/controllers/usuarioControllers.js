@@ -16,7 +16,7 @@ const registrar = async (req, res) => {
     const usuario = new Usuario_model(req.body); // genera el user
     usuario.token = generarId(); // genera el token de sesion
     const usuarioAlmacenado = await usuario.save();
-    res.json(usuarioAlmacenado)
+    return res.status(200).json(usuarioAlmacenado)
 
   } catch (error) {
     console.log(error)
@@ -40,11 +40,14 @@ const autenticar = async (req, res) => {
 
   // comprobar el password
   if (await usuario.comprobarPassword(password)) {
-    res.json({
-      _id: usuario._id,
-      nombre: usuario.nombre,
-      email: usuario.email,
-      token: generarJWT(usuario.id)
+    return res.status(200).json({
+      message: "Registro Modificado",
+      data: {
+        _id: usuario._id,
+        nombre: usuario.nombre,
+        email: usuario.email,
+        token: generarJWT(usuario.id)
+      }
     })
   } else {
     const error = new Error("Password incorrecto");
@@ -63,7 +66,7 @@ const confirmar = async (req, res) => { // el token pasa como parámetro en la r
     usuarioConfirmar.confirmado = true;
     usuarioConfirmar.token = "";
     await usuarioConfirmar.save();
-    res.json({ msg: "Usuario confirmado correctamente" })
+    return res.status(200).json({ msg: "Usuario confirmado correctamente" })
   } catch (error) {
 
   }

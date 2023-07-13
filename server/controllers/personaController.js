@@ -4,7 +4,7 @@ import Persona_model from "../models/Persona_model.js"
 // consulta de todos los registros
 const listar_persona = async (req, res) => {
     const persona = await Persona_model.find()
-    res.json(persona)
+    return res.status(200).json(persona)
 }
 
 // consulta por un registro (por id)
@@ -16,7 +16,7 @@ const obtener_persona = async (req, res) => {
         const mensaje = 'No se encontró el registro solicitado';
         return res.status(404).send(mensaje);
     }
-    res.json(persona); //muestra todos los registros
+    return res.status(200).json(persona); //muestra todos los registros
 }
 
 // registro de Persona
@@ -25,13 +25,13 @@ const registrar_persona = async (req, res) => {
     try {
         const persona_body = new Persona_model(req.body);
         const persona_almacenado = await persona_body.save();
-        res.json({ message: "Registro creado", persona_almacenado });
+        return res.status(200).json({ message: "Registro creado", persona_almacenado });
 
     } catch (error) {
         console.log(error);
 
         const mensaje_error = 'Ocurrió un error al registrar la Persona';
-        res.status(500).json({ error: mensaje_error });
+        return res.status(500).json({ error: mensaje_error });
     }
 };
 
@@ -49,7 +49,7 @@ const modificar_persona = async (req, res) => {
 
     try {
         const persona_almacenado = await persona.save();
-        res.json({ message: "Registro Modificado", persona_almacenado });
+        return res.status(200).json({ message: "Registro Modificado", persona_almacenado });
     } catch (error) {
         console.log(error)
     }
@@ -62,7 +62,7 @@ const eliminar_persona = async (req, res) => {
 
     if (persona) { // si encuentra el persona (id) -> lo elimina
         persona.deleteOne()
-        res.send('Registro eliminado')
+        return res.status(200).send('Registro eliminado')
     } else { // si no encuentra el persona (id) -> envia mensaje de error
         const mensaje = 'No se encontró el registro solicitado';
         return res.status(404).send(mensaje);
