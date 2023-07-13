@@ -6,6 +6,10 @@ const InstitucionSchema = mongoose.Schema({
     encargado: {
         type: String, required: true, trim: true
     },
+    activo: {
+        type: Boolean,
+        default: true
+    }
 },
     {
         timestamps: true
