@@ -5,15 +5,18 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles2.css'
 
 function NavbarT() {
   return (
     <>
       {['lg'].map((expand) => (
-        <Navbar key={expand} expand={expand} className="bg-body-tertiary m-0">
+
+        <Navbar key={expand} expand={expand} className=" m-0 topBanner">
           <Container fluid>
             <Navbar.Brand href="#">
-            <img src="/public/logo.jpg" alt="P.A.S" style={{ width: '40px', margin: '0', padding: '0' }} />
+              <img src="/public/logo.jpg" alt="P.A.S" style={{ width: '40px', margin: '0', padding: '0' }} />
             </Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
@@ -28,10 +31,23 @@ function NavbarT() {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="#action1">Home</Nav.Link>
-                  <Nav.Link href="#action2">Link</Nav.Link>
+                  {/* <Nav.Link href="#action1">Home</Nav.Link>
+                  <Nav.Link href="#action2">Link</Nav.Link> */}
+                  <Form className="d-flex">
+                  <Form.Control
+                    type="search"
+                    placeholder="Search"
+                    className="me-2"
+                    aria-label="Search"
+                  />
+                  <Button variant="outline-success">Search</Button>
+                </Form>
+
+                  <div className='d-flex ml-8'>
+                    <img src="/public/ejemploUser.jpg" className="rounded-circle" alt="Imagen de usuario" style={{ width: '40px', margin: '0', padding: '0' }} />
+                  
                   <NavDropdown
-                    title="Dropdown"
+                    title="User Name"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
                   >
                     <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
@@ -43,16 +59,9 @@ function NavbarT() {
                       Something else here
                     </NavDropdown.Item>
                   </NavDropdown>
+                  </div>
                 </Nav>
-                <Form className="d-flex">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                  />
-                  <Button variant="outline-success">Search</Button>
-                </Form>
+                
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>

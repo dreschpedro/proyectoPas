@@ -6,6 +6,7 @@ import NavbarT from './components/NavbarT.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavbarL from './components/NavbarL.jsx'
 import Main from './components/Main.jsx'
+// import Sidebar from './components/Sidebar'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <NavbarT />
         <div className='container p-0 m-0 d-flex flex-nowrap' style={{ height: '100vh' }}>
           <NavbarL />
+          {/* <Sidebar /> */}
           <Main />
         </div>
 

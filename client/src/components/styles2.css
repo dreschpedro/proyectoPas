@@ -1,0 +1,17 @@
+.rojo{
+    display: flex;
+    align-items: baseline;
+    background-color: brown;
+}
+
+.leftBanner{
+    height: '100vh';
+    display: 'flex';
+    flex-direction: 'column';
+    justify-Content: 'flex-start';
+    background-color: #1B3893;
+}
+
+.topBanner{
+    background-color: #162e7b;
+}
