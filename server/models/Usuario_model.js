@@ -52,8 +52,6 @@ usuarioSchema.pre('save', async function (next) { // uso function porque  si apl
     // this.password es el string sin hashear y el salt que es el valor que produjo la generacion del salt
 })
 
-//
-
 usuarioSchema.methods.comprobarPassword = async function (passwordForm) {
     return await bcrypt.compare(passwordForm, this.password)
 }

@@ -25,13 +25,13 @@ app.get('/', (req, res) => {
     res.send(`Estas en Inicio`);
 });
 
-app.use('/personal', router_personal)
-app.use('/info/', router_info)
-app.use('/institucion/', routerInstit)
-app.use('/persona', routerPerson)
-app.use('/producto', routerProducto)
-app.use('/servicio', routerServicio)
-app.use('/usuario', routerUsuario)
+app.use('/api/personal', router_personal)
+app.use('/api/info/', router_info)
+app.use('/api/institucion/', routerInstit)
+app.use('/api/persona', routerPerson)
+app.use('/api/producto', routerProducto)
+app.use('/api/servicio', routerServicio)
+app.use('/api/usuario', routerUsuario)
 
 
 app.listen(port, () => {
