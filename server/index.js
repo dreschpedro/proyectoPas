@@ -4,13 +4,13 @@ import dotenv from 'dotenv';
 import coneccionDB from './config/db.js';
 
 // rutas
-import router_personal from './routers/personalRouter.js';
-import router_info from './routers/infoRouter.js';
-import routerInstit from './routers/institucRouter.js';
-import routerPerson from './routers/persona_router.js';
-import routerProducto from './routers/producto_router.js';
-import routerServicio from './routers/servicio_router.js';
-import routerUsuario from './routers/usuarioRouter.js';
+import router_personal from './routers/personal.routes.js';
+import router_info from './routers/info.routes.js';
+import routerInstit from './routers/instituc.routes.js';
+import routerPerson from './routers/persona.routes.js';
+import routerProducto from './routers/producto.routes.js';
+import routerServicio from './routers/servicio.routes.js';
+import routerUsuario from './routers/usuario.routes.js';
 
 dotenv.config();
 
