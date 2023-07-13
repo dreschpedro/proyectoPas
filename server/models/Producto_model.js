@@ -9,12 +9,17 @@ const productoSchema = mongoose.Schema({
     codBarra: {
         type: String, required: true, trim: true
     },
-    estEntrega: {
-        type: String, required: true, trim: true
+    entregado: {
+        type: Boolean,
+        default: true
     },
     fechEntrega: {
         type: String, required: true, trim: true
     },
+    activo: {
+        type: Boolean,
+        default: true
+    }
 },
     {
         timestamps: true

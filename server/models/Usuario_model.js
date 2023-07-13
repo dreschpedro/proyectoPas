@@ -29,6 +29,10 @@ const usuarioSchema = mongoose.Schema(
         },
         rol: {
             type: String, required: true, trim: true
+        },
+        activo: {
+            type: Boolean,
+            default: true
         }
     },
     {

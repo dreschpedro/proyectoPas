@@ -4,7 +4,7 @@ import Producto_model from "../models/Producto_model.js"
 // consulta de todos los registros
 const listar_producto = async (req, res) => {
     const producto = await Producto_model.find()
-    res.json(producto)
+    return res.status(200).json(producto)
 }
 
 // consulta por un registro (por id)
@@ -16,7 +16,7 @@ const obtener_producto = async (req, res) => {
         const mensaje = 'No se encontró el registro solicitado';
         return res.status(404).send(mensaje);
     }
-    res.json(producto); //muestra todos los registros
+    return res.status(200).json(producto); //muestra todos los registros
 }
 
 // registro de producto
@@ -25,13 +25,13 @@ const registrar_producto = async (req, res) => {
     try {
         const producto_body = new Producto_model(req.body);
         const producto_almacenado = await producto_body.save();
-        res.json({ message: "Registro creado", producto_almacenado });
+        return res.status(200).json({ message: "Registro creado", producto_almacenado });
 
     } catch (error) {
         console.log(error);
 
         const mensaje_error = 'Ocurrió un error al registrar la producto';
-        res.status(500).json({ error: mensaje_error });
+        return res.status(500).json({ error: mensaje_error });
     }
 };
 
@@ -49,7 +49,7 @@ const modificar_producto = async (req, res) => {
 
     try {
         const producto_almacenado = await producto.save();
-        res.json({ message: "Registro Modificado", producto_almacenado });
+        return res.status(200).json({ message: "Registro Modificado", producto_almacenado });
     } catch (error) {
         console.log(error)
     }
@@ -62,7 +62,7 @@ const eliminar_producto = async (req, res) => {
 
     if (producto) { // si encuentra el producto (id) -> lo elimina
         producto.deleteOne()
-        res.send('Registro eliminado')
+        return res.status(200).send('Registro eliminado')
     } else { // si no encuentra el producto (id) -> envia mensaje de error
         const mensaje = 'No se encontró el registro solicitado';
         return res.status(404).send(mensaje);

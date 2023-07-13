@@ -3,6 +3,10 @@ const infoSchema = mongoose.Schema({
     //esta es la informacion socioambiental
     cuilt: {
         type: String, required: true, trim: true
+    },
+    activo: {
+        type: Boolean,
+        default: true
     }
 },
     {
