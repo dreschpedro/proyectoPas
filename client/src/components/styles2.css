@@ -9,9 +9,21 @@
     display: 'flex';
     flex-direction: 'column';
     justify-Content: 'flex-start';
-    background-color: #1B3893;
+    background-color: #717174;
 }
 
 .topBanner{
-    background-color: #162e7b;
+    background-color: #4e4e4f;
+}
+
+.containerx{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.logoPas{
+    width: '20px';
+    margin-inline: 10px;
+    padding: '0';
 }

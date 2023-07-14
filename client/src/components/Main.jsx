@@ -1,16 +1,28 @@
 import Container from 'react-bootstrap/Container';
-
+import { Button } from 'react-bootstrap';
 
 function NavbarL() {
   return (
     <>
     
     
-        <Container>
-          <h1>Main.jsx</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim fugit facere dolorem suscipit sed voluptatem labore nulla, eos similique nam natus! Libero voluptatem pariatur accusantium cum expedita mollitia accusamus eos.
-          Ex vel aliquid labore veniam tempora. Cum repellendus natus atque quaerat similique modi qui a deserunt vero odio id saepe voluptatum illum tenetur labore voluptates, tempora, hic pariatur neque doloribus!
-          </p>
+        <Container className='container d-flex justify-content-center flex-column'>
+          <p>nombre</p>
+          <input type="text" />
+          <br />
+          <p>email</p>
+          <input type="text" />
+          <br />
+          <p>contraseña</p>
+          <input type="text" />
+          <br />
+          <p>rol</p>
+          <input type="text" />
+          <br />
+          <p>institucion</p>
+          <input type="text" />
+          <br />
+          <Button>Agregacion</Button>
         </Container>
       
       <br />

@@ -31,7 +31,7 @@ function NavbarL() {
 
                         <Nav.Link href='#instituciones'>
                             <Button variant="secondary" className="mr-2">
-                                <FontAwesomeIcon icon={faUniversity} /> Instituci
+                                <FontAwesomeIcon icon={faUniversity} /> Instituciones
                             </Button>
                         </Nav.Link>
 
