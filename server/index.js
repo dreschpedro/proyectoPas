@@ -33,7 +33,6 @@ app.use('/api/producto', routerProducto)
 app.use('/api/servicio', routerServicio)
 app.use('/api/usuario', routerUsuario)
 
-
 app.listen(port, () => {
     console.log(`Servidor escuchando en el puerto ${port}`)
 })
