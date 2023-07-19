@@ -29,7 +29,7 @@ app.use(cors({
 import router_personal from './routes/personal.routes.js';
 import router_info from './routes/info.routes.js';
 import routerInstit from './routes/instituc.routes.js';
-import routerPerson from './routes/persona.routes.js';
+import routerPerson from './routes/userExt.routes.js';
 import routerProducto from './routes/producto.routes.js';
 import routerServicio from './routes/servicio.routes.js';
 import routerUsuario from './routes/usuario.routes.js';
