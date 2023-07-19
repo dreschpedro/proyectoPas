@@ -2,13 +2,23 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'; // permite hacer solicitudes al back desde el front, sino se bloquean los puertos
-import coneccionDB from './config/db.js';
+import sequelize from './config/db.js';
 
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.json());
-coneccionDB();
+
+(async () => {
+    try {
+        await sequelize();
+        // await sequelize.sync({force: false});
+        console.log('Conexión exitosa a PostgreSQL!');
+        // Aquí puedes realizar más operaciones con la base de datos si lo deseas
+    } catch (error) {
+        console.log('Error al conectar a PostgreSQL:', error);
+    }
+})();
 
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -36,3 +46,4 @@ app.use('/api/servicio', routerServicio)
 app.use('/api/usuario', routerUsuario)
 
 app.listen(port, () => console.log(`Escuchando en el ${port}`))
+

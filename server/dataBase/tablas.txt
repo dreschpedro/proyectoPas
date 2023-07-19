@@ -4,8 +4,8 @@
 1 producto
 1 usuario
 
-2 personal
 2 servicio
+2 personal
 2 user_ext
 
 3 serv_real

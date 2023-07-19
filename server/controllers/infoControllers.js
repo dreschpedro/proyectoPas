@@ -1,70 +1,70 @@
-import Info_model from "../models/Info.models.js"
+import InfoSA_model from "../models/InfoSASocAmbient_model.js"
 
 // FUNCIONALIDADES
 // consulta de todos los registros
-const listar_info = async (req, res) => {
-    const info = await Info_model.find()
-    return res.status(200).json(info)
+const listar_infoSA = async (req, res) => {
+    const infoSA = await InfoSA_model.find()
+    return res.status(200).json(infoSA)
 }
 
 // consulta por un registro (por id)
-const obtener_info = async (req, res) => {
-    const info_id = req.params.id; //busca segun el id registrado en la BD
-    const info = await Info_model.findById(info_id);
+const obtener_infoSA = async (req, res) => {
+    const infoSA_id = req.params.id; //busca segun el id registrado en la BD
+    const infoSA = await InfoSA_model.findById(infoSA_id);
 
-    if (!info) { // si no existe ese id, envia mensaje de error
+    if (!infoSA) { // si no existe ese id, envia mensaje de error
         const mensaje = 'No se encontró el registro solicitado';
         return res.status(404).send(mensaje);
     }
-    return res.status(200).json(info); //muestra todos los registros
+    return res.status(200).json(infoSA); //muestra todos los registros
 }
 
-// registro de info
-const registrar_info = async (req, res) => {
+// registro de infoSA
+const registrar_infoSA = async (req, res) => {
 
     try {
-        const info_body = new Info_model(req.body);
-        const info_almacenado = await info_body.save();
-        return res.status(200).json({ message: "Registro creado!", info_almacenado });
+        const infoSA_body = new InfoSA_model(req.body);
+        const infoSA_almacenado = await infoSA_body.save();
+        return res.status(200).json({ message: "Registro creado!", infoSA_almacenado });
 
     } catch (error) {
         console.log(error);
 
-        const mensaje_error = 'Ocurrió un error al registrar el info';
+        const mensaje_error = 'Ocurrió un error al registrar el infoSA';
         return res.status(500).json({ error: mensaje_error });
     }
 };
 
 // modifica los datos buscando por id
-const modificar_info = async (req, res) => {
-    const info_id = req.params.id;
-    const info = await Info_model.findById(info_id);
+const modificar_infoSA = async (req, res) => {
+    const infoSA_id = req.params.id;
+    const infoSA = await InfoSA_model.findById(infoSA_id);
 
-    if (!info) res.send("El info no se encuentra")
-    info.nombre = req.body.nombre;
-    info.ntelefono = req.body.ntelefono;
-    info.cuilt = req.body.cuilt;
-    info.especialidad = req.body.especialidad;
-    info.dni = req.body.dni;
+    if (!infoSA) res.send("El infoSA no se encuentra")
+    infoSA.nombre = req.body.nombre;
+    infoSA.ntelefono = req.body.ntelefono;
+    infoSA.cuilt = req.body.cuilt;
+    infoSA.especialidad = req.body.especialidad;
+    infoSA.dni = req.body.dni;
 
     try {
-        const info_almacenado = await info.save();
-        return res.status(200).json({ message: "Registro modificado", info_almacenado });
+        const infoSA_almacenado = await infoSA.save();
+        return res.status(200).json({ message: "Registro modificado", infoSA_almacenado });
     } catch (error) {
         console.log(error)
     }
 }
 
 // elimina por id
-const eliminar_info = async (req, res) => {
-    const info_id = req.params.id;
-    const info = await Info_model.findById(info_id)
+const eliminar_infoSA = async (req, res) => {
+    const infoSA_id = req.params.id;
+    const infoSA = await InfoSA_model.findById(infoSA_id)
 
-    if (info) { // si encuentra el info (id) -> lo elimina
-        info.deleteOne()
-        return res.status(200).send('info eliminado')
-    } else { // si no encuentra el info (id) -> envia mensaje de error
-        const mensaje = 'No se encontró el info solicitado';
+    if (infoSA) { // si encuentra el infoSA (id) -> lo elimina
+        infoSA.deleteOne()
+        return res.status(200).send('infoSA eliminado')
+    } else { // si no encuentra el infoSA (id) -> envia mensaje de error
+        const mensaje = 'No se encontró el infoSA solicitado';
         return res.status(404).send(mensaje);
     }
 
@@ -73,9 +73,9 @@ const eliminar_info = async (req, res) => {
 
 // exports
 export {
-    listar_info,
-    obtener_info,
-    registrar_info,
-    modificar_info,
-    eliminar_info
+    listar_infoSA,
+    obtener_infoSA,
+    registrar_infoSA,
+    modificar_infoSA,
+    eliminar_infoSA
 }

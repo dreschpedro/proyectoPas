@@ -42,6 +42,14 @@ CREATE TABLE usuario (
   confirmado BOOLEAN NOT NULL
 );
 
+-- Crear tabla servicio
+CREATE TABLE servicio (
+  id_servicio INTEGER PRIMARY KEY,
+  nombre_serv VARCHAR(100) NOT NULL,
+  descripcion TEXT,
+  id_institucion INTEGER REFERENCES institucion(id_institucion)
+);
+
 -- Crear tabla personal
 CREATE TABLE personal (
   id_personal INTEGER PRIMARY KEY,
@@ -54,14 +62,6 @@ CREATE TABLE personal (
   id_usuario INTEGER REFERENCES usuario(id_usuario)
 );
 
--- Crear tabla servicio
-CREATE TABLE servicio (
-  id_servicio INTEGER PRIMARY KEY,
-  nombre_serv VARCHAR(100) NOT NULL,
-  descripcion TEXT,
-  id_institucion INTEGER REFERENCES institucion(id_institucion)
-);
-
 -- Crear tabla usuario_externo
 CREATE TABLE usuario_externo (
   id_usuario_externo INTEGER PRIMARY KEY,
@@ -69,7 +69,7 @@ CREATE TABLE usuario_externo (
   nombre VARCHAR(100) NOT NULL,
   cuilt VARCHAR(20) NOT NULL,
   telefono VARCHAR(20) NOT NULL,
-  id_institucion INTEGER REFERENCES institucion(id_institucion),
+  id_operativo INTEGER REFERENCES operativo(id_operativo),
   id_info_socambient INTEGER REFERENCES info_socambient(id_info_socambient)
 );
 
