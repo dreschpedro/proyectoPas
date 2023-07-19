@@ -1,10 +1,7 @@
 "use client"
 import React from 'react';
+import { Table } from 'react-bootstrap';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-
-const handleImageUpload = (event) => {
-    // Lógica para manejar la carga de la imagen
-  };
 
 function RegistroUsuarios() {
   const roles = ['Data-Entry', 'Administrador', 'Consultor'];
@@ -16,14 +13,7 @@ function RegistroUsuarios() {
 
   return (
     <Form onSubmit={handleSubmit}>
-
       <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Crea una cuenta de P.A.S</h1>
-
-      <Form.Group controlId="formFile">
-        <Form.Label>Subir imagen de perfil</Form.Label>
-        <Form.Control type="file" onChange={handleImageUpload} />
-      </Form.Group>
-
       <Form.Group controlId="formUsername">
         <InputGroup className="mb-3 mt-5">
           <InputGroup.Text id="inputGroup-sizing-default">
