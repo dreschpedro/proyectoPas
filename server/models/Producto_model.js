@@ -1,29 +1,30 @@
-import mongoose from "mongoose";
-const productoSchema = mongoose.Schema({
-    nombre: {
-        type: String, required: true, trim: true
+import { DataTypes } from 'sequelize';
+import sequelize from './config/db.js';
+
+const Producto_model = sequelize.define('producto', {
+    id_producto: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    nombre_prod: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
     },
     precio: {
-        type: Number, required: true, trim: true
-    },
-    codBarra: {
-        type: String, required: true, trim: true
+        type: DataTypes.NUMERIC(10, 2),
+        allowNull: false,
     },
     entregado: {
-        type: Boolean,
-        default: true
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
     },
-    fechEntrega: {
-        type: String, required: true, trim: true
+    fecha_entrega: {
+        type: DataTypes.DATEONLY,
     },
-    activo: {
-        type: Boolean,
-        default: true
-    }
 },
     {
-        timestamps: true
-    }
-);
-const Producto_model = mongoose.model('Producto', productoSchema);
+        timestamps: true,
+    });
+
 export default Producto_model;

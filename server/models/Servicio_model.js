@@ -1,19 +1,27 @@
-import mongoose from "mongoose";
-const servicioSchema = mongoose.Schema({
-    nombre: {
-        type: String, required: true, trim: true
+import { DataTypes } from 'sequelize';
+import sequelize from './config/db.js';
+
+const Servicio_model = sequelize.define('servicio', {
+    id_servicio: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
     },
-    activo: {
-        type: Boolean,
-        default: true
-    }/*,
-    institucion: { //se debe vincular con la coleccion de "institucion" mediante el id
-        type: String, required: true, trim: true
-    },*/
+    nombre_serv: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        trim: true,
+    },
+    descripcion: {
+        type: DataTypes.TEXT,
+    },
 },
     {
-        timestamps: true
-    }
-);
-const Servicio_model = mongoose.model('Servicio', servicioSchema);
+        timestamps: true,
+    });
+
+// Relación con la tabla Institucion
+import Institucion_model from './Institucion_model.js';
+Servicio_model.belongsTo(Institucion_model, { foreignKey: 'id_institucion' });
+
 export default Servicio_model;

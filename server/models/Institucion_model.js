@@ -1,19 +1,23 @@
-import mongoose from "mongoose";
-const InstitucionSchema = mongoose.Schema({
+import { DataTypes } from 'sequelize';
+import sequelize from './config/db.js';
+
+const inst_model = sequelize.define('institucion', {
+    id_institucion: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     nombre: {
-        type: String, required: true, trim: true
+        type: DataTypes.STRING(100),
+        allowNull: false,
     },
     encargado: {
-        type: String, required: true, trim: true
+        type: DataTypes.STRING(100),
+        allowNull: false,
     },
-    activo: {
-        type: Boolean,
-        default: true
-    }
 },
     {
-        timestamps: true
-    }
-);
-const inst_model = mongoose.model('Institucion', InstitucionSchema);
+        timestamps: true,
+    });
+
 export default inst_model;

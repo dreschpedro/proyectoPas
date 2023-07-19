@@ -1,61 +1,60 @@
-import mongoose from "mongoose";
+import { DataTypes } from 'sequelize';
+import sequelize from './config/db.js';
 import bcrypt from 'bcrypt';
 
-
-const usuarioSchema = mongoose.Schema(
-    {
-        nombre: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        password: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        email: {
-            type: String,
-            required: true,
-            trim: true,
-            unique: true
-        },
-        token: {
-            type: String,
-        },
-        confirmado: {   // confirmar el email de confirmacion de usuario
-            type: Boolean,
-            default: false
-        },
-        rol: {
-            type: String, required: true, trim: true
-        },
-        activo: {
-            type: Boolean,
-            default: true
-        }
+const Usuario_model = sequelize.define('usuario', {
+    id_usuario: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
     },
+    nombre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        trim: true,
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        trim: true,
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        trim: true,
+        unique: true,
+    },
+    token: {
+        type: DataTypes.STRING,
+    },
+    confirmado: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
+    rol: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        trim: true,
+    },
+    activo: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+    },
+},
     {
-        timestamps: true  // crea dos columnas mas una de creado y otra de actualizado
+        timestamps: true,
     });
 
-usuarioSchema.pre('save', async function (next) { // uso function porque  si aplico arrows function en muchos casos this referencia a otros datos para la BD
-
-    if (!this.isModified('password')) {
-        next();
-    }
-
-    const salt = await bcrypt.genSalt(10) // metodo genSalt genera el hash - 10 son las rondas esa es la por defecto para que sea seguro el hash
+Usuario_model.beforeCreate(async (usuario) => {
+    const salt = await bcrypt.genSalt(10); // metodo genSalt genera el hash - 10 son las rondas esa es la por defecto para que sea seguro el hash
     // luego que se genera ese salt accede a todos los datos que se estan mandando para guardar en la BD
-    this.password = await bcrypt.hash(this.password, salt) // THIS HACE REFERENCIA AL OBJETO DEL USUARIO
+    usuario.password = await bcrypt.hash(usuario.password, salt); // THIS HACE REFERENCIA AL OBJETO DEL USUARIO
     // lo que hace la sentencia anterior es hashear el password, el metodo toma dos parametros 
     // this.password es el string sin hashear y el salt que es el valor que produjo la generacion del salt
-})
+});
 
-usuarioSchema.methods.comprobarPassword = async function (passwordForm) {
-    return await bcrypt.compare(passwordForm, this.password)
-}
-
-const Usuario_model = mongoose.model("Usuario", usuarioSchema);
+Usuario_model.prototype.comprobarPassword = async function (passwordForm) {
+    return await bcrypt.compare(passwordForm, this.password);
+};
 
 export default Usuario_model;
