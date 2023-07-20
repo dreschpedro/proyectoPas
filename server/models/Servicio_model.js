@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from './config/db.js';
+import sequelize from '../config/db.js';
 
 const Servicio_model = sequelize.define('servicio', {
     id_servicio: {

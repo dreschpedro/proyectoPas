@@ -10,39 +10,43 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 (async () => {
-    try {
-        await sequelize();
-        // await sequelize.sync({force: false});
-        console.log('Conexión exitosa a PostgreSQL!');
-        // Aquí puedes realizar más operaciones con la base de datos si lo deseas
-    } catch (error) {
-        console.log('Error al conectar a PostgreSQL:', error);
-    }
+  try {
+    await sequelize.authenticate();
+    console.log('Conexión exitosa a PostgreSQL!');
+  } catch (error) {
+    console.log('Error al conectar a PostgreSQL:', error);
+  }
 })();
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+  origin: 'http://localhost:5173',
 }));
 
 
 // enpoints
-import router_personal from './routes/personal.routes.js';
-import router_info from './routes/info.routes.js';
+import routerCliente from './routes/cliente.routes.js';
+import routerInfoSA from './routes/info.routes.js';
 import routerInstit from './routes/instituc.routes.js';
-import routerPerson from './routes/userExt.routes.js';
+import routerOper from './routes/opeartivo.routes.js';
+import routerPersonal from './routes/personal.routes.js';
+import routerProdEnt from './routes/Prod_entreg.routes.js';
 import routerProducto from './routes/producto.routes.js';
 import routerServicio from './routes/servicio.routes.js';
+import routerServReal from './routes/servReal.routes.js';
 import routerUsuario from './routes/usuario.routes.js';
 
 
 app.get('/', (req, res) => res.send(`Estas en Inicio`));
 
-app.use('/api/personal', router_personal)
-app.use('/api/info/', router_info)
+app.use('/api/cliente', routerCliente)
+app.use('/api/info/', routerInfoSA)
 app.use('/api/institucion/', routerInstit)
-app.use('/api/persona', routerPerson)
+app.use('/api/operativo/', routerOper)
+app.use('/api/personal', routerPersonal)
+app.use('/api/entregar', routerProdEnt)
 app.use('/api/producto', routerProducto)
 app.use('/api/servicio', routerServicio)
+app.use('/api/serv_real', routerServReal)
 app.use('/api/usuario', routerUsuario)
 
 app.listen(port, () => console.log(`Escuchando en el ${port}`))

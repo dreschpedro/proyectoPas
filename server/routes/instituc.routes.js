@@ -5,14 +5,15 @@ import {
     registrar_institucion,
     modificar_institucion,
     eliminar_institucion
-} from '../controllers/institucionControllers.js'
+} from '../controllers/institucionControllers.js';
 
 const router = express.Router();
 
-router.get('/', listar_institucion,);
-router.get('/:id', obtener_institucion,);
-router.post('/registrar', registrar_institucion,);
-router.put('/:id', modificar_institucion,);
-router.delete('/:id', eliminar_institucion)
+// Rutas para las instituciones
+router.get('/', listar_institucion);
+router.get('/:id', obtener_institucion);
+router.post('/registrar', registrar_institucion);
+router.put('/:id', modificar_institucion);
+router.delete('/:id', eliminar_institucion);
 
-export default router
+export default router;

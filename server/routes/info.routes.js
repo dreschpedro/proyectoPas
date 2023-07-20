@@ -5,14 +5,15 @@ import {
     registrar_infoSA,
     modificar_infoSA,
     eliminar_infoSA
-} from '../controllers/infoControllers.js'
+} from '../controllers/infoControllers.js';
 
 const router = express.Router();
 
-router.get('/', listar_infoSA,);
-router.get('/:id', obtener_infoSA,);
-router.post('/registrar', registrar_infoSA,);
-router.put('/:id', modificar_infoSA,);
-router.delete('/:id', eliminar_infoSA)
+// Rutas para la información socioambiental (infoSA)
+router.get('/', listar_infoSA);
+router.get('/:id', obtener_infoSA);
+router.post('/registrar', registrar_infoSA);
+router.put('/:id', modificar_infoSA);
+router.delete('/:id', eliminar_infoSA);
 
-export default router
+export default router;

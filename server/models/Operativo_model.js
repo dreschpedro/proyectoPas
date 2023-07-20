@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import sequelize from './config/db.js';
+import sequelize from '../config/db.js';
 
-const operativo_model = sequelize.define('operativo', {
+const Operativo_model = sequelize.define('operativo', {
   id_operativo: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -33,4 +33,4 @@ const operativo_model = sequelize.define('operativo', {
   });
 
 
-export default operativo_model;
+export default Operativo_model;

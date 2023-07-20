@@ -1,4 +1,4 @@
-import InfoSA_model from "../models/InfoSASocAmbient_model.js";
+import InfoSA_model from "../models/InfoSocAmbient_model.js";
 
 // FUNCIONALIDADES
 // consulta de todos los registros

@@ -1,10 +1,10 @@
 import { DataTypes } from 'sequelize';
-import sequelize from './config/db.js';
+import sequelize from '../config/db.js';
 import Operativo_model from './Operativo_model.js';
 import InfoSocAmbient_model from './InfoSocAmbient_model.js';
 
-const UsuarioExterno_model = sequelize.define('usuario_externo', {
-    id_usuario_externo: {
+const Cliente_model = sequelize.define('usuario_externo', {
+    id_cliente: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -31,9 +31,9 @@ const UsuarioExterno_model = sequelize.define('usuario_externo', {
     });
 
 // Relación con la tabla Operativo
-UsuarioExterno_model.belongsTo(Operativo_model, { foreignKey: 'id_operativo' });
+Cliente_model.belongsTo(Operativo_model, { foreignKey: 'id_operativo' });
 
 // Relación con la tabla InfoSocAmbient
-UsuarioExterno_model.belongsTo(InfoSocAmbient_model, { foreignKey: 'id_info_socambient' });
+Cliente_model.belongsTo(InfoSocAmbient_model, { foreignKey: 'id_info_socambient' });
 
-export default UsuarioExterno_model;
+export default Cliente_model;

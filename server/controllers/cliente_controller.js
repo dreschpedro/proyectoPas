@@ -1,11 +1,11 @@
-import UserExt_model from "../models/Uexterno_model.js";
+import Cliente_model from "../models/Cliente_model.js";
 
 // FUNCIONALIDADES
 // consulta de todos los registros
-const listar_userExt = async (req, res) => {
+const listar_cliente = async (req, res) => {
     try {
-        const userExt = await UserExt_model.findAll();
-        return res.status(200).json(userExt);
+        const cliente = await Cliente_model.findAll();
+        return res.status(200).json(cliente);
     } catch (error) {
         console.log(error);
         const mensaje_error = "Ocurrió un error al obtener los registros de usuario externo";
@@ -14,17 +14,17 @@ const listar_userExt = async (req, res) => {
 };
 
 // consulta por un registro (por id)
-const obtener_userExt = async (req, res) => {
-    const userExt_id = req.params.id;
+const obtener_cliente = async (req, res) => {
+    const cliente_id = req.params.id;
     try {
-        const userExt = await UserExt_model.findByPk(userExt_id);
+        const cliente = await Cliente_model.findByPk(cliente_id);
 
-        if (!userExt) {
+        if (!cliente) {
             const mensaje = "No se encontró el registro solicitado";
             return res.status(404).send(mensaje);
         }
 
-        return res.status(200).json(userExt);
+        return res.status(200).json(cliente);
     } catch (error) {
         console.log(error);
         const mensaje_error = "Ocurrió un error al obtener el registro de usuario externo";
@@ -32,12 +32,12 @@ const obtener_userExt = async (req, res) => {
     }
 };
 
-// registro de userExt
-const registrar_userExt = async (req, res) => {
+// registro de cliente
+const registrar_cliente = async (req, res) => {
     try {
-        const userExt_body = req.body;
-        const userExt_almacenado = await UserExt_model.create(userExt_body);
-        return res.status(200).json({ message: "Registro creado", userExt_almacenado });
+        const cliente_body = req.body;
+        const cliente_almacenado = await Cliente_model.create(cliente_body);
+        return res.status(200).json({ message: "Registro creado", cliente_almacenado });
     } catch (error) {
         console.log(error);
         const mensaje_error = "Ocurrió un error al registrar el usuario externo";
@@ -46,18 +46,18 @@ const registrar_userExt = async (req, res) => {
 };
 
 // modifica los datos buscando por id
-const modificar_userExt = async (req, res) => {
-    const userExt_id = req.params.id;
+const modificar_cliente = async (req, res) => {
+    const cliente_id = req.params.id;
     try {
-        const userExt = await UserExt_model.findByPk(userExt_id);
+        const cliente = await Cliente_model.findByPk(cliente_id);
 
-        if (!userExt) {
+        if (!cliente) {
             const mensaje = "No se encontró el registro solicitado";
             return res.status(404).send(mensaje);
         }
 
-        await userExt.update(req.body);
-        return res.status(200).json({ message: "Registro Modificado", userExt });
+        await cliente.update(req.body);
+        return res.status(200).json({ message: "Registro Modificado", cliente });
     } catch (error) {
         console.log(error);
         const mensaje_error = "Ocurrió un error al modificar el usuario externo";
@@ -66,17 +66,17 @@ const modificar_userExt = async (req, res) => {
 };
 
 // elimina por id
-const eliminar_userExt = async (req, res) => {
-    const userExt_id = req.params.id;
+const eliminar_cliente = async (req, res) => {
+    const cliente_id = req.params.id;
     try {
-        const userExt = await UserExt_model.findByPk(userExt_id);
+        const cliente = await Cliente_model.findByPk(cliente_id);
 
-        if (!userExt) {
+        if (!cliente) {
             const mensaje = "No se encontró el registro solicitado";
             return res.status(404).send(mensaje);
         }
 
-        await userExt.destroy();
+        await cliente.destroy();
         return res.status(200).send("Registro eliminado");
     } catch (error) {
         console.log(error);
@@ -87,9 +87,9 @@ const eliminar_userExt = async (req, res) => {
 
 // exports
 export {
-    listar_userExt,
-    obtener_userExt,
-    registrar_userExt,
-    modificar_userExt,
-    eliminar_userExt
+    listar_cliente,
+    obtener_cliente,
+    registrar_cliente,
+    modificar_cliente,
+    eliminar_cliente
 };

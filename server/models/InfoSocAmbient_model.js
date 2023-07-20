@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from './config/db.js';
+import sequelize from '../config/db.js';
 
 const InfoSA_model = sequelize.define('info_socambient', {
     id_info_socambient: {
