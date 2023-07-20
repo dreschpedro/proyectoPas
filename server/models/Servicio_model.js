@@ -7,7 +7,7 @@ const Servicio_model = sequelize.define('servicio', {
         primaryKey: true,
         autoIncrement: true,
     },
-    nombre_serv: {
+    nombre: {
         type: DataTypes.STRING,
         allowNull: false,
         trim: true,

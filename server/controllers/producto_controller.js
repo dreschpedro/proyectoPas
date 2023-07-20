@@ -1,36 +1,46 @@
-import Producto_model from "../models/Producto_model.js"
+import Producto_model from "../models/Producto_model.js";
 
 // FUNCIONALIDADES
 // consulta de todos los registros
 const listar_producto = async (req, res) => {
-    const producto = await Producto_model.find()
-    return res.status(200).json(producto)
-}
+    try {
+        const producto = await Producto_model.findAll();
+        return res.status(200).json(producto);
+    } catch (error) {
+        console.log(error);
+        const mensaje_error = "Ocurrió un error al obtener los registros de producto";
+        return res.status(500).json({ error: mensaje_error });
+    }
+};
 
 // consulta por un registro (por id)
 const obtener_producto = async (req, res) => {
-    const producto_id = req.params.id; //busca segun el id registrado en la BD
-    const producto = await Producto_model.findById(producto_id);
+    const producto_id = req.params.id;
+    try {
+        const producto = await Producto_model.findByPk(producto_id);
 
-    if (!producto) { // si no existe ese id, envia mensaje de error
-        const mensaje = 'No se encontró el registro solicitado';
-        return res.status(404).send(mensaje);
+        if (!producto) {
+            const mensaje = "No se encontró el registro solicitado";
+            return res.status(404).send(mensaje);
+        }
+
+        return res.status(200).json(producto);
+    } catch (error) {
+        console.log(error);
+        const mensaje_error = "Ocurrió un error al obtener el registro de producto";
+        return res.status(500).json({ error: mensaje_error });
     }
-    return res.status(200).json(producto); //muestra todos los registros
-}
+};
 
 // registro de producto
 const registrar_producto = async (req, res) => {
-
     try {
-        const producto_body = new Producto_model(req.body);
-        const producto_almacenado = await producto_body.save();
+        const producto_body = req.body;
+        const producto_almacenado = await Producto_model.create(producto_body);
         return res.status(200).json({ message: "Registro creado", producto_almacenado });
-
     } catch (error) {
         console.log(error);
-
-        const mensaje_error = 'Ocurrió un error al registrar la producto';
+        const mensaje_error = "Ocurrió un error al registrar el producto";
         return res.status(500).json({ error: mensaje_error });
     }
 };
@@ -38,38 +48,42 @@ const registrar_producto = async (req, res) => {
 // modifica los datos buscando por id
 const modificar_producto = async (req, res) => {
     const producto_id = req.params.id;
-    const producto = await Producto_model.findById(producto_id);
-
-    if (!producto) res.send("El Registro no se encuentra")
-    producto.nombre = req.body.nombre;
-    producto.precio = req.body.precio;
-    producto.codBarra = req.body.codBarra;
-    producto.estEntrega = req.body.estEntrega;
-    producto.fechEntrega = req.body.fechEntrega;
-
     try {
-        const producto_almacenado = await producto.save();
-        return res.status(200).json({ message: "Registro Modificado", producto_almacenado });
+        const producto = await Producto_model.findByPk(producto_id);
+
+        if (!producto) {
+            const mensaje = "No se encontró el registro solicitado";
+            return res.status(404).send(mensaje);
+        }
+
+        await producto.update(req.body);
+        return res.status(200).json({ message: "Registro Modificado", producto });
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        const mensaje_error = "Ocurrió un error al modificar el producto";
+        return res.status(500).json({ error: mensaje_error });
     }
-}
+};
 
 // elimina por id
 const eliminar_producto = async (req, res) => {
     const producto_id = req.params.id;
-    const producto = await Producto_model.findById(producto_id)
+    try {
+        const producto = await Producto_model.findByPk(producto_id);
 
-    if (producto) { // si encuentra el producto (id) -> lo elimina
-        producto.deleteOne()
-        return res.status(200).send('Registro eliminado')
-    } else { // si no encuentra el producto (id) -> envia mensaje de error
-        const mensaje = 'No se encontró el registro solicitado';
-        return res.status(404).send(mensaje);
+        if (!producto) {
+            const mensaje = "No se encontró el registro solicitado";
+            return res.status(404).send(mensaje);
+        }
+
+        await producto.destroy();
+        return res.status(200).send("Registro eliminado");
+    } catch (error) {
+        console.log(error);
+        const mensaje_error = "Ocurrió un error al eliminar el registro";
+        return res.status(500).json({ error: mensaje_error });
     }
-
-}
-
+};
 
 // exports
 export {
@@ -78,4 +92,4 @@ export {
     registrar_producto,
     modificar_producto,
     eliminar_producto
-}
+};
