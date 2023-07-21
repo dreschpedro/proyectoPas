@@ -1,17 +1,51 @@
 "use client"
-import React from 'react';
-import { Form, Button, InputGroup } from 'react-bootstrap';
 
-const handleImageUpload = (event) => {
-    // Lógica para manejar la carga de la imagen
-  };
+import React, { useState, useEffect } from 'react';
+import { Form, Button, InputGroup } from 'react-bootstrap';
+import axios from 'axios';
 
 function RegistroUsuarios() {
   const roles = ['Data-Entry', 'Administrador', 'Consultor'];
 
+  // State para almacenar las instituciones obtenidas del backend
+  const [instituciones, setInstituciones] = useState([]);
+  // State para almacenar la institución seleccionada
+  const [selectedInstitucion, setSelectedInstitucion] = useState('');
+
+
+  const instance = axios.create({
+    baseURL: 'http://localhost:3005/api/',
+    timeout: 1000,
+    headers: { 'X-Custom-Header': 'foobar' }
+  });
+
+  useEffect(() => {
+    // Lógica para obtener la lista de instituciones desde el backend utilizando la instancia de axios
+    instance.get('/institucion/') // La solicitud se enviará automáticamente a 'http://localhost:3005/api/institucion/'
+      .then((response) => {
+        console.log('Respuesta del backend:', response.data);
+        setInstituciones(response.data);
+      })
+      .catch((error) => console.error('Error al obtener las instituciones:', error));
+  }, []);
+
+
+  const handleImageUpload = (event) => {
+    // Lógica para manejar la carga de la imagen
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí puedes agregar la lógica para manejar el envío del formulario
+    // Aquí puedes agregar la lógica para manejar el envío del formulario y crear el usuario en el backend
+    const formData = new FormData(event.target);
+    formData.append('institucion', selectedInstitucion);
+    // Luego envías los datos del formulario al backend para registrar el usuario utilizando Axios
+    axios.post('/api/usuario/register', formData) // Ruta correcta para registrar el usuario en el backend
+      .then((response) => {
+        // Aquí puedes manejar la respuesta del backend si es necesario
+        console.log('Usuario registrado exitosamente:', response.data);
+      })
+      .catch((error) => console.error('Error al registrar el usuario:', error));
   };
 
   return (
@@ -64,17 +98,27 @@ function RegistroUsuarios() {
         </InputGroup>
       </Form.Group>
 
+      {/* Combobox para mostrar la lista de instituciones*/}
       <Form.Group controlId="formInstitucion">
         <InputGroup className="mb-3">
           <InputGroup.Text id="inputGroup-sizing-default">
-            Institución
+          Organización
           </InputGroup.Text>
           <Form.Control
-            aria-label="Institución"
-            aria-describedby="inputGroup-sizing-default"
-            placeholder=""
+            as="select"
+            value={selectedInstitucion}
+            onChange={(e) => setSelectedInstitucion(e.target.value)}
             required
-          />
+          >
+            <option value="" disabled>
+              Selecciona una Organización
+            </option>
+            {instituciones.map((institucion) => (
+              <option key={institucion.id_institucion} value={institucion.id_institucion}>
+                {institucion.nombre}
+              </option>
+            ))}
+          </Form.Control>
         </InputGroup>
       </Form.Group>
 
