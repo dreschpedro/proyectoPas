@@ -1,2 +1,0 @@
-pgadmin4-7.3-x64
-postgresql-15.3-3-windows-x64
