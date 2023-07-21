@@ -1,9 +1,13 @@
 "use client"
 import React, { useState } from 'react';
 import { Form, Button, InputGroup, Modal } from 'react-bootstrap';
+import Link from 'next/link';
 
 const RegistroServiciosRealizados = () => {
+  // State para el manejo de la ventana modal
   const [showModal, setShowModal] = useState(false);
+
+  // State y funciones para manejar los datos del servicio a registrar
   const [selectedService, setSelectedService] = useState('');
   const [serviceInfo, setServiceInfo] = useState({
     dni: '',
@@ -16,6 +20,7 @@ const RegistroServiciosRealizados = () => {
     institucion: '', // Combobox para la institución que realiza el servicio
   });
 
+  // Funciones para manejar el mostrar y cerrar la ventana modal
   const handleShowModal = () => {
     setShowModal(true);
   };
@@ -24,6 +29,7 @@ const RegistroServiciosRealizados = () => {
     setShowModal(false);
   };
 
+  // Función para manejar el envío del formulario
   const handleSubmit = (event) => {
     event.preventDefault();
     // Aquí puedes agregar la lógica para manejar el registro del servicio realizado
@@ -41,9 +47,25 @@ const RegistroServiciosRealizados = () => {
       <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Registrar Servicio Realizado</h1>
       <br />
 
-      <Form onSubmit={handleSubmit}>
 
-      <Form.Group controlId="formInstitucion">
+        {/* Botones de Administrar servicios e Historial */}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Link href="/servicios/crudServicios">
+          <Button variant="success" style={{ marginRight: '10px' }}>
+            Administrar Servicios
+          </Button>
+        </Link>
+        <Link href="/servicios/historial">
+          <Button variant="secondary">
+            Historial
+          </Button>
+        </Link>
+      </div>
+
+
+
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formInstitucion">
           <InputGroup className="mb-3">
             <InputGroup.Text id="inputGroup-sizing-default">
               Institución
@@ -61,7 +83,6 @@ const RegistroServiciosRealizados = () => {
             </Form.Control>
           </InputGroup>
         </Form.Group>
-
 
         <Form.Group controlId="formService">
           <InputGroup className="mb-3 mt-1">
@@ -186,7 +207,6 @@ const RegistroServiciosRealizados = () => {
           </InputGroup>
         </Form.Group>
 
-
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
           <Button variant="primary" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
             Registrar Servicio
@@ -200,10 +220,25 @@ const RegistroServiciosRealizados = () => {
           <Modal.Title>Agregar Servicios</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            {/* Agrega aquí los campos para agregar servicios */}
+          <Form>
+            <Form.Group controlId="formServiceName">
+              <Form.Label>Nombre del Servicio</Form.Label>
+              <Form.Control type="text" placeholder="Ingrese el nombre del servicio" />
+            </Form.Group>
+            <Form.Group controlId="formServiceDescription">
+              <Form.Label>Descripción del Servicio</Form.Label>
+              <Form.Control as="textarea" placeholder="Ingrese una descripción del servicio" rows={3} />
+            </Form.Group>
           </Form>
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            Agregar Servicio
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );
