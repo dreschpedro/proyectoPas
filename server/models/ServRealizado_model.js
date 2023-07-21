@@ -16,10 +16,6 @@ const ServRealizado_model = sequelize.define(
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    hora: {
-      type: DataTypes.TIME,
-      allowNull: false,
-    },
   },
   {
     timestamps: true,
@@ -36,6 +32,13 @@ ServRealizado_model.belongsTo(Cliente_model, {
 
 ServRealizado_model.belongsTo(Operativo_model, {
   foreignKey: 'id_operativo',
+});
+
+// Crear la tabla "serv_realizados" en la base de datos
+ServRealizado_model.sync({ force: false }).then(() => {
+  console.log('Tabla "serv_realizados" creada exitosamente.');
+}).catch((error) => {
+  console.log('Error al crear la tabla "serv_realizados":', error);
 });
 
 export default ServRealizado_model;
