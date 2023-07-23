@@ -10,20 +10,28 @@ const inst_model = sequelize.define('institucions', {
   nombre: {
     type: DataTypes.STRING(100),
     allowNull: false,
+    trim: true,
   },
-  encargado: {
-    type: DataTypes.STRING(100),
+  direccion: {
+    type: DataTypes.STRING(50),
     allowNull: false,
+    trim: true,
   },
   telefono: {
     type: DataTypes.STRING(20),
     allowNull: false,
+    trim: true,
   },
   email: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(30),
     allowNull: false,
     trim: true,
     unique: true,
+  },
+  descripcion: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    trim: true,
   },
   activo: {
     type: DataTypes.BOOLEAN,

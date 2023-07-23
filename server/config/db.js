@@ -1,16 +1,12 @@
 import Sequelize from 'sequelize';
 
-const sequelize = new Sequelize('proyecto_pas', 'postgres', 'admin', {
-  host: 'localhost',
-  dialect: 'postgres',
+import dotenv from 'dotenv';
+dotenv.config();
+
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
+  dialect: process.env.DB_DIALECT,
   logging: false, // Evita que aparezcan las consultas SQL en la consola
 });
-
-try {
-  await sequelize.authenticate();
-  console.log('Conexion exitosa.');
-} catch (error) {
-  console.error('No es posible conectarse a la DB:', error);
-}
 
 export default sequelize;

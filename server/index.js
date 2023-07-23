@@ -12,7 +12,7 @@ app.use(express.json());
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log('Conexión exitosa a PostgreSQL!');
+    console.log('Conexión exitosa');
   } catch (error) {
     console.log('Error al conectar a PostgreSQL:', error);
   }

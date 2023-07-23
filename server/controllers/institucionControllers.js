@@ -34,15 +34,22 @@ const obtener_institucion = async (req, res) => {
 
 // registro de institución
 const registrar_institucion = async (req, res) => {
-    try {
-        const institucion_body = req.body;
-        const institucion_almacenado = await inst_model.create(institucion_body);
-        return res.status(200).json({ message: "Institución creada", institucion_almacenado });
-    } catch (error) {
-        console.log(error);
-        const mensaje_error = "Ocurrió un error al registrar la institución";
-        return res.status(500).json({ error: mensaje_error });
+  try {
+    const { nombre, direccion, telefono, email } = req.body;
+
+    // Verificar que los campos obligatorios no estén vacíos
+    if (!nombre || !direccion || !telefono || !email) {
+      return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
+
+    const institucion_body = req.body;
+    const institucion_almacenado = await inst_model.create(institucion_body);
+    return res.status(200).json({ message: "Institución creada", institucion_almacenado });
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = "Ocurrió un error al registrar la institución";
+    return res.status(500).json({ error: mensaje_error });
+  }
 };
 
 // modifica los datos buscando por id
