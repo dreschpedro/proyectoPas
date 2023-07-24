@@ -2,7 +2,7 @@
   "name": "pas-front",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3005",
+  "proxy": "http://localhost:3005/api",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
