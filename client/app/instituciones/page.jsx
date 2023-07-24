@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { Table, Form, Button, InputGroup, Modal } from 'react-bootstrap';
+import { Table, Form, Button, InputGroup } from 'react-bootstrap';
 import Link from 'next/link';
 import axios from 'axios';
 
@@ -8,9 +8,6 @@ const ListaInstituciones = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const [listaInstituciones, setListaInstituciones] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedInstitucion, setSelectedInstitucion] = useState(null);
-  const [clave, setClave] = useState('');
 
   useEffect(() => {
     // Simulamos una llamada a la API para obtener la lista de instituciones
@@ -23,52 +20,22 @@ const ListaInstituciones = () => {
       });
   }, []);
 
-  const handleSearch = (event) => {
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
-
-    const filteredData = listaInstituciones.filter((institucion) => {
-      return (
-        institucion.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        institucion.direccion.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        institucion.contacto.includes(searchTerm) ||
-        institucion.email.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    });
-
-    setFilteredData(filteredData);
-  };
-
-  const handleShowModal = (institucion) => {
-    setSelectedInstitucion(institucion);
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedInstitucion(null);
-    setClave('');
-    setShowModal(false);
-  };
-
-  const handleDeleteInstitucion = () => {
-    // Validar la clave antes de eliminar la institución
-    if (clave === 'admin123') {
-      // Llamada a la API para eliminar la institución
-      axios.delete(`/api/instituciones/${selectedInstitucion.id}`)
-        .then(() => {
-          // Actualizamos la lista de instituciones localmente
-          const updatedData = listaInstituciones.filter((institucion) => institucion !== selectedInstitucion);
-          setListaInstituciones(updatedData);
-          handleCloseModal();
-        })
-        .catch((error) => {
-          console.error('Error al eliminar la institución:', error);
-          alert('Error al eliminar la institución. Por favor, inténtalo nuevamente.');
-        });
+  useEffect(() => {
+    // Filtrar los datos cuando el término de búsqueda cambie
+    if (searchTerm) {
+      const filteredData = listaInstituciones.filter((institucion) => {
+        return (
+          institucion.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          institucion.direccion.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          institucion.contacto.includes(searchTerm) ||
+          institucion.email.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      });
+      setFilteredData(filteredData);
     } else {
-      alert('Clave incorrecta. No se puede eliminar la institución.');
+      setFilteredData(null);
     }
-  };
+  }, [searchTerm, listaInstituciones]);
 
   // Datos de ejemplo para la lista de instituciones
   const datosEjemplo = [
@@ -129,12 +96,12 @@ const ListaInstituciones = () => {
         <Form.Group controlId="formSearch">
           <InputGroup>
             <InputGroup.Text id="inputGroup-sizing-default">
-              Filtro Asistido
+              Búsqueda Asistida
             </InputGroup.Text>
             <Form.Control
               type="text"
               value={searchTerm}
-              onChange={handleSearch}
+              onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Buscar por nombre, dirección, contacto o email"
             />
           </InputGroup>
@@ -156,7 +123,6 @@ const ListaInstituciones = () => {
             <th>Contacto</th>
             <th>Email</th>
             <th>Descripción</th>
-            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -182,78 +148,37 @@ const ListaInstituciones = () => {
                 <td>{institucion.contacto}</td>
                 <td>{institucion.email}</td>
                 <td>{institucion.descripcion}</td>
-                <td>
-                  <Link href={`/instituciones/institucionesEdit/${institucion.id}`}>
-                    <Button variant="primary">Modificar</Button>
-                  </Link>
-                  <Button variant="danger" style={{ marginLeft: '10px' }} onClick={() => handleShowModal(institucion)}>
-                    Eliminar
-                  </Button>
-                </td>
               </tr>
             ))
           ) : (
             datosEjemplo.map((institucion) => (
-              <tr key={institucion.id}>
-                <td>{institucion.id}</td>
-                <td>{institucion.nombre}</td>
-                <td>
-                  {institucion.imagen && (
-                    <img src={institucion.imagen} alt={institucion.nombre} style={{ maxWidth: '100px' }} />
-                  )}
-                </td>
-                <td>
-                  <a
-                    href={`https://www.google.com/maps/search/${encodeURIComponent(institucion.direccion)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {institucion.direccion}
-                  </a>
-                </td>
-                <td>{institucion.contacto}</td>
-                <td>{institucion.email}</td>
-                <td>{institucion.descripcion}</td>
-                <td>
-                  <Link href={`/instituciones/institucionesEdit/${institucion.id}`}>
-                    <Button variant="primary">Modificar</Button>
-                  </Link>
-                  <Button variant="danger" style={{ marginLeft: '10px' }} onClick={() => handleShowModal(institucion)}>
-                    Eliminar
-                  </Button>
-                </td>
-              </tr>
+              <Link key={institucion.id} href={`/instituciones/${institucion.id}`}>
+                <tr style={{ cursor: 'pointer' }}>
+                  <td>{institucion.id}</td>
+                  <td>{institucion.nombre}</td>
+                  <td>
+                    {institucion.imagen && (
+                      <img src={institucion.imagen} alt={institucion.nombre} style={{ maxWidth: '100px' }} />
+                    )}
+                  </td>
+                  <td>
+                    <a
+                      href={`https://www.google.com/maps/search/${encodeURIComponent(institucion.direccion)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {institucion.direccion}
+                    </a>
+                  </td>
+                  <td>{institucion.contacto}</td>
+                  <td>{institucion.email}</td>
+                  <td>{institucion.descripcion}</td>
+                </tr>
+              </Link>
             ))
           )}
         </tbody>
       </Table>
-
-      {/* Ventana Modal para Eliminar */}
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Eliminar Institución</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Ingrese la clave de administrador para eliminar la institución.</p>
-          <Form.Group controlId="formClave">
-            <Form.Control
-              type="password"
-              value={clave}
-              onChange={(e) => setClave(e.target.value)}
-              placeholder="Clave de administrador"
-              required
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Cancelar
-          </Button>
-          <Button variant="danger" onClick={handleDeleteInstitucion}>
-            Eliminar
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 };
