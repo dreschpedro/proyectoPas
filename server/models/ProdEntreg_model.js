@@ -27,7 +27,7 @@ ProdEntreg_model.belongsTo(Producto_model, {
 
 // Crear la tabla "Producto Entregado" en la base de datos
 ProdEntreg_model.sync({ force: false }).then(() => {
-  console.log('Tabla "Producto Entregado" creada exitosamente.');
+  // console.log('Tabla "Producto Entregado" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "Producto Entregado":', error);
 });

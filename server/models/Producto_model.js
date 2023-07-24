@@ -33,7 +33,7 @@ const Producto_model = sequelize.define('producto', {
 
     // Crear la tabla "Porducto" en la base de datos
 Producto_model.sync({ force: false }).then(() => {
-  console.log('Tabla "Porducto" creada exitosamente.');
+  // console.log('Tabla "Porducto" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "Producto":', error);
 });

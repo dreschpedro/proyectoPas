@@ -36,7 +36,7 @@ ServRealizado_model.belongsTo(Operativo_model, {
 
 // Crear la tabla "serv_realizados" en la base de datos
 ServRealizado_model.sync({ force: false }).then(() => {
-  console.log('Tabla "serv_realizados" creada exitosamente.');
+  // console.log('Tabla "serv_realizados" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "serv_realizados":', error);
 });

@@ -46,7 +46,7 @@ const inst_model = sequelize.define('institucions', {
 
 // Crear la tabla "institucions" en la base de datos
 inst_model.sync({ force: false }).then(() => {
-  console.log('Tabla "institucion" creada exitosamente.');
+  // console.log('Tabla "institucion" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "institucion":', error);
 });

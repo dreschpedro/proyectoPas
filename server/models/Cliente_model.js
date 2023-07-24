@@ -42,7 +42,7 @@ Cliente_model.belongsTo(InfoSocAmbient_model, { foreignKey: 'id_info_socambient'
 
 // Crear la tabla "Cliente" en la base de datos
 Cliente_model.sync().then(() => {
-  console.log('Tabla "Cliente" creada exitosamente.');
+  // console.log('Tabla "Cliente" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "Cliente":', error);
 });

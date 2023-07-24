@@ -30,7 +30,7 @@ Servicio_model.belongsTo(Institucion_model, { foreignKey: 'id_institucion' });
 
 // Crear la tabla "servicios" en la base de datos
 Servicio_model.sync({ force: false }).then(() => {
-  console.log('Tabla "servicios" creada exitosamente.');
+  // console.log('Tabla "servicios" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "servicios":', error);
 });

@@ -47,7 +47,7 @@ const Usuario_model = sequelize.define('usuario', {
 
 // Agregar el código para crear la tabla si aún no existe
 Usuario_model.sync().then(() => {
-  console.log('Tabla "usuarios" creada exitosamente.');
+  // console.log('Tabla "usuarios" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "usuarios":', error);
 });

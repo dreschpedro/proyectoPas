@@ -38,7 +38,7 @@ const Operativo_model = sequelize.define('operativo', {
 
 // Crear la tabla "Operativo" en la base de datos
 Operativo_model.sync({ force: false }).then(() => {
-  console.log('Tabla "Operavio" creada exitosamente.');
+  // console.log('Tabla "Operavio" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "Operavio":', error);
 });

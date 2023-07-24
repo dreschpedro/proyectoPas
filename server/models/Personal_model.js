@@ -47,7 +47,7 @@ Personal_model.belongsTo(Usuario_model, { foreignKey: 'id_usuario' });
 
 // Crear la tabla "Personal" en la base de datos
 Personal_model.sync({ force: false }).then(() => {
-  console.log('Tabla "Personal" creada exitosamente.');
+  // console.log('Tabla "Personal" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "Personal":', error);
 });

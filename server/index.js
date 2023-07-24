@@ -6,7 +6,7 @@ import sequelize from './config/db.js';
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3004;
+const port = process.env.PORT || 3008;
 app.use(express.json());
 
 (async () => {

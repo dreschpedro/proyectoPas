@@ -26,7 +26,7 @@ const InfoSA_model = sequelize.define('info_socambient', {
 
 // Crear la tabla "InfoSocAmb" en la base de datos
 InfoSA_model.sync({ force: true }).then(() => {
-  console.log('Tabla "InfoSocAmb" creada exitosamente.');
+  // console.log('Tabla "InfoSocAmb" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "InfoSocAmb":', error);
 });
