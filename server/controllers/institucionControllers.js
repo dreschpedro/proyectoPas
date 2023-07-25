@@ -50,7 +50,7 @@ const registrar_institucion = async (req, res) => {
     return res.status(200).json({ message: "Institución creada", institucion_almacenado });
   } catch (error) {
     console.log(error); // Agregar esta línea para mostrar los detalles del error en el servidor
-    const mensaje_error = "Ocurrió un error al registrar la institución";
+    const mensaje_error = "Back->Ocurrió un error al registrar la institución";
     return res.status(500).json({ error: mensaje_error });
   }
 };

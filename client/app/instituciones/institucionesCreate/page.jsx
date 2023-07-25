@@ -3,11 +3,9 @@ import React, { useState } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 
-const instance = axios.create({
-  baseURL: 'http://localhost:3005/api/',
-  timeout: 1000,
-  headers: { 'Accept': 'application/json' } // Agregar cualquier header necesario
-});
+// const instance = axios.create({
+//   baseURL: 'http://localhost:3005', // Cambia esto por la URL de tu servidor
+// });
 
 const handleImageUpload = (event) => {
   // Lógica para manejar la carga de la imagen
@@ -23,23 +21,25 @@ function RegistroInstituciones() {
   });
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-
+    console.log('Formdata:', JSON.stringify(formData));
     try {
+      event.preventDefault();
       const formDataToSend = new FormData();
+      // agrega todos los campos del FormData
       formDataToSend.append('nombre', formData.nombre);
       formDataToSend.append('direccion', formData.direccion);
       formDataToSend.append('telefono', formData.telefono);
       formDataToSend.append('email', formData.email);
       formDataToSend.append('descripcion', formData.descripcion);
 
-      const response = await instance.post('institucion/registrar', formDataToSend);
+      const response = await axios.post('/api/institucion/registrar', formDataToSend);
 
       console.log('Respuesta del backend:', response.data);
     } catch (error) {
-      console.error('Error al registrar la Organización:', error.message);
+      console.error('Front->Error al registrar la Organización:', error.message);
     }
   };
+
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
@@ -64,6 +64,7 @@ function RegistroInstituciones() {
             Nombre
           </InputGroup.Text>
           <Form.Control
+            type="text"
             name='nombre'
             aria-label="Nombre"
             aria-describedby="inputGroup-sizing-default"
@@ -80,6 +81,7 @@ function RegistroInstituciones() {
             Dirección
           </InputGroup.Text>
           <Form.Control
+            type="text"
             name='direccion'
             aria-label="Dirección"
             aria-describedby="inputGroup-sizing-default"
@@ -130,6 +132,7 @@ function RegistroInstituciones() {
             Descripción general de la Organización
           </InputGroup.Text>
           <Form.Control
+            type="text"
             as="textarea"
             name='descripcion'
             rows={5}
