@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
       <Navigation/>  
-      <Container className='contenedor'>
+      <Container className='contenedor pt-5'>
       {children}
       </Container>
       

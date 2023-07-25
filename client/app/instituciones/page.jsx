@@ -1,8 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Table, Form, Button, InputGroup } from 'react-bootstrap';
-import Link from 'next/link';
 import axios from 'axios';
+import Link from 'next/link';
 
 const ListaInstituciones = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -57,7 +57,6 @@ const ListaInstituciones = () => {
       email: 'institucion2@example.com',
       descripcion: 'Esta es la descripción de la Institución 2',
     },
-    // Agrega más datos de ejemplo aquí
     {
       id: 3,
       nombre: 'Institución 3',
@@ -86,6 +85,11 @@ const ListaInstituciones = () => {
       descripcion: 'Esta es la descripción de la Institución 5',
     },
   ];
+
+  const handleUserClick = (id) => {
+    // Redireccionar a la página de detalle del usuario con el ID correspondiente
+    window.location.href = `/instituciones/${id}`;
+  };
 
   return (
     <>
@@ -128,7 +132,7 @@ const ListaInstituciones = () => {
         <tbody>
           {filteredData ? (
             filteredData.map((institucion) => (
-              <tr key={institucion.id}>
+              <tr key={institucion.id} onClick={() => handleUserClick(institucion.id)} style={{ cursor: 'pointer' }}>
                 <td>{institucion.id}</td>
                 <td>{institucion.nombre}</td>
                 <td>
@@ -152,29 +156,27 @@ const ListaInstituciones = () => {
             ))
           ) : (
             datosEjemplo.map((institucion) => (
-              <Link key={institucion.id} href={`/instituciones/${institucion.id}`}>
-                <tr style={{ cursor: 'pointer' }}>
-                  <td>{institucion.id}</td>
-                  <td>{institucion.nombre}</td>
-                  <td>
-                    {institucion.imagen && (
-                      <img src={institucion.imagen} alt={institucion.nombre} style={{ maxWidth: '100px' }} />
-                    )}
-                  </td>
-                  <td>
-                    <a
-                      href={`https://www.google.com/maps/search/${encodeURIComponent(institucion.direccion)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {institucion.direccion}
-                    </a>
-                  </td>
-                  <td>{institucion.contacto}</td>
-                  <td>{institucion.email}</td>
-                  <td>{institucion.descripcion}</td>
-                </tr>
-              </Link>
+              <tr key={institucion.id} onClick={() => handleUserClick(institucion.id)} style={{ cursor: 'pointer' }}>
+                <td>{institucion.id}</td>
+                <td>{institucion.nombre}</td>
+                <td>
+                  {institucion.imagen && (
+                    <img src={institucion.imagen} alt={institucion.nombre} style={{ maxWidth: '100px' }} />
+                  )}
+                </td>
+                <td>
+                  <a
+                    href={`https://www.google.com/maps/search/${encodeURIComponent(institucion.direccion)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {institucion.direccion}
+                  </a>
+                </td>
+                <td>{institucion.contacto}</td>
+                <td>{institucion.email}</td>
+                <td>{institucion.descripcion}</td>
+              </tr>
             ))
           )}
         </tbody>

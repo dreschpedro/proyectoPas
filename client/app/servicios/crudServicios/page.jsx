@@ -96,9 +96,9 @@ const ServicesCrud = () => {
   };
 
   return (
-    <Container>
-      <h1>CRUD de Servicios</h1>
-      <Button onClick={() => handleShowModal()}>Agregar Servicio</Button>
+    <Container className='mt-3'>
+      <h1>Gestión de Servicios</h1>
+      <Button style={{ fontWeight: 'bold', margin: '15px' }} variant="success" size="lg" onClick={() => handleShowModal()}>Agregar Servicio</Button>
 
       <Table striped bordered hover>
         <thead>
@@ -115,9 +115,9 @@ const ServicesCrud = () => {
               <td>{service.id}</td>
               <td>{service.name}</td>
               <td>{service.description}</td>
-              <td>
-                <Button onClick={() => handleShowModal(service)}>Editar</Button>
-                <Button onClick={() => handleDelete(service.id)}>Eliminar</Button>
+              <td className="d-flex justify-content-center flex-column">
+                <Button style={{ fontWeight: 'bold', margin: '5px' }} variant="outline-warning"onClick={() => handleShowModal(service)}>Modificar</Button>
+                <Button style={{ fontWeight: 'bold', margin: '5px' }} variant="outline-danger" onClick={() => handleDelete(service.id)}>Eliminar</Button>
               </td>
             </tr>
           ))}
@@ -149,9 +149,11 @@ const ServicesCrud = () => {
               />
             </Form.Group>
             {/* Agrega aquí más campos para el formulario de servicio */}
-            <Button variant="primary" type="submit">
+            <div className="d-grid gap-2">
+            <Button variant="success" type="submit" size='lg' style={{ fontWeight: 'bold', marginTop: '15px' }}>
               Guardar
             </Button>
+            </div>
           </Form>
         </Modal.Body>
       </Modal>

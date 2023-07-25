@@ -1,13 +1,15 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
-import { Form, FormControl, Button, Pagination } from 'react-bootstrap';
+import { Table, Form, FormControl, Button, InputGroup, Pagination } from 'react-bootstrap';
 import axios from 'axios';
+import Link from 'next/link';
 
 function Usuarios() {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
   const [usersData, setUsersData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredUsersData, setFilteredUsersData] = useState(null);
 
   useEffect(() => {
     // Simulamos una llamada a la API para obtener los datos de los usuarios
@@ -22,9 +24,24 @@ function Usuarios() {
     setUsersData(ejemploUsuarios);
   }, []);
 
+  useEffect(() => {
+    // Filtrar los datos de usuarios en función del término de búsqueda
+    const filteredUsersData = usersData.filter((user) => {
+      return (
+        user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.username.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+
+    setFilteredUsersData(filteredUsersData);
+  }, [usersData, searchTerm]);
+
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = usersData.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = filteredUsersData
+    ? filteredUsersData.slice(indexOfFirstUser, indexOfLastUser)
+    : usersData.slice(indexOfFirstUser, indexOfLastUser);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -38,11 +55,20 @@ function Usuarios() {
       <h1 className='mt-3'>Usuarios👤</h1>
 
       <Form className="d-flex mb-3">
-        <FormControl type="text" placeholder="Buscar" className="mr-2" />
-        <Button variant="primary" className="mx-1">Buscar</Button>
-        <Button variant="success" className="ml-4">
-          Crear
+        <FormControl
+          type="text"
+          placeholder="Buscar"
+          className="mr-2"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+       <Link href="usuarios/usuarioCreate">
+        <Button variant="success" className="text-nowrap" style={{ marginLeft: '15px' }}>
+          Crear Usuario
         </Button>
+        </Link>
+
       </Form>
 
       <Table striped bordered hover>
@@ -76,11 +102,11 @@ function Usuarios() {
           <Pagination.Item active>{currentPage}</Pagination.Item>
           <Pagination.Next
             onClick={() => paginate(currentPage + 1)}
-            disabled={currentPage === Math.ceil(usersData.length / usersPerPage)}
+            disabled={currentPage === Math.ceil((filteredUsersData || usersData).length / usersPerPage)}
           />
           <Pagination.Last
             onClick={() =>
-              paginate(Math.ceil(usersData.length / usersPerPage))
+              paginate(Math.ceil((filteredUsersData || usersData).length / usersPerPage))
             }
           />
         </Pagination>

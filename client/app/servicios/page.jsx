@@ -44,19 +44,19 @@ const RegistroServiciosRealizados = () => {
 
   return (
     <>
-      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Registrar Servicio Realizado</h1>
+      <h1 style={{ marginTop: '20px' }}>Registrar Servicio Realizado</h1>
       <br />
 
 
         {/* Botones de Administrar servicios e Historial */}
         <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Link href="/servicios/crudServicios">
-          <Button variant="success" style={{ marginRight: '10px' }}>
+          <Button variant="info" style={{ margin: '10px' }}>
             Administrar Servicios
           </Button>
         </Link>
         <Link href="/servicios/historial">
-          <Button variant="secondary">
+          <Button variant="secondary" style={{ margin: '10px' }}>
             Historial
           </Button>
         </Link>
@@ -100,7 +100,7 @@ const RegistroServiciosRealizados = () => {
               <option value="Servicio 2">Servicio 2</option>
               {/* Agrega aquí más opciones de servicios */}
             </Form.Control>
-            <Button variant="primary" onClick={handleShowModal} style={{ marginLeft: '10px' }}>
+            <Button variant="success" onClick={handleShowModal} style={{ marginLeft: '10px' }}>
               Agregar Servicio
             </Button>
           </InputGroup>
@@ -208,7 +208,7 @@ const RegistroServiciosRealizados = () => {
         </Form.Group>
 
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-          <Button variant="primary" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
+          <Button variant="success" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
             Registrar Servicio
           </Button>
         </div>
@@ -235,7 +235,7 @@ const RegistroServiciosRealizados = () => {
           <Button variant="secondary" onClick={handleCloseModal}>
             Cerrar
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button variant="success" onClick={handleSubmit}>
             Agregar Servicio
           </Button>
         </Modal.Footer>

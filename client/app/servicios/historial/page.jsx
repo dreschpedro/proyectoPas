@@ -80,7 +80,7 @@ const HistorialServicios = () => {
       <Form.Group controlId="formSearch">
         <InputGroup className="mb-3">
           <InputGroup.Text id="inputGroup-sizing-default">
-            Búsqueda Asistida
+            Buscar
           </InputGroup.Text>
           <Form.Control
             type="text"

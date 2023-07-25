@@ -13,7 +13,7 @@ import { Button } from 'react-bootstrap';
 
 function Navigation() {
   return (
-    <Navbar expand="lg" bg="dark" data-bs-theme="dark">
+    <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="mb-3" fixed="top">
       <Container>
       <Link href={"/"}><Button variant="dark">P.A.S</Button></Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
