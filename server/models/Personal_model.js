@@ -35,6 +35,7 @@ const Personal_model = sequelize.define('personal', {
   }
 },
   {
+    tableName: 'personal',
     timestamps: true,
   });
 

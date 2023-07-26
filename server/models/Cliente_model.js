@@ -3,36 +3,37 @@ import sequelize from '../config/db.js';
 import Operativo_model from './Operativo_model.js';
 import InfoSocAmbient_model from './InfoSocAmbient_model.js';
 
-const Cliente_model = sequelize.define('usuario_externo', {
-    id_cliente: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    apellido: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-    },
-    nombre: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-    },
-    cuilt: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-    },
-    telefono: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-    },
-    activo: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
+const Cliente_model = sequelize.define('cliente', {
+  id_cliente: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  apellido: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+  nombre: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+  cuilt: {
+    type: DataTypes.STRING(20),
+    allowNull: false,
+  },
+  telefono: {
+    type: DataTypes.STRING(20),
+    allowNull: false,
+  },
+  activo: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
   }
 },
-    {
-        timestamps: true,
-    });
+  {
+    tableName: 'cliente',
+    timestamps: true,
+  });
 
 // Relación con la tabla Operativo
 Cliente_model.belongsTo(Operativo_model, { foreignKey: 'id_operativo' });

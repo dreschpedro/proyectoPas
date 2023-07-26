@@ -21,9 +21,10 @@ const Servicio_model = sequelize.define('servicio', {
     defaultValue: true,
   }
 },
-{
-  timestamps: true,
-});
+  {
+    tableName: 'servicio',
+    timestamps: true,
+  });
 
 // Relación con la tabla Institucion
 Servicio_model.belongsTo(Institucion_model, { foreignKey: 'id_institucion' });

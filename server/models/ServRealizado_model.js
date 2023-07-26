@@ -18,6 +18,7 @@ const ServRealizado_model = sequelize.define(
     },
   },
   {
+    tableName: 'serv_realizado',
     timestamps: true,
   }
 );

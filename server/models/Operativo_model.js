@@ -33,6 +33,7 @@ const Operativo_model = sequelize.define('operativo', {
   }
 },
   {
+    tableName: 'operativo',
     timestamps: true,
   });
 

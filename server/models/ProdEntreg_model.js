@@ -3,16 +3,15 @@ import sequelize from '../config/db.js';
 import ServRealizado_model from './ServRealizado_model.js';
 import Producto_model from './Producto_model.js';
 
-const ProdEntreg_model = sequelize.define(
-  'prod_entreg',
-  {
-    id_prod_entreg: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
+const ProdEntreg_model = sequelize.define('prod_entreg', {
+  id_prod_entreg: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
   },
+},
   {
+    tableName: 'prod_entreg',
     timestamps: true,
   }
 );

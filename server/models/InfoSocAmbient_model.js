@@ -21,6 +21,7 @@ const InfoSA_model = sequelize.define('info_socambient', {
   },
 },
   {
+    tableName: 'info_socambient',
     timestamps: true,
   });
 

@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
 
-const inst_model = sequelize.define('institucions', {
+const inst_model = sequelize.define('institucion', {
   id_institucion: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -40,7 +40,7 @@ const inst_model = sequelize.define('institucions', {
 
 },
   {
-    tableName: 'institucions',
+    tableName: 'institucion',
     timestamps: true,
   });
 
