@@ -1,13 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import axios from 'axios';
-
-const instance = axios.create({
-  baseURL: 'http://localhost:3005/api/',
-  timeout: 1000,
-  headers: { 'Accept': 'application/json' } // Agregar cualquier header necesario
-});
+import instance from '@/app/axiosConfig';
 
 const PerfilUsuarios = () => {
   const [userData, setUserData] = useState({});

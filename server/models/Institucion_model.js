@@ -23,13 +23,13 @@ const inst_model = sequelize.define('institucions', {
     trim: true,
   },
   email: {
-    type: DataTypes.STRING(30),
+    type: DataTypes.STRING(100),
     allowNull: false,
     trim: true,
     unique: true,
   },
   descripcion: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(500),
     allowNull: false,
     trim: true,
   },

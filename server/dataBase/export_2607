@@ -1,0 +1,552 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.2
+-- Dumped by pg_dump version 15.2
+
+-- Started on 2023-07-26 11:56:31
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 233 (class 1259 OID 26924)
+-- Name: info_socambients; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.info_socambients (
+    id_info_socambient integer NOT NULL,
+    "nivel_escAct" character varying(50) NOT NULL,
+    "grado_escAct" character varying(50) NOT NULL,
+    integrantes_casa integer NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.info_socambients OWNER TO postgres;
+
+--
+-- TOC entry 232 (class 1259 OID 26923)
+-- Name: info_socambients_id_info_socambient_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.info_socambients_id_info_socambient_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.info_socambients_id_info_socambient_seq OWNER TO postgres;
+
+--
+-- TOC entry 3436 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: info_socambients_id_info_socambient_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.info_socambients_id_info_socambient_seq OWNED BY public.info_socambients.id_info_socambient;
+
+
+--
+-- TOC entry 215 (class 1259 OID 26456)
+-- Name: institucions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.institucions (
+    id_institucion integer NOT NULL,
+    nombre character varying(100) NOT NULL,
+    direccion character varying(50) NOT NULL,
+    telefono character varying(20) NOT NULL,
+    email character varying(100) NOT NULL,
+    descripcion character varying(500) NOT NULL,
+    activo boolean DEFAULT true,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.institucions OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 26452)
+-- Name: institucions_id_institucion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.institucions_id_institucion_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.institucions_id_institucion_seq OWNER TO postgres;
+
+--
+-- TOC entry 3437 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: institucions_id_institucion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.institucions_id_institucion_seq OWNED BY public.institucions.id_institucion;
+
+
+--
+-- TOC entry 219 (class 1259 OID 26520)
+-- Name: operativos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.operativos (
+    id_operativo integer NOT NULL,
+    calle character varying(100) NOT NULL,
+    altura_calle character varying(20) NOT NULL,
+    barrio character varying(100) NOT NULL,
+    fecha_operativo date NOT NULL,
+    hora_operativo time without time zone NOT NULL,
+    activo boolean DEFAULT true,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.operativos OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 26512)
+-- Name: operativos_id_operativo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.operativos_id_operativo_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.operativos_id_operativo_seq OWNER TO postgres;
+
+--
+-- TOC entry 3438 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: operativos_id_operativo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.operativos_id_operativo_seq OWNED BY public.operativos.id_operativo;
+
+
+--
+-- TOC entry 225 (class 1259 OID 26575)
+-- Name: personals; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.personals (
+    id_personal integer NOT NULL,
+    apellido character varying(100) NOT NULL,
+    nombre character varying(100) NOT NULL,
+    cuilt character varying(20) NOT NULL,
+    profesion character varying(100) NOT NULL,
+    telefono character varying(20) NOT NULL,
+    activo boolean DEFAULT true,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    id_institucion integer,
+    id_usuario integer
+);
+
+
+ALTER TABLE public.personals OWNER TO postgres;
+
+--
+-- TOC entry 224 (class 1259 OID 26569)
+-- Name: personals_id_personal_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.personals_id_personal_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.personals_id_personal_seq OWNER TO postgres;
+
+--
+-- TOC entry 3439 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: personals_id_personal_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.personals_id_personal_seq OWNED BY public.personals.id_personal;
+
+
+--
+-- TOC entry 231 (class 1259 OID 26850)
+-- Name: prod_entregs; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.prod_entregs (
+    id_prod_entreg integer NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    id_serv_realizado integer,
+    id_producto integer
+);
+
+
+ALTER TABLE public.prod_entregs OWNER TO postgres;
+
+--
+-- TOC entry 230 (class 1259 OID 26849)
+-- Name: prod_entregs_id_prod_entreg_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.prod_entregs_id_prod_entreg_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.prod_entregs_id_prod_entreg_seq OWNER TO postgres;
+
+--
+-- TOC entry 3440 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: prod_entregs_id_prod_entreg_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.prod_entregs_id_prod_entreg_seq OWNED BY public.prod_entregs.id_prod_entreg;
+
+
+--
+-- TOC entry 217 (class 1259 OID 26483)
+-- Name: productos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.productos (
+    id_producto integer NOT NULL,
+    nombre character varying(100) NOT NULL,
+    precio numeric(10,2) NOT NULL,
+    entregado boolean NOT NULL,
+    fecha_entrega date,
+    activo boolean DEFAULT true,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.productos OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 26482)
+-- Name: productos_id_producto_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.productos_id_producto_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.productos_id_producto_seq OWNER TO postgres;
+
+--
+-- TOC entry 3441 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: productos_id_producto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.productos_id_producto_seq OWNED BY public.productos.id_producto;
+
+
+--
+-- TOC entry 229 (class 1259 OID 26822)
+-- Name: serv_realizados; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.serv_realizados (
+    id_serv_realizado integer NOT NULL,
+    fecha date NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    id_servicio integer,
+    id_cliente integer,
+    id_operativo integer
+);
+
+
+ALTER TABLE public.serv_realizados OWNER TO postgres;
+
+--
+-- TOC entry 228 (class 1259 OID 26815)
+-- Name: serv_realizados_id_serv_realizado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.serv_realizados_id_serv_realizado_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.serv_realizados_id_serv_realizado_seq OWNER TO postgres;
+
+--
+-- TOC entry 3442 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: serv_realizados_id_serv_realizado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.serv_realizados_id_serv_realizado_seq OWNED BY public.serv_realizados.id_serv_realizado;
+
+
+--
+-- TOC entry 223 (class 1259 OID 26548)
+-- Name: servicios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.servicios (
+    id_servicio integer NOT NULL,
+    nombre character varying(255) NOT NULL,
+    descripcion text,
+    activo boolean DEFAULT true,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    id_institucion integer
+);
+
+
+ALTER TABLE public.servicios OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 26545)
+-- Name: servicios_id_servicio_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.servicios_id_servicio_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.servicios_id_servicio_seq OWNER TO postgres;
+
+--
+-- TOC entry 3443 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: servicios_id_servicio_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.servicios_id_servicio_seq OWNED BY public.servicios.id_servicio;
+
+
+--
+-- TOC entry 227 (class 1259 OID 26773)
+-- Name: usuario_externos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuario_externos (
+    id_cliente integer NOT NULL,
+    apellido character varying(100) NOT NULL,
+    nombre character varying(100) NOT NULL,
+    cuilt character varying(20) NOT NULL,
+    telefono character varying(20) NOT NULL,
+    activo boolean DEFAULT true,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    id_operativo integer,
+    id_info_socambient integer
+);
+
+
+ALTER TABLE public.usuario_externos OWNER TO postgres;
+
+--
+-- TOC entry 226 (class 1259 OID 26769)
+-- Name: usuario_externos_id_cliente_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.usuario_externos_id_cliente_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usuario_externos_id_cliente_seq OWNER TO postgres;
+
+--
+-- TOC entry 3444 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: usuario_externos_id_cliente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.usuario_externos_id_cliente_seq OWNED BY public.usuario_externos.id_cliente;
+
+
+--
+-- TOC entry 221 (class 1259 OID 26524)
+-- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuarios (
+    id_usuario integer NOT NULL,
+    nombre character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    token character varying(255),
+    confirmado boolean DEFAULT false,
+    rol character varying(255) NOT NULL,
+    activo boolean DEFAULT true,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.usuarios OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 26521)
+-- Name: usuarios_id_usuario_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.usuarios_id_usuario_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usuarios_id_usuario_seq OWNER TO postgres;
+
+--
+-- TOC entry 3445 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: usuarios_id_usuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.usuarios_id_usuario_seq OWNED BY public.usuarios.id_usuario;
+
+
+--
+-- TOC entry 3235 (class 2604 OID 26927)
+-- Name: info_socambients id_info_socambient; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.info_socambients ALTER COLUMN id_info_socambient SET DEFAULT nextval('public.info_socambients_id_info_socambient_seq'::regclass);
+
+
+--
+-- TOC entry 3218 (class 2604 OID 26465)
+-- Name: institucions id_institucion; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.institucions ALTER COLUMN id_institucion SET DEFAULT nextval('public.institucions_id_institucion_seq'::regclass);
+
+
+--
+-- TOC entry 3222 (class 2604 OID 26525)
+-- Name: operativos id_operativo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.operativos ALTER COLUMN id_operativo SET DEFAULT nextval('public.operativos_id_operativo_seq'::regclass);
+
+
+--
+-- TOC entry 3229 (class 2604 OID 26579)
+-- Name: personals id_personal; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.personals ALTER COLUMN id_personal SET DEFAULT nextval('public.personals_id_personal_seq'::regclass);
+
+
+--
+-- TOC entry 3234 (class 2604 OID 26853)
+-- Name: prod_entregs id_prod_entreg; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.prod_entregs ALTER COLUMN id_prod_entreg SET DEFAULT nextval('public.prod_entregs_id_prod_entreg_seq'::regclass);
+
+
+--
+-- TOC entry 3220 (class 2604 OID 26488)
+-- Name: productos id_producto; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productos ALTER COLUMN id_producto SET DEFAULT nextval('public.productos_id_producto_seq'::regclass);
+
+
+--
+-- TOC entry 3233 (class 2604 OID 26827)
+-- Name: serv_realizados id_serv_realizado; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.serv_realizados ALTER COLUMN id_serv_realizado SET DEFAULT nextval('public.serv_realizados_id_serv_realizado_seq'::regclass);
+
+
+--
+-- TOC entry 3227 (class 2604 OID 26551)
+-- Name: servicios id_servicio; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.servicios ALTER COLUMN id_servicio SET DEFAULT nextval('public.servicios_id_servicio_seq'::regclass);
+
+
+--
+-- TOC entry 3231 (class 2604 OID 26783)
+-- Name: usuario_externos id_cliente; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario_externos ALTER COLUMN id_cliente SET DEFAULT nextval('public.usuario_externos_id_cliente_seq'::regclass);
+
+
+--
+-- TOC entry 3224 (class 2604 OID 26530)
+-- Name: usuarios id_usuario; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios ALTER COLUMN id_usuario SET DEFAULT nextval('public.usuarios_id_usuario_seq'::regclass);
+
+
+-- Completed on 2023-07-26 11:56:32
+
+--
+-- PostgreSQL database dump complete
+--
+

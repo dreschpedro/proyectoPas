@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import axios from 'axios';
+import instance from '@/app/axiosConfig';
 
 function RegistroUsuarios() {
   const roles = ['Data-Entry', 'Administrador', 'Consultor'];
@@ -11,13 +11,6 @@ function RegistroUsuarios() {
   const [instituciones, setInstituciones] = useState([]);
   // State para almacenar la institución seleccionada
   const [selectedInstitucion, setSelectedInstitucion] = useState('');
-
-
-  const instance = axios.create({
-    baseURL: 'http://localhost:3005/api/',
-    timeout: 1000,
-    headers: { 'X-Custom-Header': 'foobar' }
-  });
 
   useEffect(() => {
     // Lógica para obtener la lista de instituciones desde el backend utilizando la instancia de axios

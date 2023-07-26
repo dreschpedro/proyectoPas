@@ -1,10 +1,12 @@
-import Personal_model from "../models/Personal_model.js"
+import Personal_model from "../models/Personal_model.js";
+import Usuario_model from "../models/Usuario_model.js";
 
-// FUNCIONALIDADES
 // consulta de todos los registros
 const listar_personal = async (req, res) => {
   try {
-    const personal = await Personal_model.findAll();
+    const personal = await Personal_model.findAll({
+      include: [{ model: Usuario_model, attributes: ["nombre"] }],
+    });
     return res.status(200).json(personal);
   } catch (error) {
     console.log(error);
