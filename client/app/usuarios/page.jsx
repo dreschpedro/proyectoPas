@@ -18,6 +18,8 @@ function Usuarios() {
       { id: 1, firstName: 'Mark', lastName: 'Otto', username: '@mdo' },
       { id: 2, firstName: 'Jacob', lastName: 'Thornton', username: '@fat' },
       { id: 3, firstName: 'Larry', lastName: 'the Bird', username: '@twitter' },
+      { id: 3, firstName: 'Larry', lastName: 'the Bird', username: '@twitter' },
+      { id: 3, firstName: 'Larry', lastName: 'the Bird', username: '@twitter' }
       // Agrega más usuarios de ejemplo aquí
     ];
 
@@ -92,7 +94,7 @@ function Usuarios() {
         </tbody>
       </Table>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+      {/* <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
         <Pagination>
           <Pagination.First onClick={() => paginate(1)} />
           <Pagination.Prev
@@ -110,7 +112,7 @@ function Usuarios() {
             }
           />
         </Pagination>
-      </div>
+      </div> */}
     </div>
   );
 }
