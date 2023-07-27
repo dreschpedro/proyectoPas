@@ -1,0 +1,78 @@
+#instituciones
+{
+  "nombre": "Sanatorio Caminos",
+  "direccion": "Av San Martin 3213",
+  "telefono": "123456789",
+  "email": "caminos@sanatorio.com.ar",
+  "descripcion": "csdcsdc",
+  "imagen": ""
+}
+{
+  "nombre": "Universidad Nacional",
+  "direccion": "Avenida Universidad 123",
+  "telefono": "555-123-4567",
+  "email": "contacto@universidadnacional.edu",
+  "descripcion": "jkjkjkjkc",
+  "imagen": ""
+}
+{
+  "nombre": "Organización sin fines de lucro",
+  "direccion": "Plaza de la Solidaridad 789",
+  "telefono": "555-555-5555",
+  "email": "contacto@organizacion.org",
+  "descripcion": "jkjkjkjkc",
+  "imagen": ""
+}
+
+
+
+#usuario
+{
+  "nombre": "Usuario 1",
+  "password": "password1",
+  "email": "usuario1@example.com",
+  "rol": "rol1"
+}
+
+{
+  "nombre": "Usuario 2",
+  "password": "password2",
+  "email": "usuario2@example.com",
+  "rol": "rol2"
+}
+
+{
+  "nombre": "Usuario 3",
+  "password": "password3",
+  "email": "usuario3@example.com",
+  "rol": "rol3"
+}
+
+
+#personal
+{
+  "id_usuario": 1,
+  "apellido": "Apellido 1",
+  "nombre": "Nombre 1",
+  "cuilt": "111111111",
+  "profesion": "Profesion 1",
+  "telefono": "1111111111"
+}
+
+{
+  "id_usuario": 2,
+  "apellido": "Apellido 2",
+  "nombre": "Nombre 2",
+  "cuilt": "222222222",
+  "profesion": "Profesion 2",
+  "telefono": "2222222222"
+}
+
+{
+  "id_usuario": 3,
+  "apellido": "Apellido 3",
+  "nombre": "Nombre 3",
+  "cuilt": "333333333",
+  "profesion": "Profesion 3",
+  "telefono": "3333333333"
+}

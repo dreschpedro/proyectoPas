@@ -33,20 +33,22 @@ const inst_model = sequelize.define('institucion', {
     allowNull: false,
     trim: true,
   },
+  imagen: { // Nuevo campo para almacenar la URL o ruta de la imagen
+    type: DataTypes.STRING(200), // Ajusta la longitud según tus necesidades
+    allowNull: true, // Permitimos que el campo esté vacío
+  },
   activo: {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
   }
-
 },
-  {
-    tableName: 'institucion',
-    timestamps: true,
-  });
+{
+  tableName: 'institucion',
+  timestamps: true,
+});
 
-// Crear la tabla "institucions" en la base de datos
 inst_model.sync({ force: false }).then(() => {
-  // console.log('Tabla "institucion" creada exitosamente.');
+  console.log('Tabla "institucion" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "institucion":', error);
 });

@@ -33,7 +33,7 @@ function RegistroUsuarios() {
     const formData = new FormData(event.target);
     formData.append('institucion', selectedInstitucion);
     // Luego envías los datos del formulario al backend para registrar el usuario utilizando Axios
-    axios.post('/api/usuario/register', formData) // Ruta correcta para registrar el usuario en el backend
+    axios.post('/api/usuario/registrar', formData) // Ruta correcta para registrar el usuario en el backend
       .then((response) => {
         // Aquí puedes manejar la respuesta del backend si es necesario
         console.log('Usuario registrado exitosamente:', response.data);

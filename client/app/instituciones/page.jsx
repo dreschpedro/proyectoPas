@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Table, Form, Button, InputGroup } from 'react-bootstrap';
-import instance from '../axiosConfig';
 import Link from 'next/link';
 
 const ListaInstituciones = () => {
@@ -10,22 +9,28 @@ const ListaInstituciones = () => {
   const [listaInstituciones, setListaInstituciones] = useState([]);
 
   useEffect(() => {
-    // Obtener la lista de instituciones desde el backend
-    instance.get('/institucion')
-      .then((response) => {
-        console.log('Datos de la API:', response.data); // Verificar los datos obtenidos
-        setListaInstituciones(response.data);
-      })
-      .catch((error) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3005/api/institucion');
+        if (!response.ok) {
+          throw new Error('Error al obtener la lista de instituciones');
+        }
+        const data = await response.json();
+        console.log('Datos de la API:', data); // Verificar los datos obtenidos
+        setListaInstituciones(data);
+      } catch (error) {
         console.error('Error al obtener la lista de instituciones:', error);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   // Agregar el console.log justo aquí
   console.log('listaInstituciones:', listaInstituciones);
 
+  // Filtrar los datos cuando el término de búsqueda cambie
   useEffect(() => {
-    // Filtrar los datos cuando el término de búsqueda cambie
     if (searchTerm) {
       const filteredData = listaInstituciones.filter((institucion) => {
         return (
@@ -87,8 +92,8 @@ const ListaInstituciones = () => {
         <tbody>
           {filteredData ? (
             filteredData.map((institucion) => (
-              <tr key={institucion.id} onClick={() => handleUserClick(institucion.id)} style={{ cursor: 'pointer' }}>
-                <td>{institucion.id}</td>
+              <tr key={institucion.id_institucion} onClick={() => handleUserClick(institucion.id_institucion)} style={{ cursor: 'pointer' }}>
+                <td>{institucion.id_institucion}</td>
                 <td>{institucion.nombre}</td>
                 <td>
                   {/* La imagen se muestra si institucion.imagen contiene la URL de la imagen */}
@@ -112,6 +117,7 @@ const ListaInstituciones = () => {
             ))
           ) : null}
         </tbody>
+
       </Table>
     </>
   );

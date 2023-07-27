@@ -1,1 +1,0 @@
-ejecutar el archivo ".exe" para descomprimir el instalador

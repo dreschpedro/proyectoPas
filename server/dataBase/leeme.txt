@@ -1,0 +1,14 @@
+ejecutar el archivo ".exe" de las carpetas /postgres y /pgadmin para descomprimir el instalador
+
+/postgres -> las imagenes tienen los programas a instalar
+
+
+########
+pgAdmin sesion
+$ usuario: postgres
+$ clave: root
+
+
+########
+db sesion
+$ clave: admin
