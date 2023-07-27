@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from 'react';
 import { Table, Form, Button, InputGroup } from 'react-bootstrap';
 import Link from 'next/link';
+import instance from '../axiosConfig';
 
 const ListaInstituciones = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,13 +12,9 @@ const ListaInstituciones = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3005/api/institucion');
-        if (!response.ok) {
-          throw new Error('Error al obtener la lista de instituciones');
-        }
-        const data = await response.json();
-        console.log('Datos de la API:', data); // Verificar los datos obtenidos
-        setListaInstituciones(data);
+        const response = await instance.get('/institucion');
+        console.log('Datos de la API:', response.data); // Verificar los datos obtenidos
+        setListaInstituciones(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de instituciones:', error);
       }
@@ -36,13 +33,14 @@ const ListaInstituciones = () => {
         return (
           institucion.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
           institucion.direccion.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          institucion.contacto.includes(searchTerm) ||
+          institucion.telefono.includes(searchTerm) ||
           institucion.email.toLowerCase().includes(searchTerm.toLowerCase())
         );
       });
       setFilteredData(filteredData);
     } else {
-      setFilteredData(null);
+      // Si no hay término de búsqueda, mostrar todos los datos
+      setFilteredData(listaInstituciones);
     }
   }, [searchTerm, listaInstituciones]);
 
@@ -66,7 +64,7 @@ const ListaInstituciones = () => {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Buscar por nombre, dirección, contacto o email"
+              placeholder="Buscar por nombre, dirección, telefono o email"
             />
           </InputGroup>
         </Form.Group>
@@ -84,7 +82,7 @@ const ListaInstituciones = () => {
             <th>Nombre</th>
             <th>Imagen</th>
             <th>Dirección</th>
-            <th>Contacto</th>
+            <th>telefono</th>
             <th>Email</th>
             <th>Descripción</th>
           </tr>
@@ -110,7 +108,7 @@ const ListaInstituciones = () => {
                     {institucion.direccion}
                   </a>
                 </td>
-                <td>{institucion.contacto}</td>
+                <td>{institucion.telefono}</td>
                 <td>{institucion.email}</td>
                 <td>{institucion.descripcion}</td>
               </tr>
