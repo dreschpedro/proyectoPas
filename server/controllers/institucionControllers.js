@@ -24,10 +24,10 @@ const obtener_institucion = async (req, res) => {
       return res.status(404).send(mensaje);
     }
 
-    return res.status(200).json({ message: 'Institución creada', institucion_almacenado });
+    return res.status(200).json(institucion); // Devuelve el objeto "institucion" sin cambios
   } catch (error) {
-    console.error('Error al registrar la institución:', error); // Agrega esta línea para mostrar los detalles del error en el servidor
-    const mensaje_error = 'Ocurrió un error al registrar la institución';
+    console.error('Error al obtener la institución:', error);
+    const mensaje_error = 'Ocurrió un error al obtener la institución';
     return res.status(500).json({ error: mensaje_error });
   }
 };
@@ -35,7 +35,7 @@ const obtener_institucion = async (req, res) => {
 // registro de institución
 const registrar_institucion = async (req, res) => {
   try {
-    const { nombre, direccion, telefono, email, descripcion } = req.body;
+    console.log('Recibiendo solicitud para registrar institución:', req.body);
 
     // Verificar que los campos obligatorios no estén vacíos
     if (!nombre || !direccion || !telefono || !email || !descripcion) {

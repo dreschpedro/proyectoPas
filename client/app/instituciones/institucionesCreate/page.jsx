@@ -1,15 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import axios from 'axios';
-
-// const instance = axios.create({
-//   baseURL: 'http://localhost:3005', // Cambia esto por la URL de tu servidor
-// });
-
-const handleImageUpload = (event) => {
-  // Lógica para manejar la carga de la imagen
-};
+import instance from '@/app/axiosConfig'; // Importa tu instancia personalizada de Axios
 
 function RegistroInstituciones() {
   const [formData, setFormData] = useState({
@@ -17,26 +9,39 @@ function RegistroInstituciones() {
     direccion: '',
     telefono: '',
     email: '',
-    descripcion: ''
+    descripcion: '',
+    imagen: null,
   });
 
   const handleSubmit = async (event) => {
-    console.log('Formdata:', JSON.stringify(formData));
+    event.preventDefault();
     try {
-      event.preventDefault();
       const formDataToSend = new FormData();
-      // agrega todos los campos del FormData
       formDataToSend.append('nombre', formData.nombre);
       formDataToSend.append('direccion', formData.direccion);
       formDataToSend.append('telefono', formData.telefono);
       formDataToSend.append('email', formData.email);
       formDataToSend.append('descripcion', formData.descripcion);
+      formDataToSend.append('imagen', formData.imagen);
 
-      const response = await axios.post('/api/institucion/registrar', formDataToSend);
+      // Agrega los siguientes console.log para verificar los datos antes de la solicitud
+      console.log('Datos a enviar:', {
+        nombre: formData.nombre,
+        direccion: formData.direccion,
+        telefono: formData.telefono,
+        email: formData.email,
+        descripcion: formData.descripcion,
+        imagen: formData.imagen,
+      });
 
+      const response = await instance.post('institucion/registrar', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       console.log('Respuesta del backend:', response.data);
     } catch (error) {
-      console.error('Front->Error al registrar la Organización:', error.message);
+      console.error('Error al registrar la Organización:', error.message);
     }
   };
 
@@ -53,10 +58,10 @@ function RegistroInstituciones() {
     <Form onSubmit={handleSubmit}>
       <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Registrar Organización</h1>
 
-      {/* <Form.Group controlId="formLogo">
+      <Form.Group controlId="formLogo">
         <Form.Label>Subir imagen o logo de la Organización</Form.Label>
-        <Form.Control type="file" name="logo" onChange={handleImageUpload} />
-      </Form.Group> */}
+        <Form.Control type="file" name="imagen" onChange={handleChange} />
+      </Form.Group>
 
       <Form.Group controlId="formNombre">
         <InputGroup className="mb-3 mt-3">
@@ -145,12 +150,10 @@ function RegistroInstituciones() {
         </InputGroup>
       </Form.Group>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <Button variant="primary" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
-          Registrar Organización
-        </Button>
-      </div>
-    </Form >
+      <Button variant="primary" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
+        Registrar Organización
+      </Button>
+    </Form>
   );
 }
 
