@@ -11,9 +11,13 @@ import Link from 'next/link'
 import './navigation.css'
 import { Button } from 'react-bootstrap';
 
+const navbarStyle = {
+  background: '#122562', // Cambiar el color de fondo aquí
+};
+
 function Navigation() {
   return (
-    <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="mb-3" fixed="top">
+    <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="mb-3 d-flex justify-content-between" fixed="top" style={navbarStyle}>
       <Container>
       <Link href={"/"}><Button variant="dark">P.A.S</Button></Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -27,14 +31,14 @@ function Navigation() {
             
             
             <NavDropdown title="[UserName]" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.1">Administrar perfil</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
-                Another action
+                Ayuda y soporte técnico
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              {/* <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item> */}
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
-                Separated link
+                Cerrar sesión
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

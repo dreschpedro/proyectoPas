@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
 import { Form } from 'react-bootstrap';
 
 const ServiciosEstadisticas = () => {
@@ -65,8 +65,29 @@ const ServiciosEstadisticas = () => {
 
   const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#00bcd4'];
 
+
+  // Gráfico de estadísticas de "Top 5 usuarios que más registran datos"
+  const dataUsuarios = topUsuarios.map((usuario) => ({
+    nombre: usuario.nombre,
+    cantidad: usuario.cantidad,
+  }));
+
+  // Aquí insertamos el gráfico de "Top 5 usuarios que más registran datos"
+  const renderGraficoUsuarios = () => {
+    return (
+      <BarChart width={800} height={400} data={dataUsuarios} margin={{ top: 50, right: 30, left: 20, bottom: 5 }} className='mx-auto'>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="nombre" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="cantidad" fill="#8884d8" />
+      </BarChart>
+    );
+  };
+
   return (
-    <div className='mt-4'>
+    <div className='mt-4 '>
       {/* ComboBox para seleccionar la institución */}
       <Form.Select onChange={handleInstitucionChange} value={selectedInstitucion} label="Institución" className='mb-3'>
         <option value="" disabled>Selecciona una institución</option>
@@ -75,17 +96,21 @@ const ServiciosEstadisticas = () => {
         ))}
       </Form.Select>
 
-      {/* ComboBox para seleccionar el tipo de gráfico */}
+      {/* ComboBox para seleccionar el tipo de gráfico
       <Form.Select onChange={handleGraficoTipoChange} value={graficoTipo} label="Tipo de gráfico" className='mb-3'>
         <option value="estadisticas">Estadísticas</option>
         <option value="pastel">Pastel</option>
         <option value="gant">Gant</option>
         <option value="pert">Pert</option>
-      </Form.Select>
+      </Form.Select> */}
 
       {/* Gráfico seleccionado */}
-      {graficoTipo === 'estadisticas' && (
-        <LineChart width={800} height={400} data={data} margin={{ top: 50, right: 30, left: 20, bottom: 5 }}>
+      <h2>Servicios realizados a lo largo del año</h2>
+
+
+
+      <div>
+        <LineChart width={800} height={400} data={data} margin={{ top: 50, right: 30, left: 20, bottom: 5 }} className='mx-auto mb-4'>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="mes" />
           <YAxis />
@@ -97,7 +122,8 @@ const ServiciosEstadisticas = () => {
           <Line type="monotone" dataKey="servicioD" stroke="#ff7300" />
           <Line type="monotone" dataKey="servicioE" stroke="#00bcd4" />
         </LineChart>
-      )}
+      </div>
+
 
       {/* Gráfico de pastel */}
       {graficoTipo === 'pastel' && (
@@ -121,37 +147,30 @@ const ServiciosEstadisticas = () => {
         </PieChart>
       )}
 
-      {/* Gráfico de Gant */}
-      {graficoTipo === 'gant' && (
-        <div>
-          {/* Aquí iría el código para el gráfico de Gant */}
-        </div>
-      )}
-
-      {/* Gráfico de Pert */}
-      {graficoTipo === 'pert' && (
-        <div>
-          {/* Aquí iría el código para el gráfico de Pert */}
-        </div>
-      )}
-
-      {/* Agregar otros gráficos aquí */}
-
       {/* Gráfico de top usuarios */}
-      <h2>Top 5 usuarios que más registran datos</h2>
-      <ul>
-        {topUsuarios.map((usuario) => (
-          <li key={usuario.id}>{usuario.nombre} - Cantidad: {usuario.cantidad}</li>
-        ))}
-      </ul>
+      <h2 className='mt-5'>Usuarios que más registran datos</h2>
+      {renderGraficoUsuarios()}
 
-      {/* Gráfico de top servicios */}
-      <h2>Top servicios más adquiridos</h2>
-      <ul>
-        {topServicios.map((servicio) => (
-          <li key={servicio.id}>{servicio.nombre} - Cantidad: {servicio.cantidad}</li>
-        ))}
-      </ul>
+      {/* Gráfico de pastel para "Top servicios más adquiridos" */}
+      <h2 className='mt-5'>Servicios más adquiridos</h2>
+      <PieChart width={800} height={400} className='mx-auto'>
+        <Pie
+          data={topServicios}
+          dataKey="cantidad"
+          nameKey="nombre"
+          cx="50%"
+          cy="50%"
+          outerRadius={150}
+          fill="#8884d8"
+          label
+        >
+          {dataPastel.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip />
+        <Legend />
+      </PieChart>
     </div>
   );
 };
