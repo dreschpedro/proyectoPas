@@ -81,16 +81,16 @@ function Usuarios() {
         <tbody>
           {filteredUsersData ? (
             filteredUsersData.map((user) => (
-              <tr key={user.id_personal} onClick={() => handleUserClick(user.id_personal)} style={{ cursor: 'pointer' }}>
+              <tr key={user.id_personal}>
                 <td>{user.id_personal}</td>
                 <td>{user.nombre}</td>
                 <td>{user.apellido}</td>
-                <td>{user.usuario.nombre}</td> {/* Agrega el console.log aquí */}
+                <td>{user.usuario.nombre}</td>
               </tr>
             ))
-          ) : null
-          }
+          ) : null}
         </tbody>
+
 
       </Table>
 

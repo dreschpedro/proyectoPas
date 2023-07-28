@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 
 // Función de utilidad para obtener la ruta de la imagen por defecto
-const getDefaultImagePath = () => {
-  const defaultImagePath = path.join(__dirname, '../uploads/institucion/default_institucion.png');
+const getDefaultImagePath = (defaultImageFilename) => {
+  const defaultImagePath = `/uploads/institucion/${defaultImageFilename}`;
   return defaultImagePath;
 };
 

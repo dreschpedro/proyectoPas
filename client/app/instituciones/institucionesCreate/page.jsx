@@ -37,11 +37,12 @@ function RegistroInstituciones() {
         imagen: imagenSeleccionada,
       });
 
-      const response = await instance.post('institucion/registrar', formDataToSend, {
+      const response = await instance.post('/institucion/registrar', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+
       console.log('Respuesta del backend:', response.data);
     } catch (error) {
       console.error('Front->Error al registrar la Organización:', error.message);
@@ -61,7 +62,6 @@ function RegistroInstituciones() {
       }));
     }
   };
-
 
 
   return (
