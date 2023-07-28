@@ -3,15 +3,23 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'; // permite hacer solicitudes al back desde el front, sino se bloquean los puertos
 import sequelize from './config/db.js';
+import path from 'path';
 import tinify from 'tinify';
 
-
 tinify.key = process.env.TINIFY_API;
-
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3006;
 app.use(express.json());
+
+import { fileURLToPath } from 'url'; // Importa la función fileURLToPath
+import { dirname } from 'path'; // Importa la función dirname
+
+// Utiliza import.meta.url para obtener la ruta del archivo actual
+const __filename = fileURLToPath(import.meta.url);
+// Utiliza la función dirname para obtener el directorio padre del archivo actual
+const __dirname = dirname(__filename);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 (async () => {
   try {
@@ -52,5 +60,7 @@ app.use('/api/cliente', routerCliente)
 app.use('/api/personal', routerPersonal)
 app.use('/api/serv_real', routerServReal)
 app.use('/api/entregar', routerProdEnt)
+
+
 
 app.listen(port, () => console.log(`Escuchando en el ${port}`))

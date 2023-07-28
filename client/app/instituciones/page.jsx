@@ -1,8 +1,9 @@
+//front
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Table, Form, Button, InputGroup } from 'react-bootstrap';
 import Link from 'next/link';
-import instance from '../axiosConfig';
+import instance, { serverURL } from '../axiosConfig'; // Corregimos el nombre de la importación
 
 const ListaInstituciones = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,7 +14,6 @@ const ListaInstituciones = () => {
     const fetchData = async () => {
       try {
         const response = await instance.get('/institucion');
-        // console.log('Datos de la API:', response.data); // Verificar los datos obtenidos
         setListaInstituciones(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de instituciones:', error);
@@ -22,9 +22,6 @@ const ListaInstituciones = () => {
 
     fetchData();
   }, []);
-
-  // Agregar el console.log justo aquí
-  // console.log('listaInstituciones:', listaInstituciones);
 
   // Filtrar los datos cuando el término de búsqueda cambie
   useEffect(() => {
@@ -43,6 +40,8 @@ const ListaInstituciones = () => {
       setFilteredData(listaInstituciones);
     }
   }, [searchTerm, listaInstituciones]);
+
+  console.log('listaInstituciones: \n', listaInstituciones);
 
   const handleUserClick = (id) => {
     // Redireccionar a la página de detalle del usuario con el ID correspondiente
@@ -80,7 +79,7 @@ const ListaInstituciones = () => {
           <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Imagen</th>
+            <th>Logo</th>
             <th>Dirección</th>
             <th>telefono</th>
             <th>Email</th>
@@ -94,9 +93,9 @@ const ListaInstituciones = () => {
                 <td>{institucion.id_institucion}</td>
                 <td>{institucion.nombre}</td>
                 <td>
-                  {/* La imagen se muestra si institucion.imagen contiene la URL de la imagen */}
+                  {/* Usa la URL base junto con la ruta relativa almacenada en institucion.imagen */}
                   {institucion.imagen && (
-                    <img src={institucion.imagen} alt={institucion.nombre} style={{ maxWidth: '100px' }} />
+                    <img src={`${serverURL}${institucion.imagen}`} alt={institucion.nombre} style={{ maxWidth: '60px' }} />
                   )}
                 </td>
                 <td>
@@ -115,7 +114,6 @@ const ListaInstituciones = () => {
             ))
           ) : null}
         </tbody>
-
       </Table>
     </>
   );

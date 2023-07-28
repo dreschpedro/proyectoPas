@@ -34,7 +34,7 @@ function RegistroInstituciones() {
         telefono: formData.telefono,
         email: formData.email,
         descripcion: formData.descripcion,
-        imagen: formData.imagen,
+        imagen: imagenSeleccionada,
       });
 
       const response = await instance.post('institucion/registrar', formDataToSend, {
@@ -48,10 +48,12 @@ function RegistroInstituciones() {
     }
   };
 
+
   const handleChange = (event) => {
     const { name, value, files } = event.target;
     if (name === 'imagen') {
       setImagenSeleccionada(files ? files[0] : null);
+      console.log('Imagen seleccionada:', files ? files[0] : null);
     } else {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -59,15 +61,23 @@ function RegistroInstituciones() {
       }));
     }
   };
-  
+
+
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Registrar Organización</h1>
+      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>
+        Registrar Organización
+      </h1>
 
       <Form.Group controlId="formLogo">
-        <Form.Label>Subir imagen o logo de la Organización</Form.Label>
-        <Form.Control type="file" name="imagen" onChange={handleChange} />
+        <Form.Label>
+          Subir imagen o logo de la Organización
+        </Form.Label>
+        <Form.Control
+          type="file"
+          name="imagen"
+          onChange={handleChange} />
       </Form.Group>
 
       <Form.Group controlId="formNombre">
