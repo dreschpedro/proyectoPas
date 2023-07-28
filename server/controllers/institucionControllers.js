@@ -1,4 +1,8 @@
 import inst_model from "../models/Institucion_model.js";
+import {getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from '../helpers/imagen.js';
+
+
+
 
 // FUNCIONALIDADES
 // consulta de todos los registros
@@ -12,6 +16,12 @@ const listar_institucion = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
+
+
+
+
+
 
 // consulta por un registro (por id)
 const obtener_institucion = async (req, res) => {
@@ -32,28 +42,61 @@ const obtener_institucion = async (req, res) => {
   }
 };
 
-// registro de institución
+
+
+
+
+
+
+
+
+// Registro de institución
 const registrar_institucion = async (req, res) => {
+  let imagen_path; 
+
   try {
-    console.log('Recibiendo solicitud para registrar institución:', req.body);
+    // Obtener los datos de la institución del cuerpo de la solicitud
+    const { nombre, direccion, telefono, email, descripcion } = req.body;
 
     // Verificar que los campos obligatorios no estén vacíos
     if (!nombre || !direccion || !telefono || !email || !descripcion) {
       return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
-    const institucion_body = req.body;
+    // Obtener la ruta de la imagen (ya sea la imagen subida o la imagen por defecto)
+    imagen_path = saveImageAndGetPath(req);
 
-    console.log("Datos recibidos desde el frontend:", institucion_body);
+    // Crear la institución en la base de datos
+    const institucion_almacenado = await inst_model.create({
+      nombre,
+      direccion,
+      telefono,
+      email,
+      descripcion,
+      imagen: imagen_path // Guardar la ruta de la imagen en la base de datos
+    });
 
-    const institucion_almacenado = await inst_model.create(institucion_body);
     return res.status(200).json({ message: "Institución creada", institucion_almacenado });
   } catch (error) {
-    console.log(error); // Agregar esta línea para mostrar los detalles del error en el servidor
+    console.log(error);
     const mensaje_error = "Back->Ocurrió un error al registrar la institución";
     return res.status(500).json({ error: mensaje_error });
+  } finally {
+    // Eliminar la imagen temporal si no es la imagen por defecto
+    if (imagen_path) {
+      deleteTempImage(imagen_path);
+    }
   }
 };
+
+
+
+
+
+
+
+
+
 
 
 // modifica los datos buscando por id
@@ -76,6 +119,10 @@ const modificar_institucion = async (req, res) => {
   }
 };
 
+
+
+
+
 // elimina por id
 const eliminar_institucion = async (req, res) => {
   const institucion_id = req.params.id;
@@ -95,6 +142,13 @@ const eliminar_institucion = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
+
+
+
+
+
+
 
 // exports
 export {

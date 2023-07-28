@@ -13,7 +13,7 @@ const ListaInstituciones = () => {
     const fetchData = async () => {
       try {
         const response = await instance.get('/institucion');
-        console.log('Datos de la API:', response.data); // Verificar los datos obtenidos
+        // console.log('Datos de la API:', response.data); // Verificar los datos obtenidos
         setListaInstituciones(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de instituciones:', error);
@@ -24,7 +24,7 @@ const ListaInstituciones = () => {
   }, []);
 
   // Agregar el console.log justo aquí
-  console.log('listaInstituciones:', listaInstituciones);
+  // console.log('listaInstituciones:', listaInstituciones);
 
   // Filtrar los datos cuando el término de búsqueda cambie
   useEffect(() => {

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import instance from '@/app/axiosConfig'; // Importa tu instancia personalizada de Axios
+import instance from '@/app/axiosConfig';
 
 function RegistroInstituciones() {
   const [formData, setFormData] = useState({
@@ -10,8 +10,9 @@ function RegistroInstituciones() {
     telefono: '',
     email: '',
     descripcion: '',
-    imagen: null,
   });
+
+  const [imagenSeleccionada, setImagenSeleccionada] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,7 +23,9 @@ function RegistroInstituciones() {
       formDataToSend.append('telefono', formData.telefono);
       formDataToSend.append('email', formData.email);
       formDataToSend.append('descripcion', formData.descripcion);
-      formDataToSend.append('imagen', formData.imagen);
+      if (imagenSeleccionada) {
+        formDataToSend.append('imagen', imagenSeleccionada);
+      }
 
       // Agrega los siguientes console.log para verificar los datos antes de la solicitud
       console.log('Datos a enviar:', {
@@ -41,18 +44,22 @@ function RegistroInstituciones() {
       });
       console.log('Respuesta del backend:', response.data);
     } catch (error) {
-      console.error('Error al registrar la Organización:', error.message);
+      console.error('Front->Error al registrar la Organización:', error.message);
     }
   };
 
-
   const handleChange = (event) => {
     const { name, value, files } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: files ? files[0] : value,
-    }));
+    if (name === 'imagen') {
+      setImagenSeleccionada(files ? files[0] : null);
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
+  
 
   return (
     <Form onSubmit={handleSubmit}>

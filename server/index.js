@@ -3,6 +3,10 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'; // permite hacer solicitudes al back desde el front, sino se bloquean los puertos
 import sequelize from './config/db.js';
+import tinify from 'tinify';
+
+
+tinify.key = process.env.TINIFY_API;
 
 dotenv.config();
 const app = express();
