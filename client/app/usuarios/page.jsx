@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { Table, Form, FormControl, Button } from 'react-bootstrap';
+import { Table, Form, FormControl, Button, Image } from 'react-bootstrap';
 import Link from 'next/link';
 import instance from '../axiosConfig';
 
@@ -14,9 +14,8 @@ function Usuarios() {
     const fetchPersonalData = async () => {
       try {
         const response = await instance.get('/personal', {
-          // Agregar el parámetro 'include' para incluir los datos de usuario
           params: {
-            include: 'usuario', // Asegúrate de que el nombre de la relación sea correcto en tu backend (puede ser 'usuario' o 'usuarios' según la configuración)
+            include: 'usuario',
           },
         });
         setUsersData(response.data);
@@ -27,13 +26,13 @@ function Usuarios() {
     fetchPersonalData();
   }, []);
 
-
   useEffect(() => {
     // Filtrar los datos de usuarios en función del término de búsqueda
     const filteredUsersData = usersData.filter((user) => {
       return (
         user.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.usuario.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.cuilt.includes(searchTerm)
       );
     });
@@ -45,9 +44,6 @@ function Usuarios() {
     // Redireccionar a la página de detalle del usuario con el ID correspondiente
     window.location.href = `/usuarios/${id}`;
   };
-
-  console.log('usersData:', usersData);
-  console.log('filteredUsersData:', filteredUsersData);
 
   return (
     <div>
@@ -73,9 +69,10 @@ function Usuarios() {
         <thead>
           <tr>
             <th>#</th>
+            <th>Imagen</th>
             <th>Nombre</th>
             <th>Apellido</th>
-            <th>CUIL/T</th>
+            <th>Nombre de Usuario</th>
           </tr>
         </thead>
         <tbody>
@@ -83,6 +80,13 @@ function Usuarios() {
             filteredUsersData.map((user) => (
               <tr key={user.id_personal}>
                 <td>{user.id_personal}</td>
+                <td>
+                  {user.imagen ? (
+                    <Image src={user.imagen} alt={`Imagen de ${user.nombre}`} style={{ maxWidth: '60px' }} />
+                  ) : (
+                    <span>No hay imagen</span>
+                  )}
+                </td>
                 <td>{user.nombre}</td>
                 <td>{user.apellido}</td>
                 <td>{user.usuario.nombre}</td>
@@ -90,29 +94,7 @@ function Usuarios() {
             ))
           ) : null}
         </tbody>
-
-
       </Table>
-
-      {/* <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-          <Pagination>
-            <Pagination.First onClick={() => paginate(1)} />
-            <Pagination.Prev
-              onClick={() => paginate(currentPage - 1)}
-              disabled={currentPage === 1}
-            />
-            <Pagination.Item active>{currentPage}</Pagination.Item>
-            <Pagination.Next
-              onClick={() => paginate(currentPage + 1)}
-              disabled={currentPage === Math.ceil((filteredUsersData || usersData).length / usersPerPage)}
-            />
-            <Pagination.Last
-              onClick={() =>
-                paginate(Math.ceil((filteredUsersData || usersData).length / usersPerPage))
-              }
-            />
-          </Pagination>
-        </div> */}
     </div>
   );
 }

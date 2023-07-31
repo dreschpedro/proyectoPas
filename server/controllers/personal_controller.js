@@ -1,5 +1,6 @@
 import Personal_model from "../models/Personal_model.js";
 import Usuario_model from "../models/Usuario_model.js";
+import { getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from "../helpers/imagen.js";
 
 // consulta de todos los registros
 const listar_personal = async (req, res) => {

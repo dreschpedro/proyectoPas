@@ -1,0 +1,84 @@
+#instituciones
+{
+  "nombre": "Sanatorio Caminos",
+  "direccion": "Av San Martin 3213",
+  "telefono": "123456789",
+  "email": "caminos@sanatorio.com.ar",
+  "descripcion": "csdcsdc",
+  "imagen": "/uploads/institucion/default_institucion.png"
+}
+{
+  "nombre": "Universidad Nacional",
+  "direccion": "Avenida Universidad 123",
+  "telefono": "555-123-4567",
+  "email": "contacto@universidadnacional.edu",
+  "descripcion": "jkjkjkjkc",
+  "imagen": "/uploads/institucion/default_institucion.png"
+}
+{
+  "nombre": "Organización sin fines de lucro",
+  "direccion": "Plaza de la Solidaridad 789",
+  "telefono": "555-555-5555",
+  "email": "contacto@organizacion.org",
+  "descripcion": "jkjkjkjkc",
+  "imagen": "/uploads/institucion/default_institucion.png"
+}
+
+
+
+#usuario
+{
+  "nombre": "Juan1",
+  "password": "perez1",
+  "email": "perez1@juan.com",
+  "rol": "admin"
+}
+
+{
+  "nombre": "Ramon2",
+  "password": "gonzalez2",
+  "email": "gonzalez@ramon.com",
+  "rol": "Data-Entry"
+}
+
+{
+  "nombre": "Federico3",
+  "password": "espinosa3",
+  "email": "fede@espino.com",
+  "rol": "Consultor"
+}
+
+
+#personal
+{
+  "id_usuario": 1,
+  "id_institucion":1,
+  "apellido": "Perez",
+  "nombre": "Juan",
+  "cuilt": "111111111",
+  "profesion": "Profesion 1",
+  "telefono": "1111111111",
+  "imagen": "/uploads/institucion/default_personal.png"
+}
+
+{
+  "id_usuario": 2,
+  "id_institucion":1,
+  "apellido": "Gonzalez",
+  "nombre": "Ramon",
+  "cuilt": "222222222",
+  "profesion": "Profesion 2",
+  "telefono": "2222222222",
+  "imagen": "/uploads/institucion/default_personal.png"
+}
+
+{
+  "id_usuario": 3,
+  "id_institucion":2,
+  "apellido": "Espinosa",
+  "nombre": "Federico",
+  "cuilt": "333333333",
+  "profesion": "Profesion 3",
+  "telefono": "3333333333",
+  "imagen": "/uploads/institucion/default_personal.png"
+}
