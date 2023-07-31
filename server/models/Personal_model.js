@@ -29,6 +29,10 @@ const Personal_model = sequelize.define('personal', {
     type: DataTypes.STRING(20),
     allowNull: false,
   },
+  imagen: {
+    type: DataTypes.STRING(200),
+    allowNull: true, // Permitimos que el campo esté vacío
+  },
   activo: {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
