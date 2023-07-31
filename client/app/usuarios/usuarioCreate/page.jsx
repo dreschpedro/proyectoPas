@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import instance from '@/app/axiosConfig';
+import { Container } from 'react-bootstrap';
 
 function RegistroUsuarios() {
   const roles = ['Data-Entry', 'Administrador', 'Consultor'];
@@ -42,186 +43,130 @@ function RegistroUsuarios() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+<>
+    <div className="container">
+    <div className="row">
+      <div className="col-4 col-xs-12">a</div>
+      <div className="col-4 col-xs-12">b</div>
+      <div className="col-2 col-xs-12">foto</div>
+    </div>
+  </div>
 
-      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Crea una cuenta de P.A.S</h1>
 
-      <Form.Group controlId="formFile">
-        <Form.Label>Subir imagen de perfil</Form.Label>
-        <Form.Control type="file" onChange={handleImageUpload} />
-      </Form.Group>
+<Form onSubmit={handleSubmit} >
 
-      <Form.Group controlId="formUsername">
-        <InputGroup className="mb-3 mt-5">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Nombre de usuario
-          </InputGroup.Text>
-          <Form.Control
-            aria-label="Nombre de usuario"
-            aria-describedby="inputGroup-sizing-default"
-            placeholder=""
-            required
-          />
-        </InputGroup>
-      </Form.Group>
-
-      <Form.Group controlId="formPassword">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Contraseña
-          </InputGroup.Text>
-          <Form.Control
-            type="password"
-            aria-label="Contraseña"
-            required
-          />
-        </InputGroup>
-      </Form.Group>
-
-      <Form.Group controlId="formConfirmPassword">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Confirmar Contraseña
-          </InputGroup.Text>
-          <Form.Control
-            type="password"
-            aria-label="Confirmar Contraseña"
-            required
-          />
-        </InputGroup>
-      </Form.Group>
-
-      {/* Combobox para mostrar la lista de instituciones*/}
-      <Form.Group controlId="formInstitucion">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-          Organización
-          </InputGroup.Text>
-          <Form.Control
-            as="select"
-            value={selectedInstitucion}
-            onChange={(e) => setSelectedInstitucion(e.target.value)}
-            required
-          >
-            <option value="" disabled>
-              Selecciona una Organización
-            </option>
-            {instituciones.map((institucion) => (
-              <option key={institucion.id_institucion} value={institucion.id_institucion}>
-                {institucion.nombre}
-              </option>
-            ))}
-          </Form.Control>
-        </InputGroup>
-      </Form.Group>
-
-      <Form.Group controlId="formRol">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Rol
-          </InputGroup.Text>
-          <Form.Control as="select" required>
-            {roles.map((rol, index) => (
-              <option key={index}>{rol}</option>
-            ))}
-          </Form.Control>
-        </InputGroup>
-      </Form.Group>
+      <h1 style={{ marginTop: '20px' }}>Crear cuenta</h1>
+lg md sm sx
 
 
 
-      <Form.Group controlId="formEmail">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Email
-          </InputGroup.Text>
-          <Form.Control
-            type="email"
-            aria-label="Email"
-            aria-describedby="inputGroup-sizing-default"
-            placeholder=""
-            required
-          />
-        </InputGroup>
-      </Form.Group>
+      <Container className='d-flex flex-wrap'>
 
-      <Form.Group controlId="formCuil">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            CUIL/CUIT
-          </InputGroup.Text>
-          <Form.Control
-            aria-label="CUIL/CUIT"
-            aria-describedby="inputGroup-sizing-default"
-            placeholder=""
-            required
-          />
-        </InputGroup>
-      </Form.Group>
 
-      <Form.Group controlId="formNombres">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Nombres y Apellidos
-          </InputGroup.Text>
-          <Form.Control
-            aria-label="Nombres y Apellidos"
-            aria-describedby="inputGroup-sizing-default"
-            placeholder=""
-            required
-          />
-        </InputGroup>
-      </Form.Group>
+        <Container className='col-4'>
+          <Form.Group controlId="formtext">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Nombre de Usuario*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
 
-      <Form.Group controlId="formTelefono">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Teléfono
-          </InputGroup.Text>
-          <Form.Control
-            type="tel"
-            aria-label="Teléfono"
-            aria-describedby="inputGroup-sizing-default"
-            placeholder=""
-            required
-          />
-        </InputGroup>
-      </Form.Group>
 
-      <Form.Group controlId="formDomicilio">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Domicilio
-          </InputGroup.Text>
-          <Form.Control
-            aria-label="Domicilio"
-            aria-describedby="inputGroup-sizing-default"
-            placeholder=""
-            required
-          />
-        </InputGroup>
-      </Form.Group>
+          <Form.Group controlId="formPassword">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Contraseña*</Form.Label>
+              <Form.Control type="password" placeholder="" />
+            </Form.Group>
+          </Form.Group>
 
-      <Form.Group controlId="formProfesion">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Profesión
-          </InputGroup.Text>
-          <Form.Control
-            aria-label="Profesión"
-            aria-describedby="inputGroup-sizing-default"
-            placeholder=""
-            required
-          />
-        </InputGroup>
-      </Form.Group>
+          <Form.Group controlId="formPassword2">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Confirmar Contraseña*</Form.Label>
+              <Form.Control type="password" placeholder="" />
+            </Form.Group>
+          </Form.Group>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <Button variant="primary" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
-          Registrarse
-        </Button>
-      </div>
+          <Form.Group controlId="formOrganizacion">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Organización*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formEmail">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Email*</Form.Label>
+              <Form.Control type="email" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formEmail">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Rol*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+        </Container>
+
+        <Container className='col-4'>
+          <Form.Group controlId="formCuilt">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>CUIL o CUIT*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formName">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Nombres y Apellidos*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formNumber">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Teléfono*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formDomicilio">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Domicilio*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formProfesion">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Profesión*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
+            <Button variant="primary" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
+              Registrarse
+            </Button>
+          </div>
+
+        </Container>
+
+
+        <Container className='col-3'>
+          <Form.Group controlId="formFile">
+            <Form.Label>Subir imagen de perfil</Form.Label>
+            <Form.Control type="file" onChange={handleImageUpload} />
+          </Form.Group>
+        </Container>
+
+      </Container>
+
+
     </Form>
+    </>
   );
 }
 
