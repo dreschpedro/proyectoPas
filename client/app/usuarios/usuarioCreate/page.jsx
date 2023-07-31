@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import instance from '@/app/axiosConfig';
 import { Container } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function RegistroUsuarios() {
   const roles = ['Data-Entry', 'Administrador', 'Consultor'];
@@ -44,27 +46,19 @@ function RegistroUsuarios() {
 
   return (
 <>
-    <div className="container">
-    <div className="row">
-      <div className="col-4 col-xs-12">a</div>
-      <div className="col-4 col-xs-12">b</div>
-      <div className="col-2 col-xs-12">foto</div>
-    </div>
-  </div>
+   
 
 
 <Form onSubmit={handleSubmit} >
 
       <h1 style={{ marginTop: '20px' }}>Crear cuenta</h1>
-lg md sm sx
 
 
 
-      <Container className='d-flex flex-wrap'>
-
-
-        <Container className='col-4'>
-          <Form.Group controlId="formtext">
+      <Row>
+        <Col md>
+        
+        <Form.Group controlId="formtext">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Nombre de Usuario*</Form.Label>
               <Form.Control type="text" placeholder="" />
@@ -107,10 +101,14 @@ lg md sm sx
             </Form.Group>
           </Form.Group>
 
-        </Container>
+        </Col>
 
-        <Container className='col-4'>
-          <Form.Group controlId="formCuilt">
+
+
+
+        <Col md>
+
+        <Form.Group controlId="formCuilt">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>CUIL o CUIT*</Form.Label>
               <Form.Control type="text" placeholder="" />
@@ -152,18 +150,19 @@ lg md sm sx
             </Button>
           </div>
 
-        </Container>
+        
+        </Col>
 
 
-        <Container className='col-3'>
-          <Form.Group controlId="formFile">
+        <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
+        
+        <Form.Group controlId="formFile">
             <Form.Label>Subir imagen de perfil</Form.Label>
             <Form.Control type="file" onChange={handleImageUpload} />
           </Form.Group>
-        </Container>
-
-      </Container>
-
+        
+        </Col>
+      </Row>
 
     </Form>
     </>
