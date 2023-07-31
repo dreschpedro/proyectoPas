@@ -1,5 +1,5 @@
 import inst_model from "../models/Institucion_model.js";
-import {getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from '../helpers/imagen.js';
+import { getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from '../helpers/imagen.js';
 
 
 
@@ -52,7 +52,7 @@ const obtener_institucion = async (req, res) => {
 
 // Registro de institución
 const registrar_institucion = async (req, res) => {
-  let imagen_path; 
+  let imagen_path = getDefaultImagePath('institucion', 'default_institucion.png');
 
   try {
     // Obtener los datos de la institución del cuerpo de la solicitud
@@ -64,7 +64,7 @@ const registrar_institucion = async (req, res) => {
     }
 
     // Obtener la ruta de la imagen (ya sea la imagen subida o la imagen por defecto)
-    imagen_path = saveImageAndGetPath(req);
+    imagen_path = saveImageAndGetPath(req, 'institucion', 'default_institucion.png');
 
     // Crear la institución en la base de datos
     const institucion_almacenado = await inst_model.create({
@@ -83,11 +83,12 @@ const registrar_institucion = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   } finally {
     // Eliminar la imagen temporal si no es la imagen por defecto
-    if (imagen_path) {
-      deleteTempImage(imagen_path);
+    if (imagen_path && imagen_path !== getDefaultImagePath('institucion', 'default_institucion.png')) {
+      deleteTempImage(imagen_path, 'institucion', 'default_institucion.png');
     }
   }
 };
+
 
 
 

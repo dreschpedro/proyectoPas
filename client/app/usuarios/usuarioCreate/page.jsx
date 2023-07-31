@@ -46,8 +46,11 @@ function RegistroUsuarios() {
 
   return (
 <>
+<<<<<<< HEAD
    
 
+=======
+>>>>>>> a46ec14d13c14d431f7b50ccdc92aad600c604b2
 
 <Form onSubmit={handleSubmit} >
 

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Form, Button, InputGroup } from 'react-bootstrap';
 import Link from 'next/link';
-import instance, { serverURL } from '../axiosConfig'; // Corregimos el nombre de la importación
+import instance, { serverURL } from '../axiosConfig.js'; // Corregimos el nombre de la importación
 
 const ListaInstituciones = () => {
   const [searchTerm, setSearchTerm] = useState('');
