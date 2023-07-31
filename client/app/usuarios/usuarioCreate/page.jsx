@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import instance from '@/app/axiosConfig';
 import { Container } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function RegistroUsuarios() {
   const roles = ['Data-Entry', 'Administrador', 'Consultor'];
@@ -44,6 +46,11 @@ function RegistroUsuarios() {
 
   return (
 <>
+<<<<<<< HEAD
+   
+
+=======
+>>>>>>> a46ec14d13c14d431f7b50ccdc92aad600c604b2
 
 <Form onSubmit={handleSubmit} >
 
@@ -51,11 +58,10 @@ function RegistroUsuarios() {
 
 
 
-      <Container className='d-flex flex-wrap'>
-
-
-        <Container className='col-4'>
-          <Form.Group controlId="formtext">
+      <Row>
+        <Col md>
+        
+        <Form.Group controlId="formtext">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Nombre de Usuario*</Form.Label>
               <Form.Control type="text" placeholder="" />
@@ -98,10 +104,14 @@ function RegistroUsuarios() {
             </Form.Group>
           </Form.Group>
 
-        </Container>
+        </Col>
 
-        <Container className='col-4'>
-          <Form.Group controlId="formCuilt">
+
+
+
+        <Col md>
+
+        <Form.Group controlId="formCuilt">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>CUIL o CUIT*</Form.Label>
               <Form.Control type="text" placeholder="" />
@@ -143,18 +153,19 @@ function RegistroUsuarios() {
             </Button>
           </div>
 
-        </Container>
+        
+        </Col>
 
 
-        <Container className='col-3'>
-          <Form.Group controlId="formFile">
+        <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
+        
+        <Form.Group controlId="formFile">
             <Form.Label>Subir imagen de perfil</Form.Label>
             <Form.Control type="file" onChange={handleImageUpload} />
           </Form.Group>
-        </Container>
-
-      </Container>
-
+        
+        </Col>
+      </Row>
 
     </Form>
     </>
