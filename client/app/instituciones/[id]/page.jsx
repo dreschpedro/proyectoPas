@@ -1,13 +1,9 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import axios from 'axios';
+import instance, { serverURL } from '../../axiosConfig.js'; // Corregimos el nombre de la importación
+import { useParams } from 'next/navigation';
 
-const instance = axios.create({
-  baseURL: 'http://localhost:3005/api/',
-  timeout: 1000,
-  headers: { 'Accept': 'application/json' } // Agregar cualquier header necesario
-});
 
 const PerfilInstitucion = () => {
   const [institucionData, setInstitucionData] = useState({});
@@ -20,21 +16,24 @@ const PerfilInstitucion = () => {
     descripcion: '',
   });
 
+  const { id } = useParams(); // Obtiene el id de la institución desde la URL utilizando useParams
+
   useEffect(() => {
-    // Simulamos una llamada a la API para obtener los datos de la institución
-    // Puedes reemplazar esto con una llamada real a la API utilizando el ID de la institución
-    const ejemploInstitucion = {
-      id: 1,
-      nombre: 'Institución de Ejemplo',
-      logo: 'ruta_de_la_imagen.jpg',
-      direccion: 'Calle Ejemplo, Ciudad de Ejemplo',
-      telefono: '+54 9 123456789',
-      email: 'institucion@example.com',
-      descripcion: 'Esta es la descripción de la Institución de Ejemplo',
+    // Realiza la solicitud GET para obtener los datos de la institución por su ID
+    const obtenerInstitucionPorId = async () => {
+      try {
+        const response = await instance.get(`/institucion/${id}`);
+        setInstitucionData(response.data);
+      } catch (error) {
+        console.error('Error al obtener los datos de la institución:', error.message);
+      }
     };
 
-    setInstitucionData(ejemploInstitucion);
-  }, []);
+    if (id) {
+      obtenerInstitucionPorId();
+    }
+  }, [id]); // Escucha los cambios en el id para volver a obtener los datos cuando cambia
+
 
   useEffect(() => {
     setFormData({
@@ -46,8 +45,19 @@ const PerfilInstitucion = () => {
     });
   }, [institucionData]);
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async (event) => {
     // Lógica para manejar la carga de la imagen del logo (opcional)
+    const imageFile = event.target.files[0];
+    const formData = new FormData();
+    formData.append('logo', imageFile);
+
+    try {
+      const response = await instance.post('/institucion/subir-imagen', formData);
+      const imagePath = response.data.imagePath;
+      setInstitucionData({ ...institucionData, logo: imagePath });
+    } catch (error) {
+      console.error('Error al subir la imagen:', error.message);
+    }
   };
 
   const handleEditClick = () => {
@@ -86,10 +96,11 @@ const PerfilInstitucion = () => {
         <Form.Label>Logo de la Institución</Form.Label>
         <br />
         <img
-          src={institucionData.logo || 'ruta_de_la_imagen_default.jpg'}
-          alt={institucionData.nombre}
-          style={{ maxWidth: '200px' }}
+          src={`${serverURL}${institucionData.imagen}`} // Cambia institucion.imagen por institucionData.imagen
+          alt={institucionData.nombre} // Cambia institucion.nombre por institucionData.nombre
+          style={{ maxWidth: '60px' }}
         />
+
         {editing && <Form.Control type="file" name="logo" onChange={handleImageUpload} />}
       </Form.Group>
 
