@@ -1,7 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import instance from '@/app/axiosConfig';
+import instance, { serverURL } from '../../axiosConfig.js'; // Corregimos el nombre de la importación
+import { useParams } from 'next/navigation';
 
 const PerfilUsuarios = () => {
   const [userData, setUserData] = useState({});
@@ -16,34 +17,41 @@ const PerfilUsuarios = () => {
     profesion: '',
   });
 
+  const { id } = useParams(); // Obtiene el id del usuario desde la URL utilizando useParams
+
   useEffect(() => {
-    // Simulamos una llamada a la API para obtener los datos del usuario
-    // Puedes reemplazar esto con una llamada real a la API utilizando el ID del usuario
-    const ejemploUsuario = {
-      id: 1,
-      username: 'usuarioejemplo',
-      email: 'usuario@example.com',
-      cuil: '20345678901',
-      nombres: 'Usuario de Ejemplo',
-      telefono: '+54 9 123456789',
-      domicilio: 'Calle Ejemplo, Ciudad de Ejemplo',
-      profesion: 'Profesión de Ejemplo',
+    // Realiza la solicitud GET para obtener los datos de la institución por su ID
+    const obtenerpersonalPorId = async () => {
+      try {
+        const response = await instance.get(`/personal/${id}`);
+        setUserData(response.data);
+        console.log('Datos de usuario obtenidos:', response.data);
+      } catch (error) {
+        console.error('Error al obtener los datos del perosnal:', error.message);
+      }
     };
 
-    setUserData(ejemploUsuario);
-  }, []);
+    if (id) {
+      obtenerpersonalPorId();
+    }
+  }, [id]); // Escucha los cambios en el id para volver a obtener los datos cuando cambia
+
 
   useEffect(() => {
-    setFormData({
-      username: userData.username,
-      email: userData.email,
-      cuil: userData.cuil,
-      nombres: userData.nombres,
-      telefono: userData.telefono,
-      domicilio: userData.domicilio,
-      profesion: userData.profesion,
-    });
+    if (userData) {
+      setFormData({
+        username: userData.username || '',
+        email: userData.email || '',
+        cuilt: userData.cuilt || '',
+        nombre: userData.nombre || '',
+        apellido: userData.apellido || '',
+        telefono: userData.telefono || '',
+        domicilio: userData.domicilio || '',
+        profesion: userData.profesion || '',
+      });
+    }
   }, [userData]);
+
 
   const handleEditClick = () => {
     setEditing(!editing);
@@ -123,7 +131,7 @@ const PerfilUsuarios = () => {
             name="cuil"
             aria-label="CUIL/CUIT"
             aria-describedby="inputGroup-sizing-default"
-            value={formData.cuil}
+            value={formData.cuilt}
             placeholder="Ingresa el CUIL/CUIT"
             required
             readOnly={!editing}

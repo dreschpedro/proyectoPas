@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Form, FormControl, Button, Image } from 'react-bootstrap';
 import Link from 'next/link';
-import instance from '../axiosConfig';
+import instance, { serverURL } from '../axiosConfig';
 
 function Usuarios() {
   const [usersData, setUsersData] = useState([]);
@@ -85,7 +85,7 @@ function Usuarios() {
         <tbody>
           {filteredUsersData ? (
             filteredUsersData.map((user) => (
-              <tr key={user.id_personal}>
+              <tr key={user.id_personal}onClick={() => handleUserClick(user.id_personal)} style={{ cursor: 'pointer' }}>
                 <td>{user.id_personal}</td>
                 <td>
                   {user.imagen ? (
