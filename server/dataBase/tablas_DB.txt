@@ -13,15 +13,15 @@
   "telefono": "555-123-4567",
   "email": "contacto@universidadnacional.edu",
   "descripcion": "jkjkjkjkc",
-  "imagen": "/uploads/institucion/default_institucion.png"
+  "imagen": "/uploads/institucion/company.png"
 }
 {
   "nombre": "Organización sin fines de lucro",
   "direccion": "Plaza de la Solidaridad 789",
   "telefono": "555-555-5555",
-  "email": "contacto@organizacion.org",
+  "email": "fines@organizacion.org",
   "descripcion": "jkjkjkjkc",
-  "imagen": "/uploads/institucion/default_institucion.png"
+  "imagen": "/uploads/institucion/company_azul.png"
 }
 
 
@@ -58,7 +58,7 @@
   "cuilt": "111111111",
   "profesion": "Profesion 1",
   "telefono": "1111111111",
-  "imagen": "/uploads/institucion/default_personal.png"
+  "imagen": "/uploads/personal/default_personal.png"
 }
 
 {
@@ -69,7 +69,7 @@
   "cuilt": "222222222",
   "profesion": "Profesion 2",
   "telefono": "2222222222",
-  "imagen": "/uploads/institucion/default_personal.png"
+  "imagen": "/uploads/personal/default_personal.png"
 }
 
 {
@@ -80,5 +80,5 @@
   "cuilt": "333333333",
   "profesion": "Profesion 3",
   "telefono": "3333333333",
-  "imagen": "/uploads/institucion/default_personal.png"
+  "imagen": "/uploads/personal/default_personal.png"
 }
