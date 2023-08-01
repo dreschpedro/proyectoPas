@@ -1,76 +1,65 @@
 "use client"
+
 import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import instance, { serverURL } from '../../axiosConfig.js'; // Corregimos el nombre de la importación
-import { useParams } from 'next/navigation';
+import instance from '@/app/axiosConfig';
+import { Container } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { useParams } from 'next/navigation'
 
-const PerfilUsuarios = () => {
+function PerfilPersonal() {
+  const { id } = useParams(); // Obtiene el id del personal desde la URL utilizando 'useParams'
+
+  // Estado para almacenar los datos del personal obtenidos del backend
   const [userData, setUserData] = useState({});
+  // Estado para habilitar la edición de campos
   const [editing, setEditing] = useState(false);
+  // Estado para almacenar los datos del formulario
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    cuil: '',
+    nombre: '',
+    apellido: '',
     nombres: '',
+    organizacion: '',
+    email: '',
+    rol: '',
+    cuil: '',
     telefono: '',
     domicilio: '',
     profesion: '',
   });
 
-  const { id } = useParams(); // Obtiene el id del usuario desde la URL utilizando useParams
-
   useEffect(() => {
-    // Realiza la solicitud GET para obtener los datos de la institución por su ID
-    const obtenerpersonalPorId = async () => {
+    // Realiza la solicitud GET para obtener los datos del personal por su ID
+    const obtenerPersonalPorId = async () => {
       try {
         const response = await instance.get(`/personal/${id}`);
         setUserData(response.data);
-        console.log('Datos de usuario obtenidos:', response.data);
+        // Llena los campos del formulario con los datos obtenidos del servidor
+        setFormData({
+          nombre: response.data.nombre || '',
+          apellido: response.data.apellido || '',
+          nombres: response.data.nombres || '',
+          organizacion: response.data.organizacion || '',
+          email: response.data.email || '',
+          rol: response.data.rol || '',
+          cuil: response.data.cuil || '',
+          telefono: response.data.telefono || '',
+          domicilio: response.data.domicilio || '',
+          profesion: response.data.profesion || '',
+        });
       } catch (error) {
-        console.error('Error al obtener los datos del perosnal:', error.message);
+        console.error('Error al obtener los datos del Personal:', error.message);
       }
     };
 
     if (id) {
-      obtenerpersonalPorId();
+      obtenerPersonalPorId();
     }
-  }, [id]); // Escucha los cambios en el id para volver a obtener los datos cuando cambia
+  }, [id]);
 
-
-  useEffect(() => {
-    if (userData) {
-      setFormData({
-        username: userData.username || '',
-        email: userData.email || '',
-        cuilt: userData.cuilt || '',
-        nombre: userData.nombre || '',
-        apellido: userData.apellido || '',
-        telefono: userData.telefono || '',
-        domicilio: userData.domicilio || '',
-        profesion: userData.profesion || '',
-      });
-    }
-  }, [userData]);
-
-
-  const handleEditClick = () => {
-    setEditing(!editing);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      // Realizar la lógica para guardar los cambios en la API utilizando formData
-      // Puedes usar formData.username, formData.email, etc.
-      // Simulamos una respuesta exitosa de la API
-      const response = await instance.post('usuario/actualizar', formData);
-
-      console.log('Respuesta del backend:', response.data);
-      setEditing(false); // Desactivar el modo de edición después de guardar los cambios
-    } catch (error) {
-      console.error('Error al guardar los cambios:', error.message);
-    }
+  const handleImageUpload = (event) => {
+    // Lógica para manejar la carga de la imagen
   };
 
   const handleChange = (event) => {
@@ -81,157 +70,115 @@ const PerfilUsuarios = () => {
     }));
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // Aquí puedes agregar la lógica para manejar el envío del formulario y actualizar los datos del usuario en el backend
+    try {
+      // Realizar la lógica para guardar los cambios en el backend utilizando formData
+      // Puedes usar formData.nombre, formData.apellido, etc.
+      // Simulamos una respuesta exitosa de la API
+      const response = await instance.post(`/personal/${id}`, formData);
+      console.log('Datos del personal actualizados exitosamente:', response.data);
+      setEditing(false); // Desactivar el modo de edición después de guardar los cambios
+    } catch (error) {
+      console.error('Error al guardar los cambios:', error.message);
+    }
+  };
+
   return (
     <Form onSubmit={handleSubmit}>
-      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>{editing ? 'Editar Perfil de Usuario' : 'Perfil de Usuario'}</h1>
+      <h1 style={{ marginTop: '20px' }}>Perfil</h1>
 
-      <Form.Group controlId="formUsername">
-        <InputGroup className="mb-3 mt-5">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Nombre de usuario
-          </InputGroup.Text>
-          <Form.Control
-            name='username'
-            aria-label="Nombre de usuario"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.username}
-            placeholder="Ingresa el nombre de usuario"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
+      <Row>
+        <Col md>
+          <Form.Group controlId="formtext">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Nombre de Usuario*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+          <Form.Group controlId="formApe">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Apellido*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+          <Form.Group controlId="formName">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Nombres*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+          <Form.Group controlId="formOrganizacion">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Organización*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+          <Form.Group controlId="formEmail">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Email*</Form.Label>
+              <Form.Control type="email" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+        </Col>
+        <Col md>
+          <Form.Group controlId="formEmail">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Rol*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+          <Form.Group controlId="formCuilt">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>CUIL o CUIT*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+          <Form.Group controlId="formNumber">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Teléfono*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+          <Form.Group controlId="formDomicilio">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Domicilio*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+          <Form.Group controlId="formProfesion">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Profesión*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+        </Col>
+      </Row>
 
-      <Form.Group controlId="formEmail">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Email
-          </InputGroup.Text>
-          <Form.Control
-            type="email"
-            name="email"
-            aria-label="Email"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.email}
-            placeholder="Ingresa el email"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
-
-      <Form.Group controlId="formCuil">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            CUIL/CUIT
-          </InputGroup.Text>
-          <Form.Control
-            name="cuil"
-            aria-label="CUIL/CUIT"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.cuilt}
-            placeholder="Ingresa el CUIL/CUIT"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
-
-      <Form.Group controlId="formNombres">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Nombres y Apellidos
-          </InputGroup.Text>
-          <Form.Control
-            name="nombres"
-            aria-label="Nombres y Apellidos"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.nombres}
-            placeholder="Ingresa los nombres y apellidos"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
-
-      <Form.Group controlId="formTelefono">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Teléfono
-          </InputGroup.Text>
-          <Form.Control
-            type="tel"
-            name="telefono"
-            aria-label="Teléfono"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.telefono}
-            placeholder="Ingresa el número de teléfono"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
-
-      <Form.Group controlId="formDomicilio">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Domicilio
-          </InputGroup.Text>
-          <Form.Control
-            name="domicilio"
-            aria-label="Domicilio"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.domicilio}
-            placeholder="Ingresa el domicilio"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
-
-      <Form.Group controlId="formProfesion">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Profesión
-          </InputGroup.Text>
-          <Form.Control
-            name="profesion"
-            aria-label="Profesión"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.profesion}
-            placeholder="Ingresa la profesión"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
-
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-
-        {editing ? (
-          <Button variant="success" type="submit" style={{ width: '200px', fontWeight: 'bold', margin: '5px' }}>
-            Guardar Cambios
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
+        {!editing ? (
+          <Button variant="warning" onClick={() => setEditing(true)} style={{ width: '200px', fontWeight: 'bold' }}>
+            Modificar cuenta
           </Button>
         ) : (
-          <Button variant="warning" onClick={handleEditClick} style={{ width: '200px', fontWeight: 'bold', margin: '5px' }}>
-            Modificar
-          </Button>
+          <>
+            <Button variant="success" type="submit" style={{ width: '200px', fontWeight: 'bold', marginRight: '10px' }}>
+              Guardar Cambios
+            </Button>
+            <Button variant="danger" style={{ width: '200px', fontWeight: 'bold' }}>
+              Cancelar
+            </Button>
+          </>
         )}
-
-        <Button variant="danger" type="submit" style={{ width: '200px', fontWeight: 'bold', margin: '5px' }}>
-          Eliminar
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
+        <Button variant="danger" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
+          Eliminar cuenta
         </Button>
-
       </div>
     </Form>
   );
-};
+}
 
-export default PerfilUsuarios;
+export default PerfilPersonal;

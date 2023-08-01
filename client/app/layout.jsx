@@ -7,8 +7,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import Navigation2 from '@/components/navigartion2';
 // import UserProvider from "../context/user";
 import dynamic from "next/dynamic";
+import Sidebar from '@/components/sidebar';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const Nav = dynamic(() => import("../components/navigartion2"), { ssr: false });
+const Nav2 = dynamic(() => import("../components/sidebar"), { ssr: false });
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,10 +28,22 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
       <Nav/>  
-      <Container className='contenedor pt-5'>
+
+      <Row className='vh-100'>
+        <Col sm={2} className='d-none d-lg-block'>
+        <Nav2 className="mt-5 pt-5 fixed-start "/>
+        </Col>
+        <Col className='mt-5'>
+        {children}
+        </Col>
+      </Row>
+
+
+      {/* <div className='contenedor pt-5 d-flex mx-0'>
+      <Sidebar/>
       {children}
-      </Container>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      </div> */}
+      
       
       </body>
     </html>

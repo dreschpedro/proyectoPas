@@ -9,8 +9,12 @@ const Personal_model = sequelize.define('personal', {
     primaryKey: true,
     autoIncrement: true,
   },
-  apellido_nombre: {
-    type: DataTypes.STRING(200),
+  apellido: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+  nombre: {
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   cuilt: {
@@ -51,7 +55,7 @@ Personal_model.belongsTo(Usuario_model, { foreignKey: 'id_usuario' });
 
 
 // Crear la tabla "Personal" en la base de datos
-Personal_model.sync({ force: true }).then(() => {
+Personal_model.sync({ force: false }).then(() => {
   // console.log('Tabla "Personal" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "Personal":', error);

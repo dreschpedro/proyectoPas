@@ -29,17 +29,22 @@ function Usuarios() {
   useEffect(() => {
     // Filtrar los datos de usuarios en función del término de búsqueda
     const filteredUsersData = usersData.filter((user) => {
+      const nombre = user.nombre?.toLowerCase() || ''; // Comprobación de existencia para nombre
+      const apellido = user.apellido?.toLowerCase() || ''; // Comprobación de existencia para apellido
+      const usuarioNombre = user.usuario?.nombre?.toLowerCase() || ''; // Comprobación de existencia para usuario y nombre
+      const cuilt = user.cuilt || ''; // Comprobación de existencia para cuilt
+
       return (
-        user.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.usuario.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.cuilt.includes(searchTerm)
+        nombre.includes(searchTerm.toLowerCase()) ||
+        apellido.includes(searchTerm.toLowerCase()) ||
+        usuarioNombre.includes(searchTerm.toLowerCase()) ||
+        cuilt.includes(searchTerm.toLowerCase())
       );
     });
 
     const modifiedFilteredUsersData = filteredUsersData.map((user) => ({
       ...user,
-      imagen: user.imagen ? `http://localhost:3005${user.imagen}` : null,
+      imagen: user.imagen ? `${serverURL}${user.imagen}` : null,
     }));
 
     setFilteredUsersData(modifiedFilteredUsersData);
@@ -85,7 +90,7 @@ function Usuarios() {
         <tbody>
           {filteredUsersData ? (
             filteredUsersData.map((user) => (
-              <tr key={user.id_personal}onClick={() => handleUserClick(user.id_personal)} style={{ cursor: 'pointer' }}>
+              <tr key={user.id_personal} onClick={() => handleUserClick(user.id_personal)} style={{ cursor: 'pointer' }}>
                 <td>{user.id_personal}</td>
                 <td>
                   {user.imagen ? (
@@ -96,7 +101,7 @@ function Usuarios() {
                 </td>
                 <td>{user.nombre}</td>
                 <td>{user.apellido}</td>
-                <td>{user.usuario.nombre}</td>
+                <td>{user.usuario?.nombre}</td> {/* Ajustar esta línea */}
               </tr>
             ))
           ) : null}
