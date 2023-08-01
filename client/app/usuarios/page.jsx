@@ -37,8 +37,15 @@ function Usuarios() {
       );
     });
 
-    setFilteredUsersData(filteredUsersData);
+    const modifiedFilteredUsersData = filteredUsersData.map((user) => ({
+      ...user,
+      imagen: user.imagen ? `http://localhost:3005${user.imagen}` : null,
+    }));
+
+    setFilteredUsersData(modifiedFilteredUsersData);
   }, [usersData, searchTerm]);
+
+  console.log('lista Usuarios: \n', usersData);
 
   const handleUserClick = (id) => {
     // Redireccionar a la página de detalle del usuario con el ID correspondiente
