@@ -1,229 +1,184 @@
 "use client"
+
 import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import instance from '@/app/axiosConfig';
+import { Container } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-const PerfilUsuarios = () => {
-  const [userData, setUserData] = useState({});
-  const [editing, setEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    cuil: '',
-    nombres: '',
-    telefono: '',
-    domicilio: '',
-    profesion: '',
-  });
+function Perfil() {
+  const roles = ['Data-Entry', 'Administrador', 'Consultor'];
+
+  // State para almacenar las instituciones obtenidas del backend
+  const [instituciones, setInstituciones] = useState([]);
+  // State para almacenar la institución seleccionada
+  const [selectedInstitucion, setSelectedInstitucion] = useState('');
 
   useEffect(() => {
-    // Simulamos una llamada a la API para obtener los datos del usuario
-    // Puedes reemplazar esto con una llamada real a la API utilizando el ID del usuario
-    const ejemploUsuario = {
-      id: 1,
-      username: 'usuarioejemplo',
-      email: 'usuario@example.com',
-      cuil: '20345678901',
-      nombres: 'Usuario de Ejemplo',
-      telefono: '+54 9 123456789',
-      domicilio: 'Calle Ejemplo, Ciudad de Ejemplo',
-      profesion: 'Profesión de Ejemplo',
-    };
-
-    setUserData(ejemploUsuario);
+    // Lógica para obtener la lista de instituciones desde el backend utilizando la instancia de axios
+    instance.get('/institucion/') // La solicitud se enviará automáticamente a 'http://localhost:3005/api/institucion/'
+      .then((response) => {
+        console.log('Respuesta del backend:', response.data);
+        setInstituciones(response.data);
+      })
+      .catch((error) => console.error('Error al obtener las instituciones:', error));
   }, []);
 
-  useEffect(() => {
-    setFormData({
-      username: userData.username,
-      email: userData.email,
-      cuil: userData.cuil,
-      nombres: userData.nombres,
-      telefono: userData.telefono,
-      domicilio: userData.domicilio,
-      profesion: userData.profesion,
-    });
-  }, [userData]);
 
-  const handleEditClick = () => {
-    setEditing(!editing);
+  const handleImageUpload = (event) => {
+    // Lógica para manejar la carga de la imagen
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    try {
-      // Realizar la lógica para guardar los cambios en la API utilizando formData
-      // Puedes usar formData.username, formData.email, etc.
-      // Simulamos una respuesta exitosa de la API
-      const response = await instance.post('usuario/actualizar', formData);
-
-      console.log('Respuesta del backend:', response.data);
-      setEditing(false); // Desactivar el modo de edición después de guardar los cambios
-    } catch (error) {
-      console.error('Error al guardar los cambios:', error.message);
-    }
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    // Aquí puedes agregar la lógica para manejar el envío del formulario y crear el usuario en el backend
+    const formData = new FormData(event.target);
+    formData.append('institucion', selectedInstitucion);
+    // Luego envías los datos del formulario al backend para registrar el usuario utilizando Axios
+    axios.post('/api/usuario/registrar', formData) // Ruta correcta para registrar el usuario en el backend
+      .then((response) => {
+        // Aquí puedes manejar la respuesta del backend si es necesario
+        console.log('Usuario registrado exitosamente:', response.data);
+      })
+      .catch((error) => console.error('Error al registrar el usuario:', error));
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>{editing ? 'Editar Perfil de Usuario' : 'Perfil de Usuario'}</h1>
 
-      <Form.Group controlId="formUsername">
-        <InputGroup className="mb-3 mt-5">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Nombre de usuario
-          </InputGroup.Text>
-          <Form.Control
-            name='username'
-            aria-label="Nombre de usuario"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.username}
-            placeholder="Ingresa el nombre de usuario"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
 
-      <Form.Group controlId="formEmail">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Email
-          </InputGroup.Text>
-          <Form.Control
-            type="email"
-            name="email"
-            aria-label="Email"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.email}
-            placeholder="Ingresa el email"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
+<Form onSubmit={handleSubmit} >
 
-      <Form.Group controlId="formCuil">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            CUIL/CUIT
-          </InputGroup.Text>
-          <Form.Control
-            name="cuil"
-            aria-label="CUIL/CUIT"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.cuil}
-            placeholder="Ingresa el CUIL/CUIT"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
+      <h1 style={{ marginTop: '20px' }}>Crear cuenta</h1>
 
-      <Form.Group controlId="formNombres">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Nombres y Apellidos
-          </InputGroup.Text>
-          <Form.Control
-            name="nombres"
-            aria-label="Nombres y Apellidos"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.nombres}
-            placeholder="Ingresa los nombres y apellidos"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
 
-      <Form.Group controlId="formTelefono">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Teléfono
-          </InputGroup.Text>
-          <Form.Control
-            type="tel"
-            name="telefono"
-            aria-label="Teléfono"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.telefono}
-            placeholder="Ingresa el número de teléfono"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
 
-      <Form.Group controlId="formDomicilio">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Domicilio
-          </InputGroup.Text>
-          <Form.Control
-            name="domicilio"
-            aria-label="Domicilio"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.domicilio}
-            placeholder="Ingresa el domicilio"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
+      <Row>
+        <Col md>
+        
+        <Form.Group controlId="formtext">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Nombre de Usuario*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
 
-      <Form.Group controlId="formProfesion">
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Profesión
-          </InputGroup.Text>
-          <Form.Control
-            name="profesion"
-            aria-label="Profesión"
-            aria-describedby="inputGroup-sizing-default"
-            value={formData.profesion}
-            placeholder="Ingresa la profesión"
-            required
-            readOnly={!editing}
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </Form.Group>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+          <Form.Group controlId="formPassword">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Contraseña*</Form.Label>
+              <Form.Control type="password" placeholder="" />
+            </Form.Group>
+          </Form.Group>
 
-        {editing ? (
-          <Button variant="success" type="submit" style={{ width: '200px', fontWeight: 'bold', margin: '5px' }}>
-            Guardar Cambios
-          </Button>
-        ) : (
-          <Button variant="warning" onClick={handleEditClick} style={{ width: '200px', fontWeight: 'bold', margin: '5px' }}>
-            Modificar
-          </Button>
-        )}
+          <Form.Group controlId="formPassword2">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Confirmar Contraseña*</Form.Label>
+              <Form.Control type="password" placeholder="" />
+            </Form.Group>
+          </Form.Group>
 
-        <Button variant="danger" type="submit" style={{ width: '200px', fontWeight: 'bold', margin: '5px' }}>
-          Eliminar
-        </Button>
+          <Form.Group controlId="formOrganizacion">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Organización*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
 
-      </div>
+          <Form.Group controlId="formEmail">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Email*</Form.Label>
+              <Form.Control type="email" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formEmail">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Rol*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+        </Col>
+
+
+
+
+        <Col md>
+
+        <Form.Group controlId="formCuilt">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>CUIL o CUIT*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formName">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Nombres y Apellidos*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formApe">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Apellidos*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formNumber">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Teléfono*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formDomicilio">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Domicilio*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+          <Form.Group controlId="formProfesion">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Profesión*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
+
+          
+
+        
+        </Col>
+
+
+        <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
+        
+        <Form.Group controlId="formFile">
+            <Form.Label>Subir imagen de perfil</Form.Label>
+            <Form.Control type="file" onChange={handleImageUpload} />
+          </Form.Group>
+        
+        </Col>
+      </Row>
+
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
+            <Button variant="warning" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
+              Modificar cuenta
+            </Button>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
+            <Button variant="danger" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
+              Eliminar cuenta
+            </Button>
+          </div>
     </Form>
-  );
-};
 
-export default PerfilUsuarios;
+  );
+}
+
+export default Perfil;

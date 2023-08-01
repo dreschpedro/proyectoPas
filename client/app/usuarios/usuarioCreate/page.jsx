@@ -45,12 +45,7 @@ function RegistroUsuarios() {
   };
 
   return (
-<>
-<<<<<<< HEAD
-   
 
-=======
->>>>>>> a46ec14d13c14d431f7b50ccdc92aad600c604b2
 
 <Form onSubmit={handleSubmit} >
 
@@ -125,6 +120,13 @@ function RegistroUsuarios() {
             </Form.Group>
           </Form.Group>
 
+          <Form.Group controlId="formApe">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Apellidos*</Form.Label>
+              <Form.Control type="text" placeholder="" />
+            </Form.Group>
+          </Form.Group>
+
           <Form.Group controlId="formNumber">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Teléfono*</Form.Label>
@@ -147,11 +149,7 @@ function RegistroUsuarios() {
           </Form.Group>
 
 
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
-            <Button variant="primary" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
-              Registrarse
-            </Button>
-          </div>
+          
 
         
         </Col>
@@ -167,8 +165,13 @@ function RegistroUsuarios() {
         </Col>
       </Row>
 
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
+            <Button variant="primary" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
+              Registrarse
+            </Button>
+          </div>
     </Form>
-    </>
+
   );
 }
 
