@@ -7,6 +7,10 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircle, faCircleUser } from '@fortawesome/free-solid-svg-icons';
+
+
 
 const MenuModal = () => {
   const [showModal, setShowModal] = useState(false);
@@ -25,9 +29,9 @@ const MenuModal = () => {
   return (
     <>
     <div className="ms-auto">
-      <Button variant="secondary" onClick={toggleModal} className='mx-5 d-flex justify-content-lg-end'>
-        [UserName]
-      </Button>
+    
+      <FontAwesomeIcon icon={faCircleUser} style={{ color: "#ffffff" }} onClick={toggleModal} className='mx-5 d-flex justify-content-lg-end mx-lg-5  iconUser' />
+
       </div>
 
       <Modal show={showModal} onHide={toggleModal}>
@@ -35,11 +39,11 @@ const MenuModal = () => {
           <Modal.Title>[Username]</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Button variant="secondary" onClick={toggleModal}>
+          <Form className='d-flex flex-column justify-content-center align-items-center'>
+            <Button variant="secondary" onClick={toggleModal} className=''>
               Administrar Usuario
             </Button>
-            <Button variant="secondary" onClick={toggleModal}>
+            <Button variant="secondary" onClick={toggleModal} className='mt-3'>
               Ayuda y Soporte tecnico
             </Button>
           </Form>
@@ -58,7 +62,7 @@ function Navigation2() {
   return (
     <>
       {['lg'].map((expand) => (
-        <Navbar key={expand} expand={expand} className="bg-secondary mb-3 fixed-top">
+        <Navbar key={expand} expand={expand} className=" mb-3 fixed-top" style={{backgroundColor: '#101488'}}>
           <Container fluid>
             <Navbar.Brand href="#" className="mx-4">
               <Link href="/">
@@ -75,18 +79,25 @@ function Navigation2() {
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>P.A.S</Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Nav className="justify-content-center flex-grow-1 pe-3 d-lg-none">
-                  <Link href={"/estadisticas"}>
-                    <Button variant="secondary">Estadísticas</Button>
+                <Nav className="d-flex justify-content-center align-items-center flex-grow-1 pe-3 d-lg-none">
+
+                <div className='buttoncito' ><MenuModal/></div>
+
+                <Link href={"/estadisticas"} style={{marginTop: '15px'}} className='custom-link'>
+                    <div className='buttoncito' >Estadísticas</div>
                   </Link>
-                  <Link href={"/instituciones"}>
-                    <Button variant="secondary">Instituciones</Button>
+                  <div className='buttoncito custom-link'>
+                  <Link href={"/instituciones"} className='custom-link'>
+                    Instituciones
                   </Link>
-                  <Link href={"/servicios"}>
-                    <Button variant="secondary">Servicios</Button>
+                  </div>
+                  <div className='buttoncito'>
+                  <Link href={"/servicios"} className='custom-link'>
+                    Servicios
                   </Link>
-                  <Link href={"/usuarios"}>
-                    <Button variant="secondary">Usuarios</Button>
+                  </div>
+                  <Link href={"/usuarios"} className='custom-link'>
+                    <div className='buttoncito'>Usuarios</div>
                   </Link>
                 </Nav>
                 <MenuModal/>

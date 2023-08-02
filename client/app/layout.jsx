@@ -1,4 +1,5 @@
 "use client"
+import "../sass/styles.scss"
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Navigation from '@/components/navigation'
