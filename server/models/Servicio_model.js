@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
-import Institucion_model from './Institucion_model.js';
+import Organizacion_model from './Organizacion_model.js';
 
 const Servicio_model = sequelize.define('servicio', {
   id_servicio: {
@@ -27,7 +27,7 @@ const Servicio_model = sequelize.define('servicio', {
   });
 
 // Relación con la tabla Institucion
-Servicio_model.belongsTo(Institucion_model, { foreignKey: 'id_institucion' });
+Servicio_model.belongsTo(Organizacion_model, { foreignKey: 'id_organizacion' });
 
 // Crear la tabla "servicios" en la base de datos
 Servicio_model.sync({ force: false }).then(() => {

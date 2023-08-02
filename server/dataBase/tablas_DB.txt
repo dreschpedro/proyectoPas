@@ -1,4 +1,4 @@
-#instituciones
+#organizacion
 {
   "nombre": "Sanatorio Caminos",
   "direccion": "Av San Martin 3213",
@@ -28,21 +28,21 @@
 
 #usuario
 {
-  "nombre": "Juan1",
+  "username": "Juan1",
   "password": "perez1",
   "email": "perez1@juan.com",
   "rol": "admin"
 }
 
 {
-  "nombre": "Ramon2",
+  "username": "Ramon2",
   "password": "gonzalez2",
   "email": "gonzalez@ramon.com",
   "rol": "Data-Entry"
 }
 
 {
-  "nombre": "Federico3",
+  "username": "Federico3",
   "password": "espinosa3",
   "email": "fede@espino.com",
   "rol": "Consultor"
@@ -52,7 +52,7 @@
 #personal
 {
   "id_usuario": 1,
-  "id_institucion":1,
+  "id_organizacion":1,
   "apellido": "Perez",
   "nombre": "Juan",
   "cuilt": "111111111",
@@ -64,7 +64,7 @@
 
 {
   "id_usuario": 2,
-  "id_institucion":1,
+  "id_organizacion":1,
   "apellido": "Gonzalez",
   "nombre": "Ramon",
   "cuilt": "222222222",
@@ -76,7 +76,7 @@
 
 {
   "id_usuario": 3,
-  "id_institucion":2,
+  "id_organizacion":2,
   "apellido": "Espinosa",
   "nombre": "Federico",
   "cuilt": "333333333",

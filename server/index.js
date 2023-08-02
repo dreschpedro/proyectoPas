@@ -36,7 +36,7 @@ app.use(cors({
 
 
 // enpoints
-import routerInstit from './routes/instituc.routes.js';
+import routerOrganiz from './routes/organizacion.routes.js';
 import routerServicio from './routes/servicio.routes.js';
 import routerProducto from './routes/producto.routes.js';
 import routerUsuario from './routes/usuario.routes.js';
@@ -50,7 +50,7 @@ import routerProdEnt from './routes/Prod_entreg.routes.js';
 
 app.get('/', (req, res) => res.send(`Estas en Inicio`));
 
-app.use('/api/institucion/', routerInstit)
+app.use('/api/organizacion/', routerOrganiz)
 app.use('/api/servicio', routerServicio)
 app.use('/api/producto', routerProducto)
 app.use('/api/usuario', routerUsuario)

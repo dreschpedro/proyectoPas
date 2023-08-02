@@ -5,8 +5,8 @@ import instance, { serverURL } from '../../axiosConfig.js'; // Corregimos el nom
 import { useParams } from 'next/navigation';
 
 
-const PerfilInstitucion = () => {
-  const [institucionData, setInstitucionData] = useState({});
+const PerfilOrganizacion = () => {
+  const [OrganizacionData, setOrganizacionData] = useState({});
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({
     nombre: '',
@@ -16,34 +16,35 @@ const PerfilInstitucion = () => {
     descripcion: '',
   });
 
-  const { id } = useParams(); // Obtiene el id de la institución desde la URL utilizando useParams
+  const { id } = useParams(); // Obtiene el id de la organizacion desde la URL utilizando useParams
 
   useEffect(() => {
-    // Realiza la solicitud GET para obtener los datos de la institución por su ID
-    const obtenerInstitucionPorId = async () => {
+    // Realiza la solicitud GET para obtener los datos de la organizacion por su ID
+    const obtenerOrganizacionPorId = async () => {
       try {
-        const response = await instance.get(`/institucion/${id}`);
-        setInstitucionData(response.data);
+        const response = await instance.get(`/organizaciones/${id}`);
+        setOrganizacionData(response.data);
       } catch (error) {
-        console.error('Error al obtener los datos de la institución:', error.message);
+        console.error('Error al obtener los datos de la organizacion:', error.message);
       }
     };
 
     if (id) {
-      obtenerInstitucionPorId();
+      obtenerOrganizacionPorId();
     }
   }, [id]); // Escucha los cambios en el id para volver a obtener los datos cuando cambia
 
 
   useEffect(() => {
     setFormData({
-      nombre: institucionData.nombre,
-      direccion: institucionData.direccion,
-      telefono: institucionData.telefono,
-      email: institucionData.email,
-      descripcion: institucionData.descripcion,
+      nombre: OrganizacionData.nombre,
+      direccion: OrganizacionData.direccion,
+      telefono: OrganizacionData.telefono,
+      email: OrganizacionData.email,
+      descripcion: OrganizacionData.descripcion,
     });
-  }, [institucionData]);
+  }, [OrganizacionData]);
+
 
   const handleImageUpload = async (event) => {
     // Lógica para manejar la carga de la imagen del logo (opcional)
@@ -52,9 +53,9 @@ const PerfilInstitucion = () => {
     formData.append('logo', imageFile);
 
     try {
-      const response = await instance.post('/institucion/subir-imagen', formData);
+      const response = await instance.post('/organizacion/subir-imagen', formData);
       const imagePath = response.data.imagePath;
-      setInstitucionData({ ...institucionData, logo: imagePath });
+      setOrganizacionData({ ...OrganizacionData, logo: imagePath });
     } catch (error) {
       console.error('Error al subir la imagen:', error.message);
     }
@@ -71,7 +72,7 @@ const PerfilInstitucion = () => {
       // Realizar la lógica para guardar los cambios en la API utilizando formData
       // Puedes usar formData.nombre, formData.direccion, etc.
       // Simulamos una respuesta exitosa de la API
-      const response = await instance.post('institucion/actualizar', formData);
+      const response = await instance.post('organizacion/actualizar', formData);
 
       console.log('Respuesta del backend:', response.data);
       setEditing(false); // Desactivar el modo de edición después de guardar los cambios
@@ -90,14 +91,14 @@ const PerfilInstitucion = () => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>{editing ? 'Editar Perfil de la Institución' : 'Perfil de la Institución'}</h1>
+      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>{editing ? 'Editar Perfil de la organizacion' : 'Perfil de la organizacion'}</h1>
 
       <Form.Group controlId="formLogo">
-        <Form.Label>Logo de la Institución</Form.Label>
+        <Form.Label>Logo de la organizacion</Form.Label>
         <br />
         <img
-          src={`${serverURL}${institucionData.imagen}`} // Cambia institucion.imagen por institucionData.imagen
-          alt={institucionData.nombre} // Cambia institucion.nombre por institucionData.nombre
+          src={`${serverURL}${OrganizacionData.imagen}`} // Cambia Organizacion.imagen por OrganizacionData.imagen
+          alt={OrganizacionData.nombre} // Cambia Organizacion.nombre por OrganizacionData.nombre
           style={{ maxWidth: '60px' }}
         />
 
@@ -114,7 +115,7 @@ const PerfilInstitucion = () => {
             aria-label="Nombre"
             aria-describedby="inputGroup-sizing-default"
             value={formData.nombre}
-            placeholder="Ingresa el nombre de la Institución"
+            placeholder="Ingresa el nombre de la organizacion"
             required
             readOnly={!editing}
             onChange={handleChange}
@@ -132,7 +133,7 @@ const PerfilInstitucion = () => {
             aria-label="Dirección"
             aria-describedby="inputGroup-sizing-default"
             value={formData.direccion}
-            placeholder="Ingresa la dirección de la Institución"
+            placeholder="Ingresa la dirección de la organizacion"
             required
             readOnly={!editing}
             onChange={handleChange}
@@ -181,16 +182,16 @@ const PerfilInstitucion = () => {
       <Form.Group controlId="formDescripcion">
         <InputGroup className="mb-3">
           <InputGroup.Text id="inputGroup-sizing-default">
-            Descripción general de la Institución
+            Descripción general de la organizacion
           </InputGroup.Text>
           <Form.Control
             as="textarea"
             name='descripcion'
             rows={5}
-            aria-label="Descripción general de la Institución"
+            aria-label="Descripción general de la organizacion"
             aria-describedby="inputGroup-sizing-default"
             value={formData.descripcion}
-            placeholder="Ingresa una descripción general de la Institución"
+            placeholder="Ingresa una descripción general de la organizacion"
             required
             readOnly={!editing}
             onChange={handleChange}
@@ -219,4 +220,4 @@ const PerfilInstitucion = () => {
   );
 };
 
-export default PerfilInstitucion;
+export default PerfilOrganizacion;

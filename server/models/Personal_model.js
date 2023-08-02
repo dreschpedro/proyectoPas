@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
-import Institucion_model from './Institucion_model.js';
+import Organizacion_model from './Organizacion_model.js';
 import Usuario_model from './Usuario_model.js';
 
 const Personal_model = sequelize.define('personal', {
@@ -47,8 +47,8 @@ const Personal_model = sequelize.define('personal', {
     timestamps: true,
   });
 
-// Relación con la tabla Institucion
-Personal_model.belongsTo(Institucion_model, { foreignKey: 'id_institucion' });
+// Relación con la tabla organizacion
+Personal_model.belongsTo(Organizacion_model, { foreignKey: 'id_organizacion' });
 
 // Relación con la tabla Usuario
 Personal_model.belongsTo(Usuario_model, { foreignKey: 'id_usuario' });

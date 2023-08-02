@@ -1,49 +1,43 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { Form, Button, InputGroup } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import instance from '@/app/axiosConfig';
-import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useParams } from 'next/navigation'
+import { useParams } from 'next/navigation'; // Update import
 
 function PerfilPersonal() {
-  const { id } = useParams(); // Obtiene el id del personal desde la URL utilizando 'useParams'
+  const { id } = useParams();
 
-  // Estado para almacenar los datos del personal obtenidos del backend
-  const [userData, setUserData] = useState({});
-  // Estado para habilitar la edición de campos
+  const [PersonalData, setPersonalData] = useState({});
   const [editing, setEditing] = useState(false);
-  // Estado para almacenar los datos del formulario
   const [formData, setFormData] = useState({
-    nombre: '',
+    username: '',
     apellido: '',
-    nombres: '',
+    nombre: '',
     organizacion: '',
     email: '',
     rol: '',
-    cuil: '',
+    cuilt: '',
     telefono: '',
     domicilio: '',
     profesion: '',
   });
 
   useEffect(() => {
-    // Realiza la solicitud GET para obtener los datos del personal por su ID
     const obtenerPersonalPorId = async () => {
       try {
         const response = await instance.get(`/personal/${id}`);
-        setUserData(response.data);
-        // Llena los campos del formulario con los datos obtenidos del servidor
+        setPersonalData(response.data);
         setFormData({
-          nombre: response.data.nombre || '',
+          username: response.data.usuario?.username || '', // Agrega ?. para verificar si usuario está definido
+          email: response.data.usuario?.email || '',
+          rol: response.data.usuario?.rol || '',
           apellido: response.data.apellido || '',
-          nombres: response.data.nombres || '',
-          organizacion: response.data.organizacion || '',
-          email: response.data.email || '',
-          rol: response.data.rol || '',
-          cuil: response.data.cuil || '',
+          nombre: response.data.nombre || '',
+          organizacion: response.data.organizacion.nombre || '',
+          cuilt: response.data.cuilt || '',
           telefono: response.data.telefono || '',
           domicilio: response.data.domicilio || '',
           profesion: response.data.profesion || '',
@@ -58,35 +52,29 @@ function PerfilPersonal() {
     }
   }, [id]);
 
-  const handleImageUpload = (event) => {
-    // Lógica para manejar la carga de la imagen
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Aquí puedes agregar la lógica para manejar el envío del formulario y actualizar los datos del usuario en el backend
     try {
-      // Realizar la lógica para guardar los cambios en el backend utilizando formData
-      // Puedes usar formData.nombre, formData.apellido, etc.
-      // Simulamos una respuesta exitosa de la API
       const response = await instance.post(`/personal/${id}`, formData);
       console.log('Datos del personal actualizados exitosamente:', response.data);
-      setEditing(false); // Desactivar el modo de edición después de guardar los cambios
+      setEditing(false);
     } catch (error) {
       console.error('Error al guardar los cambios:', error.message);
     }
   };
 
+  const handleChange = (event) => {
+    const { name, value, files } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: files ? files[0] : value,
+    }));
+  };
+
   return (
     <Form onSubmit={handleSubmit}>
+
       <h1 style={{ marginTop: '20px' }}>Perfil</h1>
 
       <Row>
@@ -94,31 +82,57 @@ function PerfilPersonal() {
           <Form.Group controlId="formtext">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Nombre de Usuario*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Control
+                name="username"
+                type="text"
+                value={formData.username}
+                onChange={handleChange} // Agrega este atributo
+              />
+
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formApe">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Apellido*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Control
+                name="apellido"
+                type="text"
+                value={formData.apellido}
+                onChange={handleChange}
+              />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formName">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Nombres*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Control
+                name="nombre"
+                type="text"
+                value={formData.nombre}
+                onChange={handleChange}
+              />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formOrganizacion">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Organización*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Control
+                name="organizacion"
+                type="text"
+                value={formData.organizacion}
+                onChange={handleChange}
+              />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formEmail">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email*</Form.Label>
-              <Form.Control type="email" placeholder="" />
+              <Form.Control
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
             </Form.Group>
           </Form.Group>
         </Col>
@@ -126,31 +140,56 @@ function PerfilPersonal() {
           <Form.Group controlId="formEmail">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Rol*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Control
+                name="rol"
+                type="text"
+                value={formData.rol}
+                onChange={handleChange}
+              />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formCuilt">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>CUIL o CUIT*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Control
+                name="cuilt"
+                type="text"
+                value={formData.cuilt}
+                onChange={handleChange}
+              />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formNumber">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Teléfono*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Control
+                name="telefono"
+                type="text"
+                value={formData.telefono}
+                onChange={handleChange}
+              />
             </Form.Group>
           </Form.Group>
-          <Form.Group controlId="formDomicilio">
+          <Form.Group controlId="formdomicilio">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Domicilio*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Label>domicilio*</Form.Label>
+              <Form.Control
+                name="domicilio"
+                type="text"
+                value={formData.domicilio}
+                onChange={handleChange}
+              />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formProfesion">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Profesión*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Control
+                name="profesion"
+                type="text"
+                value={formData.profesion}
+                onChange={handleChange}
+              />
             </Form.Group>
           </Form.Group>
         </Col>
@@ -163,7 +202,11 @@ function PerfilPersonal() {
           </Button>
         ) : (
           <>
-            <Button variant="success" type="submit" style={{ width: '200px', fontWeight: 'bold', marginRight: '10px' }}>
+            <Button variant="success"
+              name=""
+              type="submit"
+              style={{ width: '200px', fontWeight: 'bold', marginRight: '10px' }
+              }>
               Guardar Cambios
             </Button>
             <Button variant="danger" style={{ width: '200px', fontWeight: 'bold' }}>
@@ -173,11 +216,15 @@ function PerfilPersonal() {
         )}
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
-        <Button variant="danger" type="submit" style={{ width: '200px', fontWeight: 'bold' }}>
+        <Button variant="danger"
+          name=""
+          type="submit"
+          style={{ width: '200px', fontWeight: 'bold' }
+          }>
           Eliminar cuenta
         </Button>
       </div>
-    </Form>
+    </Form >
   );
 }
 

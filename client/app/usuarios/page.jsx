@@ -5,9 +5,9 @@ import Link from 'next/link';
 import instance, { serverURL } from '../axiosConfig';
 
 function Usuarios() {
-  const [usersData, setUsersData] = useState([]);
+  const [PersonalData, setPersonalData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredUsersData, setFilteredUsersData] = useState(null);
+  const [filteredPersonalData, setFilteredPersonalData] = useState(null);
 
   useEffect(() => {
     // Obtener los datos de personal desde el servidor
@@ -18,7 +18,7 @@ function Usuarios() {
             include: 'usuario',
           },
         });
-        setUsersData(response.data);
+        setPersonalData(response.data);
       } catch (error) {
         console.error('Error al obtener los datos de personal:', error);
       }
@@ -28,11 +28,11 @@ function Usuarios() {
 
   useEffect(() => {
     // Filtrar los datos de usuarios en función del término de búsqueda
-    const filteredUsersData = usersData.filter((user) => {
-      const nombre = user.nombre?.toLowerCase() || ''; // Comprobación de existencia para nombre
-      const apellido = user.apellido?.toLowerCase() || ''; // Comprobación de existencia para apellido
-      const usuarioNombre = user.usuario?.nombre?.toLowerCase() || ''; // Comprobación de existencia para usuario y nombre
-      const cuilt = user.cuilt || ''; // Comprobación de existencia para cuilt
+    const filteredPersonalData = PersonalData.filter((personal) => {
+      const nombre = personal.nombre?.toLowerCase() || ''; // Comprobación de existencia para nombre
+      const apellido = personal.apellido?.toLowerCase() || ''; // Comprobación de existencia para apellido
+      const usuarioNombre = personal.usuario?.username?.toLowerCase() || ''; // Comprobación de existencia para usuario y nombre
+      const cuilt = personal.cuilt || ''; // Comprobación de existencia para cuilt
 
       return (
         nombre.includes(searchTerm.toLowerCase()) ||
@@ -42,17 +42,17 @@ function Usuarios() {
       );
     });
 
-    const modifiedFilteredUsersData = filteredUsersData.map((user) => ({
-      ...user,
-      imagen: user.imagen ? `${serverURL}${user.imagen}` : null,
+    const modifiedFilteredPersonalData = filteredPersonalData.map((personal) => ({
+      ...personal,
+      imagen: personal.imagen ? `${serverURL}${personal.imagen}` : null,
     }));
 
-    setFilteredUsersData(modifiedFilteredUsersData);
-  }, [usersData, searchTerm]);
+    setFilteredPersonalData(modifiedFilteredPersonalData);
+  }, [PersonalData, searchTerm]);
 
-  console.log('lista Usuarios: \n', usersData);
+  console.log('lista Usuarios: \n', PersonalData);
 
-  const handleUserClick = (id) => {
+  const handlepersonalClick = (id) => {
     // Redireccionar a la página de detalle del usuario con el ID correspondiente
     window.location.href = `/usuarios/${id}`;
   };
@@ -88,20 +88,20 @@ function Usuarios() {
           </tr>
         </thead>
         <tbody>
-          {filteredUsersData ? (
-            filteredUsersData.map((user) => (
-              <tr key={user.id_personal} onClick={() => handleUserClick(user.id_personal)} style={{ cursor: 'pointer' }}>
-                <td>{user.id_personal}</td>
+          {filteredPersonalData ? (
+            filteredPersonalData.map((personal) => (
+              <tr key={personal.id_personal} onClick={() => handlepersonalClick(personal.id_personal)} style={{ cursor: 'pointer' }}>
+                <td>{personal.id_personal}</td>
                 <td>
-                  {user.imagen ? (
-                    <Image src={user.imagen} alt={`Imagen de ${user.nombre}`} style={{ maxWidth: '60px' }} />
+                  {personal.imagen ? (
+                    <Image src={personal.imagen} alt={`Imagen de ${personal.nombre}`} style={{ maxWidth: '60px' }} />
                   ) : (
                     <span>No hay imagen</span>
                   )}
                 </td>
-                <td>{user.nombre}</td>
-                <td>{user.apellido}</td>
-                <td>{user.usuario?.nombre}</td> {/* Ajustar esta línea */}
+                <td>{personal.nombre}</td>
+                <td>{personal.apellido}</td>
+                <td>{personal.usuario?.username}</td> {/* Ajustar esta línea */}
               </tr>
             ))
           ) : null}

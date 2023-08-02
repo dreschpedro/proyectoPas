@@ -9,8 +9,8 @@ const Sidebar = () => {
                   <Link href={"/estadisticas"}>
                     <Button variant="secondary">Estadísticas</Button>
                   </Link>
-                  <Link href={"/instituciones"}>
-                    <Button variant="secondary">Instituciones</Button>
+                  <Link href={"/organizaciones"}>
+                    <Button variant="secondary">Organizaciones</Button>
                   </Link>
                   <Link href={"/servicios"}>
                     <Button variant="secondary">Servicios</Button>
