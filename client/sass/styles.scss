@@ -1,0 +1,32 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+// Estilos personalizados
+.buttoncito  {
+  background-color: #22096F;
+  margin-Top: 15px;
+
+  color: #FFFFFF;
+  width: 8.6rem;
+  height: 2.6rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+Link{
+  text-decoration:none;
+}
+
+.custom-link {
+  text-decoration: none;
+  color: #FFFFFF;
+  cursor: pointer; /* Agrega un cursor de tipo puntero para indicar que es un enlace */
+}
+
+
+.iconUser{
+  height: 2rem;
+  width: 2rem;
+}
+
