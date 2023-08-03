@@ -24,7 +24,6 @@ function PerfilPersonal() {
     domicilio: '',
     profesion: '',
   });
-
   useEffect(() => {
     const obtenerPersonalPorId = async () => {
       try {
@@ -32,8 +31,6 @@ function PerfilPersonal() {
 
         const resData = response.data;
         console.log('Datos del Personal obtenidos:', resData);
-
-
 
         setPersonalData(resData);
         setFormData({
@@ -56,25 +53,54 @@ function PerfilPersonal() {
       } catch (error) {
         console.error('Error al obtener los datos del Personal:', error.message);
       }
-
     };
 
     if (id) {
       obtenerPersonalPorId();
     }
-  }, [id]);
+  }, [id, editing]);  // Include `editing` in the dependencies
 
+
+
+  const handleEditClick = () => {
+    setEditing(true);
+  };
+
+  const handleCancelClick = () => {
+    setEditing(false);
+    // Reset form data to current PersonalData when cancelling
+    setFormData({
+      // datos del usuario
+      username: PersonalData.personal?.usuario?.username || '',
+      email: PersonalData.personal?.usuario?.email || '',
+      rol: PersonalData.personal?.usuario?.rol || '',
+
+      // datos de la organizacion
+      organizacion: PersonalData.organizacion?.nombre || '',
+
+      // datos del personal
+      apellido: PersonalData.personal?.apellido || '',
+      nombre: PersonalData.personal?.nombre || '',
+      cuilt: PersonalData.personal?.cuilt || '',
+      telefono: PersonalData.personal?.telefono || '',
+      domicilio: PersonalData.personal?.domicilio || '',
+      profesion: PersonalData.personal?.profesion || '',
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await instance.post(`/personal/${id}`, formData);
-      console.log('Datos del personal actualizados exitosamente:', response.data);
-      setEditing(false);
+      if (editing) {
+        const response = await instance.put(`/personal/${id}`, formData);
+        console.log('Datos del personal actualizados exitosamente:', response.data);
+        setEditing(false);
+      }
     } catch (error) {
       console.error('Error al guardar los cambios:', error.message);
     }
   };
+
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
@@ -98,6 +124,7 @@ function PerfilPersonal() {
                 name="username"
                 type="text"
                 value={formData.username}
+                readOnly={!editing}
                 onChange={handleChange} // Agrega este atributo
               />
 
@@ -110,6 +137,7 @@ function PerfilPersonal() {
                 name="apellido"
                 type="text"
                 value={formData.apellido}
+                readOnly={!editing}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -121,6 +149,7 @@ function PerfilPersonal() {
                 name="nombre"
                 type="text"
                 value={formData.nombre}
+                readOnly={!editing}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -132,6 +161,7 @@ function PerfilPersonal() {
                 name="organizacion"
                 type="text"
                 value={formData.organizacion}
+                readOnly={!editing}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -143,6 +173,7 @@ function PerfilPersonal() {
                 name="email"
                 type="email"
                 value={formData.email}
+                readOnly={!editing}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -156,6 +187,7 @@ function PerfilPersonal() {
                 name="rol"
                 type="text"
                 value={formData.rol}
+                readOnly={!editing}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -167,6 +199,7 @@ function PerfilPersonal() {
                 name="cuilt"
                 type="text"
                 value={formData.cuilt}
+                readOnly={!editing}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -178,6 +211,7 @@ function PerfilPersonal() {
                 name="telefono"
                 type="text"
                 value={formData.telefono}
+                readOnly={!editing}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -189,6 +223,7 @@ function PerfilPersonal() {
                 name="domicilio"
                 type="text"
                 value={formData.domicilio}
+                readOnly={!editing}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -200,6 +235,7 @@ function PerfilPersonal() {
                 name="profesion"
                 type="text"
                 value={formData.profesion}
+                readOnly={!editing}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -207,36 +243,51 @@ function PerfilPersonal() {
         </Col>
       </Row>
 
+      {/* MODIFICAR/GUARDAR CAMBIOS   ||   CANCELAR */}
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
         {!editing ? (
-          <Button variant="warning" onClick={() => setEditing(true)} style={{ width: '200px', fontWeight: 'bold' }}>
+          <Button
+            variant="warning"
+            onClick={handleEditClick}
+            style={{ width: '200px', fontWeight: 'bold' }}
+          >
             Modificar cuenta
           </Button>
         ) : (
           <>
-            <Button variant="success"
-              name=""
-              type="submit"
-              style={{ width: '200px', fontWeight: 'bold', marginRight: '10px' }
-              }>
-              Guardar Cambios
-            </Button>
-            <Button variant="danger" style={{ width: '200px', fontWeight: 'bold' }}>
-              Cancelar
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Button
+                variant="success"
+                name=""
+                type="submit"
+                style={{ width: '200px', fontWeight: 'bold', marginRight: '10px' }}
+              >
+                Guardar Cambios
+              </Button>
+              <Button
+                variant="danger"
+                onClick={handleCancelClick}
+                style={{ width: '200px', fontWeight: 'bold' }}
+              >
+                Cancelar
+              </Button>
+            </div>
           </>
         )}
       </div>
+
+      {/* ELIMINAR CUENTA */}
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
-        <Button variant="danger"
+        <Button
+          variant="danger"
           name=""
           type="submit"
-          style={{ width: '200px', fontWeight: 'bold' }
-          }>
+          style={{ width: '200px', fontWeight: 'bold' }}
+        >
           Eliminar cuenta
         </Button>
       </div>
-    </Form >
+    </Form>
   );
 }
 
