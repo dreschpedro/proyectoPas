@@ -1,16 +1,15 @@
 import Personal_model from "../models/Personal_model.js";
 import Usuario_model from "../models/Usuario_model.js";
 import { getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from "../helpers/imagen.js";
-import Organizacion_model from "../models/Organizacion_model.js"; 
+import Organizacion_model from "../models/Organizacion_model.js";
 
-// consulta de todos los registros
+// Consulta de todos los registros activos
 const listar_personal = async (req, res) => {
   try {
     const personal = await Personal_model.findAll({
+      where: { activo: true },
       include: [{ model: Usuario_model, attributes: ["username"] }],
     });
-
-    // console.log('Personal data:', personal);
 
     return res.status(200).json(personal);
   } catch (error) {
@@ -21,12 +20,13 @@ const listar_personal = async (req, res) => {
 };
 
 
-// consulta por un registro (por id)
+// consulta de todos los registros con activo: true
 const obtener_personal = async (req, res) => {
   const personal_id = req.params.id;
 
   try {
-    const personal = await Personal_model.findByPk(personal_id, {
+    const personal = await Personal_model.findOne({
+      where: { id_personal: personal_id, activo: true }, // Agregar condición de activo: true
       include: [
         {
           model: Usuario_model,
@@ -53,7 +53,6 @@ const obtener_personal = async (req, res) => {
   }
 };
 
-
 // registro de personal
 const registrar_personal = async (req, res) => {
   try {
@@ -68,14 +67,18 @@ const registrar_personal = async (req, res) => {
 };
 
 // modifica los datos buscando por id
+// Modifica los datos de un registro activo por id
 const modificar_personal = async (req, res) => {
   const personal_id = req.params.id;
 
   try {
-    const personal = await Personal_model.findByPk(personal_id);
+    // Consulta el registro y verifica si está activo
+    const personal = await Personal_model.findOne({
+      where: { id_personal: personal_id, activo: true },
+    });
 
     if (!personal) {
-      return res.status(404).send('El registro no se encuentra');
+      return res.status(404).send('El registro no se encuentra o no está activo');
     }
 
     await personal.update(req.body);
@@ -87,8 +90,9 @@ const modificar_personal = async (req, res) => {
   }
 };
 
-// elimina por id
-const eliminar_personal = async (req, res) => {
+
+// Cambiar el estado 'activo' del registro por id
+const cambiar_estado_personal = async (req, res) => {
   const personal_id = req.params.id;
 
   try {
@@ -99,14 +103,15 @@ const eliminar_personal = async (req, res) => {
       return res.status(404).send(mensaje);
     }
 
-    await personal.destroy();
-    return res.status(200).send('Registro eliminado');
+    await personal.update({ activo: !personal.activo }); // Cambia el estado activo
+    return res.status(200).json({ message: 'Estado modificado', activo: personal.activo });
   } catch (error) {
     console.log(error);
-    const mensaje_error = 'Ocurrió un error al eliminar el registro';
+    const mensaje_error = 'Ocurrió un error al cambiar el estado del registro';
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
 
 // exports
 export {
@@ -114,5 +119,5 @@ export {
   obtener_personal,
   registrar_personal,
   modificar_personal,
-  eliminar_personal
+  cambiar_estado_personal
 };

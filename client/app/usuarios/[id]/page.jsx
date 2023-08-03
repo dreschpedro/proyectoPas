@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Modal } from 'react-bootstrap';
 import instance from '@/app/axiosConfig';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,6 +10,8 @@ import { useParams } from 'next/navigation'; // Update import
 function PerfilPersonal() {
   const { id } = useParams();
 
+  const [modificationError, setModificationError] = useState(null);
+  const [accountDeleted, setAccountDeleted] = useState(false);
   const [PersonalData, setPersonalData] = useState({});
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -24,6 +26,9 @@ function PerfilPersonal() {
     domicilio: '',
     profesion: '',
   });
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   useEffect(() => {
     const obtenerPersonalPorId = async () => {
       try {
@@ -58,9 +63,7 @@ function PerfilPersonal() {
     if (id) {
       obtenerPersonalPorId();
     }
-  }, [id, editing]);  // Include `editing` in the dependencies
-
-
+  }, [id, editing]);
 
   const handleEditClick = () => {
     setEditing(true);
@@ -68,7 +71,6 @@ function PerfilPersonal() {
 
   const handleCancelClick = () => {
     setEditing(false);
-    // Reset form data to current PersonalData when cancelling
     setFormData({
       // datos del usuario
       username: PersonalData.personal?.usuario?.username || '',
@@ -94,13 +96,20 @@ function PerfilPersonal() {
       if (editing) {
         const response = await instance.put(`/personal/${id}`, formData);
         console.log('Datos del personal actualizados exitosamente:', response.data);
-        setEditing(false);
+
+        if (response.data.activo === false) {
+          // Si el registro no está activo, muestra un mensaje al usuario
+          setModificationError('No se pudo modificar el registro ya que no está activo.');
+        } else {
+          setEditing(false);
+          setModificationError(null);
+        }
+
       }
     } catch (error) {
       console.error('Error al guardar los cambios:', error.message);
     }
   };
-
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
@@ -108,6 +117,26 @@ function PerfilPersonal() {
       ...prevFormData,
       [name]: files ? files[0] : value,
     }));
+  };
+
+  const handleShowDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await instance.put(`/personal/estado/${id}`); // Use the new endpoint
+      console.log('Estado de cuenta cambiado exitosamente');
+      setAccountDeleted(true);
+      handleCloseDeleteModal(); // Close the delete modal
+    } catch (error) {
+      console.error('Error al cambiar el estado de la cuenta:', error.message);
+    }
   };
 
   return (
@@ -118,26 +147,28 @@ function PerfilPersonal() {
       <Row>
         <Col md>
           <Form.Group controlId="formtext">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="username">
               <Form.Label>Nombre de Usuario*</Form.Label>
               <Form.Control
                 name="username"
                 type="text"
                 value={formData.username}
                 readOnly={!editing}
+                required
                 onChange={handleChange} // Agrega este atributo
               />
 
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formApe">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="apellido">
               <Form.Label>Apellido*</Form.Label>
               <Form.Control
                 name="apellido"
                 type="text"
                 value={formData.apellido}
                 readOnly={!editing}
+                required
                 onChange={handleChange}
               />
             </Form.Group>
@@ -150,6 +181,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.nombre}
                 readOnly={!editing}
+                required
                 onChange={handleChange}
               />
             </Form.Group>
@@ -162,6 +194,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.organizacion}
                 readOnly={!editing}
+                required
                 onChange={handleChange}
               />
             </Form.Group>
@@ -174,6 +207,7 @@ function PerfilPersonal() {
                 type="email"
                 value={formData.email}
                 readOnly={!editing}
+                required
                 onChange={handleChange}
               />
             </Form.Group>
@@ -188,6 +222,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.rol}
                 readOnly={!editing}
+                required
                 onChange={handleChange}
               />
             </Form.Group>
@@ -200,6 +235,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.cuilt}
                 readOnly={!editing}
+                required
                 onChange={handleChange}
               />
             </Form.Group>
@@ -212,6 +248,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.telefono}
                 readOnly={!editing}
+                required
                 onChange={handleChange}
               />
             </Form.Group>
@@ -224,6 +261,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.domicilio}
                 readOnly={!editing}
+                required
                 onChange={handleChange}
               />
             </Form.Group>
@@ -236,6 +274,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.profesion}
                 readOnly={!editing}
+                required
                 onChange={handleChange}
               />
             </Form.Group>
@@ -243,7 +282,7 @@ function PerfilPersonal() {
         </Col>
       </Row>
 
-      {/* MODIFICAR/GUARDAR CAMBIOS   ||   CANCELAR */}
+      {/* MODIFICAR/GUARDAR CAMBIOS || CANCELAR */}
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
         {!editing ? (
           <Button
@@ -272,6 +311,11 @@ function PerfilPersonal() {
                 Cancelar
               </Button>
             </div>
+            {modificationError && (
+              <p style={{ color: 'red', textAlign: 'center', marginTop: '10px' }}>
+                {modificationError}
+              </p>
+            )}
           </>
         )}
       </div>
@@ -280,13 +324,38 @@ function PerfilPersonal() {
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
         <Button
           variant="danger"
-          name=""
-          type="submit"
+          onClick={handleShowDeleteModal}
           style={{ width: '200px', fontWeight: 'bold' }}
         >
           Eliminar cuenta
         </Button>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Cambio de Estado</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Está seguro que desea eliminar su cuenta?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDeleteModal}>
+            Cancelar
+          </Button>
+          <Button variant="danger" onClick={handleDeleteAccount}>
+            Eliminar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Account Deleted Confirmation */}
+      <Modal className={`confirmation-message ${accountDeleted ? 'active' : ''}`}>
+        <Modal.Header closeButton>
+          <Modal.Title>Cuenta ELiminada exitosamente</Modal.Title>
+        </Modal.Header>
+      </Modal>
+
     </Form>
   );
 }
