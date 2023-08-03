@@ -37,7 +37,7 @@ function RegistroInstituciones() {
         imagen: imagenSeleccionada,
       });
 
-      const response = await instance.post('/institucion/registrar', formDataToSend, {
+      const response = await instance.post('/organizaciones/registrar', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

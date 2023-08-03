@@ -4,13 +4,6 @@ import Link from 'next/link';
 import Row from 'react-bootstrap';
 import Col from 'react-bootstrap';
 
-// const buttonStyle = {
-//   backgroundColor: '#22096F',
-//   marginTop: '15px',
-//   color: '#FFFFFF',
-//   widht: '20px',
-// }
-
 const Sidebar = () => {
   return (
     <div className="sidebar mt-5 pt-5  fixed-start h-100 " style={{backgroundColor: '#101488'}}>
@@ -20,8 +13,8 @@ const Sidebar = () => {
                     <div className='buttoncito' >Estadísticas</div>
                   </Link>
                   <div className='buttoncito custom-link'>
-                  <Link href={"/instituciones"} className='custom-link'>
-                    Instituciones
+                  <Link href={"/organizaciones"} className='custom-link'>
+                    Organizaciones
                   </Link>
                   </div>
                   <div className='buttoncito'>

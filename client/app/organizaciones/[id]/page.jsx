@@ -6,6 +6,8 @@ import { useParams } from 'next/navigation';
 
 
 const PerfilOrganizacion = () => {
+  const { id } = useParams();
+  
   const [OrganizacionData, setOrganizacionData] = useState({});
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -16,7 +18,6 @@ const PerfilOrganizacion = () => {
     descripcion: '',
   });
 
-  const { id } = useParams(); // Obtiene el id de la organizacion desde la URL utilizando useParams
 
   useEffect(() => {
     // Realiza la solicitud GET para obtener los datos de la organizacion por su ID
@@ -53,7 +54,7 @@ const PerfilOrganizacion = () => {
     formData.append('logo', imageFile);
 
     try {
-      const response = await instance.post('/organizacion/subir-imagen', formData);
+      const response = await instance.post('/organizaciones/subir-imagen', formData);
       const imagePath = response.data.imagePath;
       setOrganizacionData({ ...OrganizacionData, logo: imagePath });
     } catch (error) {
@@ -72,7 +73,7 @@ const PerfilOrganizacion = () => {
       // Realizar la lógica para guardar los cambios en la API utilizando formData
       // Puedes usar formData.nombre, formData.direccion, etc.
       // Simulamos una respuesta exitosa de la API
-      const response = await instance.post('organizacion/actualizar', formData);
+      const response = await instance.post('organizaciones/actualizar', formData);
 
       console.log('Respuesta del backend:', response.data);
       setEditing(false); // Desactivar el modo de edición después de guardar los cambios

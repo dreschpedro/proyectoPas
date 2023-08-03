@@ -13,7 +13,7 @@ const ListaOrganizacion = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await instance.get('/organizacion');
+        const response = await instance.get('/organizaciones');
         setListaOrganizacion(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de Organizaciones:', error);

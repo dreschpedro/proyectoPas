@@ -3,7 +3,7 @@ import path from 'path';
 
 // Función de utilidad para obtener la ruta de la imagen por defecto
 const getDefaultImagePath = (entityType, defaultImageFilename) => {
-  const defaultImagePath = `../uploads/${entityType}/${defaultImageFilename}`;
+  const defaultImagePath = `/uploads/${entityType}/${defaultImageFilename}`;
   return defaultImagePath;
 };
 
@@ -22,7 +22,7 @@ const saveImageAndGetPath = (req, entityType, defaultImageFilename) => {
 const deleteTempImage = (imagePath, entityType, defaultImageFilename) => {
   if (imagePath) {
     // Verifica si la imagen no es la por defecto antes de eliminarla
-    if (!imagePath.includes(`../uploads/${entityType}/${defaultImageFilename}`)) {
+    if (!imagePath.includes(`/uploads/${entityType}/${defaultImageFilename}`)) {
       fs.unlinkSync(imagePath);
     }
   }

@@ -5,7 +5,7 @@
   "telefono": "123456789",
   "email": "caminos@sanatorio.com.ar",
   "descripcion": "csdcsdc",
-  "imagen": "/uploads/institucion/default_institucion.png"
+  "imagen": "/uploads/organizacion/default_organizacion.png"
 }
 {
   "nombre": "Universidad Nacional",
@@ -13,7 +13,7 @@
   "telefono": "555-123-4567",
   "email": "contacto@universidadnacional.edu",
   "descripcion": "jkjkjkjkc",
-  "imagen": "/uploads/institucion/company.png"
+  "imagen": "/uploads/organizacion/company.png"
 }
 {
   "nombre": "Organización sin fines de lucro",
@@ -21,7 +21,7 @@
   "telefono": "555-555-5555",
   "email": "fines@organizacion.org",
   "descripcion": "jkjkjkjkc",
-  "imagen": "/uploads/institucion/company_azul.png"
+  "imagen": "/uploads/organizacion/company_azul.png"
 }
 
 

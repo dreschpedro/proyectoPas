@@ -4,7 +4,7 @@ import axios from 'axios';
 const serverURL = 'http://localhost:3005';
 
 const instance = axios.create({
-  baseURL: `${serverURL}/api/`,
+  baseURL: serverURL,
   timeout: 5000,
   headers: { 'X-Custom-Header': 'foobar' }
 });

@@ -29,22 +29,34 @@ function PerfilPersonal() {
     const obtenerPersonalPorId = async () => {
       try {
         const response = await instance.get(`/personal/${id}`);
-        setPersonalData(response.data);
+
+        const resData = response.data;
+        console.log('Datos del Personal obtenidos:', resData);
+
+
+
+        setPersonalData(resData);
         setFormData({
-          username: response.data.usuario?.username || '', // Agrega ?. para verificar si usuario está definido
-          email: response.data.usuario?.email || '',
-          rol: response.data.usuario?.rol || '',
-          apellido: response.data.apellido || '',
-          nombre: response.data.nombre || '',
-          organizacion: response.data.organizacion.nombre || '',
-          cuilt: response.data.cuilt || '',
-          telefono: response.data.telefono || '',
-          domicilio: response.data.domicilio || '',
-          profesion: response.data.profesion || '',
+          // datos del usuario
+          username: resData.personal.usuario?.username || '',
+          email: resData.personal.usuario?.email || '',
+          rol: resData.personal.usuario?.rol || '',
+
+          // datos de la organizacion
+          organizacion: resData.organizacion?.nombre || '',
+
+          // datos del personal
+          apellido: resData.personal.apellido || '',
+          nombre: resData.personal.nombre || '',
+          cuilt: resData.personal.cuilt || '',
+          telefono: resData.personal.telefono || '',
+          domicilio: resData.personal.domicilio || '',
+          profesion: resData.personal.profesion || '',
         });
       } catch (error) {
         console.error('Error al obtener los datos del Personal:', error.message);
       }
+
     };
 
     if (id) {
