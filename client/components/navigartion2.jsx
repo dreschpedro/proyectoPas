@@ -28,9 +28,9 @@ const MenuModal = () => {
 
   return (
     <>
-    <div className="ms-auto">
-    
-      <FontAwesomeIcon icon={faCircleUser} style={{ color: "#ffffff" }} onClick={toggleModal} className='mx-5 d-flex justify-content-lg-end mx-lg-5  iconUser' />
+      <div className="ms-auto">
+
+        <FontAwesomeIcon icon={faCircleUser} style={{ color: "#ffffff" }} onClick={toggleModal} className='mx-5 d-flex justify-content-lg-end mx-lg-5  iconUser' />
 
       </div>
 
@@ -62,7 +62,7 @@ function Navigation2() {
   return (
     <>
       {['lg'].map((expand) => (
-        <Navbar key={expand} expand={expand} className=" mb-3 fixed-top" style={{backgroundColor: '#101488'}}>
+        <Navbar key={expand} expand={expand} className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
           <Container fluid>
             <Navbar.Brand href="#" className="mx-4">
               <Link href="/">
@@ -81,26 +81,26 @@ function Navigation2() {
               <Offcanvas.Body>
                 <Nav className="d-flex justify-content-center align-items-center flex-grow-1 pe-3 d-lg-none">
 
-                <div className='buttoncito' ><MenuModal/></div>
+                  <div className='buttoncito' ><MenuModal /></div>
 
-                <Link href={"/estadisticas"} style={{marginTop: '15px'}} className='custom-link'>
+                  <Link href={"/estadisticas"} style={{ marginTop: '15px' }} className='custom-link'>
                     <div className='buttoncito' >Estadísticas</div>
                   </Link>
                   <div className='buttoncito custom-link'>
-                  <Link href={"/instituciones"} className='custom-link'>
-                    Instituciones
-                  </Link>
+                    <Link href={"/organizaciones"} className='custom-link'>
+                      Organizaciones
+                    </Link>
                   </div>
                   <div className='buttoncito'>
-                  <Link href={"/servicios"} className='custom-link'>
-                    Servicios
-                  </Link>
+                    <Link href={"/servicios"} className='custom-link'>
+                      Servicios
+                    </Link>
                   </div>
                   <Link href={"/usuarios"} className='custom-link'>
                     <div className='buttoncito'>Usuarios</div>
                   </Link>
                 </Nav>
-                <MenuModal/>
+                <MenuModal />
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>

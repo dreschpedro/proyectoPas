@@ -5,10 +5,11 @@ import { Form, Button, Modal } from 'react-bootstrap';
 import instance from '@/app/axiosConfig';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useParams } from 'next/navigation'; // Update import
+import { useParams, useRouter } from 'next/navigation'; // Update import
 
 function PerfilPersonal() {
   const { id } = useParams();
+  const router = useRouter();
 
   const [modificationError, setModificationError] = useState(null);
   const [accountDeleted, setAccountDeleted] = useState(false);
@@ -130,12 +131,28 @@ function PerfilPersonal() {
 
   const handleDeleteAccount = async () => {
     try {
-      await instance.put(`/personal/estado/${id}`); // Use the new endpoint
-      console.log('Estado de cuenta cambiado exitosamente');
+      await instance.put(`/personal/estado/${id}`);
+      console.log('Cuenta eliminada exitosamente');
       setAccountDeleted(true);
       handleCloseDeleteModal(); // Close the delete modal
+
+      // Redirect to "/usuarios" after a short delay
+      setTimeout(() => {
+        router.push('/usuarios');
+      }, 1500); // 1.5 seconds delay before redirection
     } catch (error) {
-      console.error('Error al cambiar el estado de la cuenta:', error.message);
+      console.error('Error al eliminar la cuenta:', error.message);
+    }
+  };
+
+
+  const handleConfirmationClose = () => {
+    setShowConfirmation(false);
+    if (accountDeleted) {
+      // Redirect to "/usuarios" after a short delay
+      setTimeout(() => {
+        router.push('/usuarios');
+      }, 2000); // 1.5 seconds delay before redirection
     }
   };
 
@@ -350,10 +367,13 @@ function PerfilPersonal() {
       </Modal>
 
       {/* Account Deleted Confirmation */}
-      <Modal className={`confirmation-message ${accountDeleted ? 'active' : ''}`}>
+      <Modal show={accountDeleted} onHide={handleConfirmationClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Cuenta ELiminada exitosamente</Modal.Title>
+          <Modal.Title>Cuenta Eliminada Exitosamente</Modal.Title>
         </Modal.Header>
+        <Modal.Body>
+          La cuenta ha sido eliminada exitosamente.
+        </Modal.Body>
       </Modal>
 
     </Form>

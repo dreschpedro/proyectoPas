@@ -24,7 +24,7 @@ function Navigation() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Link href={"/estadisticas"}><Button variant="dark">Estadísticas</Button></Link>
-            <Link href={"/instituciones"}><Button variant="dark">Organizaciones</Button></Link>
+            <Link href={"/organizaciones"}><Button variant="dark">Organizaciones</Button></Link>
             <Link href={"/productos"}><Button variant="dark">Productos</Button></Link>
             <Link href={"/servicios"}><Button variant="dark">Servicios</Button></Link>
             <Link href={"/usuarios"}><Button variant="dark">Usuarios</Button></Link>

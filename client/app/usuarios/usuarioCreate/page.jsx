@@ -1,5 +1,6 @@
 "use client"
 
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import instance from '@/app/axiosConfig';
@@ -8,16 +9,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 function RegistroUsuarios() {
-  const roles = ['Data-Entry', 'Administrador', 'Consultor'];
 
-  // State para almacenar las Organizaciones obtenidas del backend
+const roles = ['Data-Entry', 'Administrador', 'Consultor'];
+  const [selectedRol, setSelectedRol] = useState('');
   const [Organizaciones, setOrganizaciones] = useState([]);
-  // State para almacenar la institución seleccionada
   const [selectedOrganizacion, setSelectedOrganizacion] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredOrganizaciones, setFilteredOrganizaciones] = useState([]);
 
   useEffect(() => {
-    // Lógica para obtener la lista de Organizaciones desde el backend utilizando la instancia de axios
-    instance.get('/organizaciones/') // La solicitud se enviará automáticamente a 'http://localhost:3005/api/Organizacion/'
+    instance.get('/organizaciones/')
       .then((response) => {
         console.log('Respuesta del backend:', response.data);
         setOrganizaciones(response.data);
@@ -25,6 +26,18 @@ function RegistroUsuarios() {
       .catch((error) => console.error('Error al obtener las Organizaciones:', error));
   }, []);
 
+  useEffect(() => {
+    if (searchTerm) {
+      const filteredData = Organizaciones.filter((organizacion) => {
+        return (
+          organizacion.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      });
+      setFilteredOrganizaciones(filteredData);
+    } else {
+      setFilteredOrganizaciones([]);
+    }
+  }, [searchTerm, Organizaciones]);
 
   const handleImageUpload = (event) => {
     // Lógica para manejar la carga de la imagen
@@ -49,9 +62,6 @@ function RegistroUsuarios() {
     <Form onSubmit={handleSubmit} >
 
       <h1 style={{ marginTop: '20px' }}>Crear cuenta</h1>
-
-
-
       <Row>
         <Col md>
 
@@ -93,15 +103,38 @@ function RegistroUsuarios() {
           </Form.Group>
 
           <Form.Group controlId="formOrganizacion">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Organización*</Form.Label>
+            <Form.Label>Organización*</Form.Label>
+            <InputGroup>
               <Form.Control
                 type="text"
-                name=""
-                // value={formData}
+                value={selectedOrganizacion}
+                onChange={(e) => {
+                  setSelectedOrganizacion(e.target.value);
+                  setSearchTerm(e.target.value);
+                }}
                 required
-                placeholder="" />
-            </Form.Group>
+                placeholder="Buscar y seleccionar organización"
+              />
+              {filteredOrganizaciones.length > 0 && (
+                <DropdownButton
+                  as={InputGroup.Append}
+                  variant="outline-primary"
+                  // title="Seleccionar"
+                >
+                  {filteredOrganizaciones.map((org) => (
+                    <Dropdown.Item 
+                      key={org.id_organizacion}
+                      onClick={() => {
+                        setSelectedOrganizacion(org.nombre);
+                        setSearchTerm(org.nombre);
+                      }}
+                    >
+                      {org.nombre}
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>
+              )}
+            </InputGroup>
           </Form.Group>
 
           <Form.Group controlId="formEmail">
@@ -116,18 +149,24 @@ function RegistroUsuarios() {
             </Form.Group>
           </Form.Group>
 
-          <Form.Group controlId="formEmail">
+          <Form.Group controlId="formRol">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Rol*</Form.Label>
-              <Form.Control
-                type="text"
-                name=""
-                // value={formData}
-                required
-                placeholder="" />
+              <DropdownButton
+                title={selectedRol || 'Seleccionar Rol'}
+                variant="outline-primary"
+                onSelect={(eventKey) => setSelectedRol(eventKey)}>
+                {roles.map((rol) => (
+                  <Dropdown.Item key={rol} eventKey={rol}>
+                    {rol}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
             </Form.Group>
           </Form.Group>
+
         </Col>
+
 
         <Col md>
           <Form.Group controlId="formCuilt">
@@ -144,7 +183,7 @@ function RegistroUsuarios() {
 
           <Form.Group controlId="formName">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Nombres y Apellidos*</Form.Label>
+              <Form.Label>Nombre*</Form.Label>
               <Form.Control
                 type="text"
                 name=""
@@ -156,7 +195,7 @@ function RegistroUsuarios() {
 
           <Form.Group controlId="formApe">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Apellidos*</Form.Label>
+              <Form.Label>Apellido*</Form.Label>
               <Form.Control
                 type="text"
                 name=""

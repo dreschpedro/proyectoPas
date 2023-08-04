@@ -5,16 +5,16 @@ import { Table, Form, Button, InputGroup } from 'react-bootstrap';
 import Link from 'next/link';
 import instance, { serverURL } from '../axiosConfig.js'; // Corregimos el nombre de la importación
 
-const ListaOrganizacion = () => {
+const ListaOrganizaciones = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
-  const [listaOrganizacion, setListaOrganizacion] = useState([]);
+  const [listaOrganizaciones, setListaOrganizaciones] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await instance.get('/organizaciones');
-        setListaOrganizacion(response.data);
+        setListaOrganizaciones(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de Organizaciones:', error);
       }
@@ -26,7 +26,7 @@ const ListaOrganizacion = () => {
   // Filtrar los datos cuando el término de búsqueda cambie
   useEffect(() => {
     if (searchTerm) {
-      const filteredData = listaOrganizacion.filter((organizacion) => {
+      const filteredData = listaOrganizaciones.filter((organizacion) => {
         return (
           organizacion.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
           organizacion.direccion.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -37,11 +37,11 @@ const ListaOrganizacion = () => {
       setFilteredData(filteredData);
     } else {
       // Si no hay término de búsqueda, mostrar todos los datos
-      setFilteredData(listaOrganizacion);
+      setFilteredData(listaOrganizaciones);
     }
-  }, [searchTerm, listaOrganizacion]);
+  }, [searchTerm, listaOrganizaciones]);
 
-  console.log('listaOrganizacion: \n', listaOrganizacion);
+  console.log('listaOrganizaciones: \n', listaOrganizaciones);
 
   const handleUserClick = (id) => {
     // Redireccionar a la página de detalle del usuario con el ID correspondiente
@@ -57,7 +57,7 @@ const ListaOrganizacion = () => {
         <Form.Group controlId="formSearch">
           <InputGroup>
             <InputGroup.Text id="inputGroup-sizing-default">
-              Búsqueda Asistida
+              Búscar
             </InputGroup.Text>
             <Form.Control
               type="text"
@@ -101,13 +101,13 @@ const ListaOrganizacion = () => {
                   )}
                 </td>
                 <td>
-                  <a
+                  <Link
                     href={`https://www.google.com/maps/search/${encodeURIComponent(organizacion.direccion)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     {organizacion.direccion}
-                  </a>
+                  </Link>
                 </td>
                 <td>{organizacion.telefono}</td>
                 <td>{organizacion.email}</td>
@@ -121,4 +121,4 @@ const ListaOrganizacion = () => {
   );
 };
 
-export default ListaOrganizacion;
+export default ListaOrganizaciones;
