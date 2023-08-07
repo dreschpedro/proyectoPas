@@ -10,12 +10,27 @@ import Col from 'react-bootstrap/Col';
 
 function RegistroUsuarios() {
 
-const roles = ['Data-Entry', 'Administrador', 'Consultor'];
+  const roles = ['Data-Entry', 'Administrador', 'Consultor'];
   const [selectedRol, setSelectedRol] = useState('');
+  const [isRolSelected, setIsRolSelected] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [Organizaciones, setOrganizaciones] = useState([]);
   const [selectedOrganizacion, setSelectedOrganizacion] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOrganizaciones, setFilteredOrganizaciones] = useState([]);
+
+  const [formData, setFormData] = useState({
+    username: '',
+    apellido: '',
+    nombre: '',
+    organizacion: '',
+    email: '',
+    rol: '',
+    cuilt: '',
+    telefono: '',
+    domicilio: '',
+    profesion: '',
+  });
 
   useEffect(() => {
     instance.get('/organizaciones/')
@@ -43,23 +58,62 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
     // Lógica para manejar la carga de la imagen
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Aquí puedes agregar la lógica para manejar el envío del formulario y crear el usuario en el backend
-    const formData = new FormData(event.target);
-    formData.append('organizacion', selectedOrganizacion);
-    // Luego envías los datos del formulario al backend para registrar el usuario utilizando Axios
-    axios.post('/usuarios/registrar', formData) // Ruta correcta para registrar el usuario en el backend
-      .then((response) => {
-        // Aquí puedes manejar la respuesta del backend si es necesario
-        console.log('Usuario registrado exitosamente:', response.data);
-      })
-      .catch((error) => console.error('Error al registrar el usuario:', error));
+
+    if (!selectedRol) {
+      setIsRolSelected(true); // Mostrar el mensaje de error
+      return;
+    }
+
+    try {
+      // Obtener el id de la organización seleccionada
+      const selectedOrg = Organizaciones.find(org => org.nombre === selectedOrganizacion);
+      if (!selectedOrg) {
+        console.error('Organización seleccionada no encontrada.');
+        return;
+      }
+      const organizacionId = selectedOrg.id_organizacion;
+
+      // Registrar un nuevo usuario
+      const userResponse = await instance.post('/usuarios/registrar', {
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        rol: selectedRol,
+        // ... otros campos de usuario
+      });
+      const userId = userResponse.data.id_usuario;
+
+      // Registrar un nuevo registro en la tabla personal
+      const personalResponse = await instance.post('/personal/registrar', {
+        apellido: formData.apellido,
+        nombre: formData.nombre,
+        cuilt: formData.cuilt,
+        domicilio: formData.domicilio,
+        profesion: formData.profesion,
+        telefono: formData.telefono,
+        // ... otros campos de personal
+        id_organizacion: organizacionId,
+        id_usuario: userId,
+      });
+
+      console.log('Usuario registrado exitosamente:', personalResponse.data);
+    } catch (error) {
+      console.error('Error al registrar el usuario:', error);
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
-
-    <Form onSubmit={handleSubmit} >
+    <Form onSubmit={handleSubmit}>
 
       <h1 style={{ marginTop: '20px' }}>Crear cuenta</h1>
       <Row>
@@ -70,9 +124,10 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
               <Form.Label>Nombre de Usuario*</Form.Label>
               <Form.Control
                 type="text"
-                name=""
-                // value={formData}
+                name="username"
+                value={formData.username}
                 required
+                onChange={handleInputChange}
                 placeholder="" />
             </Form.Group>
           </Form.Group>
@@ -83,8 +138,8 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
               <Form.Label>Contraseña*</Form.Label>
               <Form.Control
                 type="password"
-                name=""
-                // value={formData}
+                name="password"
+                value={formData.password}
                 required
                 placeholder="" />
             </Form.Group>
@@ -95,8 +150,8 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
               <Form.Label>Confirmar Contraseña*</Form.Label>
               <Form.Control
                 type="password"
-                name=""
-                // value={formData}
+                name="password"
+                // value={formData.password}
                 required
                 placeholder="" />
             </Form.Group>
@@ -107,6 +162,7 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
             <InputGroup>
               <Form.Control
                 type="text"
+                name="organizacion"
                 value={selectedOrganizacion}
                 onChange={(e) => {
                   setSelectedOrganizacion(e.target.value);
@@ -119,10 +175,10 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
                 <DropdownButton
                   as={InputGroup.Append}
                   variant="outline-primary"
-                  // title="Seleccionar"
+                // title="Seleccionar"
                 >
                   {filteredOrganizaciones.map((org) => (
-                    <Dropdown.Item 
+                    <Dropdown.Item
                       key={org.id_organizacion}
                       onClick={() => {
                         setSelectedOrganizacion(org.nombre);
@@ -142,8 +198,8 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
               <Form.Label>Email*</Form.Label>
               <Form.Control
                 type="email"
-                name=""
-                // value={formData}
+                name="email"
+                value={formData.email}
                 required
                 placeholder="" />
             </Form.Group>
@@ -154,14 +210,22 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
               <Form.Label>Rol*</Form.Label>
               <DropdownButton
                 title={selectedRol || 'Seleccionar Rol'}
-                variant="outline-primary"
-                onSelect={(eventKey) => setSelectedRol(eventKey)}>
+                variant={(isRolSelected || formSubmitted) ? 'outline-danger' : 'outline-primary'}
+                onSelect={(eventKey) => {
+                  setSelectedRol(eventKey);
+                  setIsRolSelected(false); // Restablecer el estado cuando se seleccione un rol
+                }}>
                 {roles.map((rol) => (
                   <Dropdown.Item key={rol} eventKey={rol}>
                     {rol}
                   </Dropdown.Item>
                 ))}
               </DropdownButton>
+              {(isRolSelected || formSubmitted) && !selectedRol && (
+                <div style={{ color: 'red', marginTop: '0.25rem' }}>
+                  Por favor, selecciona un rol.
+                </div>
+              )}
             </Form.Group>
           </Form.Group>
 
@@ -173,9 +237,10 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>CUIL o CUIT*</Form.Label>
               <Form.Control
-                type="text"
-                name=""
-                // value={formData}
+                type="number"
+                as="input"
+                name="cuilt"
+                value={formData.cuilt}
                 required
                 placeholder="" />
             </Form.Group>
@@ -186,8 +251,8 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
               <Form.Label>Nombre*</Form.Label>
               <Form.Control
                 type="text"
-                name=""
-                // value={formData}
+                name="nombre"
+                value={formData.nombre}
                 required
                 placeholder="" />
             </Form.Group>
@@ -198,8 +263,8 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
               <Form.Label>Apellido*</Form.Label>
               <Form.Control
                 type="text"
-                name=""
-                // value={formData}
+                name="apellido"
+                value={formData.apellido}
                 required
                 placeholder="" />
             </Form.Group>
@@ -209,9 +274,9 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Teléfono*</Form.Label>
               <Form.Control
-                type="text"
-                name=""
-                // value={formData}
+                type="number"
+                name="telefono"
+                value={formData.telefono}
                 required
                 placeholder="" />
             </Form.Group>
@@ -222,8 +287,8 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
               <Form.Label>Domicilio*</Form.Label>
               <Form.Control
                 type="text"
-                name=""
-                // value={formData}
+                name="domicilio"
+                value={formData.domicilio}
                 required
                 placeholder="" />
             </Form.Group>
@@ -234,8 +299,8 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
               <Form.Label>Profesión*</Form.Label>
               <Form.Control
                 type="text"
-                name=""
-                // value={formData}
+                name="profesion"
+                value={formData.profesion}
                 required
                 placeholder="" />
             </Form.Group>
@@ -250,8 +315,8 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
             <Form.Label>Subir imagen de perfil</Form.Label>
             <Form.Control
               type="file"
-              name=""
-              // value={formData}
+              name="imagen"
+              value={formData.imagen}
               required
               onChange={handleImageUpload} />
           </Form.Group>
@@ -262,14 +327,11 @@ const roles = ['Data-Entry', 'Administrador', 'Consultor'];
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
         <Button variant="primary"
           type="submit"
-          name=""
-          // value={formData}
           style={{ width: '200px', fontWeight: 'bold' }}>
           Registrarse
         </Button>
       </div>
     </Form>
-
   );
 }
 
