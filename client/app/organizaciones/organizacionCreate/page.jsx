@@ -17,7 +17,7 @@ function RegistroInstituciones() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const formDataToSend = new FormData();
+      const formDataToSend = new FormData();  
       formDataToSend.append('nombre', formData.nombre);
       formDataToSend.append('direccion', formData.direccion);
       formDataToSend.append('telefono', formData.telefono);
@@ -88,6 +88,7 @@ function RegistroInstituciones() {
           <Form.Control
             type="text"
             name='nombre'
+            value={formData.nombre}
             aria-label="Nombre"
             aria-describedby="inputGroup-sizing-default"
             placeholder="Ingresa el nombre de la Organización"
@@ -105,6 +106,7 @@ function RegistroInstituciones() {
           <Form.Control
             type="text"
             name='direccion'
+            value={formData.direccion}
             aria-label="Dirección"
             aria-describedby="inputGroup-sizing-default"
             placeholder="Ingresa la dirección de la Organización"
@@ -120,8 +122,9 @@ function RegistroInstituciones() {
             Número de teléfono
           </InputGroup.Text>
           <Form.Control
-            type="tel"
+            type="number"
             name='telefono'
+            value={formData.telefono}
             aria-label="Número de contacto"
             aria-describedby="inputGroup-sizing-default"
             placeholder="Ingresa el número de contacto"
@@ -139,6 +142,7 @@ function RegistroInstituciones() {
           <Form.Control
             type="email"
             name="email"
+            value={formData.email}
             aria-label="Email corporativo"
             aria-describedby="inputGroup-sizing-default"
             placeholder="Ingresa el email corporativo"
@@ -157,11 +161,11 @@ function RegistroInstituciones() {
             type="text"
             as="textarea"
             name='descripcion'
+            value={formData.descripcion}
             rows={5}
             aria-label="Descripción general de la Organización"
             aria-describedby="inputGroup-sizing-default"
             placeholder="Ingresa una descripción general de la Organización"
-            required
             onChange={handleChange}
           />
         </InputGroup>

@@ -63,8 +63,11 @@ const registrar_organizacion = async (req, res) => {
       return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
-    // Obtener la ruta de la imagen (ya sea la imagen subida o la imagen por defecto)
-    imagen_path = saveImageAndGetPath(req, 'organizacion', 'default_organizacion.png');
+    // Verificar si se proporcionó una imagen en la solicitud
+    if (req.file) {
+      // Si se proporcionó una imagen, guardarla y obtener su ruta
+      imagen_path = saveImageAndGetPath(req, 'organizacion', 'default_organizacion.png');
+    }
 
     // Crear la organizacion en la base de datos
     const organizacion_almacenado = await organizacion_model.create({
@@ -88,6 +91,7 @@ const registrar_organizacion = async (req, res) => {
     }
   }
 };
+
 
 
 

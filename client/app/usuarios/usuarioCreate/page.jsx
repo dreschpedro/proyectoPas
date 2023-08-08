@@ -57,8 +57,19 @@ function RegistroUsuarios() {
     }
   }, [searchTerm, Organizaciones]);
 
-  const handleImageUpload = (event) => {
-    // Lógica para manejar la carga de la imagen
+  const handleImageUpload = async (event) => {
+    // Lógica para manejar la carga de la imagen del logo (opcional)
+    const imageFile = event.target.files[0];
+    const formData = new FormData();
+    formData.append('logo', imageFile);
+
+    try {
+      const response = await instance.post('/organizaciones/subir-imagen', formData);
+      const imagePath = response.data.imagePath;
+      setOrganizacionData({ ...OrganizacionData, logo: imagePath });
+    } catch (error) {
+      console.error('Error al subir la imagen:', error.message);
+    }
   };
 
   const handleSubmit = async (event) => {
