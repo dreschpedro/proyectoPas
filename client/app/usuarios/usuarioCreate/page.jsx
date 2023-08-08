@@ -7,6 +7,9 @@ import instance from '@/app/axiosConfig';
 import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+
 
 function RegistroUsuarios() {
 
@@ -338,14 +341,30 @@ function RegistroUsuarios() {
         {/* imagen de perfil */}
         <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
 
-          <Form.Group controlId="formFile">
-            <Form.Label>Subir imagen de perfil</Form.Label>
+          {/* <Form.Group controlId="formFile">
+            
             <Form.Control
               type="file"
               name="imagen"
               value={formData.imagen}
               onChange={handleImageUpload} />
-          </Form.Group>
+              
+          </Form.Group> */}
+
+
+<Form.Group controlId="formFile">
+        <Form.Label>Seleccionar imagen de perfil</Form.Label>
+        <Button variant="secondary" className="d-flex align-items-center">
+          <FontAwesomeIcon icon={faUser} className="me-2" />
+          Subir imagen de perfil
+          <Form.Control
+            type="file"
+            name="imagen"
+            className="d-none"
+            onChange={handleImageUpload}
+          />
+        </Button>
+      </Form.Group>
 
         </Col>
       </Row>
