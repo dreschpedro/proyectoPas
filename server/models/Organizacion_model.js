@@ -30,12 +30,13 @@ const organizacion_model = sequelize.define('organizacion', {
   },
   descripcion: {
     type: DataTypes.STRING(500),
-    allowNull: false,
+    allowNull: true,
     trim: true,
   },
   imagen: {
     type: DataTypes.STRING(200),
-    allowNull: true, // Permitimos que el campo esté vacío
+    allowNull: true,
+    defaultValue: 'default_organizacion.png', // Imagen por defecto
   },
   activo: {
     type: DataTypes.BOOLEAN,

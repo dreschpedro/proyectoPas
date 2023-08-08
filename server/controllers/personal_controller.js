@@ -55,16 +55,36 @@ const obtener_personal = async (req, res) => {
 
 // registro de personal
 const registrar_personal = async (req, res) => {
+  let imagen_path = getDefaultImagePath('personal', 'default_personal.png'); // Ruta de imagen por defecto
+
   try {
     const personal_body = req.body;
-    const personal_almacenado = await Personal_model.create(personal_body);
+
+    // Verificar si se proporcionó una imagen en la solicitud
+    if (req.file) {
+      // Si se proporcionó una imagen, guardarla y obtener su ruta
+      imagen_path = saveImageAndGetPath(req, 'personal', 'default_personal.png');
+    }
+
+    // Crear el registro de personal en la base de datos
+    const personal_almacenado = await Personal_model.create({
+      ...personal_body,
+      imagen: imagen_path // Guardar la ruta de la imagen en la base de datos
+    });
+
     return res.status(200).json({ message: 'Registro creado', personal_almacenado });
   } catch (error) {
     console.log(error);
     const mensaje_error = 'Ocurrió un error al registrar el personal';
     return res.status(500).json({ error: mensaje_error });
+  } finally {
+    // Eliminar la imagen temporal si no es la imagen por defecto
+    if (imagen_path && imagen_path !== getDefaultImagePath('personal', 'default_personal.png')) {
+      deleteTempImage(imagen_path, 'personal', 'default_personal.png');
+    }
   }
 };
+
 
 // modifica los datos buscando por id
 // Modifica los datos de un registro activo por id
