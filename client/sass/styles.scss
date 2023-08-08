@@ -30,3 +30,46 @@ Link{
   width: 2rem;
 }
 
+/* Estilos para cambiar el color del icono del menú hamburguesa */
+.navbar-toggle-custom .navbar-toggler-icon {
+  color: #ffffff; /* Cambia este valor al color deseado */
+}
+
+.azulbg{
+  background-color: #101488;
+}
+
+.bordesito{
+  border: solid 3px;
+  border-radius: 25px;
+  border-color: #22096F;
+  padding: 2em;
+  margin-top: 15px;
+}
+
+.titulo{
+  margin-top: 5rem;
+}
+
+.bouttoncancel{
+  height: 2.5rem;
+  border: solid 3px;
+  border-radius: 10px;
+  border-color: #22096F;
+  color: #22096F;
+  background-color: #FFFFFF;
+  margin-right: 10px;
+  width: 200px;
+  font: bold;
+}
+
+.buttonRegistrar{
+  height: 2.5rem;
+  border-radius: 10px;
+  color: #ffffff;
+  background-color: #22096F;
+  border-color: #22096F;
+  margin-right: 10px;
+  width: 200px;
+  font: bold;
+}
