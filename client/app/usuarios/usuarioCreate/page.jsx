@@ -231,7 +231,7 @@ function RegistroUsuarios() {
                 type="email"
                 name="email"
                 value={formData.email}
-                // required
+                required
                 onChange={handleInputChange}
                 placeholder="ejemplo@correo.com" />
             </Form.Group>
