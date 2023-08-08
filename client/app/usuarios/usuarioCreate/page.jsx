@@ -135,10 +135,11 @@ function RegistroUsuarios() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-
-      <h1 style={{ marginTop: '20px' }}>Crear cuenta</h1>
-      <Row>
+    <>
+<h1 className='titulo'>Crear cuenta</h1>
+<Form onSubmit={handleSubmit} className='bordesito' >
+    
+    <Row>
         <Col md>
 
           <Form.Group controlId="formtext">
@@ -360,14 +361,17 @@ function RegistroUsuarios() {
         </Col>
       </Row>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
-        <Button variant="primary"
-          type="submit"
-          style={{ width: '200px', fontWeight: 'bold' }}>
-          Registrarse
-        </Button>
-      </div>
+      <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
+            <button type="submit" className='bouttoncancel'>
+              Cancelar
+            </button>
+
+            <button className='buttonRegistrar' type="submit">
+              Registrarse
+            </button>
+          </div>
     </Form>
+    </>
   );
 }
 
