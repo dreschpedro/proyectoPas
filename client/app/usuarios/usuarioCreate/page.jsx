@@ -18,6 +18,8 @@ function RegistroUsuarios() {
   const [selectedOrganizacion, setSelectedOrganizacion] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOrganizaciones, setFilteredOrganizaciones] = useState([]);
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
+
 
   const [formData, setFormData] = useState({
     username: '',
@@ -25,6 +27,7 @@ function RegistroUsuarios() {
     nombre: '',
     organizacion: '',
     email: '',
+    imagen: '',
     rol: '',
     cuilt: '',
     telefono: '',
@@ -65,6 +68,14 @@ function RegistroUsuarios() {
       setIsRolSelected(true); // Mostrar el mensaje de error
       return;
     }
+
+    if (formData.password !== formData.password2) {
+      setPasswordMismatch(true);
+      return;
+    } else {
+      setPasswordMismatch(false); // Restablecer el estado si las contraseñas coinciden
+    }
+
 
     try {
       // Obtener el id de la organización seleccionada
@@ -134,28 +145,36 @@ function RegistroUsuarios() {
 
 
           <Form.Group controlId="formPassword">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className={`mb-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
               <Form.Label>Contraseña*</Form.Label>
               <Form.Control
                 type="password"
                 name="password"
                 value={formData.password}
                 required
-                placeholder="" />
+                onChange={handleInputChange}
+                placeholder=""
+              />
+              {passwordMismatch && (
+                <div className="error-message">Las contraseñas no coinciden.</div>
+              )}
             </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="formPassword2">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className={`mb-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
               <Form.Label>Confirmar Contraseña*</Form.Label>
               <Form.Control
                 type="password"
-                name="password"
-                // value={formData.password}
+                name="password2"
+                value={formData.password2}
                 required
-                placeholder="" />
+                onChange={handleInputChange}
+                placeholder=""
+              />
             </Form.Group>
           </Form.Group>
+
 
           <Form.Group controlId="formOrganizacion">
             <Form.Label>Organización*</Form.Label>
@@ -175,7 +194,7 @@ function RegistroUsuarios() {
                 <DropdownButton
                   as={InputGroup.Append}
                   variant="outline-primary"
-                // title="Seleccionar"
+                  title="Seleccionar"
                 >
                   {filteredOrganizaciones.map((org) => (
                     <Dropdown.Item
@@ -200,8 +219,9 @@ function RegistroUsuarios() {
                 type="email"
                 name="email"
                 value={formData.email}
-                required
-                placeholder="" />
+                // required
+                onChange={handleInputChange}
+                placeholder="ejemplo@correo.com" />
             </Form.Group>
           </Form.Group>
 
@@ -242,6 +262,7 @@ function RegistroUsuarios() {
                 name="cuilt"
                 value={formData.cuilt}
                 required
+                onChange={handleInputChange}
                 placeholder="" />
             </Form.Group>
           </Form.Group>
@@ -254,6 +275,7 @@ function RegistroUsuarios() {
                 name="nombre"
                 value={formData.nombre}
                 required
+                onChange={handleInputChange}
                 placeholder="" />
             </Form.Group>
           </Form.Group>
@@ -266,6 +288,7 @@ function RegistroUsuarios() {
                 name="apellido"
                 value={formData.apellido}
                 required
+                onChange={handleInputChange}
                 placeholder="" />
             </Form.Group>
           </Form.Group>
@@ -278,6 +301,7 @@ function RegistroUsuarios() {
                 name="telefono"
                 value={formData.telefono}
                 required
+                onChange={handleInputChange}
                 placeholder="" />
             </Form.Group>
           </Form.Group>
@@ -290,6 +314,7 @@ function RegistroUsuarios() {
                 name="domicilio"
                 value={formData.domicilio}
                 required
+                onChange={handleInputChange}
                 placeholder="" />
             </Form.Group>
           </Form.Group>
@@ -302,6 +327,7 @@ function RegistroUsuarios() {
                 name="profesion"
                 value={formData.profesion}
                 required
+                onChange={handleInputChange}
                 placeholder="" />
             </Form.Group>
           </Form.Group>
@@ -317,7 +343,6 @@ function RegistroUsuarios() {
               type="file"
               name="imagen"
               value={formData.imagen}
-              required
               onChange={handleImageUpload} />
           </Form.Group>
 

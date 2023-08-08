@@ -1,2 +1,2 @@
-UPDATE personal
+UPDATE usuario
 SET activo = true
