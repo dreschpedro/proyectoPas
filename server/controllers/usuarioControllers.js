@@ -41,23 +41,25 @@ const autenticar = async (req, res) => {
     const passwordValido = await bcrypt.compare(password, usuario.password);
 
     if (passwordValido) {
+      const token = generarJWT(usuario.id_usuario);
       return res.status(200).json({
-        message: "Registro Modificado",
+        message: "Autenticación Exitosa",
         data: {
           id_usuario: usuario.id_usuario,
-          nombre: usuario.nombre,
+          username: usuario.username,
           email: usuario.email,
-          token: generarJWT(usuario.id_usuario)
+          token: token
         }
       });
     } else {
-      return res.status(403).json({ msg: "Password incorrecto" });
+      return res.status(403).json({ msg: "Contraseña incorrecta" });
     }
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Ocurrió un error al autenticar el usuario" });
   }
 };
+
 
 const confirmar = async (req, res) => {
   const { token } = req.params;
@@ -91,7 +93,7 @@ const perfil = async (req, res) => {
     // Aquí puedes seleccionar qué información del usuario deseas devolver en el perfil
     const perfilUsuario = {
       id_usuario: usuario.id_usuario,
-      nombre: usuario.nombre,
+      username: usuario.username,
       email: usuario.email,
       rol: usuario.rol,
       // Otros campos que desees mostrar en el perfil

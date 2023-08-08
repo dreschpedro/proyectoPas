@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import instance from '@/app/axiosConfig';
@@ -32,19 +31,6 @@ function RegistroOrganizacions() {
       .catch((error) => console.error('Error al obtener las Organizaciones:', error));
   }, []);
 
-  useEffect(() => {
-    if (searchTerm) {
-      const filteredData = Organizaciones.filter((organizacion) => {
-        return (
-          organizacion.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      });
-      setFilteredOrganizaciones(filteredData);
-    } else {
-      setFilteredOrganizaciones([]);
-    }
-  }, [searchTerm, Organizaciones]);
-
   const handleImageUpload = async (event) => {
     // Lógica para manejar la carga de la imagen del logo (opcional)
     const imageFile = event.target.files[0];
@@ -64,15 +50,15 @@ function RegistroOrganizacions() {
     event.preventDefault();
 
     try {
-  
+
       // Registrar una nueva Organizacion
       const userResponse = await instance.post('/organizaciones/registrar', {
-        username: formData.username,
-        password: formData.password,
-        email: formData.email,
-        rol: selectedRol,
+        nombre: FormData.nombre,
+        email: FormData.email,
+        imagen: FormData.imagen,
+        telefono: FormData.telefono,
+        direccion: FormData.direccion,
       });
-      const userId = userResponse.data.id_Organizacion;
 
       console.log('Organizacion registrada exitosamente:', personalResponse.data);
     } catch (error) {
@@ -105,7 +91,7 @@ function RegistroOrganizacions() {
                   value={formData.nombre}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Organización Ejemplo" />
               </Form.Group>
             </Form.Group>
 
@@ -118,21 +104,21 @@ function RegistroOrganizacions() {
                   value={formData.direccion}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Av Ejemplo 123" />
               </Form.Group>
             </Form.Group>
 
 
             <Form.Group controlId="formNumber">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Teléfono*</Form.Label>
+                <Form.Label>Número de Teléfono*</Form.Label>
                 <Form.Control
                   type="number"
                   name="telefono"
                   value={formData.telefono}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="3764221122" />
               </Form.Group>
             </Form.Group>
 
@@ -154,11 +140,11 @@ function RegistroOrganizacions() {
           <Col md>
           </Col>
 
-          {/* imagen de perfil */}
+          {/* imagen de la Organización */}
           <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
 
             <Form.Group controlId="formFile">
-              <Form.Label>Subir imagen de perfil</Form.Label>
+              <Form.Label>Subir imagen</Form.Label>
               <Form.Control
                 type="file"
                 name="imagen"
