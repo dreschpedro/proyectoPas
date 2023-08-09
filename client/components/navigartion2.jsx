@@ -1,3 +1,4 @@
+
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
@@ -9,6 +10,8 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import logo from '../public/pas-blanco.png'
+import Pagination from 'react-bootstrap/Pagination';
 
 
 
@@ -62,12 +65,33 @@ function Navigation2() {
   return (
     <>
       {['lg'].map((expand) => (
-        <Navbar key={expand} expand={expand} className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
+        <Navbar key={expand} expand={expand} data-bs-theme="dark" className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
           <Container fluid>
-            <Navbar.Brand href="#" className="mx-4">
+            <Navbar.Brand href="#" className="mx-4 d-flex flex-nowrap">
               <Link href="/">
-                <Button variant="secondary">[PasIcon]</Button>
+                <button className='homebutton ' >
+                  <img src={logo} alt="logo" />
+                  <p>Programa de <br /> Asitencia Solidaria</p>
+
+
+                </button>
               </Link>
+
+              <div className='d-flex flex-nowrap'>
+              <Pagination className='mx-3 h-50 my-auto'>
+                <Pagination.Prev className='h-50'/>
+                <Pagination.Next className=''/>
+              </Pagination>
+
+
+              <Form.Control
+                className='h-80 my-auto w-80'
+                placeholder="Buscador"
+                aria-label="Buscador"
+                aria-describedby="basic-addon2"
+              />
+              </div>
+
             </Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas

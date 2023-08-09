@@ -73,3 +73,61 @@ Link{
   width: 200px;
   font: bold;
 }
+
+.comboboxrol{
+  width: 100%;
+}
+
+.imagebutton{
+  border: solid;
+  width: 10rem;
+  height: 10rem;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
+  border-color: #22096F;
+  background-color: #EFEFEF;
+
+
+
+   /* Efecto hover */
+   &:hover {
+    background-color: #9f9cff;
+    color: #FFFFFF; /* Cambiar color del texto/icono en hover */
+    cursor: pointer; /* Cambiar el cursor al pasar por encima */
+  }
+
+  /* Efecto click */
+  &:active {
+    transform: scale(0.95); /* Reducir tamaño durante el clic */
+  }
+}
+
+.imageIcon{
+  width: 8rem;
+  height: 8rem;
+  color: #22096F;
+}
+
+  // .shadow-right {
+  //   box-shadow:5px 0px 5px rgba(0, 0, 0, 0.2); /* Sombras hacia la derecha */
+  // }
+
+.homebutton{
+  border: none;
+  background-color: #101488;
+  display: flex;
+  flex-wrap: nowrap;
+ 
+
+
+  p {
+    color: #FFFFFF;
+    font-size: 0.65rem;
+    margin: 0; // Para eliminar el margen predeterminado del párrafo
+  }
+}
+
+
+Link{font-style: none;}

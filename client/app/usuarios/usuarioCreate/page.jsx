@@ -191,7 +191,7 @@ function RegistroUsuarios() {
           </Form.Group>
 
 
-          <Form.Group controlId="formOrganizacion">
+          <Form.Group controlId="formOrganizacion" className='mb-3'>
             <Form.Label>Organización*</Form.Label>
             <InputGroup>
               <Form.Control
@@ -338,6 +338,7 @@ function RegistroUsuarios() {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Profesión*</Form.Label>
               <Form.Control
+                className='shadow-right'
                 type="text"
                 name="profesion"
                 value={formData.profesion}
@@ -364,17 +365,17 @@ function RegistroUsuarios() {
 
 
 <Form.Group controlId="formFile">
-        <Form.Label>Seleccionar imagen de perfil</Form.Label>
-        <Button variant="secondary" className="d-flex align-items-center">
-          <FontAwesomeIcon icon={faUser} className="me-2" />
-          Subir imagen de perfil
+        
+        <div className="d-flex align-items-center imagebutton">
+          <FontAwesomeIcon icon={faUser} className="imageIcon" />
           <Form.Control
             type="file"
             name="imagen"
             className="d-none"
             onChange={handleImageUpload}
           />
-        </Button>
+        </div>
+        <Form.Label className='d-flex justify-content-center mb-5'>Seleccionar imagen de perfil</Form.Label>
       </Form.Group>
 
         </Col>

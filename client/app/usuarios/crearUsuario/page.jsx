@@ -92,7 +92,7 @@ function RegistroUsuarios() {
             </Form.Group>
           </Form.Group>
 
-          <Form.Group controlId="formEmail">
+          <Form.Group controlId="formRol">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Rol*</Form.Label>
               <Form.Control type="text" placeholder="" />
