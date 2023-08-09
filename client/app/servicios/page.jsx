@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Form, Button, InputGroup, Modal } from 'react-bootstrap';
 import Link from 'next/link';
+import instance from '../axiosConfig';
 
 const RegistroServiciosRealizados = () => {
   // State para el manejo de la ventana modal
@@ -9,6 +10,12 @@ const RegistroServiciosRealizados = () => {
 
   // State y funciones para manejar los datos del servicio a registrar
   const [selectedService, setSelectedService] = useState('');
+  const [formData, setFormData] = useState({
+    nombre: '',
+    descripcion: '',
+  });
+
+  
   const [serviceInfo, setServiceInfo] = useState({
     dni: '',
     fechaNacimiento: '',
@@ -17,7 +24,7 @@ const RegistroServiciosRealizados = () => {
     hijos: '',
     trabajo: '',
     subsidio: '',
-    institucion: '', // Combobox para la institución que realiza el servicio
+    Organizacion: '', // Combobox para la organizacion que realiza el servicio
   });
 
   // Funciones para manejar el mostrar y cerrar la ventana modal
@@ -29,27 +36,44 @@ const RegistroServiciosRealizados = () => {
     setShowModal(false);
   };
 
-  // Función para manejar el envío del formulario
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Aquí puedes agregar la lógica para manejar el registro del servicio realizado
-    console.log("Información del servicio realizado:", {
-      selectedService,
-      ...serviceInfo,
-    });
-    // Luego, puedes enviar los datos al backend para almacenarlos en la base de datos
-    // y realizar otras operaciones necesarias
-    handleCloseModal();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('nombre', formData.nombre);
+      formDataToSend.append('descripcion', formData.descripcion);
+
+      console.log('Datos enviados al backend:', formDataToSend);
+
+      const response = await instance.post('/servicios/registrar', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      handleCloseModal(true)
+
+      // Resto del código de manejo de respuesta...
+    } catch (error) {
+      console.error('Error al registrar el Servicio:', error);
+    }
   };
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
   return (
     <>
       <h1 style={{ marginTop: '20px' }}>Registrar Servicio Realizado</h1>
       <br />
 
 
-        {/* Botones de Administrar servicios e Historial */}
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+      {/* Botones de Administrar servicios e Historial */}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Link href="/servicios/crudServicios">
           <Button variant="info" style={{ margin: '10px' }}>
             Administrar Servicios
@@ -65,21 +89,21 @@ const RegistroServiciosRealizados = () => {
 
 
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formInstitucion">
+        <Form.Group controlId="formOrganizacion">
           <InputGroup className="mb-3">
             <InputGroup.Text id="inputGroup-sizing-default">
-              Institución
+              organizacion
             </InputGroup.Text>
             <Form.Control
               as="select"
-              value={serviceInfo.institucion}
-              onChange={(e) => setServiceInfo({ ...serviceInfo, institucion: e.target.value })}
+              value={serviceInfo.Organizacion}
+              onChange={(e) => setServiceInfo({ ...serviceInfo, Organizacion: e.target.value })}
               required
             >
-              <option value="">Seleccionar Institución</option>
-              <option value="Institución 1">Institución 1</option>
-              <option value="Institución 2">Institución 2</option>
-              {/* Agrega aquí más opciones de instituciones */}
+              <option value="">Seleccionar Organizacion</option>
+              <option value="organizacion 1">organizacion 1</option>
+              <option value="organizacion 2">organizacion 2</option>
+              {/* Agrega aquí más opciones de Organizaciones */}
             </Form.Control>
           </InputGroup>
         </Form.Group>
@@ -223,11 +247,23 @@ const RegistroServiciosRealizados = () => {
           <Form>
             <Form.Group controlId="formServiceName">
               <Form.Label>Nombre del Servicio</Form.Label>
-              <Form.Control type="text" placeholder="Ingrese el nombre del servicio" />
+              <Form.Control
+                type="text"
+                name="nombre"
+                required
+                value={formData.nombre}
+                onChange={handleChange}
+                placeholder="" />
             </Form.Group>
             <Form.Group controlId="formServiceDescription">
               <Form.Label>Descripción del Servicio</Form.Label>
-              <Form.Control as="textarea" placeholder="Ingrese una descripción del servicio" rows={3} />
+              <Form.Control
+                type="text"
+                as="textarea"
+                name="descripcion"
+                value={formData.descripcion}
+                onChange={handleChange}
+                placeholder="" />
             </Form.Group>
           </Form>
         </Modal.Body>

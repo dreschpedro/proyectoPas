@@ -15,6 +15,7 @@ const Servicio_model = sequelize.define('servicio', {
   },
   descripcion: {
     type: DataTypes.TEXT,
+    trim: true,
   },
   activo: {
     type: DataTypes.BOOLEAN,

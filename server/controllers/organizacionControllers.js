@@ -55,21 +55,21 @@ const registrar_organizacion = async (req, res) => {
   let imagen_path = getDefaultImagePath('organizacion', 'default_organizacion.png');
 
   try {
-    // Obtener los datos de la organizacion del cuerpo de la solicitud
+    // Obtener los datos de la organización del cuerpo de la solicitud
     const { nombre, direccion, telefono, email, descripcion } = req.body;
 
     // Verificar que los campos obligatorios no estén vacíos
-    if (!nombre || !direccion || !telefono || !email || !descripcion) {
+    if (!nombre || !direccion || !telefono || !email) {
       return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
     // Verificar si se proporcionó una imagen en la solicitud
     if (req.file) {
       // Si se proporcionó una imagen, guardarla y obtener su ruta
-      imagen_path = saveImageAndGetPath(req, 'organizacion', 'default_organizacion.png');
+      imagen_path = saveImageAndGetPath(req, 'organizacion', req.file.filename);
     }
 
-    // Crear la organizacion en la base de datos
+    // Crear la organización en la base de datos
     const organizacion_almacenado = await organizacion_model.create({
       nombre,
       direccion,
@@ -79,15 +79,15 @@ const registrar_organizacion = async (req, res) => {
       imagen: imagen_path // Guardar la ruta de la imagen en la base de datos
     });
 
-    return res.status(200).json({ message: "organizacion creada", organizacion_almacenado });
+    return res.status(200).json({ message: "Organización creada", organizacion_almacenado });
   } catch (error) {
     console.log(error);
-    const mensaje_error = "Back->Ocurrió un error al registrar la organizacion";
+    const mensaje_error = "Ocurrió un error al registrar la organización";
     return res.status(500).json({ error: mensaje_error });
   } finally {
     // Eliminar la imagen temporal si no es la imagen por defecto
     if (imagen_path && imagen_path !== getDefaultImagePath('organizacion', 'default_organizacion.png')) {
-      deleteTempImage(imagen_path, 'organizacion', 'default_organizacion.png');
+      deleteTempImage(imagen_path, 'organizacion', req.file.filename);
     }
   }
 };

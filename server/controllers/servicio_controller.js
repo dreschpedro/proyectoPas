@@ -36,6 +36,7 @@ const obtener_servicio = async (req, res) => {
 const registrar_servicio = async (req, res) => {
     try {
         const servicio_body = req.body;
+        console.log(servicio_body)
         const servicio_almacenado = await Servicio_model.create(servicio_body);
         return res.status(200).json({ message: "Registro creado", servicio_almacenado });
     } catch (error) {
