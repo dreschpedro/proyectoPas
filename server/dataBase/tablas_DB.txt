@@ -85,3 +85,20 @@
   "telefono": "3333333333",
   "imagen": "/uploads/personal/default_personal.png"
 }
+
+#servicio
+{
+  "nombre": "servicio 1",
+  "descripcion": "descripcion 1",
+  "id_organizacion": "1"
+}
+{
+  "nombre": "servicio 2",
+  "descripcion": "descripcion 2",
+  "id_organizacion": "2"
+}
+{
+  "nombre": "servicio 3",
+  "descripcion": "descripcion 3",
+  "id_organizacion": "3"
+}

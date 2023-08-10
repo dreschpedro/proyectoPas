@@ -10,20 +10,22 @@ function Usuarios() {
   const [filteredPersonalData, setFilteredPersonalData] = useState(null);
 
   useEffect(() => {
-    // Obtener los datos de personal desde el servidor
-    const fetchPersonalData = async () => {
-      try {
-        const response = await instance.get('/personal', {
-          params: {
-            include: 'usuario',
-          },
-        });
-        setPersonalData(response.data);
-      } catch (error) {
-        console.error('Error al obtener los datos de personal:', error);
-      }
-    };
-    fetchPersonalData();
+    if (typeof window !== 'undefined') {
+      // Obtener los datos de personal desde el servidor solo en el lado del cliente
+      const fetchPersonalData = async () => {
+        try {
+          const response = await instance.get('/personal', {
+            params: {
+              include: 'usuario',
+            },
+          });
+          setPersonalData(response.data);
+        } catch (error) {
+          console.error('Error al obtener los datos de personal:', error);
+        }
+      };
+      fetchPersonalData();
+    }
   }, []);
 
   useEffect(() => {

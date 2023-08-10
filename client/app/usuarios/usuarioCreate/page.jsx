@@ -139,258 +139,248 @@ function RegistroUsuarios() {
 
   return (
     <>
-<h1 className='titulo'>Crear cuenta</h1>
-<Form onSubmit={handleSubmit} className='bordesito' >
-    
-    <Row>
-        <Col md>
+      <h1 className='titulo'>Crear cuenta</h1>
+      <Form onSubmit={handleSubmit} className='bordesito' >
 
-          <Form.Group controlId="formtext">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Nombre de Usuario*</Form.Label>
-              <Form.Control
-                type="text"
-                name="username"
-                value={formData.username}
-                required
-                onChange={handleInputChange}
-                placeholder="" />
+        <Row>
+          <Col md>
+
+            <Form.Group controlId="formtext">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Nombre de Usuario*</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  required
+                  onChange={handleInputChange}
+                  placeholder="" />
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
 
 
-          <Form.Group controlId="formPassword">
-            <Form.Group className={`mb-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
-              <Form.Label>Contraseña*</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                value={formData.password}
-                required
-                onChange={handleInputChange}
-                placeholder=""
-              />
-              {passwordMismatch && (
-                <div className="error-message">Las contraseñas no coinciden.</div>
-              )}
+            <Form.Group controlId="formPassword">
+              <Form.Group className={`mb-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
+                <Form.Label>Contraseña*</Form.Label>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  required
+                  onChange={handleInputChange}
+                  placeholder=""
+                />
+                {passwordMismatch && (
+                  <div className="error-message">Las contraseñas no coinciden.</div>
+                )}
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
 
-          <Form.Group controlId="formPassword2">
-            <Form.Group className={`mb-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
-              <Form.Label>Confirmar Contraseña*</Form.Label>
-              <Form.Control
-                type="password"
-                name="password2"
-                value={formData.password2}
-                required
-                onChange={handleInputChange}
-                placeholder=""
-              />
+            <Form.Group controlId="formPassword2">
+              <Form.Group className={`mb-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
+                <Form.Label>Confirmar Contraseña*</Form.Label>
+                <Form.Control
+                  type="password"
+                  name="password2"
+                  value={formData.password2}
+                  required
+                  onChange={handleInputChange}
+                  placeholder=""
+                />
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
 
 
-          <Form.Group controlId="formOrganizacion" className='mb-3'>
-            <Form.Label>Organización*</Form.Label>
-            <InputGroup>
-              <Form.Control
-                type="text"
-                name="organizacion"
-                value={selectedOrganizacion}
-                onChange={(e) => {
-                  setSelectedOrganizacion(e.target.value);
-                  setSearchTerm(e.target.value);
-                }}
-                required
-                placeholder="Buscar y seleccionar organización"
-              />
-              {filteredOrganizaciones.length > 0 && (
+            <Form.Group controlId="formOrganizacion" className='mb-3'>
+              <Form.Label>Organización*</Form.Label>
+              <InputGroup>
+                <Form.Control
+                  type="text"
+                  name="organizacion"
+                  value={selectedOrganizacion}
+                  onChange={(e) => {
+                    setSelectedOrganizacion(e.target.value);
+                    setSearchTerm(e.target.value);
+                  }}
+                  required
+                  placeholder="Buscar y seleccionar organización"
+                />
+                {filteredOrganizaciones.length > 0 && (
+                  <DropdownButton
+                    as={InputGroup.Append}
+                    variant="outline-primary"
+                    title="Seleccionar"
+                  >
+                    {filteredOrganizaciones.map((org) => (
+                      <Dropdown.Item
+                        key={org.id_organizacion}
+                        onClick={() => {
+                          setSelectedOrganizacion(org.nombre);
+                          setSearchTerm(org.nombre);
+                        }}
+                      >
+                        {org.nombre}
+                      </Dropdown.Item>
+                    ))}
+                  </DropdownButton>
+                )}
+              </InputGroup>
+            </Form.Group>
+
+            <Form.Group controlId="formEmail">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Email*</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  required
+                  onChange={handleInputChange}
+                  placeholder="ejemplo@correo.com" />
+              </Form.Group>
+            </Form.Group>
+
+            <Form.Group controlId="formRol">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Rol*</Form.Label>
                 <DropdownButton
-                  as={InputGroup.Append}
-                  variant="outline-primary"
-                  title="Seleccionar"
-                >
-                  {filteredOrganizaciones.map((org) => (
-                    <Dropdown.Item
-                      key={org.id_organizacion}
-                      onClick={() => {
-                        setSelectedOrganizacion(org.nombre);
-                        setSearchTerm(org.nombre);
-                      }}
-                    >
-                      {org.nombre}
+                  title={selectedRol || 'Seleccionar Rol'}
+                  variant={(isRolSelected || formSubmitted) ? 'outline-danger' : 'outline-primary'}
+                  onSelect={(eventKey) => {
+                    setSelectedRol(eventKey);
+                    setIsRolSelected(false); // Restablecer el estado cuando se seleccione un rol
+                  }}>
+                  {roles.map((rol) => (
+                    <Dropdown.Item key={rol} eventKey={rol}>
+                      {rol}
                     </Dropdown.Item>
                   ))}
                 </DropdownButton>
-              )}
-            </InputGroup>
-          </Form.Group>
-
-          <Form.Group controlId="formEmail">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email*</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={formData.email}
-                required
-                onChange={handleInputChange}
-                placeholder="ejemplo@correo.com" />
+                {(isRolSelected || formSubmitted) && !selectedRol && (
+                  <div style={{ color: 'red', marginTop: '0.25rem' }}>
+                    Por favor, selecciona un rol.
+                  </div>
+                )}
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
 
-          <Form.Group controlId="formRol">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Rol*</Form.Label>
-              <DropdownButton
-                title={selectedRol || 'Seleccionar Rol'}
-                variant={(isRolSelected || formSubmitted) ? 'outline-danger' : 'outline-primary'}
-                onSelect={(eventKey) => {
-                  setSelectedRol(eventKey);
-                  setIsRolSelected(false); // Restablecer el estado cuando se seleccione un rol
-                }}>
-                {roles.map((rol) => (
-                  <Dropdown.Item key={rol} eventKey={rol}>
-                    {rol}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-              {(isRolSelected || formSubmitted) && !selectedRol && (
-                <div style={{ color: 'red', marginTop: '0.25rem' }}>
-                  Por favor, selecciona un rol.
-                </div>
-              )}
+          </Col>
+
+
+          <Col md>
+            <Form.Group controlId="formCuilt">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>CUIL o CUIT*</Form.Label>
+                <Form.Control
+                  type="number"
+                  as="input"
+                  name="cuilt"
+                  value={formData.cuilt}
+                  required
+                  onChange={handleInputChange}
+                  placeholder="" />
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
 
-        </Col>
-
-
-        <Col md>
-          <Form.Group controlId="formCuilt">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>CUIL o CUIT*</Form.Label>
-              <Form.Control
-                type="number"
-                as="input"
-                name="cuilt"
-                value={formData.cuilt}
-                required
-                onChange={handleInputChange}
-                placeholder="" />
+            <Form.Group controlId="formName">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Nombre*</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="nombre"
+                  value={formData.nombre}
+                  required
+                  onChange={handleInputChange}
+                  placeholder="" />
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
 
-          <Form.Group controlId="formName">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Nombre*</Form.Label>
-              <Form.Control
-                type="text"
-                name="nombre"
-                value={formData.nombre}
-                required
-                onChange={handleInputChange}
-                placeholder="" />
+            <Form.Group controlId="formApe">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Apellido*</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="apellido"
+                  value={formData.apellido}
+                  required
+                  onChange={handleInputChange}
+                  placeholder="" />
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
 
-          <Form.Group controlId="formApe">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Apellido*</Form.Label>
-              <Form.Control
-                type="text"
-                name="apellido"
-                value={formData.apellido}
-                required
-                onChange={handleInputChange}
-                placeholder="" />
+            <Form.Group controlId="formNumber">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Teléfono*</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="telefono"
+                  value={formData.telefono}
+                  required
+                  onChange={handleInputChange}
+                  placeholder="" />
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
 
-          <Form.Group controlId="formNumber">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Teléfono*</Form.Label>
-              <Form.Control
-                type="number"
-                name="telefono"
-                value={formData.telefono}
-                required
-                onChange={handleInputChange}
-                placeholder="" />
+            <Form.Group controlId="formDomicilio">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Domicilio*</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="domicilio"
+                  value={formData.domicilio}
+                  required
+                  onChange={handleInputChange}
+                  placeholder="" />
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
 
-          <Form.Group controlId="formDomicilio">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Domicilio*</Form.Label>
-              <Form.Control
-                type="text"
-                name="domicilio"
-                value={formData.domicilio}
-                required
-                onChange={handleInputChange}
-                placeholder="" />
+            <Form.Group controlId="formProfesion">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Profesión*</Form.Label>
+                <Form.Control
+                  className='shadow-right'
+                  type="text"
+                  name="profesion"
+                  value={formData.profesion}
+                  required
+                  onChange={handleInputChange}
+                  placeholder="" />
+              </Form.Group>
             </Form.Group>
-          </Form.Group>
 
-          <Form.Group controlId="formProfesion">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Profesión*</Form.Label>
-              <Form.Control
-                className='shadow-right'
-                type="text"
-                name="profesion"
-                value={formData.profesion}
-                required
-                onChange={handleInputChange}
-                placeholder="" />
+          </Col>
+
+          {/* imagen de perfil */}
+          <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
+
+
+            <Form.Group controlId="formFile">
+
+              <div className="d-flex align-items-center imagebutton">
+                <FontAwesomeIcon icon={faUser} className="imageIcon" />
+                <Form.Control
+                  type="file"
+                  name="imagen"
+                  className="d-none"
+                  onChange={handleImageUpload}
+                />
+              </div>
+              <Form.Label className='d-flex justify-content-center mb-5'>Seleccionar imagen de perfil</Form.Label>
             </Form.Group>
-          </Form.Group>
 
-        </Col>
+          </Col>
+        </Row>
 
-        {/* imagen de perfil */}
-        <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
+        <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
+          <button type="submit" className='bouttoncancel'>
+            Cancelar
+          </button>
 
-          {/* <Form.Group controlId="formFile">
-            
-            <Form.Control
-              type="file"
-              name="imagen"
-              value={formData.imagen}
-              onChange={handleImageUpload} />
-              
-          </Form.Group> */}
-
-
-<Form.Group controlId="formFile">
-        
-        <div className="d-flex align-items-center imagebutton">
-          <FontAwesomeIcon icon={faUser} className="imageIcon" />
-          <Form.Control
-            type="file"
-            name="imagen"
-            className="d-none"
-            onChange={handleImageUpload}
-          />
+          <button className='buttonRegistrar' type="submit">
+            Registrarse
+          </button>
         </div>
-        <Form.Label className='d-flex justify-content-center mb-5'>Seleccionar imagen de perfil</Form.Label>
-      </Form.Group>
-
-        </Col>
-      </Row>
-
-      <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
-            <button type="submit" className='bouttoncancel'>
-              Cancelar
-            </button>
-
-            <button className='buttonRegistrar' type="submit">
-              Registrarse
-            </button>
-          </div>
-    </Form>
+      </Form>
     </>
   );
 }
