@@ -126,7 +126,7 @@
 
     return (
       <Container className='mt-3'>
-        <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Lista de Organizaciones</h1>
+        <h1 style={{  marginTop: '20px' }}>Lista de Organizaciones</h1>
         <br />
 
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
@@ -143,7 +143,7 @@
               />
             </InputGroup>
           </Form.Group>
-          <Button style={{ fontWeight: 'bold', margin: '15px' }} variant="success" size="lg" onClick={() => handleShowModal()}>Agregar Organización</Button>
+          <Button style={{ fontWeight: 'bold', margin: '15px' }} size="lg" onClick={() => handleShowModal()}>Agregar Organización</Button>
         </div>
 
         <Table striped bordered hover responsive>

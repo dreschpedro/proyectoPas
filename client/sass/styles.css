@@ -11996,4 +11996,101 @@ Link {
 .iconUser {
   height: 2rem;
   width: 2rem;
+}
+
+/* Estilos para cambiar el color del icono del menú hamburguesa */
+.navbar-toggle-custom .navbar-toggler-icon {
+  color: #ffffff; /* Cambia este valor al color deseado */
+}
+
+.azulbg {
+  background-color: #101488;
+}
+
+.bordesito {
+  border: solid 3px;
+  border-radius: 25px;
+  border-color: #22096F;
+  padding: 2em;
+  margin-top: 15px;
+}
+
+.titulo {
+  margin-top: 5rem;
+}
+
+.bouttoncancel {
+  height: 2.5rem;
+  border: solid 3px;
+  border-radius: 10px;
+  border-color: #22096F;
+  color: #22096F;
+  background-color: #FFFFFF;
+  margin-right: 10px;
+  width: 200px;
+  font: bold;
+}
+
+.buttonRegistrar {
+  height: 2.5rem;
+  border-radius: 10px;
+  color: #ffffff;
+  background-color: #22096F;
+  border-color: #22096F;
+  margin-right: 10px;
+  width: 200px;
+  font: bold;
+}
+
+.comboboxrol {
+  width: 100%;
+}
+
+.imagebutton {
+  border: solid;
+  width: 10rem;
+  height: 10rem;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
+  border-color: #22096F;
+  background-color: #EFEFEF;
+  /* Efecto hover */
+  /* Efecto click */
+}
+.imagebutton:hover {
+  background-color: #9f9cff;
+  color: #FFFFFF; /* Cambiar color del texto/icono en hover */
+  cursor: pointer; /* Cambiar el cursor al pasar por encima */
+}
+.imagebutton:active {
+  transform: scale(0.95); /* Reducir tamaño durante el clic */
+}
+
+.imageIcon {
+  width: 8rem;
+  height: 8rem;
+  color: #22096F;
+}
+
+.homebutton {
+  border: none;
+  background-color: #101488;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.homebutton p {
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  margin: 0;
+}
+
+Link {
+  font-style: none;
+}
+
+.custom-thead {
+  background-color: #f8f9fa; /* Cambia el color a tu preferencia */
+  color: white; /* Cambia el color del texto a tu preferencia */
 }/*# sourceMappingURL=styles.css.map */
