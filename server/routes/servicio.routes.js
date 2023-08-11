@@ -5,7 +5,7 @@ import {
   obtener_servicio,
   registrar_servicio,
   modificar_servicio,
-  eliminar_servicio
+  cambiar_estado_servicio
 } from "../controllers/servicio_controller.js";
 
 const router = express.Router();
@@ -14,6 +14,6 @@ router.get('/', listar_servicio);
 router.get('/:id', obtener_servicio);
 router.post('/registrar', registrar_servicio);
 router.put('/:id', modificar_servicio);
-router.delete('/:id', eliminar_servicio)
+router.put('/estado/:id', cambiar_estado_servicio)
 
 export default router;
