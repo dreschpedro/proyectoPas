@@ -1,6 +1,6 @@
 # ProyectoPas
 
-Bienvenido al repositorio del ProyectoPas. Este proyecto tiene como objetivo proporcionar una plataforma de registro de servicios y productos brindados a las personas que participan en los operativos del Programa de Asistencia Social (PAS) en diversos barrios. El proyecto se centra en el seguimiento y registro de los datos de las personas atendidas, así como los servicios específicos proporcionados durante los operativos.
+Bienvenido al repositorio del ProyectoPas. Este proyecto tiene como objetivo proporcionar una plataforma de registro de servicios y productos brindados a las personas que participan en los operativos del Programa de Asistencia Solidaria (PAS) en diversos barrios. El proyecto se centra en el seguimiento y registro de los datos de las personas atendidas, así como los servicios específicos proporcionados durante los operativos.
 
 ## Estructura del Directorio
 
