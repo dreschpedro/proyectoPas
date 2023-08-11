@@ -6,6 +6,7 @@ import instance from '@/app/axiosConfig.js';
 const ServicesCrud = () => {
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [serviceDeleted, setServiceDeleted] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -43,9 +44,11 @@ const ServicesCrud = () => {
     setShowDeleteModal(false);
   };
 
-  const handleShowDeleteModal = () => {
+  const handleShowDeleteModal = (service) => {
+    setFormData(service); // Configurar formData con el servicio seleccionado
     setShowDeleteModal(true);
   };
+
 
   const handleChange = (e) => {
     setFormData({
@@ -73,25 +76,32 @@ const ServicesCrud = () => {
   };
 
   const handleServiceClick = (id) => {
-    // Redireccionar a la página de detalle del usuario con el ID correspondiente
+    //Redireccionar a la página de detalle del usuario con el ID correspondiente
     window.location.href = `/servicios/${id}`;
+  };
+
+  const handleConfirmationClose = () => {
+    setShowConfirmation(false);
+    if (accountDeleted) {
+      // Redirect to "/usuarios" after a short delay
+      setTimeout(() => {
+        router.push('/usuarios');
+      }, 2000); // 1.5 seconds delay before redirection
+    }
   };
 
   const handleDeleteService = async () => {
     try {
-      await instance.put(`/servicio/estado/${id}`);
-      console.log('Sercvicio eliminado exitosamente');
-      setAccountDeleted(true);
+      await instance.put(`/servicios/estado/${id}`);
+      console.log('Servicio eliminado exitosamente');
+      setServiceDeleted(true);
       handleCloseDeleteModal(); // Close the delete modal
 
-      // Redirect to "/usuarios" after a short delay
-      setTimeout(() => {
-        router.push('/servicios');
-      }, 1500); // 1.5 seconds delay before redirection
     } catch (error) {
       console.error('Error al eliminar la cuenta:', error.message);
     }
   };
+
 
   return (
     <Container className='mt-3'>
@@ -108,42 +118,56 @@ const ServicesCrud = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Organización</th>
-            <th>Acciones</th>
+            <th
+              style={{ backgroundColor: '#101488', color: '#ffffff', borderTopLeftRadius: '5px' }}
+            >ID</th>
+            <th
+              style={{ backgroundColor: '#101488', color: '#ffffff' }}
+            >Nombre</th>
+            <th
+              style={{ backgroundColor: '#101488', color: '#ffffff' }}
+            >Descripción</th>
+            <th
+              style={{ backgroundColor: '#101488', color: '#ffffff' }}
+            >Organización</th>
+            <th
+              style={{ borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}
+            >Acciones</th>
           </tr>
         </thead>
         <tbody>
           {services.map((service) => (
             <tr
               key={service.id_servicio}
-              onClick={() => handleServiceClick(service.id_servicio)}
               style={{
                 marginBottom: '10px',
                 cursor: 'pointer'
               }}
             >
-              <td>{service.id_servicio}</td>
-              <td>{service.nombre}</td>
-              <td>{service.descripcion}</td>
-              <td>{service.organizacion?.nombre}</td>
+              <td onClick={() => handleServiceClick(service.id_servicio)}
+              >{service.id_servicio}</td>
+              <td onClick={() => handleServiceClick(service.id_servicio)}
+              >{service.nombre}</td>
+              <td onClick={() => handleServiceClick(service.id_servicio)}
+              >{service.descripcion}</td>
+              <td onClick={() => handleServiceClick(service.id_servicio)}
+              >{service.organizacion?.nombre}</td>
               <td className="d-flex justify-content-center flex-column">
                 <Button
-                  style={{ fontWeight: 'bold', margin: '5px' }}
+                  style={{ width: '200px', fontWeight: 'bold', margin: '5px' }}
                   variant="outline-warning"
                   onClick={() => handleShowModal(service)}
                 >
                   Modificar
                 </Button>
                 <Button
-                  variant="danger"
-                  onClick={handleShowDeleteModal}
-                  style={{ width: '200px', fontWeight: 'bold' }}
+                  variant="outline-danger"
+                  onClick={() => handleShowDeleteModal(service)}
+                  style={{ width: '200px', fontWeight: 'bold', margin: '5px' }}
                 >
-                  Eliminar cuenta
+                  Eliminar Servicio
                 </Button>
+
               </td>
             </tr>
           ))}
@@ -191,13 +215,14 @@ const ServicesCrud = () => {
           </Form>
         </Modal.Body>
       </Modal>
+
       {/* Delete Confirmation Modal */}
       <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirmar Cambio de Estado</Modal.Title>
+          <Modal.Title>Eliminar Servicio</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ¿Está seguro que desea eliminar su cuenta?
+          ¿Está seguro que desea eliminar el Servicio?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDeleteModal}>
@@ -207,6 +232,16 @@ const ServicesCrud = () => {
             Eliminar
           </Button>
         </Modal.Footer>
+      </Modal>
+
+
+      <Modal show={serviceDeleted} onHide={handleConfirmationClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Cuenta Eliminada Exitosamente</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          La cuenta ha sido eliminada exitosamente.
+        </Modal.Body>
       </Modal>
     </Container>
   );

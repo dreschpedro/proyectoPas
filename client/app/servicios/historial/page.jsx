@@ -73,15 +73,21 @@ const HistorialServicios = () => {
 
   return (
     <>
-      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>Historial de Servicios Realizados</h1>
+      <h1 style={{ marginTop: '20px' }}>Historial de Servicios Realizados</h1>
       <br />
 
       {/* Filtros de búsqueda asistida */}
       <Form.Group controlId="formSearch">
+        <p><b>Buscador</b></p>
         <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
+
+          {/* <Form.Label>
+            Buscador
+          </Form.Label> */}
+
+          {/* <InputGroup.Text id="inputGroup-sizing-default">
             Buscar
-          </InputGroup.Text>
+          </InputGroup.Text> */}
           <Form.Control
             type="text"
             value={searchTerm}
@@ -92,18 +98,18 @@ const HistorialServicios = () => {
       </Form.Group>
 
       {/* Tabla para mostrar el historial de servicios */}
-      <Table striped bordered hover responsive>
-        <thead>
+      <Table striped bordered hover responsive style={{ borderRadius: '1  5px' }}>
+        <thead  >
           <tr>
-            <th>Nombre del Servicio</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th onClick={() => handleOpenGoogleMaps('Ciudad Autónoma de Buenos Aires, Argentina')}>Ubicación</th>
-            <th>Institución</th>
-            <th>Usuario Registro</th>
-            <th>Nombre Beneficiario</th>
-            <th>DNI</th>
-            <th>Cantidad de Realizaciones</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff',borderTopLeftRadius: '5px' }}>Nombre del Servicio</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Fecha</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Hora</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }} onClick={() => handleOpenGoogleMaps('Ciudad Autónoma de Buenos Aires, Argentina')}>Ubicación</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Institución</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Usuario Registro</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Nombre Beneficiario</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>DNI</th>
+            <th style={{borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Cantidad de Realizaciones</th>
           </tr>
         </thead>
         <tbody>
@@ -120,7 +126,7 @@ const HistorialServicios = () => {
                 <td>{servicio.usuarioRegistro}</td>
                 <td>{servicio.beneficiario}</td>
                 <td>{servicio.dni}</td>
-                <td>{servicio.cantidadRealizaciones}</td>
+                <td >{servicio.cantidadRealizaciones}</td>
               </tr>
             ))
           ) : (

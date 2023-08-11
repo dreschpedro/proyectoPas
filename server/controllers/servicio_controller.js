@@ -24,7 +24,7 @@ const obtener_servicio = async (req, res) => {
   try {
     const servicio = await Servicio_model.findOne({
       where: {
-        // id_servicio: servicio_id,
+        id_servicio: servicio_id,
         activo: true
       }, // Agregar condición de activo: true
       include: [
