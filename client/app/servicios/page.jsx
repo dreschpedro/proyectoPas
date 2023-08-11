@@ -89,24 +89,27 @@ const RegistroServiciosRealizados = () => {
       <Row>
 
         <Col>
-          <h1 className='titulo'>Registrar Servicio</h1>
-        </Col>
 
-        <Col>
-          <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
+
+          <div className='d-flex flex-nowrap'>
+          <h1 className='titulo'>Registrar Servicio</h1> 
+          <div >
 
             <Link href="/servicios/crudServicios">
-              <Button variant="info" className='bouttoncancel' style={{ margin: '10px' }}>
-                Administrar Servicios
-              </Button>
+              <button className='buttonRegistrar' style={{ marginLeft: '10em', margin: '10px' , marginTop: '5.5rem'}}>
+                Administrar
+              </button>
             </Link>
             <Link href="/servicios/historial">
-              <Button variant="secondary" style={{ margin: '10px' }}>
+              <button className='bouttoncancel' style={{ margin: '10px' , marginTop: '5.5rem'}}>
                 Historial
-              </Button>
+              </button>
             </Link>
           </div>
+          </div>
         </Col>
+
+     
       </Row>
       <Form onSubmit={handleSubmit} className='bordesito' >
 
