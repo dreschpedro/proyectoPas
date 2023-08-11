@@ -82,11 +82,11 @@ function Usuarios() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Nombre de Usuario</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff',borderTopLeftRadius: '5px' }}>#</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Imagen</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Nombre</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Apellido</th>
+            <th style={{ borderTopRightRadius: '5px',backgroundColor: '#101488', color: '#ffffff' }}>Nombre de Usuario</th>
           </tr>
         </thead>
         <tbody>

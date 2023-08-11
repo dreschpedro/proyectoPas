@@ -103,10 +103,10 @@ const ServicesCrud = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Acciones</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff',borderTopLeftRadius: '5px' }}>ID</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Nombre</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Descripción</th>
+            <th style={{ borderTopRightRadius: '5px',backgroundColor: '#101488', color: '#ffffff' }}>Acciones</th>
           </tr>
         </thead>
         <tbody>

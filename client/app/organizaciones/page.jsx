@@ -149,13 +149,13 @@
         <Table striped bordered hover responsive>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Logo</th>
-              <th>Dirección</th>
-              <th>telefono</th>
-              <th>Email</th>
-              <th>Descripción</th>
+              <th style={{ backgroundColor: '#101488', color: '#ffffff', borderTopLeftRadius: '5px'}} >ID</th>
+              <th style={{ backgroundColor: '#101488', color: '#ffffff' }} >Nombre</th>
+              <th style={{ backgroundColor: '#101488', color: '#ffffff' }} >Logo</th>
+              <th style={{ backgroundColor: '#101488', color: '#ffffff' }} >Dirección</th>
+              <th style={{ backgroundColor: '#101488', color: '#ffffff' }} >telefono</th>
+              <th style={{ backgroundColor: '#101488', color: '#ffffff' }} >Email</th>
+              <th style={{borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }} >Descripción</th>
             </tr>
           </thead>
           <tbody>
