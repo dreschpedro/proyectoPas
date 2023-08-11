@@ -1,58 +1,36 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Container, Table, Button, Modal, Form } from 'react-bootstrap';
+import instance from '@/app/axiosConfig.js';
 
 const ServicesCrud = () => {
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
-    id: '',
     name: '',
     description: '',
-    // Otros campos de servicio aquí
+    id_organizacion: 1, // ID de organización de ejemplo
   });
 
-  // Datos de ejemplo para simular cuatro servicios
-  const servicesData = [
-    {
-      id: 1,
-      name: 'Servicio 1',
-      description: 'Descripción del Servicio 1',
-    },
-    {
-      id: 2,
-      name: 'Servicio 2',
-      description: 'Descripción del Servicio 2',
-    },
-    {
-      id: 3,
-      name: 'Servicio 3',
-      description: 'Descripción del Servicio 3',
-    },
-    {
-      id: 4,
-      name: 'Servicio 4',
-      description: 'Descripción del Servicio 4',
-    },
-  ];
-
   useEffect(() => {
-    // Aquí usaríamos fetchServices para obtener los datos reales desde el backend
-    // Como solo tenemos datos de ejemplo, establecemos directamente los datos ficticios
-    setServices(servicesData);
+    fetchServices();
   }, []);
 
-  const handleShowModal = (service) => {
-    if (service) {
-      setFormData(service);
-    } else {
-      setFormData({
-        id: '',
-        name: '',
-        description: '',
-      });
+  const fetchServices = async () => {
+    try {
+      const response = await instance.get('/servicios');
+      setServices(response.data);
+    } catch (error) {
+      console.error('Error al obtener los servicios:', error);
     }
+  };
+
+  const handleShowModal = () => {
+    setFormData({
+      name: '',
+      description: '',
+      id_organizacion: 1, // Reiniciar el ID de organización en el modal
+    });
     setShowModal(true);
   };
 
@@ -70,26 +48,25 @@ const ServicesCrud = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Lógica para enviar los datos del formulario al backend para crear o actualizar el servicio
-      if (formData.id) {
-        // Lógica para actualizar servicio
-      } else {
-        // Lógica para crear servicio
-      }
+      const dataToSend = {
+        id_organizacion: formData.id_organizacion, // Enviar el id_organizacion actual
+        nombre: formData.nombre,
+        descripcion: formData.descripcion,
+      };
+
+      const response = await instance.post('/servicios/registrar', dataToSend);
+      console.log(response.data.message);
+      fetchServices();
       handleCloseModal();
-      // Como estamos usando datos ficticios, simplemente actualizamos la lista de servicios
-      setServices(servicesData);
     } catch (error) {
-      console.error('Error al guardar el servicio:', error);
+      console.error('Error al registrar el servicio:', error);
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      // Lógica para eliminar el servicio utilizando el backend
-      // Actualiza la lista de servicios después de eliminar
-      // Como estamos usando datos ficticios, simplemente actualizamos la lista de servicios
-      setServices(servicesData.filter((service) => service.id !== id));
+      await instance.delete(`/servicios/${id}`);
+      fetchServices();
     } catch (error) {
       console.error('Error al eliminar el servicio:', error);
     }
@@ -98,7 +75,14 @@ const ServicesCrud = () => {
   return (
     <Container className='mt-3'>
       <h1>Gestión de Servicios</h1>
-      <Button style={{ fontWeight: 'bold', margin: '15px' }} variant="success" size="lg" onClick={() => handleShowModal()}>Agregar Servicio</Button>
+      <Button
+        style={{ fontWeight: 'bold', margin: '15px' }}
+        variant="success"
+        size="lg"
+        onClick={() => handleShowModal()}
+      >
+        Agregar Servicio
+      </Button>
 
       <Table striped bordered hover>
         <thead>
@@ -111,13 +95,25 @@ const ServicesCrud = () => {
         </thead>
         <tbody>
           {services.map((service) => (
-            <tr key={service.id} style={{ marginBottom: '10px' }}>
-              <td>{service.id}</td>
-              <td>{service.name}</td>
-              <td>{service.description}</td>
+            <tr key={service.id_servicio} style={{ marginBottom: '10px' }}>
+              <td>{service.id_servicio}</td>
+              <td>{service.nombre}</td>
+              <td>{service.descripcion}</td>
               <td className="d-flex justify-content-center flex-column">
-                <Button style={{ fontWeight: 'bold', margin: '5px' }} variant="outline-warning"onClick={() => handleShowModal(service)}>Modificar</Button>
-                <Button style={{ fontWeight: 'bold', margin: '5px' }} variant="outline-danger" onClick={() => handleDelete(service.id)}>Eliminar</Button>
+                <Button
+                  style={{ fontWeight: 'bold', margin: '5px' }}
+                  variant="outline-warning"
+                  onClick={() => handleShowModal(service)}
+                >
+                  Modificar
+                </Button>
+                <Button
+                  style={{ fontWeight: 'bold', margin: '5px' }}
+                  variant="outline-danger"
+                  onClick={() => handleDelete(service.id)}
+                >
+                  Eliminar
+                </Button>
               </td>
             </tr>
           ))}
@@ -126,7 +122,7 @@ const ServicesCrud = () => {
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>{formData.id ? 'Editar Servicio' : 'Agregar Servicio'}</Modal.Title>
+          <Modal.Title>Agregar Servicio</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
@@ -134,25 +130,33 @@ const ServicesCrud = () => {
               <Form.Label>Nombre del Servicio</Form.Label>
               <Form.Control
                 type="text"
-                name="name"
-                value={formData.name}
+                name="nombre"
+                required
+                value={formData.nombre}
                 onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group controlId="formDescription">
+            <Form.Group controlId="formDescripcion">
               <Form.Label>Descripción del Servicio</Form.Label>
               <Form.Control
                 as="textarea"
-                name="description"
-                value={formData.description}
+                name="descripcion"
+                value={formData.descripcion}
                 onChange={handleChange}
               />
             </Form.Group>
             {/* Agrega aquí más campos para el formulario de servicio */}
-            <div className="d-grid gap-2">
-            <Button variant="success" type="submit" size='lg' style={{ fontWeight: 'bold', marginTop: '15px' }}>
-              Guardar
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
+              <button
+                type="button"
+                className='bouttoncancel'
+                onClick={handleCloseModal}
+              >
+                Cerrar
+              </button>
+              <button className='buttonRegistrar' type="submit">
+                Registrar Servicio
+              </button>
             </div>
           </Form>
         </Modal.Body>
