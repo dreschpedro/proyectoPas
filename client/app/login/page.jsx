@@ -6,8 +6,12 @@ import instance from '@/app/axiosConfig';
 import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import RootLayout from '../layout';
 
-function Login() {
+
+
+const isAuthPage = true;
+function Login({ isAuthPage }) {
   const roles = ['Data-Entry', 'Administrador', 'Consultor'];
 
   // State para almacenar las Login obtenidas del backend
@@ -46,7 +50,8 @@ function Login() {
 
   return (
     <>
-      <h1 className='titulo'>Crear cuenta</h1>
+    <RootLayout isAuthPage={!isAuthPage}>
+      {!isAuthPage && <h1 className='titulo'>Crear cuenta</h1>}
       <Form onSubmit={handleSubmit} className='bordesito' >
         <Col md>
 
@@ -83,6 +88,7 @@ function Login() {
           </button>
         </div>
       </Form>
+      </RootLayout>
     </>
   );
 }

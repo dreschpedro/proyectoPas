@@ -10,8 +10,8 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faCircleUser } from '@fortawesome/free-solid-svg-icons';
-import logo from '../public/pas-blanco.png'
 import Pagination from 'react-bootstrap/Pagination';
+import Image from 'next/image'
 
 
 
@@ -68,28 +68,34 @@ function Navigation2() {
         <Navbar key={expand} expand={expand} data-bs-theme="dark" className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
           <Container fluid>
             <Navbar.Brand href="#" className="mx-4 d-flex flex-nowrap">
-              <Link href="/">
+              <Link href="/" style={{ textDecoration: 'none' }}>
                 <button className='homebutton ' >
-                  <img src={logo} alt="logo" />
-                  <p>Programa de <br /> Asitencia Solidaria</p>
+                  <Image
+                    src="/img/pas-blanco.png"
+                    width={30}
+                    height={30}
+                    alt="Picture of the author"
+                  />
+                  
+                  <p >Programa de <br /> Asitencia Solidaria</p>
 
 
                 </button>
               </Link>
 
               <div className='d-flex flex-nowrap'>
-              <Pagination className='mx-3 h-50 my-auto'>
-                <Pagination.Prev className='h-50'/>
-                <Pagination.Next className=''/>
-              </Pagination>
+                <Pagination className='mx-3 h-50 my-auto '>
+                  <Pagination.Prev className='h-50 bg-light' />
+                  <Pagination.Next className='bg-light' />
+                </Pagination>
 
 
-              <Form.Control
-                className='h-80 my-auto w-80'
-                placeholder="Buscador"
-                aria-label="Buscador"
-                aria-describedby="basic-addon2"
-              />
+                <Form.Control
+                  className='h-80 my-auto w-80'
+                  placeholder="Buscador"
+                  aria-label="Buscador"
+                  aria-describedby="basic-addon2"
+                />
               </div>
 
             </Navbar.Brand>
