@@ -65,7 +65,7 @@ function Navigation2() {
   return (
     <>
       {['lg'].map((expand) => (
-        <Navbar key={expand} expand={expand} data-bs-theme="dark" className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
+        <Navbar key={expand} expand={expand} className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
           <Container fluid>
             <Navbar.Brand href="#" className="mx-4 d-flex flex-nowrap">
               <Link href="/" style={{ textDecoration: 'none' }}>
@@ -76,23 +76,20 @@ function Navigation2() {
                     height={30}
                     alt="Picture of the author"
                   />
-                  
                   <p >Programa de <br /> Asitencia Solidaria</p>
-
-
                 </button>
               </Link>
 
               <div className='d-flex flex-nowrap'>
-                <Pagination className='mx-3 h-50 my-auto '>
-                  <Pagination.Prev className='h-50 bg-light' />
-                  <Pagination.Next className='bg-light' />
+                <Pagination className='mx-3 my-auto '>
+                  <Pagination.Prev className='' />
+                  <Pagination.Next className='' />
                 </Pagination>
 
 
                 <Form.Control
-                  className='h-80 my-auto w-80'
-                  placeholder="Buscador"
+                  className='h-80 my-auto'
+                  placeholder="Buscador                            🔎"
                   aria-label="Buscador"
                   aria-describedby="basic-addon2"
                 />
