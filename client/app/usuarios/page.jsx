@@ -92,7 +92,11 @@ function Usuarios() {
         <tbody>
           {filteredPersonalData ? (
             filteredPersonalData.map((personal) => (
-              <tr key={personal.id_personal} onClick={() => handlepersonalClick(personal.id_personal)} style={{ cursor: 'pointer' }}>
+              <tr
+                key={personal.id_personal}
+                onClick={() => handlepersonalClick(personal.id_personal)}
+                style={{ cursor: 'pointer' }}
+              >
                 <td>{personal.id_personal}</td>
                 <td>
                   {personal.imagen ? (

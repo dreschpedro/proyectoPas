@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup, Modal } from 'react-bootstrap';
 import Link from 'next/link';
 import Row from 'react-bootstrap/Row';
@@ -7,13 +7,11 @@ import Col from 'react-bootstrap/Col';
 import instance from '../axiosConfig.js';
 
 const RegistroServiciosRealizados = () => {
-  // State para el manejo de la ventana modal
   const [showModal, setShowModal] = useState(false);
-
-  // State y funciones para manejar los datos del servicio a registrar
   const [selectedService, setSelectedService] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [Organizaciones, setOrganizaciones] = useState([]);
+  const [organizaciones, setOrganizaciones] = useState([]);
+  const [servicios, setServicios] = useState([]); // Inicializar aquí
   const [selectedOrganizacion, setSelectedOrganizacion] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOrganizaciones, setFilteredOrganizaciones] = useState([]);
@@ -21,6 +19,29 @@ const RegistroServiciosRealizados = () => {
     nombre: '',
     descripcion: '',
   });
+
+  useEffect(() => {
+    const fetchOrganizaciones = async () => {
+      try {
+        const response = await instance.get('/organizaciones');
+        setOrganizaciones(response.data);
+      } catch (error) {
+        console.error('Error al obtener las organizaciones:', error);
+      }
+    };
+
+    const fetchServicios = async () => {
+      try {
+        const response = await instance.get('/servicios');
+        setServicios(response.data);
+      } catch (error) {
+        console.error('Error al obtener los servicios:', error);
+      }
+    };
+
+    fetchOrganizaciones();
+    fetchServicios();
+  }, []);
 
 
   const [serviceInfo, setServiceInfo] = useState({
@@ -115,7 +136,7 @@ const RegistroServiciosRealizados = () => {
 
         <Row>
           <Col>
-
+            {/* Seleccionar Organizacion y Servicio */}
 
             <Form.Group controlId="formOrganizacion">
               <Form.Label>Organización*</Form.Label>
@@ -126,34 +147,38 @@ const RegistroServiciosRealizados = () => {
                   onChange={(e) => setServiceInfo({ ...serviceInfo, Organizacion: e.target.value })}
                   required
                 >
-                  <option value="">Seleccionar Organizacion</option>
-                  <option value="organizacion 1">organizacion 1</option>
-                  <option value="organizacion 2">organizacion 2</option>
-                  {/* Agrega aquí más opciones de Organizaciones */}
+                  <option value="">Seleccionar Organización</option>
+                  {organizaciones.map((organizacion) => (
+                    <option key={organizacion.id} value={organizacion.id}>
+                      {organizacion.nombre}
+                    </option>
+                  ))}
                 </Form.Control>
               </InputGroup>
             </Form.Group>
 
-
-            <Form.Group controlId="formOrganizacion">
+            <Form.Group controlId="formServicio">
               <Form.Label>Servicio*</Form.Label>
               <InputGroup className="mb-3">
                 <Form.Control
                   as="select"
-                  value={serviceInfo.Organizacion}
-                  onChange={(e) => setServiceInfo({ ...serviceInfo, Organizacion: e.target.value })}
+                  value={serviceInfo.Servicio}
+                  onChange={(e) => setServiceInfo({ ...serviceInfo, Servicio: e.target.value })}
                   required
                 >
                   <option value="">Seleccionar Servicio</option>
-                  <option value="servicio 1">servicio 1</option>
-                  <option value="servicio 2">servicio 2</option>
-                  {/* Agrega aquí más opciones de servicios */}
+                  {servicios.map((servicio) => (
+                    <option key={servicio.id} value={servicio.id}>
+                      {servicio.nombre}
+                    </option>
+                  ))}
                 </Form.Control>
               </InputGroup>
             </Form.Group>
+
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
               <button type="submit" className='buttonRegistrar'>
-                Agregar
+                Nuevo Servicio
               </button>
             </div>
           </Col>
