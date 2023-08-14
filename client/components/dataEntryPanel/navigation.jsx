@@ -68,7 +68,7 @@ function Navigation2() {
         <Navbar key={expand} expand={expand} className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
           <Container fluid>
             <Navbar.Brand href="#" className="mx-4 d-flex flex-nowrap">
-              <Link href="/" style={{ textDecoration: 'none' }}>
+              <Link href="/dataEntry" style={{ textDecoration: 'none' }}>
                 <button className='homebutton ' >
                   <Image
                     src="/img/pas-blanco.png"
@@ -110,22 +110,18 @@ function Navigation2() {
 
                   <div className='buttoncito' ><MenuModal /></div>
 
-                  <Link href={"/estadisticas"} style={{ marginTop: '15px' }} className='custom-link'>
-                    <div className='buttoncito' >Estadísticas</div>
-                  </Link>
+                 
                   <div className='buttoncito custom-link'>
-                    <Link href={"/organizaciones"} className='custom-link'>
-                      Organizaciones
+                    <Link href={"/dataEntry/organizaciones"} className='custom-link'>
+                      Organizacion
                     </Link>
                   </div>
                   <div className='buttoncito'>
-                    <Link href={"/servicios"} className='custom-link'>
+                    <Link href={"/dataEntry/servicios"} className='custom-link'>
                       Servicios
                     </Link>
                   </div>
-                  <Link href={"/usuarios"} className='custom-link'>
-                    <div className='buttoncito'>Usuarios</div>
-                  </Link>
+                  
                 </Nav>
                 <MenuModal />
               </Offcanvas.Body>

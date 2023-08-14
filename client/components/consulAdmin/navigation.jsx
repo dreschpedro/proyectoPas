@@ -110,20 +110,20 @@ function Navigation2() {
 
                   <div className='buttoncito' ><MenuModal /></div>
 
-                  <Link href={"/estadisticas"} style={{ marginTop: '15px' }} className='custom-link'>
+                  <Link href={"/consultor/estadisticas"} style={{ marginTop: '15px' }} className='custom-link'>
                     <div className='buttoncito' >Estadísticas</div>
                   </Link>
                   <div className='buttoncito custom-link'>
-                    <Link href={"/organizaciones"} className='custom-link'>
+                    <Link href={"/consultor/organizaciones"} className='custom-link'>
                       Organizaciones
                     </Link>
                   </div>
                   <div className='buttoncito'>
-                    <Link href={"/servicios"} className='custom-link'>
+                    <Link href={"/consultor/servicios"} className='custom-link'>
                       Servicios
                     </Link>
                   </div>
-                  <Link href={"/usuarios"} className='custom-link'>
+                  <Link href={"/consultor/usuarios"} className='custom-link'>
                     <div className='buttoncito'>Usuarios</div>
                   </Link>
                 </Nav>
