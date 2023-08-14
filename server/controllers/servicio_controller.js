@@ -7,7 +7,7 @@ const listar_servicio = async (req, res) => {
   try {
     const servicio = await Servicio_model.findAll({
       where: { activo: true },
-      include: [{ model: organizacion_model, attributes: ["nombre"] }],
+      include: [{ model: organizacion_model, attributes: ["id_organizacion", "nombre"] }],
     });
     return res.status(200).json(servicio);
   } catch (error) {
@@ -26,11 +26,11 @@ const obtener_servicio = async (req, res) => {
       where: {
         id_servicio: servicio_id,
         activo: true
-      }, // Agregar condición de activo: true
+      },
       include: [
         {
           model: organizacion_model,
-          attributes: ["nombre"],
+          attributes: ["id_organizacion", "nombre"],
         },
       ],
     });
@@ -45,7 +45,7 @@ const obtener_servicio = async (req, res) => {
       return res.status(404).send(mensaje);
     }
 
-    return res.status(200).json({ servicio, organizacion }); // Devuelve también la organización
+    return res.status(200).json({ servicio, organizacion });
   } catch (error) {
     console.log(error);
     const mensaje_error = 'Ocurrió un error al obtener el registro de servicio';

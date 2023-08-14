@@ -113,24 +113,24 @@ const RegistroServiciosRealizados = () => {
 
 
           <div className='d-flex flex-nowrap'>
-          <h1 className='titulo'>Registrar Servicio</h1> 
-          <div >
+            <h1 className='titulo'>Registrar Servicio</h1>
+            <div >
 
-            <Link href="/servicios/crudServicios">
-              <button className='buttonRegistrar' style={{ marginLeft: '10em', margin: '10px' , marginTop: '5.5rem'}}>
-                Administrar
-              </button>
-            </Link>
-            <Link href="/servicios/historial">
-              <button className='bouttoncancel' style={{ margin: '10px' , marginTop: '5.5rem'}}>
-                Historial
-              </button>
-            </Link>
-          </div>
+              <Link href="/servicios/crudServicios">
+                <button className='buttonRegistrar' style={{ marginLeft: '10em', margin: '10px', marginTop: '5.5rem' }}>
+                  Administrar
+                </button>
+              </Link>
+              <Link href="/servicios/historial">
+                <button className='bouttoncancel' style={{ margin: '10px', marginTop: '5.5rem' }}>
+                  Historial
+                </button>
+              </Link>
+            </div>
           </div>
         </Col>
 
-     
+
       </Row>
       <Form onSubmit={handleSubmit} className='bordesito' >
 
