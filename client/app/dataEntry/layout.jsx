@@ -1,6 +1,6 @@
 "use client"
-import "../sass/styles.scss"
-import './globals.css'
+import "../../sass/styles.scss"
+// import './globals.css'
 import { Inter } from 'next/font/google'
 // import Navigation from '@/components/navigation'
 // import Container from 'react-bootstrap/Container';
@@ -9,11 +9,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import UserProvider from "../context/user";
 import dynamic from "next/dynamic";
 // import Sidebar from '@/components/sidebar';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-// const Nav = dynamic(() => import("../components/navigartion2"), { ssr: false });
-// const Nav2 = dynamic(() => import("../components/sidebar"), { ssr: false });
+const Nav = dynamic(() => import("../../components/dataEntryPanel/navigation"), { ssr: false });
+const Nav2 = dynamic(() => import("../../components/dataEntryPanel/sidebar"), { ssr: false });
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -28,16 +28,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-      {/* <Nav/>  
+      <Nav/>  
 
       <Row className='vh-100'>
         <Col sm={2} className='d-none d-lg-block'>
         <Nav2 className="mt-5 pt-5 fixed-start "/>
         </Col>
-        <Col className='mt-5'> */}
+        <Col className='mt-5'>
         {children}
-        {/* </Col>
-      </Row> */}
+        </Col>
+      </Row>
 
 
       {/* <div className='contenedor pt-5 d-flex mx-0'>
