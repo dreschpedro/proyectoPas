@@ -14,7 +14,7 @@ const HistorialServicios = () => {
       fecha: '2023-07-15',
       hora: '15:30',
       ubicacion: 'Ciudad Autónoma de Buenos Aires, Argentina',
-      institucion: 'Institución 1',
+      organizacion: 'organizacion 1',
       usuarioRegistro: 'Usuario 1',
       beneficiario: 'Juan Pérez',
       dni: '12345678',
@@ -25,7 +25,7 @@ const HistorialServicios = () => {
       fecha: '2023-07-16',
       hora: '10:00',
       ubicacion: 'Santiago, Chile',
-      institucion: 'Institución 2',
+      organizacion: 'organizacion 2',
       usuarioRegistro: 'Usuario 2',
       beneficiario: 'María Gómez',
       dni: '87654321',
@@ -36,7 +36,7 @@ const HistorialServicios = () => {
       fecha: '2023-07-17',
       hora: '14:45',
       ubicacion: 'Lima, Perú',
-      institucion: 'Institución 3',
+      organizacion: 'organizacion 3',
       usuarioRegistro: 'Usuario 3',
       beneficiario: 'Carlos Ramírez',
       dni: '78901234',
@@ -56,7 +56,7 @@ const HistorialServicios = () => {
         servicio.nombreServicio.toLowerCase().includes(searchTerm.toLowerCase()) ||
         servicio.fecha.includes(searchTerm) ||
         servicio.ubicacion.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        servicio.institucion.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        servicio.organizacion.toLowerCase().includes(searchTerm.toLowerCase()) ||
         servicio.usuarioRegistro.toLowerCase().includes(searchTerm.toLowerCase()) ||
         servicio.beneficiario.toLowerCase().includes(searchTerm.toLowerCase()) ||
         servicio.dni.includes(searchTerm)
@@ -92,7 +92,7 @@ const HistorialServicios = () => {
             type="text"
             value={searchTerm}
             onChange={handleSearch}
-            placeholder="Buscar por servicio, fecha, ubicación, institución, usuario, beneficiario o DNI"
+            placeholder="Buscar por servicio, fecha, ubicación, organizacion, usuario, beneficiario o DNI"
           />
         </InputGroup>
       </Form.Group>
@@ -105,7 +105,7 @@ const HistorialServicios = () => {
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Fecha</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Hora</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }} onClick={() => handleOpenGoogleMaps('Ciudad Autónoma de Buenos Aires, Argentina')}>Ubicación</th>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Institución</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Organización</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Usuario Registro</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Nombre Beneficiario</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>DNI</th>
@@ -122,7 +122,7 @@ const HistorialServicios = () => {
                 <td onClick={() => handleOpenGoogleMaps(servicio.ubicacion)} style={{ cursor: 'pointer' }}>
                   {servicio.ubicacion}
                 </td>
-                <td>{servicio.institucion}</td>
+                <td>{servicio.organizacion}</td>
                 <td>{servicio.usuarioRegistro}</td>
                 <td>{servicio.beneficiario}</td>
                 <td>{servicio.dni}</td>
@@ -139,7 +139,7 @@ const HistorialServicios = () => {
                 <td onClick={() => handleOpenGoogleMaps(servicio.ubicacion)} style={{ cursor: 'pointer' }}>
                   {servicio.ubicacion}
                 </td>
-                <td>{servicio.institucion}</td>
+                <td>{servicio.organizacion}</td>
                 <td>{servicio.usuarioRegistro}</td>
                 <td>{servicio.beneficiario}</td>
                 <td>{servicio.dni}</td>

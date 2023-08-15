@@ -2,7 +2,6 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
 import Servicio_model from './Servicio_model.js';
 import Cliente_model from './Cliente_model.js';
-import Operativo_model from './Operativo_model.js';
 
 const ServRealizado_model = sequelize.define(
   'serv_realizado',
@@ -31,9 +30,6 @@ ServRealizado_model.belongsTo(Cliente_model, {
   foreignKey: 'id_cliente',
 });
 
-ServRealizado_model.belongsTo(Operativo_model, {
-  foreignKey: 'id_operativo',
-});
 
 // Crear la tabla "serv_realizados" en la base de datos
 ServRealizado_model.sync({ force: false }).then(() => {

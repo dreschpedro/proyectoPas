@@ -40,7 +40,6 @@ import routerOrganiz from './routes/organizacion.routes.js';
 import routerServicio from './routes/servicio.routes.js';
 import routerProducto from './routes/producto.routes.js';
 import routerUsuario from './routes/usuario.routes.js';
-import routerOper from './routes/opeartivo.routes.js';
 import routerInfoSA from './routes/info.routes.js';
 import routerCliente from './routes/cliente.routes.js';
 import routerServReal from './routes/servReal.routes.js';
@@ -54,7 +53,6 @@ app.use('/organizaciones/', routerOrganiz)
 app.use('/servicios', routerServicio)
 app.use('/producto', routerProducto)
 app.use('/usuarios', routerUsuario)
-app.use('/operativo/', routerOper)
 app.use('/info/', routerInfoSA)
 app.use('/cliente', routerCliente)
 app.use('/personal', routerPersonal)

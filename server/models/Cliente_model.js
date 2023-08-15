@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
-import Operativo_model from './Operativo_model.js';
 import InfoSocAmbient_model from './InfoSocAmbient_model.js';
 
 const Cliente_model = sequelize.define('cliente', {
@@ -34,9 +33,6 @@ const Cliente_model = sequelize.define('cliente', {
     tableName: 'cliente',
     timestamps: true,
   });
-
-// Relación con la tabla Operativo
-Cliente_model.belongsTo(Operativo_model, { foreignKey: 'id_operativo' });
 
 // Relación con la tabla InfoSocAmbient
 Cliente_model.belongsTo(InfoSocAmbient_model, { foreignKey: 'id_info_socambient' });

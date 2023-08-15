@@ -11,13 +11,6 @@ const ServicesCrud = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [serviceInfo, setServiceInfo] = useState({
-    dni: '',
-    fechaNacimiento: '',
-    ocupacion: '',
-    domicilioReal: '',
-    hijos: '',
-    trabajo: '',
-    subsidio: '',
     id_organizacion: '',
     Organizacion: '', // Combobox para la organización que realiza el servicio
   });
@@ -108,7 +101,7 @@ const ServicesCrud = () => {
     e.preventDefault();
     try {
       const dataToSend = {
-        nombre: selectedService.nombre,
+        nombre: selectedService.nombre, 
         descripcion: selectedService.descripcion,
         id_organizacion: serviceInfo.id_organizacion,
       };
