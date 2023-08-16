@@ -79,8 +79,8 @@ Link{
   color: #ffffff;
   background-color: #22096F;
   border-color: #22096F;
-  margin-right: 10px;
-  width: 200px;
+  margin:auto;
+  width: 100%;
   font: bold;
 }
 
@@ -147,3 +147,21 @@ Link{font-style: none;}
   background-color: #f8f9fa; /* Cambia el color a tu preferencia */
   color: white; /* Cambia el color del texto a tu preferencia */
 }
+
+
+.blur-background {
+  backdrop-filter: blur(10px); /* Ajusta el valor de desenfoque según sea necesario */
+  background-color: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
+  border: solid 1px;
+  border-radius: 25px;
+  border-color: rgba(255, 255, 255, 0.5);
+  padding: 2em;
+  margin-top: 15px;
+}
+
+
+.my-px {
+  padding-left: 3rem; /* Ajusta los valores según tus necesidades */
+  padding-right: 3rem;
+}
+
