@@ -6,7 +6,8 @@ import instance from '@/app/axiosConfig';
 import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import RootLayout from './layout';
+// import RootLayout from './layout';
+import Link from 'next/link';
 
 
 
@@ -50,45 +51,46 @@ function Login({ isAuthPage }) {
 
   return (
     <>
-    <RootLayout isAuthPage={!isAuthPage}>
-      {!isAuthPage && <h1 className='titulo'>Crear cuenta</h1>}
-      <Form onSubmit={handleSubmit} className='bordesito' >
+    {/* <RootLayout isAuthPage={!isAuthPage}> */}
+      
+      <Form onSubmit={handleSubmit} className='blur-background' >
+      <h1 className='text-white text-center'>Iniciar Sesion</h1>
         <Col md>
 
-          <Form.Group controlId="formtext">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Nombre de Usuario*</Form.Label>
+          <Form.Group controlId="formtext" className='mt-5'>
+            <Form.Group className="mb-5" controlId="exampleForm.ControlInput1">
+              {/* <Form.Label>Nombre de Usuario*</Form.Label> */}
               <Form.Control 
               type="text" 
               name='username'
-              placeholder="" />
+              placeholder="Nombre de Usuario" />
             </Form.Group>
           </Form.Group>
 
 
           <Form.Group controlId="formPassword">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Contraseña*</Form.Label>
+            <Form.Group className="mb-5" controlId="exampleForm.ControlInput1">
+              {/* <Form.Label>Contraseña*</Form.Label> */}
               <Form.Control 
               type="password" 
               name='password'
-              placeholder="" />
+              placeholder="Contraseña" />
             </Form.Group>
           </Form.Group>
 
         </Col>
 
-        <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
-          <button type="submit" className='bouttoncancel'>
-            Cancelar
-          </button>
-
+        <div style={{  display: 'flex', flexDirection: 'column', marginTop: '49px' }}>
           <button className='buttonRegistrar' type="submit">
-            Inisiar Sesión
+            Iniciar Sesión
           </button>
+        <div className='mt-5 mb-3 d-flex align-items-center justify-content-center'>
+          <Link style={{ color: '#22096F' }} href={"/login/recuperar"}><b>Recuperar Contraseña</b></Link>
+        </div>
+
         </div>
       </Form>
-      </RootLayout>
+      {/* </RootLayout> */}
     </>
   );
 }
