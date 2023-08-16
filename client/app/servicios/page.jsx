@@ -44,45 +44,34 @@ const fetchLocalidades = async (departamentoId) => {
 const RegistroServiciosRealizados = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState('');
-  const [formSubmitted, setFormSubmitted] = useState(false);
   const [organizaciones, setOrganizaciones] = useState([]);
   const [servicios, setServicios] = useState([]); // Inicializar aquí
-  const [selectedOrganizacion, setSelectedOrganizacion] = useState('');
-  const [filteredOrganizaciones, setFilteredOrganizaciones] = useState([]);
   const [provincias, setProvincias] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
   const [localidades, setLocalidades] = useState([]);
   const [modalFormData, setModalFormData] = useState({
-    nombre: '',
-    descripcion: '',
-  });
-  const [serviceInfo, setServiceInfo] = useState({
-    nombre: '',
-    descripcion: '',
-    dni: '',
-    fechaNacimiento: '',
-    ocupacion: '',
-    domicilioReal: '',
-    hijos: '',
-    trabajo: '',
-    subsidio: '',
+    // nombre: '',
+    // descripcion: '',
+    organizacion: '',
     id_organizacion: '',
-    Organizacion: '', // Combobox para la organizacion que realiza el servicio
   });
   const [formData, setFormData] = useState({
+    organizacion: '',
+    servicio: '',
     apellido: '',
     nombre: '',
-    descripcion: '',
     dni: '',
     fechaNacimiento: '',
-    ocupacion: '',
-    domicilioReal: '',
-    hijos: '',
-    trabajo: '',
     genero: '',
-    subsidio: '',
+    email: '',
+    contacto: '',
+    telefono: '',
+    provincia: '',
+    departamento: '',
+    localidad: '',
+    ocupacion: '',
+    domicilio: '',
     id_organizacion: '',
-    Organizacion: '',
   });
 
   useEffect(() => {
@@ -145,23 +134,22 @@ const RegistroServiciosRealizados = () => {
       ...prevData,
       [name]: value,
     }));
+
     console.log('Modal form data:', modalFormData);
   };
 
-
-  const handleSubmit = async (e) => {
+  const handleModalSubmit = async (e) => {
     e.preventDefault();
     try {
       const dataToSend = {
         nombre: modalFormData.nombre, // Usa modalFormData.nombre
-        descripcion: selectedService.descripcion,
-        id_organizacion: serviceInfo.id_organizacion,
+        descripcion: modalFormData.descripcion,
+        id_organizacion: modalFormData.id_organizacion,
       };
 
       console.log('Data to send:', dataToSend); // Agregar este console.log
 
       if (selectedService.id_servicio) {
-        // Edit an existing service
         await instance.put(`/servicios/${selectedService.id_servicio}`, dataToSend);
         console.log('Service edited successfully');
       } else {
@@ -172,34 +160,44 @@ const RegistroServiciosRealizados = () => {
 
       console.log('Saving changes');
       // Fetch updated services and close modal
-      fetchServices();
+      fetchServicios();
       handleCloseModal();
     } catch (error) {
       console.error('Error saving changes:', error);
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+
+    } catch (error) {
+      console.error('Error saving changes:', error);
+    }
+  };
+
+  const setModalOrganizacionValue = (organizacionId) => {
+    setModalFormData((prevModalFormData) => ({
+      ...prevModalFormData,
+      id_organizacion: organizacionId,
+    }));
+  };
+
 
   const setOrganizacionValue = (organizacionId) => {
-    setServiceInfo((prevServiceInfo) => ({
+    setFormData((prevServiceInfo) => ({
       ...prevServiceInfo,
       id_organizacion: organizacionId,
     }));
   };
-  const handleServiceChange = (e) => {
-    setSelectedService({
-      ...selectedService,
-      [e.target.name]: e.target.value,
-    });
-  };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
+  const handleServiceChange = (e) => {
+    setModalFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [e.target.name]: e.target.value,
     }));
   };
+
 
   const handleShowModal = (service) => {
     setSelectedService(service);
@@ -211,13 +209,10 @@ const RegistroServiciosRealizados = () => {
     setShowModal(false);
   };
 
-
   return (
     <>
       <Row>
-
         <Col>
-
 
           <div className='d-flex flex-nowrap'>
             <h1 className='titulo'>Registrar Servicio</h1>
@@ -250,13 +245,13 @@ const RegistroServiciosRealizados = () => {
               <FormSelect className="mb-3"
                 as="select"
                 name='organizacion'
-                value={serviceInfo.Organizacion}
-                onChange={(e) => setServiceInfo({ ...serviceInfo, Organizacion: e.target.value })}
+                value={formData.organizacion}
+                onChange={(e) => setFormData({ ...formData, organizacion: e.target.value })}
                 required
               >
                 <option value="">Seleccionar Organización</option>
                 {organizaciones.map((organizacion) => (
-                  <option key={organizacion.id} value={organizacion.id}>
+                  <option key={organizacion.id_organizacion} value={organizacion.id_organizacion}>
                     {organizacion.nombre}
                   </option>
                 ))}
@@ -268,8 +263,8 @@ const RegistroServiciosRealizados = () => {
               <FormSelect className="mb-3"
                 name='servicio'
                 as="select"
-                value={serviceInfo.Servicio}
-                onChange={(e) => setServiceInfo({ ...serviceInfo, Servicio: e.target.value })}
+                value={formData.servicio}
+                onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
                 required>
 
                 <option value="">Seleccionar Servicio</option>
@@ -354,8 +349,8 @@ const RegistroServiciosRealizados = () => {
               <FormSelect className="mb-3"
                 as="select"
                 name='genero'
-                value={serviceInfo.Organizacion}
-                onChange={(e) => setServiceInfo({ ...serviceInfo, Organizacion: e.target.value })}
+                value={formData.genero}
+                onChange={(e) => setFormData({ ...formData, Organizacion: e.target.value })}
                 required
               >
                 <option value=""> Seleccione el Género </option>
@@ -379,12 +374,6 @@ const RegistroServiciosRealizados = () => {
               </Form.Group>
             </Form.Group>
 
-
-          </Col>
-
-
-          <Col md>
-
             <Form.Group controlId="formContacto">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Contacto</Form.Label>
@@ -397,6 +386,9 @@ const RegistroServiciosRealizados = () => {
                   placeholder="" />
               </Form.Group>
             </Form.Group>
+
+          </Col>
+          <Col md>
 
             <Form.Group controlId="formTelefoono">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -414,11 +406,12 @@ const RegistroServiciosRealizados = () => {
             <Form.Group controlId="formProvincia">
               <Form.Label>Provincia</Form.Label>
               <FormSelect
+                className="mb-3"
                 as="select"
                 name='provincia'
-                value={serviceInfo.provincia}
+                value={formData.provincia}
                 onChange={(e) => {
-                  setServiceInfo({ ...serviceInfo, provincia: e.target.value });
+                  setFormData({ ...formData, provincia: e.target.value });
                   handleProvinciaChange(e.target.value);
                 }}
                 required
@@ -436,10 +429,11 @@ const RegistroServiciosRealizados = () => {
               <Form.Label>Departamento</Form.Label>
               <FormSelect
                 as="select"
+                className="mb-3"
                 name='departamento'
-                value={serviceInfo.departamento} // Update the selected department value
+                value={formData.departamento} // Update the selected department value
                 onChange={(e) => {
-                  setServiceInfo({ ...serviceInfo, departamento: e.target.value }); // Update the selected department in serviceInfo
+                  setFormData({ ...formData, departamento: e.target.value }); // Update the selected department in serviceInfo
                   handleDepartamentoChange(e.target.value);
                 }}
                 required
@@ -457,10 +451,11 @@ const RegistroServiciosRealizados = () => {
             <Form.Group controlId="formLocalidad">
               <Form.Label>Localidad</Form.Label>
               <FormSelect
+                className="mb-3"
                 as="select"
                 name='localidad'
-                value={serviceInfo.localidad}
-                onChange={(e) => setServiceInfo({ ...serviceInfo, localidad: e.target.value })}
+                value={formData.localidad}
+                onChange={(e) => setFormData({ ...formData, localidad: e.target.value })}
                 required
               >
                 <option value="">Seleccione la Localidad</option>
@@ -486,34 +481,35 @@ const RegistroServiciosRealizados = () => {
               </Form.Group>
             </Form.Group>
 
-            <Form.Group controlId="formProfesion">
+            <Form.Group controlId="formOcupacion">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Ocupacion</Form.Label>
                 <Form.Control
                   className='shadow-right'
                   type="text"
-                  name="profesion"
-                  value={formData.profesion}
+                  name="ocupacion"
+                  value={formData.ocupacion}
                   required
                   onChange={handleInputChange}
                   placeholder="" />
               </Form.Group>
             </Form.Group>
+            <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
+              <button type="submit" className='bouttoncancel'>
+                Cancelar
+              </button>
+
+              <button className='buttonRegistrar' type="submit">
+                Registrar Servicio
+              </button>
+            </div>
 
           </Col>
 
 
         </Row>
 
-        <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
-          <button type="submit" className='bouttoncancel'>
-            Cancelar
-          </button>
 
-          <button className='buttonRegistrar' type="submit">
-            Registrar Servicio
-          </button>
-        </div>
       </Form>
 
       <Modal show={showModal} onHide={handleCloseModal}>
@@ -522,11 +518,12 @@ const RegistroServiciosRealizados = () => {
         </Modal.Header>
         <Modal.Body>
 
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleModalSubmit}>
             <Form.Group controlId="formName">
               <Form.Label>Nombre del Servicio*</Form.Label>
               <Form.Control
                 type="text"
+                as='input'
                 name="nombre"
                 required
                 value={modalFormData.nombre}
@@ -540,8 +537,8 @@ const RegistroServiciosRealizados = () => {
               <InputGroup className="mb-3">
                 <Form.Control
                   as="select"
-                  value={serviceInfo.id_organizacion} // Cambia a serviceInfo.id_organizacion
-                  onChange={(e) => setOrganizacionValue(e.target.value)} // Usa setOrganizacionValue directamente
+                  value={modalFormData.id_organizacion} // Cambia a serviceInfo.id_organizacion
+                  onChange={(e) => setModalOrganizacionValue(e.target.value)} // Usa setOrganizacionValue directamente
                   required
                 >
                   <option value="">Seleccionar Organización</option>
@@ -560,8 +557,8 @@ const RegistroServiciosRealizados = () => {
               <Form.Control
                 as="textarea"
                 name="descripcion"
-                value={selectedService?.descripcion || ''}
-                onChange={handleServiceChange}
+                value={modalFormData.descripcion}
+                onChange={handleModalInputChange}
               />
             </Form.Group>
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
