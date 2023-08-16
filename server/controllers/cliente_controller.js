@@ -66,23 +66,24 @@ const modificar_cliente = async (req, res) => {
 };
 
 // elimina por id
-const eliminar_cliente = async (req, res) => {
-    const cliente_id = req.params.id;
-    try {
-        const cliente = await Cliente_model.findByPk(cliente_id);
+const cambiar_estado_cliente = async (req, res) => {
+  const cliente_id = req.params.id;
 
-        if (!cliente) {
-            const mensaje = "No se encontró el registro solicitado";
-            return res.status(404).send(mensaje);
-        }
+  try {
+    const cliente = await cliente_model.findByPk(cliente_id);
 
-        await cliente.destroy();
-        return res.status(200).send("Registro eliminado");
-    } catch (error) {
-        console.log(error);
-        const mensaje_error = "Ocurrió un error al eliminar el registro";
-        return res.status(500).json({ error: mensaje_error });
+    if (!cliente) {
+      const mensaje = 'No se encontró el registro solicitado';
+      return res.status(404).send(mensaje);
     }
+
+    await cliente.update({ activo: !cliente.activo }); // Cambia el estado activo
+    return res.status(200).json({ message: 'Estado modificado', activo: cliente.activo });
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = 'Ocurrió un error al cambiar el estado del registro';
+    return res.status(500).json({ error: mensaje_error });
+  }
 };
 
 // exports
@@ -91,5 +92,5 @@ export {
     obtener_cliente,
     registrar_cliente,
     modificar_cliente,
-    eliminar_cliente
+    cambiar_estado_cliente
 };

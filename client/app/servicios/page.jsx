@@ -49,16 +49,18 @@ const RegistroServiciosRealizados = () => {
   const [provincias, setProvincias] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
   const [localidades, setLocalidades] = useState([]);
+  const [organizacionServicios, setOrganizacionServicios] = useState([]);
+  const [organizacionTieneServicios, setOrganizacionTieneServicios] = useState(true);
   const [modalFormData, setModalFormData] = useState({
-    // nombre: '',
-    // descripcion: '',
+    nombre: '',
+    descripcion: '',
     organizacion: '',
     id_organizacion: '',
   });
   const [formData, setFormData] = useState({
     organizacion: '',
     servicio: '',
-    apellido: '',
+    apellidos: '',
     nombre: '',
     dni: '',
     fechaNacimiento: '',
@@ -89,12 +91,25 @@ const RegistroServiciosRealizados = () => {
     const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
     setDepartamentos(sortedDepartamentos);
     setLocalidades([]);
+
+
+    // Actualizar servicios relacionados con la organización seleccionada
+    const selectedOrganizacion = organizaciones.find(org => org.id_organizacion === provinciaId);
+    if (selectedOrganizacion) {
+      const serviciosDeOrganizacion = servicios.filter(servicio => servicio.id_organizacion === selectedOrganizacion.id_organizacion);
+      setOrganizacionServicios(serviciosDeOrganizacion);
+      setOrganizacionTieneServicios(serviciosDeOrganizacion.length > 0);
+    } else {
+      setOrganizacionServicios([]);
+      setOrganizacionTieneServicios(false);
+    }
   };
 
   const handleDepartamentoChange = async (departamentoId) => {
     const localidadesData = await fetchLocalidades(departamentoId);
     const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
     setLocalidades(sortedLocalidades);
+
   };
 
   useEffect(() => {
@@ -102,6 +117,7 @@ const RegistroServiciosRealizados = () => {
       try {
         const response = await instance.get('/organizaciones');
         setOrganizaciones(response.data);
+        console.log('Organizaciones:', response.data); // Agregar este console.log
       } catch (error) {
         console.error('Error al obtener las organizaciones:', error);
       }
@@ -111,6 +127,7 @@ const RegistroServiciosRealizados = () => {
       try {
         const response = await instance.get('/servicios');
         setServicios(response.data);
+        console.log('Servicios:', response.data); // Agregar este console.log
       } catch (error) {
         console.error('Error al obtener los servicios:', error);
       }
@@ -170,7 +187,40 @@ const RegistroServiciosRealizados = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const dataToSend = {
+        organizacion: formData.organizacion,
+        servicio: formData.servicio,
+        apellidos: formData.apellidos,
+        nombre: formData.nombre,
+        dni: formData.dni,
+        fechaNacimiento: formData.fechaNacimiento,
+        genero: formData.genero,
+        email: formData.email,
+        contacto: formData.contacto,
+        telefono: formData.telefono,
+        provincia: formData.provincia,
+        departamento: formData.departamento,
+        localidad: formData.localidad,
+        ocupacion: formData.ocupacion,
+        domicilio: formData.domicilio,
+        id_organizacion: formData.id_organizacion,
+      };
 
+      console.log('Data to send:', dataToSend); // Agregar este console.log
+
+      if (selectedService.id_servicio) {
+        await instance.put(`/cliente/${selectedService.id_servicio}`, dataToSend);
+        console.log('Service edited successfully');
+      } else {
+        // Add a new service
+        const response = await instance.post('/cliente/registrar', dataToSend);
+        console.log(response.data.message);
+      }
+
+      console.log('Saving changes');
+      // Fetch updated services and close modal
+      fetchServicios();
+      handleCloseModal();
     } catch (error) {
       console.error('Error saving changes:', error);
     }
@@ -266,14 +316,18 @@ const RegistroServiciosRealizados = () => {
                 value={formData.servicio}
                 onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
                 required>
-
                 <option value="">Seleccionar Servicio</option>
-                {servicios.map((servicio) => (
-                  <option key={servicio.id} value={servicio.id}>
-                    {servicio.nombre}
-                  </option>
-                ))}
+                {organizacionTieneServicios ? (
+                  organizacionServicios.map((servicio) => (
+                    <option key={servicio.id} value={servicio.id}>
+                      {servicio.nombre}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No tiene servicios registrados</option>
+                )}
               </FormSelect>
+
             </Form.Group>
 
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
