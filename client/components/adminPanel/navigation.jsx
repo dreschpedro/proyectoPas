@@ -68,7 +68,7 @@ function Navigation2() {
         <Navbar key={expand} expand={expand} className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
           <Container fluid>
             <Navbar.Brand href="#" className="mx-4 d-flex flex-nowrap">
-              <Link href="/" style={{ textDecoration: 'none' }}>
+              <Link href="/admin" style={{ textDecoration: 'none' }}>
                 <button className='homebutton ' >
                   <Image
                     src="/img/pas-blanco.png"
@@ -80,19 +80,23 @@ function Navigation2() {
                 </button>
               </Link>
 
+
+              {/* estos botones de navegacion los dejo por que si pasamos el software a elcetron o ionic,
+               va a ser necesario implementar esta funcionalidad*/}
               <div className='d-flex flex-nowrap'>
                 <Pagination className='mx-3 my-auto '>
                   <Pagination.Prev className='' />
                   <Pagination.Next className='' />
                 </Pagination>
 
-
-                <Form.Control
+                {/*esto lo dejo comentado por que con gonzalo llegamos a
+                 la conclucion de que se veia "cheto" pero no tenia una funcionalidad real */}
+                {/* <Form.Control
                   className='h-80 my-auto'
                   placeholder="Buscador                            🔎"
                   aria-label="Buscador"
                   aria-describedby="basic-addon2"
-                />
+                /> */}
               </div>
 
             </Navbar.Brand>

@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
             <body className={inter.className}>
 
                 <Image
-                    alt="Mountains"
+                    alt="manos"
                     src="/img/loginBackground.png"
                     quality={100}
                     fill
@@ -35,24 +35,24 @@ export default function RootLayout({ children }) {
                     }}
                 />
 
-                <Container style={{ position: 'absolute' }} className="m-auto">
+                <Container style={{ position: 'absolute' }} >
                     <Row>
 
-                        <Col className="d-flex align-items-center flex-column mt-5">
-                            <h1 className="text-white mt-5">BIENVENIDO</h1>
+                        <Col className="d-flex align-items-center flex-column mt-0 mt-lg-5 mt-lg-5  col-md-6 col-sm-12">
+                            <h1 className="text-white mt-5 d-none d-sm-block d-md-block ">BIENVENIDO</h1>
 
                             <div className="d-flex flex-nowrap">
                                 <div>
                                     <Image
                                         src="/img/logoPasColor.png"
-                                        width={200}
+                                        width={240}
                                         height={200}
                                         alt="Picture of the author"
                                         
                                     />
                                 </div>
                                 <div class="d-flex  align-items-center">
-                                    <h3 className="text-white text-center">Programa de <br /> Asistencia Solidaria</h3>
+                                    <h3 className="text-white text-center  d-none d-sm-block d-md-block ">Programa de <br /> Asistencia Solidaria</h3>
                                 </div>
                             </div>
 
@@ -60,14 +60,14 @@ export default function RootLayout({ children }) {
                         </Col>
 
 
-                        <Col className="mt-5">
+                        <Col className="mt-0 mt-lg-5 mt-lg-5 col-md-6 col-sm-12">
                             <div className="mt-5">
                                 {children}
                             </div>
                         </Col>
                     </Row>
 
-                    <div className="d-flex justify-content-between mt-5 px-3 fixed-bottom">
+                    <div className="d-flex justify-content-between mt-5 px-3 fixed-sm-bottom">
                         <div className="">
                         <Image
                             src="/img/misionesGob.png"

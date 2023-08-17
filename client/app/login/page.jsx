@@ -71,7 +71,7 @@ function Login({ isAuthPage }) {
           <Form.Group controlId="formPassword">
             <Form.Group className="mb-5" controlId="exampleForm.ControlInput1">
               {/* <Form.Label>Contraseña*</Form.Label> */}
-              <Form.Control 
+              <Form.Control className='shadow shadow-sm'
               type="password" 
               name='password'
               placeholder="Contraseña" />

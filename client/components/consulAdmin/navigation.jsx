@@ -68,7 +68,7 @@ function Navigation2() {
         <Navbar key={expand} expand={expand} className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
           <Container fluid>
             <Navbar.Brand href="#" className="mx-4 d-flex flex-nowrap">
-              <Link href="/" style={{ textDecoration: 'none' }}>
+              <Link href="/consultor" style={{ textDecoration: 'none' }}>
                 <button className='homebutton ' >
                   <Image
                     src="/img/pas-blanco.png"

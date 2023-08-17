@@ -11,12 +11,12 @@ const Sidebar = () => {
                   
                   
                   <div className='buttoncito custom-link'>
-                  <Link href={"dataEntry/organizaciones"} className='custom-link'>
+                  <Link href={"/dataEntry/organizaciones"} className='custom-link'>
                     Organizacion
                   </Link>
                   </div>
                   <div className='buttoncito'>
-                  <Link href={"dataEntry/servicios"} className='custom-link'>
+                  <Link href={"/dataEntry/servicios"} className='custom-link'>
                     Servicios
                   </Link>
                   </div>

@@ -61,32 +61,36 @@ function Usuarios() {
 
   return (
     <div>
-      <h1 className='mt-3'>Usuarios👤</h1>
-
-      <Form className="d-flex mb-3">
+      <h1 className='mt-5 mb-5'>Usuarios</h1>
+      <div className=''>
+      <Form className="mt-5 mb-5 d-flex mb-3 align-items-center">
         <FormControl
           type="text"
           placeholder="Buscar"
-          className="mr-2"
+          className="mr-2 shadow"
+          style={{ maxWidth: '35rem' }}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
-        <Link href="usuarios/usuarioCreate">
-          <Button variant="success" className="text-nowrap" style={{ marginLeft: '15px' }}>
-            Crear Usuario
-          </Button>
-        </Link>
+        <div className="ml-auto">
+          <Link href="usuarios/usuarioCreate">
+            <Button variant="success" className="text-nowrap" style={{ marginLeft: '3rem', backgroundColor: '#22096F' }}>
+              Crear Usuario
+            </Button>
+          </Link>
+        </div>
       </Form>
+      </div>
 
-      <Table striped bordered hover>
+      <Table className='mt-5'striped bordered hover>
         <thead>
           <tr>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff',borderTopLeftRadius: '5px' }}>#</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff', borderTopLeftRadius: '5px' }}>#</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Imagen</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Nombre</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Apellido</th>
-            <th style={{ borderTopRightRadius: '5px',backgroundColor: '#101488', color: '#ffffff' }}>Nombre de Usuario</th>
+            <th style={{ borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Nombre de Usuario</th>
           </tr>
         </thead>
         <tbody>
