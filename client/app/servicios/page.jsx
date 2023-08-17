@@ -241,11 +241,39 @@ const RegistroServiciosRealizados = () => {
     }));
   };
 
-  const handleServiceChange = (e) => {
-    setModalFormData((prevData) => ({
-      ...prevData,
-      [e.target.name]: e.target.value,
+  const fetchServiciosPorOrganizacion = async (organizacionId) => {
+    try {
+      const response = await instance.get(`/servicios/organizacion/${organizacionId}`);
+      const servicios = response.data;
+      setOrganizacionServicios(servicios);
+      setOrganizacionTieneServicios(servicios.length > 0);
+    } catch (error) {
+      console.error('Error al obtener los servicios:', error);
+    }
+  };
+
+  const handleOrganizacionChange = async (organizacionId) => {
+    setFormData((prevServiceInfo) => ({
+      ...prevServiceInfo,
+      id_organizacion: organizacionId,
     }));
+
+    // Llamada a la función para obtener servicios por organización
+    fetchServiciosPorOrganizacion(organizacionId);
+
+    // Buscar la organización seleccionada
+    const selectedOrganizacion = organizaciones.find(org => org.id_organizacion === organizacionId);
+
+    if (selectedOrganizacion) {
+      console.log('Selected Organizacion ID:', selectedOrganizacion.id_organizacion);
+    } else {
+      console.log('Selected Organizacion: No se encontró la organización');
+    }
+  };
+
+  const handleServicioChange = (e) => {
+    console.log('Selected Servicio:', e.target.value);
+    // Resto del código
   };
 
 
@@ -296,9 +324,14 @@ const RegistroServiciosRealizados = () => {
                 as="select"
                 name='organizacion'
                 value={formData.organizacion}
-                onChange={(e) => setFormData({ ...formData, organizacion: e.target.value })}
+                onChange={(e) => {
+                  console.log('Selected Organizacion ID:', e.target.value);
+                  setFormData({ ...formData, organizacion: e.target.value });
+                  handleOrganizacionChange(e.target.value);
+                }}
                 required
               >
+
                 <option value="">Seleccionar Organización</option>
                 {organizaciones.map((organizacion) => (
                   <option key={organizacion.id_organizacion} value={organizacion.id_organizacion}>
@@ -315,7 +348,8 @@ const RegistroServiciosRealizados = () => {
                 as="select"
                 value={formData.servicio}
                 onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
-                required>
+                required
+              >
                 <option value="">Seleccionar Servicio</option>
                 {organizacionTieneServicios ? (
                   organizacionServicios.map((servicio) => (
