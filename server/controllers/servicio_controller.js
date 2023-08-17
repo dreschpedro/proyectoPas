@@ -108,11 +108,33 @@ const cambiar_estado_servicio = async (req, res) => {
   }
 };
 
+// consulta de servicios por organización
+const listar_servicio_por_organizacion = async (req, res) => {
+  const organizacion_id = req.params.organizacion_id;
+
+  try {
+    const servicios = await Servicio_model.findAll({
+      where: {
+        activo: true,
+        id_organizacion: organizacion_id,
+      },
+      include: [{ model: organizacion_model, attributes: ["id_organizacion", "nombre"] }],
+    });
+
+    return res.status(200).json(servicios);
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = "Ocurrió un error al obtener los servicios de la organización";
+    return res.status(500).json({ error: mensaje_error });
+  }
+};
+
 // exports
 export {
   listar_servicio,
   obtener_servicio,
   registrar_servicio,
   modificar_servicio,
-  cambiar_estado_servicio
+  cambiar_estado_servicio,
+  listar_servicio_por_organizacion
 };
