@@ -1,3 +1,5 @@
-SELECT servicio.id_servicio, servicio.nombre, servicio.descripcion, servicio.activo
+SELECT servicio.id_servicio,servicio.activo, servicio.nombre servicio, 
+organizacion.id_organizacion, organizacion.nombre organizacion
 FROM servicio
-ORDER BY servicio.id_servicio
+JOIN organizacion ON organizacion.id_organizacion = servicio.id_organizacion
+-- WHERE organizacion.id_organizacion= 3

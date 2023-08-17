@@ -40,7 +40,6 @@ const fetchLocalidades = async (departamentoId) => {
   }
 };
 
-
 const RegistroServiciosRealizados = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState('');
@@ -57,6 +56,7 @@ const RegistroServiciosRealizados = () => {
     organizacion: '',
     id_organizacion: '',
   });
+  
   const [formData, setFormData] = useState({
     organizacion: '',
     servicio: '',
@@ -112,76 +112,12 @@ const RegistroServiciosRealizados = () => {
 
   };
 
-  useEffect(() => {
-    const fetchOrganizaciones = async () => {
-      try {
-        const response = await instance.get('/organizaciones');
-        setOrganizaciones(response.data);
-        console.log('Organizaciones:', response.data); // Agregar este console.log
-      } catch (error) {
-        console.error('Error al obtener las organizaciones:', error);
-      }
-    };
-
-    const fetchServicios = async () => {
-      try {
-        const response = await instance.get('/servicios');
-        setServicios(response.data);
-        console.log('Servicios:', response.data); // Agregar este console.log
-      } catch (error) {
-        console.error('Error al obtener los servicios:', error);
-      }
-    };
-
-    fetchOrganizaciones();
-    fetchServicios();
-  }, []);
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  };
-
-  const handleModalInputChange = (event) => {
-    const { name, value } = event.target;
-    setModalFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    console.log('Modal form data:', modalFormData);
-  };
-
-  const handleModalSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const dataToSend = {
-        nombre: modalFormData.nombre, // Usa modalFormData.nombre
-        descripcion: modalFormData.descripcion,
-        id_organizacion: modalFormData.id_organizacion,
-      };
-
-      console.log('Data to send:', dataToSend); // Agregar este console.log
-
-      if (selectedService.id_servicio) {
-        await instance.put(`/servicios/${selectedService.id_servicio}`, dataToSend);
-        console.log('Service edited successfully');
-      } else {
-        // Add a new service
-        const response = await instance.post('/servicios/registrar', dataToSend);
-        console.log(response.data.message);
-      }
-
-      console.log('Saving changes');
-      // Fetch updated services and close modal
-      fetchServicios();
-      handleCloseModal();
-    } catch (error) {
-      console.error('Error saving changes:', error);
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -233,14 +169,6 @@ const RegistroServiciosRealizados = () => {
     }));
   };
 
-
-  const setOrganizacionValue = (organizacionId) => {
-    setFormData((prevServiceInfo) => ({
-      ...prevServiceInfo,
-      id_organizacion: organizacionId,
-    }));
-  };
-
   const fetchServiciosPorOrganizacion = async (organizacionId) => {
     try {
       const response = await instance.get(`/servicios/organizacion/${organizacionId}`);
@@ -271,12 +199,6 @@ const RegistroServiciosRealizados = () => {
     }
   };
 
-  const handleServicioChange = (e) => {
-    console.log('Selected Servicio:', e.target.value);
-    // Resto del código
-  };
-
-
   const handleShowModal = (service) => {
     setSelectedService(service);
     setShowModal(true);
@@ -285,6 +207,70 @@ const RegistroServiciosRealizados = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  useEffect(() => {
+    const fetchOrganizaciones = async () => {
+      try {
+        const response = await instance.get('/organizaciones');
+        setOrganizaciones(response.data);
+        console.log('Organizaciones:', response.data); // Agregar este console.log
+      } catch (error) {
+        console.error('Error al obtener las organizaciones:', error);
+      }
+    };
+
+    const fetchServicios = async () => {
+      try {
+        const response = await instance.get('/servicios');
+        setServicios(response.data);
+        console.log('Servicios:', response.data); // Agregar este console.log
+      } catch (error) {
+        console.error('Error al obtener los servicios:', error);
+      }
+    };
+
+    fetchOrganizaciones();
+    fetchServicios();
+  }, []);
+
+  const handleModalInputChange = (event) => {
+    const { name, value } = event.target;
+    setModalFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    console.log('Modal form data:', modalFormData);
+  };
+
+  const handleModalSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const dataToSend = {
+        nombre: modalFormData.nombre, // Usa modalFormData.nombre
+        descripcion: modalFormData.descripcion,
+        id_organizacion: modalFormData.id_organizacion,
+      };
+
+      console.log('Data to send:', dataToSend); // Agregar este console.log
+
+      if (selectedService.id_servicio) {
+        await instance.put(`/servicios/${selectedService.id_servicio}`, dataToSend);
+        console.log('Service edited successfully');
+      } else {
+        // Add a new service
+        const response = await instance.post('/servicios/registrar', dataToSend);
+        console.log(response.data.message);
+      }
+
+      console.log('Saving changes');
+      // Fetch updated services and close modal
+      fetchServicios();
+      handleCloseModal();
+    } catch (error) {
+      console.error('Error saving changes:', error);
+    }
   };
 
   return (
@@ -434,21 +420,22 @@ const RegistroServiciosRealizados = () => {
 
             <Form.Group controlId="formGenero">
               <Form.Label>Género</Form.Label>
-              <FormSelect className="mb-3"
+              <FormSelect
+                className="mb-3"
                 as="select"
                 name='genero'
                 value={formData.genero}
-                onChange={(e) => setFormData({ ...formData, Organizacion: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, genero: e.target.value })} // Corregido: use "genero" en lugar de "Organizacion"
                 required
               >
                 <option value=""> Seleccione el Género </option>
-
                 <option key="masculino" value="masculino"> Masculino </option>
                 <option key="femenino" value="femenino"> Femenino </option>
                 <option key="noBinario" value="noBinario"> No Binario </option>
                 <option key="noDecir" value="noDecir"> Prefiero no decirlo </option>
               </FormSelect>
             </Form.Group>
+
 
             <Form.Group controlId="formEmail">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
