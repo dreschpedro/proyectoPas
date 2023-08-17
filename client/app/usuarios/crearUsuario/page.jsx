@@ -58,44 +58,44 @@ function RegistroUsuarios() {
         
         <Form.Group controlId="formtext">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Nombre de Usuario*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              {/* <Form.Label>Nombre de Usuario*</Form.Label> */}
+              <Form.Control type="text" placeholder="Nombre de Usuario" />
             </Form.Group>
           </Form.Group>
 
 
           <Form.Group controlId="formPassword">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Contraseña*</Form.Label>
-              <Form.Control type="password" placeholder="" />
+              {/* <Form.Label>Contraseña*</Form.Label> */}
+              <Form.Control type="password" placeholder="Contraseña" />
             </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="formPassword2">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Confirmar Contraseña*</Form.Label>
-              <Form.Control type="password" placeholder="" />
+              {/* <Form.Label>Confirmar Contraseña*</Form.Label> */}
+              <Form.Control type="password" placeholder="Confirmar Contraseña" />
             </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="formOrganizacion">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Organización*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              {/* <Form.Label>Organización*</Form.Label> */}
+              <Form.Control type="text" placeholder="Organización" />
             </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="formEmail">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email*</Form.Label>
-              <Form.Control type="email" placeholder="" />
+              {/* <Form.Label>Email*</Form.Label> */}
+              <Form.Control type="email" placeholder="Email" />
             </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="formRol">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Rol*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              {/* <Form.Label>Rol*</Form.Label> */}
+              <Form.Control type="text" placeholder="Rol" />
             </Form.Group>
           </Form.Group>
 
@@ -108,43 +108,43 @@ function RegistroUsuarios() {
 
         <Form.Group controlId="formCuilt">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>CUIL o CUIT*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              {/* <Form.Label>CUIL o CUIT*</Form.Label> */}
+              <Form.Control type="text" placeholder="CUIL o CUIT" />
             </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="formName">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Nombres y Apellidos*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              {/* <Form.Label>Nombres y Apellidos*</Form.Label> */}
+              <Form.Control type="text" placeholder="Nombres y Apellidos" />
             </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="formApe">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Apellidos*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              {/* <Form.Label>Apellidos*</Form.Label> */}
+              <Form.Control type="text" placeholder="Apellidos" />
             </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="formNumber">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Teléfono*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              {/* <Form.Label>Teléfono*</Form.Label> */}
+              <Form.Control type="text" placeholder="Teléfono" />
             </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="formDomicilio">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Domicilio*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              {/* <Form.Label>Domicilio*</Form.Label> */}
+              <Form.Control type="text" placeholder="Domicilio" />
             </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="formProfesion">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Profesión*</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              {/* <Form.Label>Profesión*</Form.Label> */}
+              <Form.Control type="text" placeholder="Profesión" />
             </Form.Group>
           </Form.Group>
 
