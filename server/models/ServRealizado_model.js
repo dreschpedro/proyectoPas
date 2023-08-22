@@ -10,11 +10,7 @@ const ServRealizado_model = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    },
-    fecha: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
+    }
   },
   {
     tableName: 'serv_realizado',

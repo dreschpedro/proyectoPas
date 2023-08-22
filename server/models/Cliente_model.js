@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
-import InfoSocAmbient_model from './InfoSocAmbient_model.js';
 
 const Cliente_model = sequelize.define('cliente', {
   id_cliente: {
@@ -17,7 +16,7 @@ const Cliente_model = sequelize.define('cliente', {
     allowNull: false,
   },
   dni: {
-    type: DataTypes.STRING(20),
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   fechaNacimiento: {
@@ -43,6 +42,18 @@ const Cliente_model = sequelize.define('cliente', {
     type: DataTypes.STRING(20),
     allowNull: false,
   },
+  provincia: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  departamento: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  localidad: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
   domicilio: {
     type: DataTypes.STRING(200),
     allowNull: true,
@@ -61,16 +72,12 @@ const Cliente_model = sequelize.define('cliente', {
     timestamps: true,
   });
 
-// Relación con la tabla InfoSocAmbient
-Cliente_model.belongsTo(InfoSocAmbient_model, { foreignKey: 'id_info_socambient' });
-
 // Crear la tabla "Cliente" en la base de datos
-Cliente_model.sync({ alter: true }, { force: false }).then(() => {
+Cliente_model.sync({ force: false }, { alter: true }).then(() => {
   // console.log('Tabla "Cliente" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "Cliente":', error);
 });
-
 
 
 export default Cliente_model;

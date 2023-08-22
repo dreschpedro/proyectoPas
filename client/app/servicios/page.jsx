@@ -45,6 +45,7 @@ const RegistroServiciosRealizados = () => {
   const [selectedService, setSelectedService] = useState('');
   const [organizaciones, setOrganizaciones] = useState([]);
   const [servicios, setServicios] = useState([]); // Inicializar aquí
+  const [searchResult, setSearchResult] = useState(null);
   const [provincias, setProvincias] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
   const [localidades, setLocalidades] = useState([]);
@@ -56,7 +57,7 @@ const RegistroServiciosRealizados = () => {
     organizacion: '',
     id_organizacion: '',
   });
-  
+
   const [formData, setFormData] = useState({
     organizacion: '',
     servicio: '',
@@ -87,7 +88,9 @@ const RegistroServiciosRealizados = () => {
   }, []);
 
   const handleProvinciaChange = async (provinciaId) => {
+    console.log('Selected Provincia:', provinciaId); // Add this console.log
     const departamentosData = await fetchDepartamentos(provinciaId);
+    console.log('Departamentos Data:', departamentosData);
     const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
     setDepartamentos(sortedDepartamentos);
     setLocalidades([]);
@@ -97,19 +100,38 @@ const RegistroServiciosRealizados = () => {
     const selectedOrganizacion = organizaciones.find(org => org.id_organizacion === provinciaId);
     if (selectedOrganizacion) {
       const serviciosDeOrganizacion = servicios.filter(servicio => servicio.id_organizacion === selectedOrganizacion.id_organizacion);
+      console.log('Servicios de Organización:', serviciosDeOrganizacion); // Add this console.log
       setOrganizacionServicios(serviciosDeOrganizacion);
       setOrganizacionTieneServicios(serviciosDeOrganizacion.length > 0);
     } else {
+      console.log('Selected Organizacion: No se encontró la organización');
       setOrganizacionServicios([]);
       setOrganizacionTieneServicios(false);
     }
   };
 
   const handleDepartamentoChange = async (departamentoId) => {
+    console.log('Selected Departamento:', departamentoId); // Add this console.log
     const localidadesData = await fetchLocalidades(departamentoId);
+    console.log('Localidades Data:', localidadesData); // Add this console.log
     const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
     setLocalidades(sortedLocalidades);
 
+  };
+
+  const handleLocalidadChange = async (localidad_id) => {
+    console.log('Selected Localidad:', localidad_id); // Add this console.log
+  };
+
+  const searchByDNI = async (dni) => {
+    try {
+      console.log('Searching by DNI:', dni); // Agregar este console.log
+      const response = await instance.get(`/cliente/dni/${dni}`);
+      const data = response.data;
+      setSearchResult(data);
+    } catch (error) {
+      console.error('Error al buscar por DNI:', error);
+    }
   };
 
   const handleInputChange = (event) => {
@@ -118,11 +140,20 @@ const RegistroServiciosRealizados = () => {
       ...prevData,
       [name]: value,
     }));
+
+    //buscar DNI
+    searchByDNI(value);
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Obtener los IDs de Provincia, Departamento y Localidad
+      const provinciaId = formData.provincia;
+      const departamentoId = formData.departamento;
+      const localidadId = formData.localidad;
+
       const dataToSend = {
         organizacion: formData.organizacion,
         servicio: formData.servicio,
@@ -134,9 +165,9 @@ const RegistroServiciosRealizados = () => {
         email: formData.email,
         contacto: formData.contacto,
         telefono: formData.telefono,
-        provincia: formData.provincia,
-        departamento: formData.departamento,
-        localidad: formData.localidad,
+        provinciaId,
+        departamentoId,
+        localidadId,
         ocupacion: formData.ocupacion,
         domicilio: formData.domicilio,
         id_organizacion: formData.id_organizacion,
@@ -365,6 +396,31 @@ const RegistroServiciosRealizados = () => {
           <h1 className='titulo'>Información</h1>
           <Col md>
 
+            <Form.Group controlId="formDNI">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>DNI</Form.Label>
+                <Form.Control
+                  type="number"
+                  as="input"
+                  name="dni"
+                  value={formData.dni}
+                  required
+                  onChange={handleInputChange}
+                  placeholder=""
+                />
+              </Form.Group>
+            </Form.Group>
+
+            {/* Display search result */}
+            {searchResult && (
+              <div>
+                <h3>Resultado de la búsqueda:</h3>
+                <p>Nombre: {searchResult.nombre}</p>
+                <p>Apellido: {searchResult.apellido}</p>
+                {/* Display other relevant information */}
+              </div>
+            )}
+
             <Form.Group controlId="formApellido">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Apellidos</Form.Label>
@@ -391,19 +447,7 @@ const RegistroServiciosRealizados = () => {
               </Form.Group>
             </Form.Group>
 
-            <Form.Group controlId="formDNI">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>DNI</Form.Label>
-                <Form.Control
-                  type="number"
-                  as="input"
-                  name="dni"
-                  value={formData.dni}
-                  required
-                  onChange={handleInputChange}
-                  placeholder="" />
-              </Form.Group>
-            </Form.Group>
+
 
             <Form.Group controlId="formName">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -530,7 +574,10 @@ const RegistroServiciosRealizados = () => {
                 as="select"
                 name='localidad'
                 value={formData.localidad}
-                onChange={(e) => setFormData({ ...formData, localidad: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, localidad: e.target.value });
+                  handleLocalidadChange(e.target.value);
+                }}
                 required
               >
                 <option value="">Seleccione la Localidad</option>
