@@ -16,12 +16,12 @@ const Cliente_model = sequelize.define('cliente', {
     allowNull: false,
   },
   dni: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING(8),
     allowNull: false,
   },
   fechaNacimiento: {
-    type: DataTypes.DATE,
-    allowNull: true, // Puede ser null si no tienes la fecha de nacimiento
+    type: DataTypes.DATEONLY,
+    allowNull: true,
   },
   genero: {
     type: DataTypes.STRING(10),
@@ -73,7 +73,7 @@ const Cliente_model = sequelize.define('cliente', {
   });
 
 // Crear la tabla "Cliente" en la base de datos
-Cliente_model.sync({ force: false }, { alter: true }).then(() => {
+Cliente_model.sync({ force: false }).then(() => {
   // console.log('Tabla "Cliente" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "Cliente":', error);

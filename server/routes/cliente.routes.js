@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get('/', listar_cliente);
 router.get('/:id', obtener_cliente);
-router.get('/dni/:dni', buscar_cliente_por_dni); // Cambio en la ruta para usar parámetro de ruta
+router.get('/dni/:dni', buscar_cliente_por_dni);
 router.post('/registrar', registrar_cliente);
 router.put('/:id', modificar_cliente);
 router.put('/estado/:id', cambiar_estado_cliente);

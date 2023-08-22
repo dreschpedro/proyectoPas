@@ -32,17 +32,11 @@ const obtener_cliente = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
 // Buscar cliente por DNI
+
 const buscar_cliente_por_dni = async (req, res) => {
-  const dni = req.query.dni; // Obtener el valor del parámetro 'dni' de la consulta
-  console.log('DNI:', dni); 
+  const dni = req.params.dni; // Cambia de req.query a req.params
+  console.log('DNI:', dni);  
 
   try {
     const cliente = await Cliente_model.findOne({
@@ -50,6 +44,7 @@ const buscar_cliente_por_dni = async (req, res) => {
         dni: dni,
       },
     });
+
 
     if (!cliente) {
       return res.status(404).json({ mensaje: "No se encontró ningún cliente con ese DNI" });

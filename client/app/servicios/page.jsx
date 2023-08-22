@@ -40,6 +40,9 @@ const fetchLocalidades = async (departamentoId) => {
   }
 };
 
+const genreDB = ['masculino', 'femenino', 'noBinario', 'noDecir'];
+const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo'];
+
 const RegistroServiciosRealizados = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState('');
@@ -123,37 +126,75 @@ const RegistroServiciosRealizados = () => {
     console.log('Selected Localidad:', localidad_id); // Add this console.log
   };
 
+
   const searchByDNI = async (dni) => {
     try {
-      console.log('Searching by DNI:', dni); // Agregar este console.log
+      console.log('Searching by DNI:', dni);
       const response = await instance.get(`/cliente/dni/${dni}`);
       const data = response.data;
-      setSearchResult(data);
+
+      // Update the formData state to fill the form fields with search results
+      setFormData((prevData) => ({
+        ...prevData,
+        dni: data.dni,
+        nombre: data.nombre,
+        apellido: data.apellido,
+        fechaNacimiento: data.fechaNacimiento,
+        genero: data.genero || formData.genero, // Keep the current formData.genero if data.genero is null
+        email: data.email,
+        contacto: data.contacto,
+        telefono: data.telefono,
+        provincia: data.provinciaId,
+        departamento: data.departamentoId,
+        localidad: data.localidadId,
+        ocupacion: data.ocupacion,
+        domicilio: data.domicilio,
+      }));
     } catch (error) {
       console.error('Error al buscar por DNI:', error);
     }
   };
 
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
 
-    //buscar DNI
-    searchByDNI(value);
+    // Search by DNI and fill the form fields
+    if (name === 'dni') {
+      searchByDNI(value);
+    }
+
+    if (name === 'fechaNacimiento') {
+      // Convierte la fecha de "dd/mm/aaaa" a un objeto Date
+      const parts = value.split('/');
+      const year = parseInt(parts[2], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const day = parseInt(parts[0], 10);
+      const date = new Date(year, month, day);
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: date.toString(), // Convierte la fecha a formato "aaaa-mm-dd"
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
+
+
+
+
+  // Convierte la fecha de la base de datos al formato "dd/mm/aaaa"
+  const dbDate = new Date(formData.fechaNacimiento);
+  const formattedDate = `${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()}`;
+
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Obtener los IDs de Provincia, Departamento y Localidad
-      const provinciaId = formData.provincia;
-      const departamentoId = formData.departamento;
-      const localidadId = formData.localidad;
-
       const dataToSend = {
         organizacion: formData.organizacion,
         servicio: formData.servicio,
@@ -165,9 +206,9 @@ const RegistroServiciosRealizados = () => {
         email: formData.email,
         contacto: formData.contacto,
         telefono: formData.telefono,
-        provinciaId,
-        departamentoId,
-        localidadId,
+        provinciaId: formData.provincia,
+        departamentoId: formData.departamento,
+        localidadId: formData.localidad,
         ocupacion: formData.ocupacion,
         domicilio: formData.domicilio,
         id_organizacion: formData.id_organizacion,
@@ -305,11 +346,11 @@ const RegistroServiciosRealizados = () => {
 
 
 
-    
+
   };
 
 
-  
+
   return (
     <>
       <Row>
@@ -317,10 +358,10 @@ const RegistroServiciosRealizados = () => {
 
           <div className='d-flex flex-wrap'>
             <h1 className='titulo'>Registrar Servicio</h1>
-            <div style={{margin:'auto'}} className='d-flex '>
+            <div style={{ margin: 'auto' }} className='d-flex '>
 
               <Link href="/servicios/crudServicios">
-                <button className='buttonRegistrar responsive-buttons' style={{ marginLeft: '10em'}}>
+                <button className='buttonRegistrar responsive-buttons' style={{ marginLeft: '10em' }}>
                   Administrar
                 </button>
               </Link>
@@ -418,15 +459,6 @@ const RegistroServiciosRealizados = () => {
               </Form.Group>
             </Form.Group>
 
-            {/* Display search result */}
-            {searchResult && (
-              <div>
-                <h3>Resultado de la búsqueda:</h3>
-                <p>Nombre: {searchResult.nombre}</p>
-                <p>Apellido: {searchResult.apellido}</p>
-                {/* Display other relevant information */}
-              </div>
-            )}
 
             <Form.Group controlId="formApellido">
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
@@ -465,30 +497,33 @@ const RegistroServiciosRealizados = () => {
                 className='border border-secondary rounded rounded-1.1 shadow mt-5'
                   type="date"
                   name="fechaNacimiento"
-                  value={formData.fechaNacimiento}
+                  value={formattedDate}
                   required
-                  onChange={handleInputChange}
-                  placeholder="" />
+                  onChange={handleInputChange} // Asegúrate de actualizar la función handleInputChange
+                  placeholder="dd/mm/aaaa" />
               </Form.Group>
             </Form.Group>
+
 
             <Form.Group controlId="formGenero">
               {/* <Form.Label>Género</Form.Label> */}
               <FormSelect
                 className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
-                name='genero'
+                name="genero"
                 value={formData.genero}
-                onChange={(e) => setFormData({ ...formData, genero: e.target.value })} // Corregido: use "genero" en lugar de "Organizacion"
+                onChange={handleInputChange}
                 required
               >
-                <option value=""> Seleccione el Género </option>
-                <option key="masculino" value="masculino"> Masculino </option>
-                <option key="femenino" value="femenino"> Femenino </option>
-                <option key="noBinario" value="noBinario"> No Binario </option>
-                <option key="noDecir" value="noDecir"> Prefiero no decirlo </option>
+                <option value="">Seleccione el Género</option>
+                {genreDB.map((genero, index) => (
+                  <option key={genero} value={genero}>
+                    {genreView[index]}
+                  </option>
+                ))}
               </FormSelect>
             </Form.Group>
+
 
 
             <Form.Group controlId="formEmail">

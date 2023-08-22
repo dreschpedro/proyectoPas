@@ -24,6 +24,7 @@
 -- 	(2, 'servicio 2', 'descripcion 2', 'true', '2023-08-09 21:40:58.941-03', '2023-08-09 21:40:58.941-03', 2),
 -- 	(3, 'servicio 3', 'descripcion 3', 'true', '2023-08-09 21:41:08.238-03', '2023-08-09 21:41:08.238-03', 3);
 
-INSERT INTO "cliente" ("id_cliente", "apellido", "nombre", "dni", "fechaNacimiento", "genero", "email", "contacto", "telefono", "provincia", "departamento", "localidad", "domicilio", "ocupacion", "activo", "createdAt", "updatedAt") VALUES
-	(3, 'Perez', 'Juana', 321351, '1965-02-14 21:00:00-03', 'Femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', 54, 54028, 54028030000, 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:47:47.924-03', '2023-08-21 18:47:47.924-03'),
-	(4, 'Perez', 'Juana', 321352, '1965-02-14 21:00:00-03', 'Femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', 54, 54028, 54028030000, 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:48:10.821-03', '2023-08-21 18:48:10.821-03');
+
+-- INSERT INTO "cliente" ("id_cliente", "apellido", "nombre", "dni", "fechaNacimiento", "genero", "email", "contacto", "telefono", "provincia", "departamento", "localidad", "domicilio", "ocupacion", "activo", "createdAt", "updatedAt") VALUES
+-- 	(3, 'Perez', 'Juana', 321351, '1965-02-14 21:00:00-03', 'Femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', 54, 54028, 54028030000, 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:47:47.924-03', '2023-08-21 18:47:47.924-03'),
+-- 	(4, 'Perez', 'Juana', 321352, '1965-02-14 21:00:00-03', 'Femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', 54, 54028, 54028030000, 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:48:10.821-03', '2023-08-21 18:48:10.821-03');
