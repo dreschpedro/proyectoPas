@@ -40,6 +40,9 @@ const fetchLocalidades = async (departamentoId) => {
   }
 };
 
+const genreDB = ['masculino', 'femenino', 'noBinario', 'noDecir'];
+const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo'];
+
 const RegistroServiciosRealizados = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState('');
@@ -125,35 +128,53 @@ const RegistroServiciosRealizados = () => {
 
   const searchByDNI = async (dni) => {
     try {
-      console.log('Searching by DNI:', dni); // Agregar este console.log
+      console.log('Searching by DNI:', dni);
       const response = await instance.get(`/cliente/dni/${dni}`);
       const data = response.data;
-      setSearchResult(data);
+
+      // Update the formData state to fill the form fields with search results
+      setFormData((prevData) => ({
+        ...prevData,
+        dni: data.dni,
+        nombre: data.nombre,
+        apellido: data.apellido,
+        fechaNacimiento: data.fechaNacimiento,
+        genero: data.genero || formData.genero, // Keep the current formData.genero if data.genero is null
+        email: data.email,
+        contacto: data.contacto,
+        telefono: data.telefono,
+        provincia: data.provinciaId,
+        departamento: data.departamentoId,
+        localidad: data.localidadId,
+        ocupacion: data.ocupacion,
+        domicilio: data.domicilio,
+      }));
     } catch (error) {
       console.error('Error al buscar por DNI:', error);
     }
   };
 
+
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
+    // Update only the relevant field in the formData state
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
 
-    //buscar DNI
-    searchByDNI(value);
+    // Search by DNI and fill the form fields
+    if (name === 'dni') {
+      searchByDNI(value);
+    }
   };
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Obtener los IDs de Provincia, Departamento y Localidad
-      const provinciaId = formData.provincia;
-      const departamentoId = formData.departamento;
-      const localidadId = formData.localidad;
-
       const dataToSend = {
         organizacion: formData.organizacion,
         servicio: formData.servicio,
@@ -165,9 +186,9 @@ const RegistroServiciosRealizados = () => {
         email: formData.email,
         contacto: formData.contacto,
         telefono: formData.telefono,
-        provinciaId,
-        departamentoId,
-        localidadId,
+        provinciaId: formData.provincia,
+        departamentoId: formData.departamento,
+        localidadId: formData.localidad,
         ocupacion: formData.ocupacion,
         domicilio: formData.domicilio,
         id_organizacion: formData.id_organizacion,
@@ -400,7 +421,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>DNI</Form.Label>
                 <Form.Control
-                  type="number"
+                  type="string"
                   as="input"
                   name="dni"
                   value={formData.dni}
@@ -411,15 +432,6 @@ const RegistroServiciosRealizados = () => {
               </Form.Group>
             </Form.Group>
 
-            {/* Display search result */}
-            {searchResult && (
-              <div>
-                <h3>Resultado de la búsqueda:</h3>
-                <p>Nombre: {searchResult.nombre}</p>
-                <p>Apellido: {searchResult.apellido}</p>
-                {/* Display other relevant information */}
-              </div>
-            )}
 
             <Form.Group controlId="formApellido">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -448,8 +460,7 @@ const RegistroServiciosRealizados = () => {
             </Form.Group>
 
 
-
-            <Form.Group controlId="formName">
+            <Form.Group controlId="formFechaNac">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Fecha Nacimiento</Form.Label>
                 <Form.Control
@@ -462,23 +473,46 @@ const RegistroServiciosRealizados = () => {
               </Form.Group>
             </Form.Group>
 
+            {/* <Form.Group controlId="formGenero">
+              <Form.Label>Género</Form.Label>
+              <FormSelect
+                className="mb-3"
+                as="select"
+                name="genero"
+                value={formData.genero}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Seleccione el Género</option>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+                <option value="noBinario">No Binario</option>
+                <option value="noDecir">Prefiero no decirlo</option>
+              </FormSelect>
+            </Form.Group> */}
+
+
+
+
             <Form.Group controlId="formGenero">
               <Form.Label>Género</Form.Label>
               <FormSelect
                 className="mb-3"
                 as="select"
-                name='genero'
+                name="genero"
                 value={formData.genero}
-                onChange={(e) => setFormData({ ...formData, genero: e.target.value })} // Corregido: use "genero" en lugar de "Organizacion"
+                onChange={handleInputChange}
                 required
               >
-                <option value=""> Seleccione el Género </option>
-                <option key="masculino" value="masculino"> Masculino </option>
-                <option key="femenino" value="femenino"> Femenino </option>
-                <option key="noBinario" value="noBinario"> No Binario </option>
-                <option key="noDecir" value="noDecir"> Prefiero no decirlo </option>
+                <option value="">Seleccione el Género</option>
+                {genreDB.map((genero, index) => (
+                  <option key={genero} value={genero}>
+                    {genreView[index]}
+                  </option>
+                ))}
               </FormSelect>
             </Form.Group>
+
 
 
             <Form.Group controlId="formEmail">
