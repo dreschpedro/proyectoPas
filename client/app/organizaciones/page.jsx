@@ -126,24 +126,26 @@
 
     return (
       <Container className='mt-3'>
-        <h1 style={{  marginTop: '20px' }}>Lista de Organizaciones</h1>
+        <h1 className='titulo'>Lista de Organizaciones</h1>
         <br />
 
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+        <div   className='d-flex justify-content-between align-items-end mt-5 mb-5'   >
           <Form.Group controlId="formSearch">
             <InputGroup>
-              <InputGroup.Text id="inputGroup-sizing-default">
+              {/* <InputGroup.Text id="inputGroup-sizing-default">
                 Búscar
-              </InputGroup.Text>
+              </InputGroup.Text> */}
               <Form.Control
+                style={{width: '60%'}}
+                className=' shadow border border-secondary rounded rounded-1.1 shadow'
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Buscar por nombre, dirección, telefono o email"
+                placeholder="Buscador"
               />
             </InputGroup>
           </Form.Group>
-          <Button style={{ fontWeight: 'bold', margin: '15px' }} size="lg" onClick={() => handleShowModal()}>Agregar Organización</Button>
+          <Button variant="success" className="text-nowrap" style={{ marginLeft: '3rem', backgroundColor: '#22096F' }}  onClick={() => handleShowModal()}>Agregar Organización</Button>
         </div>
 
         <Table striped bordered hover responsive>

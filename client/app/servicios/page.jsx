@@ -343,7 +343,7 @@ const RegistroServiciosRealizados = () => {
 
             <Form.Group controlId="formOrganizacion">
               {/* <Form.Label>Organización*</Form.Label> */}
-              <FormSelect className="mb-5 shadow"
+              <FormSelect className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 as="select"
                 name='organizacion'
                 value={formData.organizacion}
@@ -366,7 +366,7 @@ const RegistroServiciosRealizados = () => {
 
             <Form.Group controlId="formServicio">
               {/* <Form.Label>Servicio*</Form.Label> */}
-              <FormSelect className="mt-5 mt-3 shadow"
+              <FormSelect className="mt-5 mt-3 border border-secondary rounded rounded-1.1 shadow"
                 name='servicio'
                 as="select"
                 value={formData.servicio}
@@ -406,7 +406,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>DNI</Form.Label> */}
                 <Form.Control
-                  className='shadow mb-5'
+                  className='border border-secondary rounded rounded-1.1 shadow mb-5'
                   type="number"
                   as="input"
                   name="dni"
@@ -432,7 +432,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Apellidos</Form.Label> */}
                 <Form.Control
-                className='shadow mb-5'
+                className='border border-secondary rounded rounded-1.1 shadow mb-5'
                   type="text"
                   name="apellido"
                   value={formData.apellido}
@@ -446,7 +446,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Nombres</Form.Label> */}
                 <Form.Control
-                className='shadow mt-5'
+                className='border border-secondary rounded rounded-1.1 shadow mt-5'
                   type="text"
                   name="nombre"
                   value={formData.nombre}
@@ -462,7 +462,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Fecha Nacimiento</Form.Label> */}
                 <Form.Control
-                className='shadow mt-5'
+                className='border border-secondary rounded rounded-1.1 shadow mt-5'
                   type="date"
                   name="fechaNacimiento"
                   value={formData.fechaNacimiento}
@@ -475,7 +475,7 @@ const RegistroServiciosRealizados = () => {
             <Form.Group controlId="formGenero">
               {/* <Form.Label>Género</Form.Label> */}
               <FormSelect
-                className='shadow mt-5'
+                className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
                 name='genero'
                 value={formData.genero}
@@ -495,7 +495,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Email (Opcional)</Form.Label> */}
                 <Form.Control
-                className='shadow mt-5'
+                className='border border-secondary rounded rounded-1.1 shadow mt-5'
                   type="email"
                   name="email"
                   value={formData.email}
@@ -508,7 +508,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Contacto</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-5'
+                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
                   type="number"
                   name="contacto"
                   value={formData.contacto}
@@ -525,7 +525,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Teléfono</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-5'
+                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
                   type="number"
                   name="telefono"
                   value={formData.telefono}
@@ -538,7 +538,7 @@ const RegistroServiciosRealizados = () => {
             <Form.Group controlId="formProvincia">
               {/* <Form.Label>Provincia</Form.Label> */}
               <FormSelect
-                className='shadow mt-5'
+                className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
                 name='provincia'
                 value={formData.provincia}
@@ -560,7 +560,7 @@ const RegistroServiciosRealizados = () => {
             <Form.Group controlId="formDepartamento">
               {/* <Form.Label>Departamento</Form.Label> */}
               <FormSelect
-                className='shadow mt-5'
+                className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
                 name='departamento'
                 value={formData.departamento} // Update the selected department value
@@ -583,7 +583,7 @@ const RegistroServiciosRealizados = () => {
             <Form.Group controlId="formLocalidad" className='mt-5'>
               {/* <Form.Label>Localidad</Form.Label> */}
               <FormSelect
-                className='shadow mt-5 mt-3'
+                className='border border-secondary rounded rounded-1.1 shadow mt-5 mt-3'
                 as="select"
                 name='localidad'
                 value={formData.localidad}
@@ -607,7 +607,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Domicilio</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-5 mt-3'
+                  className='border border-secondary rounded rounded-1.1 shadow mt-5 mt-3'
                   type="text"
                   name="domicilio"
                   value={formData.domicilio}
@@ -621,7 +621,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Ocupacion</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3'
+                  className='border border-secondary rounded rounded-1.1 shadow mt-3'
                   type="text"
                   name="ocupacion"
                   value={formData.ocupacion}

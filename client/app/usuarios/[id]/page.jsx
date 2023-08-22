@@ -159,14 +159,15 @@ function PerfilPersonal() {
   return (
     <Form onSubmit={handleSubmit}>
 
-      <h1 style={{ marginTop: '20px' }}>Perfil</h1>
+      <h1 className='titulo mb-5'>Perfil</h1>
 
-      <Row>
+      <Row className='bordesito'>
         <Col md>
           <Form.Group controlId="formtext">
             <Form.Group className="mb-3" controlId="username">
               <Form.Label>Nombre de Usuario*</Form.Label>
               <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow'
                 name="username"
                 type="text"
                 value={formData.username}
@@ -181,6 +182,7 @@ function PerfilPersonal() {
             <Form.Group className="mb-3" controlId="apellido">
               <Form.Label>Apellido*</Form.Label>
               <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow'
                 name="apellido"
                 type="text"
                 value={formData.apellido}
@@ -191,9 +193,11 @@ function PerfilPersonal() {
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formName">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.Control 
+              className='border border-secondary rounded rounded-1.1 shadow'Input1">
               <Form.Label>Nombres*</Form.Label>
               <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow'
                 name="nombre"
                 type="text"
                 value={formData.nombre}
@@ -204,9 +208,11 @@ function PerfilPersonal() {
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formOrganizacion">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.Control 
+              className='border border-secondary rounded rounded-1.1 shadow'Input1">
               <Form.Label>Organización*</Form.Label>
               <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow'
                 name="organizacion"
                 type="text"
                 value={formData.organizacion}
@@ -217,9 +223,11 @@ function PerfilPersonal() {
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formEmail">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.Control 
+              className='border border-secondary rounded rounded-1.1 shadow'Input1">
               <Form.Label>Email*</Form.Label>
               <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow'
                 name="email"
                 type="email"
                 value={formData.email}
@@ -232,9 +240,11 @@ function PerfilPersonal() {
         </Col>
         <Col md>
           <Form.Group controlId="formEmail">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.Control 
+              className='border border-secondary rounded rounded-1.1 shadow'Input1">
               <Form.Label>Rol*</Form.Label>
               <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow'
                 name="rol"
                 type="text"
                 value={formData.rol}
@@ -245,9 +255,11 @@ function PerfilPersonal() {
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formCuilt">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.Control 
+              className='border border-secondary rounded rounded-1.1 shadow'Input1">
               <Form.Label>CUIL o CUIT*</Form.Label>
               <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow'
                 name="cuilt"
                 type="text"
                 value={formData.cuilt}
@@ -258,9 +270,11 @@ function PerfilPersonal() {
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formNumber">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.Control 
+              className='border border-secondary rounded rounded-1.1 shadow'Input1">
               <Form.Label>Teléfono*</Form.Label>
               <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow'
                 name="telefono"
                 type="text"
                 value={formData.telefono}
@@ -271,9 +285,11 @@ function PerfilPersonal() {
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formdomicilio">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.Control 
+              className='border border-secondary rounded rounded-1.1 shadow'Input1">
               <Form.Label>domicilio*</Form.Label>
               <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow'
                 name="domicilio"
                 type="text"
                 value={formData.domicilio}
@@ -284,9 +300,11 @@ function PerfilPersonal() {
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formProfesion">
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.Control 
+              className='border border-secondary rounded rounded-1.1 shadow'Input1">
               <Form.Label>Profesión*</Form.Label>
               <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow'
                 name="profesion"
                 type="text"
                 value={formData.profesion}
@@ -311,7 +329,9 @@ function PerfilPersonal() {
           </Button>
         ) : (
           <>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+
+          <div></div>
+            <div style={{ display: 'flex',  justifyContent: 'center' }}>
               <Button
                 variant="success"
                 name=""
@@ -338,6 +358,8 @@ function PerfilPersonal() {
       </div>
 
       {/* ELIMINAR CUENTA */}
+
+      
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
         <Button
           variant="danger"

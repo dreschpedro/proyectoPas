@@ -140,16 +140,16 @@ const ServicesCrud = () => {
 
   return (
     <Container className='mt-3'>
-      <h1>Gestión de Servicios</h1>
-      <Button
-        style={{ fontWeight: 'bold', margin: '15px' }}
-        variant="success"
+     <div className='d-flex flex-wrap mb-3'>
+      <h1 className='titulo'>Gestión de Servicios</h1>
+      <button
+       className='buttonRegistrar responsive-buttons' style={{ marginLeft: '10em'}}
         size="lg"
         onClick={() => handleShowModal()}
       >
         Agregar Servicio
-      </Button>
-
+      </button>
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>

@@ -91,8 +91,8 @@ const PerfilOrganizacion = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>{editing ? 'Editar Perfil de la organizacion' : 'Perfil de la organizacion'}</h1>
+    <Form className='bordesito' onSubmit={handleSubmit}>
+      <h1 className='titulo'>{editing ? 'Editar Perfil de la organizacion' : 'Perfil de la organizacion'}</h1>
 
       <Form.Group controlId="formLogo">
         <Form.Label>Logo de la organizacion</Form.Label>

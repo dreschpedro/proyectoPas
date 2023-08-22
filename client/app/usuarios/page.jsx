@@ -61,13 +61,13 @@ function Usuarios() {
 
   return (
     <div>
-      <h1 className='mt-5 mb-5'>Usuarios</h1>
-      <div className='' style={{}}>
+      <h1 className='titulo'>Usuarios</h1>
+      <div >
         <Form className="mt-5 mb-5 d-flex mb-3 align-items-center">
           <FormControl
             type="text"
             placeholder="Buscar"
-            className="mr-2 shadow"
+            className="mr-2 shadow border border-secondary rounded rounded-1.1 shadow"
             style={{ maxWidth: '35rem' }}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}

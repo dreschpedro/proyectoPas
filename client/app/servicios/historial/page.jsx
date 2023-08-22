@@ -73,13 +73,13 @@ const HistorialServicios = () => {
 
   return (
     <>
-      <h1 style={{ marginTop: '20px' }}>Historial de Servicios Realizados</h1>
+      <h1 style={{ marginTop: '20px' }}>Historial de Servicios</h1>
       <br />
 
       {/* Filtros de búsqueda asistida */}
-      <Form.Group controlId="formSearch">
-        <p><b>Buscador</b></p>
-        <InputGroup className="mb-3">
+      <Form.Group controlId="formSearch" className='mt-5 mb-5 '>
+        {/* <p><b>Buscador</b></p> */}
+        <InputGroup className="mb-3 shadow border border-secondary rounded rounded-1.1" style={{ maxWidth: '35rem' }}>
 
           {/* <Form.Label>
             Buscador
@@ -92,7 +92,7 @@ const HistorialServicios = () => {
             type="text"
             value={searchTerm}
             onChange={handleSearch}
-            placeholder="Buscar por servicio, fecha, ubicación, organizacion, usuario, beneficiario o DNI"
+            placeholder="Buscador"
           />
         </InputGroup>
       </Form.Group>

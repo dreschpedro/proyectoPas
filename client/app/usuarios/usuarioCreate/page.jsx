@@ -146,10 +146,10 @@ function RegistroUsuarios() {
           <Col md>
 
             <Form.Group controlId="formtext">
-              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Nombre de Usuario*</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3 '
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="text"
                   name="username"
                   value={formData.username}
@@ -161,10 +161,10 @@ function RegistroUsuarios() {
 
 
             <Form.Group controlId="formPassword">
-              <Form.Group className={`mb-3  mt-3${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
+              <Form.Group className={`mb-3  mb-4${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Contraseña*</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3 '
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="password"
                   name="password"
                   value={formData.password}
@@ -179,10 +179,10 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formPassword2">
-              <Form.Group className={`mb-3 mt-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
+              <Form.Group className={`mb-3 mb-4 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Confirmar Contraseña*</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3 '
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="password"
                   name="password2"
                   value={formData.password2}
@@ -194,11 +194,11 @@ function RegistroUsuarios() {
             </Form.Group>
 
 
-            <Form.Group controlId="formOrganizacion" className='mb-3 mt-3'>
+            <Form.Group controlId="formOrganizacion" className='mb-3 mb-4'>
               {/* <Form.Label>Organización*</Form.Label> */}
               <InputGroup>
                 <Form.Control
-                  className='shadow '
+                  className='shadow border border-secondary rounded rounded-1.1 shadow '
                   type="text"
                   name="organizacion"
                   value={selectedOrganizacion}
@@ -232,10 +232,10 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formEmail">
-              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Email*</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3 '
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="email"
                   name="email"
                   value={formData.email}
@@ -246,7 +246,7 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formRol">
-              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Rol*</Form.Label> */}
                 <DropdownButton
                   title={selectedRol || 'Seleccionar Rol'}
@@ -274,10 +274,10 @@ function RegistroUsuarios() {
 
           <Col md>
             <Form.Group controlId="formCuilt">
-              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>CUIL o CUIT*</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3 '
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="number"
                   as="input"
                   name="cuilt"
@@ -289,10 +289,10 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formName">
-              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Nombre*</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3 '
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="text"
                   name="nombre"
                   value={formData.nombre}
@@ -303,10 +303,10 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formApe">
-              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Apellido*</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3 '
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="text"
                   name="apellido"
                   value={formData.apellido}
@@ -317,10 +317,10 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formNumber">
-              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Teléfono*</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3 '
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="number"
                   name="telefono"
                   value={formData.telefono}
@@ -331,10 +331,10 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formDomicilio">
-              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Domicilio*</Form.Label> */}
                 <Form.Control
-                  className='shadow'
+                  className='shadow border border-secondary rounded rounded-1.1 shadow'
                   type="text"
                   name="domicilio"
                   value={formData.domicilio}
@@ -345,10 +345,10 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formProfesion">
-              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Profesión*</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3'
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4'
                   type="text"
                   name="profesion"
                   value={formData.profesion}
@@ -372,7 +372,7 @@ function RegistroUsuarios() {
 
                   type="file"
                   name="imagen"
-                  className="d-none shadow mt-3"
+                  className="d-none shadow border border-secondary rounded rounded-1.1 shadow mb-4"
                   onChange={handleImageUpload}
                 />
               </div>
