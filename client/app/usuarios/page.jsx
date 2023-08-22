@@ -62,28 +62,28 @@ function Usuarios() {
   return (
     <div>
       <h1 className='mt-5 mb-5'>Usuarios</h1>
-      <div className=''>
-      <Form className="mt-5 mb-5 d-flex mb-3 align-items-center">
-        <FormControl
-          type="text"
-          placeholder="Buscar"
-          className="mr-2 shadow"
-          style={{ maxWidth: '35rem' }}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      <div className='' style={{}}>
+        <Form className="mt-5 mb-5 d-flex mb-3 align-items-center">
+          <FormControl
+            type="text"
+            placeholder="Buscar"
+            className="mr-2 shadow"
+            style={{ maxWidth: '35rem' }}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
 
-        <div className="ml-auto">
-          <Link href="usuarios/usuarioCreate">
-            <Button variant="success" className="text-nowrap" style={{ marginLeft: '3rem', backgroundColor: '#22096F' }}>
-              Crear Usuario
-            </Button>
-          </Link>
-        </div>
-      </Form>
+          <div className="ml-auto">
+            <Link href="usuarios/usuarioCreate">
+              <Button variant="success" className="text-nowrap" style={{ marginLeft: '3rem', backgroundColor: '#22096F' }}>
+                Crear Usuario
+              </Button>
+            </Link>
+          </div>
+        </Form>
       </div>
 
-      <Table className='mt-5'striped bordered hover>
+      <Table className='mt-5' striped bordered hover>
         <thead>
           <tr>
             <th style={{ backgroundColor: '#101488', color: '#ffffff', borderTopLeftRadius: '5px' }}>#</th>
