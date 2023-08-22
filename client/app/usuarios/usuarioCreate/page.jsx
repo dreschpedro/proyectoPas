@@ -146,7 +146,7 @@ function RegistroUsuarios() {
           <Col md>
 
             <Form.Group controlId="formtext">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Nombre de Usuario*</Form.Label> */}
                 <Form.Control
                   className='shadow mt-3 '
@@ -161,7 +161,7 @@ function RegistroUsuarios() {
 
 
             <Form.Group controlId="formPassword">
-              <Form.Group className={`mb-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
+              <Form.Group className={`mb-3  mt-3${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Contraseña*</Form.Label> */}
                 <Form.Control
                   className='shadow mt-3 '
@@ -179,7 +179,7 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formPassword2">
-              <Form.Group className={`mb-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
+              <Form.Group className={`mb-3 mt-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Confirmar Contraseña*</Form.Label> */}
                 <Form.Control
                   className='shadow mt-3 '
@@ -194,11 +194,11 @@ function RegistroUsuarios() {
             </Form.Group>
 
 
-            <Form.Group controlId="formOrganizacion" className='mb-3'>
+            <Form.Group controlId="formOrganizacion" className='mb-3 mt-3'>
               {/* <Form.Label>Organización*</Form.Label> */}
               <InputGroup>
                 <Form.Control
-                  className='shadow mt-3 '
+                  className='shadow '
                   type="text"
                   name="organizacion"
                   value={selectedOrganizacion}
@@ -232,7 +232,7 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formEmail">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Email*</Form.Label> */}
                 <Form.Control
                   className='shadow mt-3 '
@@ -246,7 +246,7 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formRol">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Rol*</Form.Label> */}
                 <DropdownButton
                   title={selectedRol || 'Seleccionar Rol'}
@@ -274,7 +274,7 @@ function RegistroUsuarios() {
 
           <Col md>
             <Form.Group controlId="formCuilt">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>CUIL o CUIT*</Form.Label> */}
                 <Form.Control
                   className='shadow mt-3 '
@@ -289,7 +289,7 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formName">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Nombre*</Form.Label> */}
                 <Form.Control
                   className='shadow mt-3 '
@@ -303,7 +303,7 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formApe">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Apellido*</Form.Label> */}
                 <Form.Control
                   className='shadow mt-3 '
@@ -317,7 +317,7 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formNumber">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Teléfono*</Form.Label> */}
                 <Form.Control
                   className='shadow mt-3 '
@@ -331,10 +331,10 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formDomicilio">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Domicilio*</Form.Label> */}
                 <Form.Control
-                  className='shadow mt-3 '
+                  className='shadow'
                   type="text"
                   name="domicilio"
                   value={formData.domicilio}
@@ -345,7 +345,7 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formProfesion">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Profesión*</Form.Label> */}
                 <Form.Control
                   className='shadow mt-3'
@@ -369,7 +369,7 @@ function RegistroUsuarios() {
               <div className="d-flex align-items-center imagebutton">
                 <FontAwesomeIcon icon={faUser} className="imageIcon" />
                 <Form.Control
-                
+
                   type="file"
                   name="imagen"
                   className="d-none shadow mt-3"
@@ -382,7 +382,7 @@ function RegistroUsuarios() {
           </Col>
         </Row>
 
-        <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '49px' }}>
           <button type="submit" className='bouttoncancel'>
             Cancelar
           </button>
@@ -391,6 +391,7 @@ function RegistroUsuarios() {
             Registrarse
           </button>
         </div>
+
       </Form>
     </>
   );

@@ -68,7 +68,7 @@ function Login({ isAuthPage }) {
                 </Col>
 
                 <div style={{ display: 'flex', flexDirection: 'column', marginTop: '49px' }}>
-                    <button className='buttonRegistrar' type="submit">
+                    <button className='buttonLogin' type="submit">
                         Recuperar Contraseña
                     </button>
                     <div className='mt-5 mb-3 d-flex align-items-center justify-content-center'>

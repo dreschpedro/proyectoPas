@@ -20,8 +20,8 @@ const Cliente_model = sequelize.define('cliente', {
     allowNull: false,
   },
   fechaNacimiento: {
-    type: DataTypes.DATE,
-    allowNull: true, // Puede ser null si no tienes la fecha de nacimiento
+    type: DataTypes.DATEONLY,
+    allowNull: true,
   },
   genero: {
     type: DataTypes.STRING(10),

@@ -73,7 +73,7 @@ Link{
   font: bold;
 }
 
-.buttonRegistrar{
+.buttonLogin{
   height: 2.5rem;
   border-radius: 10px;
   color: #ffffff;
@@ -81,6 +81,16 @@ Link{
   border-color: #22096F;
   margin:auto;
   width: 100%;
+  font: bold;
+}
+
+.buttonRegistrar{
+  height: 2.5rem;
+  border-radius: 10px;
+  color: #ffffff;
+  background-color: #22096F;
+  border-color: #22096F;
+  width: 200px;
   font: bold;
 }
 
@@ -165,3 +175,25 @@ Link{font-style: none;}
   padding-right: 3rem;
 }
 
+
+.custom-width {
+  width: 100%;
+}
+
+.tablet-width {
+  width: 80%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+
+.responsive-buttons {
+  margin: 10px;
+  margin-top: 5.5rem;
+
+  @media (max-width: 888px) {
+    margin-top: 1rem;
+  }
+}

@@ -2,7 +2,7 @@
 -- 	(1, 'Juan1', '$2b$10$jodfEF8kEPjhmSbgyvZ3Q.toK/kAqgdU7/P7Z5eXIG.MixgjbQSKW', 'perez1@juan.com', '0.54540856590168781691022238596', 'false', 'admin', 'true', '2023-08-02 21:23:58.53-03', '2023-08-02 21:23:58.659-03'),
 -- 	(2, 'Ramon2', '$2b$10$PUP.GxwbyUEHrEspluCOd.1RdkYOzxKOErW9kmnEsigBqyhjLrqlS', 'gonzalez@ramon.com', '0.96695835254248391691022248357', 'false', 'Data-Entry', 'true', '2023-08-02 21:24:08.278-03', '2023-08-02 21:24:08.433-03'),
 -- 	(3, 'Federico3', '$2b$10$t5S8waS87VsyjSH.I.gR2ubluR6bfc.zBSdtep7efv35svy6Qnsqi', 'fede@espino.com', '0.28504958233006161691022253920', 'false', 'Consultor', 'true', '2023-08-02 21:24:13.84-03', '2023-08-02 21:24:13.998-03');
-/*!40000 ALTER TABLE "usuario" ENABLE KEYS */;
+-- /*!40000 ALTER TABLE "usuario" ENABLE KEYS */;
 
 
 -- INSERT INTO "organizacion" ("id_organizacion", "nombre", "direccion", "telefono", "email", "descripcion", "imagen", "activo", "createdAt", "updatedAt") VALUES
@@ -25,6 +25,6 @@
 -- 	(3, 'servicio 3', 'descripcion 3', 'true', '2023-08-09 21:41:08.238-03', '2023-08-09 21:41:08.238-03', 3);
 
 
-INSERT INTO "cliente" ("id_cliente", "apellido", "nombre", "dni", "fechaNacimiento", "genero", "email", "contacto", "telefono", "provincia", "departamento", "localidad", "domicilio", "ocupacion", "activo", "createdAt", "updatedAt") VALUES
-	(3, 'Perez', 'Juana', 321351, '1965-02-14 21:00:00-03', 'Femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', 54, 54028, 54028030000, 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:47:47.924-03', '2023-08-21 18:47:47.924-03'),
-	(4, 'Perez', 'Juana', 321352, '1965-02-14 21:00:00-03', 'Femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', 54, 54028, 54028030000, 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:48:10.821-03', '2023-08-21 18:48:10.821-03');
+-- INSERT INTO "cliente" ("id_cliente", "apellido", "nombre", "dni", "fechaNacimiento", "genero", "email", "contacto", "telefono", "provincia", "departamento", "localidad", "domicilio", "ocupacion", "activo", "createdAt", "updatedAt") VALUES
+-- 	(3, 'Perez', 'Juana', 321351, '1965-02-14 21:00:00-03', 'Femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', 54, 54028, 54028030000, 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:47:47.924-03', '2023-08-21 18:47:47.924-03'),
+-- 	(4, 'Perez', 'Juana', 321352, '1965-02-14 21:00:00-03', 'Femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', 54, 54028, 54028030000, 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:48:10.821-03', '2023-08-21 18:48:10.821-03');

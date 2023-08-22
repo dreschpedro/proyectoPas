@@ -126,6 +126,7 @@ const RegistroServiciosRealizados = () => {
     console.log('Selected Localidad:', localidad_id); // Add this console.log
   };
 
+
   const searchByDNI = async (dni) => {
     try {
       console.log('Searching by DNI:', dni);
@@ -155,21 +156,40 @@ const RegistroServiciosRealizados = () => {
   };
 
 
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
-    // Update only the relevant field in the formData state
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
 
     // Search by DNI and fill the form fields
     if (name === 'dni') {
       searchByDNI(value);
     }
+
+    if (name === 'fechaNacimiento') {
+      // Convierte la fecha de "dd/mm/aaaa" a un objeto Date
+      const parts = value.split('/');
+      const year = parseInt(parts[2], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const day = parseInt(parts[0], 10);
+      const date = new Date(year, month, day);
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: date.toString(), // Convierte la fecha a formato "aaaa-mm-dd"
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
+
+
+
+
+  // Convierte la fecha de la base de datos al formato "dd/mm/aaaa"
+  const dbDate = new Date(formData.fechaNacimiento);
+  const formattedDate = `${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()}`;
+
 
 
   const handleSubmit = async (e) => {
@@ -323,24 +343,30 @@ const RegistroServiciosRealizados = () => {
     } catch (error) {
       console.error('Error saving changes:', error);
     }
+
+
+
+
   };
+
+
 
   return (
     <>
       <Row>
         <Col>
 
-          <div className='d-flex flex-nowrap'>
+          <div className='d-flex flex-wrap'>
             <h1 className='titulo'>Registrar Servicio</h1>
-            <div >
+            <div style={{ margin: 'auto' }} className='d-flex '>
 
               <Link href="/servicios/crudServicios">
-                <button className='buttonRegistrar' style={{ marginLeft: '10em', margin: '10px', marginTop: '5.5rem' }}>
+                <button className='buttonRegistrar responsive-buttons' style={{ marginLeft: '10em' }}>
                   Administrar
                 </button>
               </Link>
               <Link href="/servicios/historial">
-                <button className='bouttoncancel' style={{ margin: '10px', marginTop: '5.5rem' }}>
+                <button className='bouttoncancel responsive-buttons' >
                   Historial
                 </button>
               </Link>
@@ -350,15 +376,15 @@ const RegistroServiciosRealizados = () => {
 
 
       </Row>
-      <Form onSubmit={handleSubmit} className='bordesito' >
+      <Form onSubmit={handleSubmit} className='bordesito tablet-width'>
 
         <Row>
           <Col>
             {/* Seleccionar Organizacion y Servicio */}
 
             <Form.Group controlId="formOrganizacion">
-              <Form.Label>Organización*</Form.Label>
-              <FormSelect className="mb-3"
+              {/* <Form.Label>Organización*</Form.Label> */}
+              <FormSelect className="mb-5 shadow"
                 as="select"
                 name='organizacion'
                 value={formData.organizacion}
@@ -380,8 +406,8 @@ const RegistroServiciosRealizados = () => {
             </Form.Group>
 
             <Form.Group controlId="formServicio">
-              <Form.Label>Servicio*</Form.Label>
-              <FormSelect className="mb-3"
+              {/* <Form.Label>Servicio*</Form.Label> */}
+              <FormSelect className="mt-5 mt-3 shadow"
                 name='servicio'
                 as="select"
                 value={formData.servicio}
@@ -418,86 +444,71 @@ const RegistroServiciosRealizados = () => {
           <Col md>
 
             <Form.Group controlId="formDNI">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>DNI</Form.Label>
+              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>DNI</Form.Label> */}
                 <Form.Control
+                  className='shadow mb-5'
                   type="string"
                   as="input"
                   name="dni"
                   value={formData.dni}
                   required
                   onChange={handleInputChange}
-                  placeholder=""
+                  placeholder="DNI"
                 />
               </Form.Group>
             </Form.Group>
 
 
             <Form.Group controlId="formApellido">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Apellidos</Form.Label>
+              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Apellidos</Form.Label> */}
                 <Form.Control
+                  className='shadow mb-5'
                   type="text"
                   name="apellido"
                   value={formData.apellido}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Apellidos" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formName">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Nombres</Form.Label>
+              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Nombres</Form.Label> */}
                 <Form.Control
+                  className='shadow mt-5'
                   type="text"
                   name="nombre"
                   value={formData.nombre}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Nombres" />
               </Form.Group>
             </Form.Group>
 
 
-            <Form.Group controlId="formFechaNac">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Fecha Nacimiento</Form.Label>
+
+            <Form.Group controlId="formName">
+              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Fecha Nacimiento</Form.Label> */}
                 <Form.Control
+                  className='shadow mt-5'
                   type="date"
                   name="fechaNacimiento"
-                  value={formData.fechaNacimiento}
+                  value={formattedDate}
                   required
-                  onChange={handleInputChange}
-                  placeholder="" />
+                  onChange={handleInputChange} // Asegúrate de actualizar la función handleInputChange
+                  placeholder="dd/mm/aaaa" />
               </Form.Group>
             </Form.Group>
-
-            {/* <Form.Group controlId="formGenero">
-              <Form.Label>Género</Form.Label>
-              <FormSelect
-                className="mb-3"
-                as="select"
-                name="genero"
-                value={formData.genero}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Seleccione el Género</option>
-                <option value="masculino">Masculino</option>
-                <option value="femenino">Femenino</option>
-                <option value="noBinario">No Binario</option>
-                <option value="noDecir">Prefiero no decirlo</option>
-              </FormSelect>
-            </Form.Group> */}
-
-
 
 
             <Form.Group controlId="formGenero">
-              <Form.Label>Género</Form.Label>
+              {/* <Form.Label>Género</Form.Label> */}
               <FormSelect
-                className="mb-3"
+                className='shadow mt-5'
                 as="select"
                 name="genero"
                 value={formData.genero}
@@ -516,27 +527,29 @@ const RegistroServiciosRealizados = () => {
 
 
             <Form.Group controlId="formEmail">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Email (Opcional)</Form.Label>
+              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Email (Opcional)</Form.Label> */}
                 <Form.Control
+                  className='shadow mt-5'
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Email" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formContacto">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Contacto</Form.Label>
+              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Contacto</Form.Label> */}
                 <Form.Control
+                  className='shadow mt-5'
                   type="number"
                   name="contacto"
                   value={formData.contacto}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Contacto" />
               </Form.Group>
             </Form.Group>
 
@@ -544,22 +557,23 @@ const RegistroServiciosRealizados = () => {
           <Col md>
 
             <Form.Group controlId="formTelefoono">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Teléfono</Form.Label>
+              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Teléfono</Form.Label> */}
                 <Form.Control
+                  className='shadow mt-5'
                   type="number"
                   name="telefono"
                   value={formData.telefono}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Telefono" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formProvincia">
-              <Form.Label>Provincia</Form.Label>
+              {/* <Form.Label>Provincia</Form.Label> */}
               <FormSelect
-                className="mb-3"
+                className='shadow mt-5'
                 as="select"
                 name='provincia'
                 value={formData.provincia}
@@ -579,10 +593,10 @@ const RegistroServiciosRealizados = () => {
             </Form.Group>
 
             <Form.Group controlId="formDepartamento">
-              <Form.Label>Departamento</Form.Label>
+              {/* <Form.Label>Departamento</Form.Label> */}
               <FormSelect
+                className='shadow mt-5'
                 as="select"
-                className="mb-3"
                 name='departamento'
                 value={formData.departamento} // Update the selected department value
                 onChange={(e) => {
@@ -601,10 +615,10 @@ const RegistroServiciosRealizados = () => {
             </Form.Group>
 
 
-            <Form.Group controlId="formLocalidad">
-              <Form.Label>Localidad</Form.Label>
+            <Form.Group controlId="formLocalidad" className='mt-5'>
+              {/* <Form.Label>Localidad</Form.Label> */}
               <FormSelect
-                className="mb-3"
+                className='shadow mt-5 mt-3'
                 as="select"
                 name='localidad'
                 value={formData.localidad}
@@ -625,29 +639,30 @@ const RegistroServiciosRealizados = () => {
 
 
             <Form.Group controlId="formDomicilio">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Domicilio</Form.Label>
+              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Domicilio</Form.Label> */}
                 <Form.Control
+                  className='shadow mt-5 mt-3'
                   type="text"
                   name="domicilio"
                   value={formData.domicilio}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Domicilio" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formOcupacion">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Ocupacion</Form.Label>
+              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Ocupacion</Form.Label> */}
                 <Form.Control
-                  className='shadow-right'
+                  className='shadow mt-3'
                   type="text"
                   name="ocupacion"
                   value={formData.ocupacion}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Ocupacion" />
               </Form.Group>
             </Form.Group>
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
@@ -690,7 +705,7 @@ const RegistroServiciosRealizados = () => {
 
             <Form.Group controlId="formOrganizacion">
               <Form.Label>Organización*</Form.Label>
-              <InputGroup className="mb-3">
+              <InputGroup className="mt-5">
                 <Form.Control
                   as="select"
                   value={modalFormData.id_organizacion} // Cambia a serviceInfo.id_organizacion
