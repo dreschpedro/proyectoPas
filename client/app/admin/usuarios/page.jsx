@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Form, FormControl, Button, Image } from 'react-bootstrap';
 import Link from 'next/link';
-import instance, { serverURL } from '../axiosConfig';
+import instance, { serverURL } from '../../axiosConfig';
 
 function Usuarios() {
   const [PersonalData, setPersonalData] = useState([]);

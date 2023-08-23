@@ -389,12 +389,12 @@ const RegistroServiciosRealizados = () => {
             <h1 className='titulo'>Registrar Servicio</h1>
             <div style={{ margin: 'auto' }} className='d-flex '>
 
-              <Link href="/servicios/crudServicios">
+              <Link href="/admin/servicios/crudServicios">
                 <button className='buttonRegistrar responsive-buttons' style={{ marginLeft: '10em' }}>
                   Administrar
                 </button>
               </Link>
-              <Link href="/servicios/historial">
+              <Link href="/admin/servicios/historial">
                 <button className='bouttoncancel responsive-buttons' >
                   Historial
                 </button>
