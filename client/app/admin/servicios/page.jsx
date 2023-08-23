@@ -6,6 +6,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import instance, { serverURL } from '@/app/axiosConfig';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
+
 const fetchProvincias = async () => {
   try {
     const response = await fetch('https://apis.datos.gob.ar/georef/api/provincias?campos=id,nombre');
@@ -45,6 +49,7 @@ const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo']
 const RegistroServiciosRealizados = () => {
 
   const [selectedProvincia, setSelectedProvincia] = useState('');
+  const [searchInProgress, setSearchInProgress] = useState(false);
   const [selectedDepartamento, setSelectedDepartamento] = useState('');
   const [selectedLocalidad, setSelectedLocalidad] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -83,15 +88,21 @@ const RegistroServiciosRealizados = () => {
   });
 
   const searchByDNI = async (dni) => {
+    setSearchInProgress(true);
     try {
       console.log('Searching by DNI:', dni);
       const response = await instance.get(`/cliente/dni/${dni}`);
       const data = response.data;
       console.log('Search Result:', data);
 
-      const provinciaId = data.provinciaId;
-      const departamentoId = data.departamentoId;
-      const localidadId = data.localidadId;
+      const provinciaId = data.provincia;
+      setSelectedProvincia(provinciaId);
+
+      const departamentoId = data.departamento;
+      const localidadId = data.localidad;
+
+      setSelectedDepartamento(departamentoId);
+      setSelectedLocalidad(localidadId);
 
       // Update the formData state to fill the form fields with search results
       setFormData((prevData) => ({
@@ -121,6 +132,8 @@ const RegistroServiciosRealizados = () => {
       setLocalidades(sortedLocalidades);
     } catch (error) {
       console.error('Error al buscar por DNI:', error);
+    } finally {
+      setSearchInProgress(false);
     }
   };
 
@@ -193,11 +206,6 @@ const RegistroServiciosRealizados = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
-    // Search by DNI and fill the form fields
-    if (name === 'dni') {
-      searchByDNI(value);
-    }
-
     if (name === 'fechaNacimiento') {
       const parts = value.split('/');
       const year = parseInt(parts[2], 10);
@@ -208,7 +216,6 @@ const RegistroServiciosRealizados = () => {
         ...prevData,
         fechaNacimiento: formattedDate,
       }));
-
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -218,12 +225,9 @@ const RegistroServiciosRealizados = () => {
   };
 
 
-
-
   // Convierte la fecha de la base de datos al formato "dd/mm/aaaa"
   const dbDate = new Date(formData.fechaNacimiento);
   const formattedDate = `${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()}`;
-
 
 
   const handleSubmit = async (e) => {
@@ -472,25 +476,34 @@ const RegistroServiciosRealizados = () => {
       <Form onSubmit={handleSubmit} className='bordesito' >
 
         <Row>
-          
+
           <Col md>
 
             <Form.Group controlId="formDNI">
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
-                {/* <Form.Label>DNI</Form.Label> */}
-                <Form.Control
-                  className='border border-secondary rounded rounded-1.1 shadow mb-5'
-                  type="number"
-                  as="input"
-                  name="dni"
-                  value={formData.dni}
-                  required
-                  onChange={handleInputChange}
-                  placeholder="DNI"
-                />
+                <div className="input-group">
+                  <Form.Control
+                    className="border border-secondary rounded rounded-1.1 shadow mb-5"
+                    type="number"
+                    as="input"
+                    name="dni"
+                    value={formData.dni}
+                    required={!searchInProgress}
+                    onChange={handleInputChange}
+                    placeholder="DNI"
+                  />
+
+                  <button
+                    className="border border-secondary rounded rounded-1.1 shadow mb-5"
+                    onClick={() => searchByDNI(formData.dni)} // Call searchByDNI when the button is clicked
+                  >
+                    <span className="input-group-text">
+                      <FontAwesomeIcon icon={faSearch} />
+                    </span>
+                  </button>
+                </div>
               </Form.Group>
             </Form.Group>
-
 
             <Form.Group controlId="formApellido">
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
@@ -500,7 +513,7 @@ const RegistroServiciosRealizados = () => {
                   type="text"
                   name="apellido"
                   value={formData.apellido}
-                  required
+                  required={!searchInProgress}
                   onChange={handleInputChange}
                   placeholder="Apellidos" />
               </Form.Group>
@@ -514,13 +527,11 @@ const RegistroServiciosRealizados = () => {
                   type="text"
                   name="nombre"
                   value={formData.nombre}
-                  required
+                  required={!searchInProgress}
                   onChange={handleInputChange}
                   placeholder="Nombres" />
               </Form.Group>
             </Form.Group>
-
-
 
             <Form.Group controlId="formName">
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
@@ -530,13 +541,12 @@ const RegistroServiciosRealizados = () => {
                   type="date"
                   name="fechaNacimiento"
                   value={formData.fechaNacimiento} // Mantén el valor en formato aaaa-mm-dd para que el selector de fechas funcione
-                  required
+                  required={!searchInProgress}
                   onChange={handleInputChange}
                   placeholder="dd/mm/aaaa"
                 />
               </Form.Group>
             </Form.Group>
-
 
             <Form.Group controlId="formGenero">
               {/* <Form.Label>Género</Form.Label> */}
@@ -546,7 +556,7 @@ const RegistroServiciosRealizados = () => {
                 name="genero"
                 value={formData.genero}
                 onChange={handleInputChange}
-                required
+                required={!searchInProgress}
               >
                 <option value="">Seleccione el Género</option>
                 {genreDB.map((genero, index) => (
@@ -556,8 +566,6 @@ const RegistroServiciosRealizados = () => {
                 ))}
               </FormSelect>
             </Form.Group>
-
-
 
             <Form.Group controlId="formEmail">
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
@@ -580,7 +588,7 @@ const RegistroServiciosRealizados = () => {
                   type="number"
                   name="contacto"
                   value={formData.contacto}
-                  required
+                  required={!searchInProgress}
                   onChange={handleInputChange}
                   placeholder="Contacto" />
               </Form.Group>
@@ -597,7 +605,7 @@ const RegistroServiciosRealizados = () => {
                   type="number"
                   name="telefono"
                   value={formData.telefono}
-                  required
+                  required={!searchInProgress}
                   onChange={handleInputChange}
                   placeholder="Telefono" />
               </Form.Group>
@@ -608,11 +616,12 @@ const RegistroServiciosRealizados = () => {
                 className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
                 name='provincia'
-                value={formData.provincia}  // Usar formData.provincia en lugar de selectedProvincia
+                value={selectedProvincia}  // Use "selectedProvincia" here
                 onChange={(e) => {
-                  handleProvinciaChange(e.target.value); // Mover esta función al onChange
+                  const selectedValue = e.target.value;
+                  handleProvinciaChange(selectedValue);
                 }}
-                required
+                required={!searchInProgress}
               >
                 <option value="">Seleccione la Provincia</option>
                 {provincias.map((provincia) => (
@@ -632,7 +641,7 @@ const RegistroServiciosRealizados = () => {
                 onChange={(e) => {
                   handleDepartamentoChange(e.target.value); // Mover esta función al onChange
                 }}
-                required
+                required={!searchInProgress}
               >
 
                 <option value="">Seleccione el Departamento</option>
@@ -653,7 +662,7 @@ const RegistroServiciosRealizados = () => {
                 onChange={(e) => {
                   handleLocalidadChange(e.target.value); // Mover esta función al onChange
                 }}
-                required
+                required={!searchInProgress}
               >
 
                 <option value="">Seleccione la Localidad</option>
@@ -674,7 +683,7 @@ const RegistroServiciosRealizados = () => {
                   type="text"
                   name="domicilio"
                   value={formData.domicilio}
-                  required
+                  required={!searchInProgress}
                   onChange={handleInputChange}
                   placeholder="Domicilio" />
               </Form.Group>
@@ -688,11 +697,13 @@ const RegistroServiciosRealizados = () => {
                   type="text"
                   name="ocupacion"
                   value={formData.ocupacion}
-                  required
+                  required={!searchInProgress}
                   onChange={handleInputChange}
                   placeholder="Ocupacion" />
               </Form.Group>
             </Form.Group>
+
+            
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
               <button type="submit" className='bouttoncancel'>
                 Cancelar
@@ -705,9 +716,7 @@ const RegistroServiciosRealizados = () => {
 
           </Col>
 
-
         </Row>
-
 
       </Form>
 
