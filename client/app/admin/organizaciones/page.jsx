@@ -5,8 +5,8 @@
   import Row from 'react-bootstrap/Row';
   import Col from 'react-bootstrap/Col';
   import Link from 'next/link';
-  import instance from '@/app/axiosConfig';
-
+  import instance, { serverURL } from '@/app/axiosConfig';
+  
   const ListaOrganizaciones = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);

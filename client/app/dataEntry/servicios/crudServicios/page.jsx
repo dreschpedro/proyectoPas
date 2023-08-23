@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Container, Table, InputGroup, Button, Modal, Form } from 'react-bootstrap';
-import instance from '@/app/axiosConfig.js';
+import instance, { serverURL } from '@/app/axiosConfig';
 
 const ServicesCrud = () => {
   const [services, setServices] = useState([]);
