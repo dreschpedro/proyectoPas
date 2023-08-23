@@ -437,10 +437,14 @@ const RegistroServiciosRealizados = () => {
           </Col>
         </Row>
       </Form>
+
+
+      <h1 className='titulo'>Información</h1>
+
       <Form onSubmit={handleSubmit} className='bordesito' >
 
         <Row>
-          <h1 className='titulo'>Información</h1>
+          
           <Col md>
 
             <Form.Group controlId="formDNI">

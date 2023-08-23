@@ -91,8 +91,10 @@ const PerfilOrganizacion = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h1 style={{ textAlign: 'center', marginTop: '20px' }}>{editing ? 'Editar Perfil de la organizacion' : 'Perfil de la organizacion'}</h1>
+    <>
+    <h1 className='titulo mb-5'>{editing ? 'Editar Perfil de la organizacion' : 'Perfil de la organizacion'}</h1>
+    <Form className='bordesito' onSubmit={handleSubmit}>
+      
 
       <Form.Group controlId="formLogo">
         <Form.Label>Logo de la organizacion</Form.Label>
@@ -108,64 +110,56 @@ const PerfilOrganizacion = () => {
 
       <Form.Group controlId="formNombre">
         <InputGroup className="mb-3 mt-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Nombre
-          </InputGroup.Text>
           <Form.Control
             name='nombre'
             aria-label="Nombre"
             aria-describedby="inputGroup-sizing-default"
             value={formData.nombre}
-            placeholder="Ingresa el nombre de la organizacion"
+            placeholder="Nombre de la organizacion"
             required
             readOnly={!editing}
             onChange={handleChange}
+            className="mb-3 border border-secondary rounded rounded-1.1 shadow"
           />
         </InputGroup>
       </Form.Group>
 
       <Form.Group controlId="formDireccion">
         <InputGroup className="mb-3 mt-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Dirección
-          </InputGroup.Text>
+        
           <Form.Control
             name='direccion'
             aria-label="Dirección"
             aria-describedby="inputGroup-sizing-default"
             value={formData.direccion}
-            placeholder="Ingresa la dirección de la organizacion"
+            placeholder="Dirección de la organizacion"
             required
             readOnly={!editing}
             onChange={handleChange}
+            className="mb-3 border border-secondary rounded rounded-1.1 shadow"
           />
         </InputGroup>
       </Form.Group>
 
       <Form.Group controlId="formContacto">
         <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Número de teléfono
-          </InputGroup.Text>
           <Form.Control
             type="tel"
             name='telefono'
             aria-label="Número de contacto"
             aria-describedby="inputGroup-sizing-default"
             value={formData.telefono}
-            placeholder="Ingresa el número de contacto"
+            placeholder="Número de contacto"
             required
             readOnly={!editing}
             onChange={handleChange}
+            className="mb-3 border border-secondary rounded rounded-1.1 shadow"
           />
         </InputGroup>
       </Form.Group>
 
       <Form.Group controlId="formEmail">
         <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Email corporativo
-          </InputGroup.Text>
           <Form.Control
             type="email"
             name="email"
@@ -176,18 +170,16 @@ const PerfilOrganizacion = () => {
             required
             readOnly={!editing}
             onChange={handleChange}
+            className="mb-3 border border-secondary rounded rounded-1.1 shadow"
           />
         </InputGroup>
       </Form.Group>
 
       <Form.Group controlId="formDescripcion">
         <InputGroup className="mb-3">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Descripción general de la organizacion
-          </InputGroup.Text>
           <Form.Control
             as="textarea"
-            name='descripcion'
+            name='Descripción general de la organizacion'
             rows={5}
             aria-label="Descripción general de la organizacion"
             aria-describedby="inputGroup-sizing-default"
@@ -196,6 +188,7 @@ const PerfilOrganizacion = () => {
             required
             readOnly={!editing}
             onChange={handleChange}
+            className="mb-3 border border-secondary rounded rounded-1.1 shadow"
           />
         </InputGroup>
       </Form.Group>
@@ -218,6 +211,7 @@ const PerfilOrganizacion = () => {
 
       </div>
     </Form>
+    </>
   );
 };
 

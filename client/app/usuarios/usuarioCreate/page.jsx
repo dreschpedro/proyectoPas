@@ -388,7 +388,7 @@ function RegistroUsuarios() {
           </button>
 
           <button className='buttonRegistrar' type="submit">
-            Registrarse
+            Registrar
           </button>
         </div>
 

@@ -61,32 +61,36 @@ function Usuarios() {
 
   return (
     <div>
-      <h1 className='mt-3'>Usuarios👤</h1>
+      <h1 className='titulo'>Usuarios</h1>
+      <div >
+        <Form className="mt-5 mb-5 d-flex mb-3 align-items-center">
+          <FormControl
+            type="text"
+            placeholder="Buscar"
+            className="mr-2 shadow border border-secondary rounded rounded-1.1 shadow"
+            style={{ maxWidth: '35rem' }}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
 
-      <Form className="d-flex mb-3">
-        <FormControl
-          type="text"
-          placeholder="Buscar"
-          className="mr-2"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+          <div className="ml-auto"  style={{ display: 'flex', marginLeft: 'auto' }}>
+            <Link href="usuarios/usuarioCreate">
+              <button className="buttonRegistrar" style={{ marginLeft: '3rem' }}>
+                Crear Usuario
+              </button>
+            </Link>
+          </div>
+        </Form>
+      </div>
 
-        <Link href="usuarios/usuarioCreate">
-          <Button variant="success" className="text-nowrap" style={{ marginLeft: '15px' }}>
-            Crear Usuario
-          </Button>
-        </Link>
-      </Form>
-
-      <Table striped bordered hover>
+      <Table className='mt-5' striped bordered hover>
         <thead>
           <tr>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff',borderTopLeftRadius: '5px' }}>#</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff', borderTopLeftRadius: '5px' }}>#</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Imagen</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Nombre</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Apellido</th>
-            <th style={{ borderTopRightRadius: '5px',backgroundColor: '#101488', color: '#ffffff' }}>Nombre de Usuario</th>
+            <th style={{ borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Nombre de Usuario</th>
           </tr>
         </thead>
         <tbody>

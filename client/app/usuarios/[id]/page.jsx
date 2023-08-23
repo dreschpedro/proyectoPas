@@ -165,14 +165,17 @@ function PerfilPersonal() {
         <Col md>
           <Form.Group controlId="formtext">
             <Form.Group className="mb-3" controlId="username">
-              <Form.Label>Nombre de Usuario*</Form.Label>
+              {/* <Form.Label>Nombre de Usuario*</Form.Label> */}
               <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow'
+
                 name="username"
                 type="text"
                 value={formData.username}
                 readOnly={!editing}
+                
                 required
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Nombre de Usuario'
                 onChange={handleChange} // Agrega este atributo
               />
 
@@ -180,59 +183,68 @@ function PerfilPersonal() {
           </Form.Group>
           <Form.Group controlId="formApe">
             <Form.Group className="mb-3" controlId="apellido">
-              <Form.Label>Apellido*</Form.Label>
+              {/* <Form.Label>Apellido*</Form.Label> */}
               <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow'
+
                 name="apellido"
                 type="text"
                 value={formData.apellido}
                 readOnly={!editing}
+                
                 required
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Apellido'
                 onChange={handleChange}
               />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formName">
-            <Form.Group className="mb-3" controlId="exampleForm.Control 
-              className='border border-secondary rounded rounded-1.1 shadow'Input1">
-              <Form.Label>Nombres*</Form.Label>
+            <Form.Group className="mb-3" controlId="exampleForm.Control Input1">
+              {/* <Form.Label>Nombres*</Form.Label> */}
               <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow'
+
                 name="nombre"
                 type="text"
                 value={formData.nombre}
                 readOnly={!editing}
+                
                 required
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Nombres'
                 onChange={handleChange}
               />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formOrganizacion">
-            <Form.Group className="mb-3" controlId="exampleForm.Control 
-              className='border border-secondary rounded rounded-1.1 shadow'Input1">
-              <Form.Label>Organización*</Form.Label>
+            <Form.Group className="mb-3" controlId="exampleForm.Control Input1">
+              {/* <Form.Label>Organización*</Form.Label> */}
               <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow'
+
                 name="organizacion"
                 type="text"
                 value={formData.organizacion}
                 readOnly={!editing}
+                
                 required
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Organización'
                 onChange={handleChange}
               />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formEmail">
-            <Form.Group className="mb-3" controlId="exampleForm.Control 
-              className='border border-secondary rounded rounded-1.1 shadow'Input1">
-              <Form.Label>Email*</Form.Label>
+            <Form.Group className="mb-3" controlId="exampleForm.Control Input1">
+              {/* <Form.Label>Email*</Form.Label> */}
               <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow'
+
                 name="email"
                 type="email"
                 value={formData.email}
                 readOnly={!editing}
+                
                 required
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Email'
                 onChange={handleChange}
               />
             </Form.Group>
@@ -240,76 +252,86 @@ function PerfilPersonal() {
         </Col>
         <Col md>
           <Form.Group controlId="formEmail">
-            <Form.Group className="mb-3" controlId="exampleForm.Control 
-              className='border border-secondary rounded rounded-1.1 shadow'Input1">
-              <Form.Label>Rol*</Form.Label>
+            <Form.Group className="mb-3" controlId="exampleForm.Control Input1">
+              {/* <Form.Label>Rol*</Form.Label> */}
               <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow'
+
                 name="rol"
                 type="text"
                 value={formData.rol}
                 readOnly={!editing}
+                
                 required
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Rol'
                 onChange={handleChange}
               />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formCuilt">
-            <Form.Group className="mb-3" controlId="exampleForm.Control 
-              className='border border-secondary rounded rounded-1.1 shadow'Input1">
-              <Form.Label>CUIL o CUIT*</Form.Label>
+            <Form.Group className="mb-3" controlId="exampleForm.Control Input1">
+              {/* <Form.Label>CUIL o CUIT*</Form.Label> */}
               <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow'
+
                 name="cuilt"
                 type="text"
                 value={formData.cuilt}
                 readOnly={!editing}
+                
                 required
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='CUIL o CUIT'
                 onChange={handleChange}
               />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formNumber">
-            <Form.Group className="mb-3" controlId="exampleForm.Control 
-              className='border border-secondary rounded rounded-1.1 shadow'Input1">
-              <Form.Label>Teléfono*</Form.Label>
+            <Form.Group className="mb-3" controlId="exampleForm.Control Input1">
+              {/* <Form.Label>Teléfono*</Form.Label> */}
               <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow'
+
                 name="telefono"
                 type="text"
                 value={formData.telefono}
                 readOnly={!editing}
+                
                 required
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Teléfono'
                 onChange={handleChange}
               />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formdomicilio">
-            <Form.Group className="mb-3" controlId="exampleForm.Control 
-              className='border border-secondary rounded rounded-1.1 shadow'Input1">
-              <Form.Label>domicilio*</Form.Label>
+            <Form.Group className="mb-3" controlId="exampleForm.Control Input1">
+              {/* <Form.Label>domicilio*</Form.Label> */}
               <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow'
+
                 name="domicilio"
                 type="text"
                 value={formData.domicilio}
                 readOnly={!editing}
+                
                 required
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Domicilio'
                 onChange={handleChange}
               />
             </Form.Group>
           </Form.Group>
           <Form.Group controlId="formProfesion">
-            <Form.Group className="mb-3" controlId="exampleForm.Control 
-              className='border border-secondary rounded rounded-1.1 shadow'Input1">
-              <Form.Label>Profesión*</Form.Label>
+            <Form.Group className="mb-3" controlId="exampleForm.Control Input1">
+              {/* <Form.Label>Profesión*</Form.Label> */}
               <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow'
+               
                 name="profesion"
                 type="text"
                 value={formData.profesion}
                 readOnly={!editing}
+                
                 required
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Profesión'
                 onChange={handleChange}
               />
             </Form.Group>

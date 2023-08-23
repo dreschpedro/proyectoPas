@@ -12,6 +12,7 @@ $primary: $principal;
 
 // Estilos personalizados
 .buttoncito  {
+  border: none;
   background-color: #22096F;
   margin-Top: 15px;
 
@@ -53,8 +54,10 @@ Link{
   border: solid 3px;
   border-radius: 25px;
   border-color: #22096F;
-  padding: 2em;
+  padding: 2rem;
   margin-top: 15px;
+ 
+  
 }
 
 .titulo{
@@ -71,9 +74,19 @@ Link{
   margin-right: 10px;
   width: 200px;
   font: bold;
+
+  &:hover {
+    background-color: #f4f4f4; /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #e0e0e0; /* Cambia el color al hacer clic */
+  }
+
 }
 
 .buttonLogin{
+  border: none;
   height: 2.5rem;
   border-radius: 10px;
   color: #ffffff;
@@ -82,9 +95,18 @@ Link{
   margin:auto;
   width: 100%;
   font: bold;
+
+  &:hover {
+    background-color: #1a0752; /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #150644; /* Cambia el color al hacer clic */
+  }
 }
 
 .buttonRegistrar{
+  border: none;
   height: 2.5rem;
   border-radius: 10px;
   color: #ffffff;
@@ -92,6 +114,15 @@ Link{
   border-color: #22096F;
   width: 200px;
   font: bold;
+
+  &:hover {
+    background-color: #1a0752; /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #150644; /* Cambia el color al hacer clic */
+  }
+
 }
 
 .comboboxrol{
@@ -197,3 +228,5 @@ Link{font-style: none;}
     margin-top: 1rem;
   }
 }
+
+

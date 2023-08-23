@@ -129,23 +129,25 @@
         <h1 className='titulo'>Lista de Organizaciones</h1>
         <br />
 
-        <div   className='d-flex justify-content-between align-items-end mt-5 mb-5'   >
+        <div  >
+        <Form className="mt-5 mb-5 d-flex mb-3 align-items-center">
           <Form.Group controlId="formSearch">
             <InputGroup>
-              {/* <InputGroup.Text id="inputGroup-sizing-default">
-                Búscar
-              </InputGroup.Text> */}
+             
               <Form.Control
-                style={{width: '60%'}}
+                style={{ maxWidth: '35rem' }}
                 className=' shadow border border-secondary rounded rounded-1.1 shadow'
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Buscador"
+                placeholder="Buscar"
               />
             </InputGroup>
           </Form.Group>
-          <Button variant="success" className="text-nowrap" style={{ marginLeft: '3rem', backgroundColor: '#22096F' }}  onClick={() => handleShowModal()}>Agregar Organización</Button>
+          <div className="ml-auto">
+          <button className="buttonRegistrar" style={{ marginLeft: '3rem' }}  onClick={() => handleShowModal()}>Agregar Organización</button>
+          </div>
+          </Form>
         </div>
 
         <Table striped bordered hover responsive>

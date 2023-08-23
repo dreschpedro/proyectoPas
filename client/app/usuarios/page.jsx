@@ -73,11 +73,11 @@ function Usuarios() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <div className="ml-auto">
+          <div className="ml-auto"  style={{ display: 'flex', marginLeft: 'auto' }}>
             <Link href="usuarios/usuarioCreate">
-              <Button variant="success" className="text-nowrap" style={{ marginLeft: '3rem', backgroundColor: '#22096F' }}>
+              <button className="buttonRegistrar" style={{ marginLeft: '3rem' }}>
                 Crear Usuario
-              </Button>
+              </button>
             </Link>
           </div>
         </Form>

@@ -139,36 +139,38 @@ function RegistroUsuarios() {
 
   return (
     <>
-      <h1 className='titulo'>Crear cuenta</h1>
-      <Form onSubmit={handleSubmit} className='bordesito' >
+      <h1 className='titulo mt-5 mb-5'>Crear cuenta</h1>
+      <Form onSubmit={handleSubmit} className='bordesito pt-5 pb-5' >
 
         <Row>
           <Col md>
 
             <Form.Group controlId="formtext">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Nombre de Usuario*</Form.Label>
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Nombre de Usuario*</Form.Label> */}
                 <Form.Control
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="text"
                   name="username"
                   value={formData.username}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Nombre de Usuario" />
               </Form.Group>
             </Form.Group>
 
 
             <Form.Group controlId="formPassword">
-              <Form.Group className={`mb-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
-                <Form.Label>Contraseña*</Form.Label>
+              <Form.Group className={`mb-3  mb-4${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Contraseña*</Form.Label> */}
                 <Form.Control
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="password"
                   name="password"
                   value={formData.password}
                   required
                   onChange={handleInputChange}
-                  placeholder=""
+                  placeholder="Contraseña"
                 />
                 {passwordMismatch && (
                   <div className="error-message">Las contraseñas no coinciden.</div>
@@ -177,24 +179,26 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formPassword2">
-              <Form.Group className={`mb-3 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
-                <Form.Label>Confirmar Contraseña*</Form.Label>
+              <Form.Group className={`mb-3 mb-4 ${passwordMismatch ? 'has-error' : ''}`} controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Confirmar Contraseña*</Form.Label> */}
                 <Form.Control
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="password"
                   name="password2"
                   value={formData.password2}
                   required
                   onChange={handleInputChange}
-                  placeholder=""
+                  placeholder="Confirmar Contraseña"
                 />
               </Form.Group>
             </Form.Group>
 
 
-            <Form.Group controlId="formOrganizacion" className='mb-3'>
-              <Form.Label>Organización*</Form.Label>
+            <Form.Group controlId="formOrganizacion" className='mb-3 mb-4'>
+              {/* <Form.Label>Organización*</Form.Label> */}
               <InputGroup>
                 <Form.Control
+                  className='shadow border border-secondary rounded rounded-1.1 shadow '
                   type="text"
                   name="organizacion"
                   value={selectedOrganizacion}
@@ -203,7 +207,7 @@ function RegistroUsuarios() {
                     setSearchTerm(e.target.value);
                   }}
                   required
-                  placeholder="Buscar y seleccionar organización"
+                  placeholder="Organización"
                 />
                 {filteredOrganizaciones.length > 0 && (
                   <DropdownButton
@@ -228,21 +232,22 @@ function RegistroUsuarios() {
             </Form.Group>
 
             <Form.Group controlId="formEmail">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Email*</Form.Label>
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Email*</Form.Label> */}
                 <Form.Control
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="email"
                   name="email"
                   value={formData.email}
                   required
                   onChange={handleInputChange}
-                  placeholder="ejemplo@correo.com" />
+                  placeholder="Email (ejemplo@correo.com)" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formRol">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Rol*</Form.Label>
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Rol*</Form.Label> */}
                 <DropdownButton
                   title={selectedRol || 'Seleccionar Rol'}
                   variant={(isRolSelected || formSubmitted) ? 'outline-danger' : 'outline-primary'}
@@ -269,82 +274,87 @@ function RegistroUsuarios() {
 
           <Col md>
             <Form.Group controlId="formCuilt">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>CUIL o CUIT*</Form.Label>
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>CUIL o CUIT*</Form.Label> */}
                 <Form.Control
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="number"
                   as="input"
                   name="cuilt"
                   value={formData.cuilt}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="CUIL o CUIT" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formName">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Nombre*</Form.Label>
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Nombre*</Form.Label> */}
                 <Form.Control
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="text"
                   name="nombre"
                   value={formData.nombre}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Nombre" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formApe">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Apellido*</Form.Label>
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Apellido*</Form.Label> */}
                 <Form.Control
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="text"
                   name="apellido"
                   value={formData.apellido}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Apellido" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formNumber">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Teléfono*</Form.Label>
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Teléfono*</Form.Label> */}
                 <Form.Control
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="number"
                   name="telefono"
                   value={formData.telefono}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Teléfono" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formDomicilio">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Domicilio*</Form.Label>
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Domicilio*</Form.Label> */}
                 <Form.Control
+                  className='shadow border border-secondary rounded rounded-1.1 shadow'
                   type="text"
                   name="domicilio"
                   value={formData.domicilio}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Domicilio" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formProfesion">
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Profesión*</Form.Label>
+              <Form.Group className="mb-3 mb-4" controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Profesión*</Form.Label> */}
                 <Form.Control
-                  className='shadow-right'
+                  className='shadow border border-secondary rounded rounded-1.1 shadow mb-4'
                   type="text"
                   name="profesion"
                   value={formData.profesion}
                   required
                   onChange={handleInputChange}
-                  placeholder="" />
+                  placeholder="Profesión" />
               </Form.Group>
             </Form.Group>
 
@@ -359,9 +369,10 @@ function RegistroUsuarios() {
               <div className="d-flex align-items-center imagebutton">
                 <FontAwesomeIcon icon={faUser} className="imageIcon" />
                 <Form.Control
+
                   type="file"
                   name="imagen"
-                  className="d-none"
+                  className="d-none shadow border border-secondary rounded rounded-1.1 shadow mb-4"
                   onChange={handleImageUpload}
                 />
               </div>
@@ -371,15 +382,16 @@ function RegistroUsuarios() {
           </Col>
         </Row>
 
-        <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '49px' }}>
           <button type="submit" className='bouttoncancel'>
             Cancelar
           </button>
 
           <button className='buttonRegistrar' type="submit">
-            Registrarse
+            Registrar
           </button>
         </div>
+
       </Form>
     </>
   );
