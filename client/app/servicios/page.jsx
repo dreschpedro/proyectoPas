@@ -9,7 +9,7 @@ import instance from '../axiosConfig.js';
 
 const fetchProvincias = async () => {
   try {
-    const response = await fetch('https://apis.datos.gob.ar/georef/api/provincias');
+    const response = await fetch('https://apis.datos.gob.ar/georef/api/provincias?campos=id,nombre');
     const data = await response.json();
     return data.provincias || [];
   } catch (error) {
@@ -44,11 +44,14 @@ const genreDB = ['masculino', 'femenino', 'noBinario', 'noDecir'];
 const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo'];
 
 const RegistroServiciosRealizados = () => {
+
+  const [selectedProvincia, setSelectedProvincia] = useState('');
+  const [selectedDepartamento, setSelectedDepartamento] = useState('');
+  const [selectedLocalidad, setSelectedLocalidad] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState('');
   const [organizaciones, setOrganizaciones] = useState([]);
   const [servicios, setServicios] = useState([]); // Inicializar aquí
-  const [searchResult, setSearchResult] = useState(null);
   const [provincias, setProvincias] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
   const [localidades, setLocalidades] = useState([]);
@@ -80,58 +83,16 @@ const RegistroServiciosRealizados = () => {
     id_organizacion: '',
   });
 
-  useEffect(() => {
-    const fetchProvinciasSorted = async () => {
-      const provinciasData = await fetchProvincias();
-      const sortedProvincias = provinciasData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-      setProvincias(sortedProvincias);
-    };
-
-    fetchProvinciasSorted();
-  }, []);
-
-  const handleProvinciaChange = async (provinciaId) => {
-    console.log('Selected Provincia:', provinciaId); // Add this console.log
-    const departamentosData = await fetchDepartamentos(provinciaId);
-    console.log('Departamentos Data:', departamentosData);
-    const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-    setDepartamentos(sortedDepartamentos);
-    setLocalidades([]);
-
-
-    // Actualizar servicios relacionados con la organización seleccionada
-    const selectedOrganizacion = organizaciones.find(org => org.id_organizacion === provinciaId);
-    if (selectedOrganizacion) {
-      const serviciosDeOrganizacion = servicios.filter(servicio => servicio.id_organizacion === selectedOrganizacion.id_organizacion);
-      console.log('Servicios de Organización:', serviciosDeOrganizacion); // Add this console.log
-      setOrganizacionServicios(serviciosDeOrganizacion);
-      setOrganizacionTieneServicios(serviciosDeOrganizacion.length > 0);
-    } else {
-      console.log('Selected Organizacion: No se encontró la organización');
-      setOrganizacionServicios([]);
-      setOrganizacionTieneServicios(false);
-    }
-  };
-
-  const handleDepartamentoChange = async (departamentoId) => {
-    console.log('Selected Departamento:', departamentoId); // Add this console.log
-    const localidadesData = await fetchLocalidades(departamentoId);
-    console.log('Localidades Data:', localidadesData); // Add this console.log
-    const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-    setLocalidades(sortedLocalidades);
-
-  };
-
-  const handleLocalidadChange = async (localidad_id) => {
-    console.log('Selected Localidad:', localidad_id); // Add this console.log
-  };
-
-
   const searchByDNI = async (dni) => {
     try {
       console.log('Searching by DNI:', dni);
       const response = await instance.get(`/cliente/dni/${dni}`);
       const data = response.data;
+      console.log('Search Result:', data);
+
+      const provinciaId = data.provinciaId;
+      const departamentoId = data.departamentoId;
+      const localidadId = data.localidadId;
 
       // Update the formData state to fill the form fields with search results
       setFormData((prevData) => ({
@@ -144,15 +105,89 @@ const RegistroServiciosRealizados = () => {
         email: data.email,
         contacto: data.contacto,
         telefono: data.telefono,
-        provincia: data.provinciaId,
-        departamento: data.departamentoId,
-        localidad: data.localidadId,
+        provincia: provinciaId,
+        departamento: departamentoId,
+        localidad: localidadId,
         ocupacion: data.ocupacion,
         domicilio: data.domicilio,
       }));
+
+      // Fetch and populate departamento and localidad based on the IDs
+      const departamentosData = await fetchDepartamentos(provinciaId);
+      const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      setDepartamentos(sortedDepartamentos);
+
+      const localidadesData = await fetchLocalidades(departamentoId);
+      const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      setLocalidades(sortedLocalidades);
     } catch (error) {
       console.error('Error al buscar por DNI:', error);
     }
+  };
+
+
+  useEffect(() => {
+    const fetchProvinciasSorted = async () => {
+      const provinciasData = await fetchProvincias();
+      const sortedProvincias = provinciasData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      setProvincias(sortedProvincias);
+    };
+
+    fetchProvinciasSorted();
+  }, []);
+
+
+  const handleProvinciaChange = async (provinciaId) => {
+    setSelectedProvincia(provinciaId);
+    setSelectedDepartamento(''); // Reset departmento seleccionado
+    setSelectedLocalidad('');    // Reset localidad seleccionada
+
+    const departamentosData = await fetchDepartamentos(provinciaId);
+    const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    setDepartamentos(sortedDepartamentos);
+    setLocalidades([]);
+
+    const selectedOrganizacion = organizaciones.find(org => org.id_organizacion === provinciaId);
+    if (selectedOrganizacion) {
+      const serviciosDeOrganizacion = servicios.filter(servicio => servicio.id_organizacion === selectedOrganizacion.id_organizacion);
+      setOrganizacionServicios(serviciosDeOrganizacion);
+      setOrganizacionTieneServicios(serviciosDeOrganizacion.length > 0);
+    } else {
+      setOrganizacionServicios([]);
+      setOrganizacionTieneServicios(false);
+    }
+
+    // Auto-select province, department, and locality from search results
+    setFormData((prevData) => ({
+      ...prevData,
+      provincia: provinciaId,
+      departamento: '', // Reiniciar el departamento seleccionado
+      localidad: '',    // Reiniciar la localidad seleccionada
+    }));
+
+  };
+
+  const handleDepartamentoChange = async (departamentoId) => {
+    setSelectedDepartamento(departamentoId);
+    setSelectedLocalidad(''); // Reset selected locality
+
+    const localidadesData = await fetchLocalidades(departamentoId);
+    const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    setLocalidades(sortedLocalidades);
+
+    // Auto-select the locality based on the search results
+    setFormData((prevData) => ({
+      ...prevData,
+      localidad: '',
+    }));
+
+
+  };
+
+
+  const handleLocalidadChange = async (localidad_id) => {
+    setSelectedLocalidad(localidad_id);
+    console.log('Selected Localidad:', localidad_id); // Add this console.log
   };
 
 
@@ -165,7 +200,6 @@ const RegistroServiciosRealizados = () => {
     }
 
     if (name === 'fechaNacimiento') {
-      // Convierte la fecha de "dd/mm/aaaa" a un objeto Date
       const parts = value.split('/');
       const year = parseInt(parts[2], 10);
       const month = parseInt(parts[1], 10) - 1;
@@ -173,8 +207,9 @@ const RegistroServiciosRealizados = () => {
       const date = new Date(year, month, day);
       setFormData((prevData) => ({
         ...prevData,
-        [name]: date.toString(), // Convierte la fecha a formato "aaaa-mm-dd"
+        fechaNacimiento: formattedDate,
       }));
+
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -343,13 +378,7 @@ const RegistroServiciosRealizados = () => {
     } catch (error) {
       console.error('Error saving changes:', error);
     }
-
-
-
-
   };
-
-
 
   return (
     <>
@@ -464,7 +493,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Apellidos</Form.Label> */}
                 <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow mb-5'
+                  className='border border-secondary rounded rounded-1.1 shadow mb-5'
                   type="text"
                   name="apellido"
                   value={formData.apellido}
@@ -478,7 +507,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Nombres</Form.Label> */}
                 <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow mt-5'
+                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
                   type="text"
                   name="nombre"
                   value={formData.nombre}
@@ -494,13 +523,14 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Fecha Nacimiento</Form.Label> */}
                 <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow mt-5'
+                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
                   type="date"
                   name="fechaNacimiento"
-                  value={formattedDate}
+                  value={formData.fechaNacimiento} // Mantén el valor en formato aaaa-mm-dd para que el selector de fechas funcione
                   required
-                  onChange={handleInputChange} // Asegúrate de actualizar la función handleInputChange
-                  placeholder="dd/mm/aaaa" />
+                  onChange={handleInputChange}
+                  placeholder="dd/mm/aaaa"
+                />
               </Form.Group>
             </Form.Group>
 
@@ -530,7 +560,7 @@ const RegistroServiciosRealizados = () => {
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Email (Opcional)</Form.Label> */}
                 <Form.Control
-                className='border border-secondary rounded rounded-1.1 shadow mt-5'
+                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
                   type="email"
                   name="email"
                   value={formData.email}
@@ -571,15 +601,13 @@ const RegistroServiciosRealizados = () => {
             </Form.Group>
 
             <Form.Group controlId="formProvincia">
-              {/* <Form.Label>Provincia</Form.Label> */}
               <FormSelect
                 className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
                 name='provincia'
-                value={formData.provincia}
+                value={formData.provincia}  // Usar formData.provincia en lugar de selectedProvincia
                 onChange={(e) => {
-                  setFormData({ ...formData, provincia: e.target.value });
-                  handleProvinciaChange(e.target.value);
+                  handleProvinciaChange(e.target.value); // Mover esta función al onChange
                 }}
                 required
               >
@@ -593,18 +621,17 @@ const RegistroServiciosRealizados = () => {
             </Form.Group>
 
             <Form.Group controlId="formDepartamento">
-              {/* <Form.Label>Departamento</Form.Label> */}
               <FormSelect
                 className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
                 name='departamento'
-                value={formData.departamento} // Update the selected department value
+                value={formData.departamento}
                 onChange={(e) => {
-                  setFormData({ ...formData, departamento: e.target.value }); // Update the selected department in serviceInfo
-                  handleDepartamentoChange(e.target.value);
+                  handleDepartamentoChange(e.target.value); // Mover esta función al onChange
                 }}
                 required
               >
+
                 <option value="">Seleccione el Departamento</option>
                 {departamentos.map((departamento) => (
                   <option key={departamento.id} value={departamento.id}>
@@ -614,20 +641,18 @@ const RegistroServiciosRealizados = () => {
               </FormSelect>
             </Form.Group>
 
-
             <Form.Group controlId="formLocalidad" className='mt-5'>
-              {/* <Form.Label>Localidad</Form.Label> */}
               <FormSelect
                 className='border border-secondary rounded rounded-1.1 shadow mt-5 mt-3'
                 as="select"
                 name='localidad'
                 value={formData.localidad}
                 onChange={(e) => {
-                  setFormData({ ...formData, localidad: e.target.value });
-                  handleLocalidadChange(e.target.value);
+                  handleLocalidadChange(e.target.value); // Mover esta función al onChange
                 }}
                 required
               >
+
                 <option value="">Seleccione la Localidad</option>
                 {localidades.map((localidad) => (
                   <option key={localidad.id} value={localidad.id}>

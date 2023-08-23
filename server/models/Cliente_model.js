@@ -43,15 +43,15 @@ const Cliente_model = sequelize.define('cliente', {
     allowNull: false,
   },
   provincia: {
-    type: DataTypes.BIGINT,
+    type: DataTypes.STRING(200),
     allowNull: false,
   },
   departamento: {
-    type: DataTypes.BIGINT,
+    type: DataTypes.STRING(200),
     allowNull: false,
   },
   localidad: {
-    type: DataTypes.BIGINT,
+    type: DataTypes.STRING(200),
     allowNull: false,
   },
   domicilio: {

@@ -19,12 +19,13 @@
 -- 	(1, 'Perez', 'Juancsdcsdcsdc', '111111111', 'Posadascdcd', 'Profesion 1', '1111111111', '/uploads/personal/default_personal.png', 'true', '2023-08-02 21:25:04.971-03', '2023-08-03 14:20:12.701-03', 1, 1),
 -- 	(3, 'Espinosa', 'Federico', '999999', 'Posadas', 'Profesion 3', '3333333333', '/uploads/personal/default_personal.png', 'true', '2023-08-02 21:25:18.566-03', '2023-08-03 14:21:18.054-03', 2, 3);
 
+
 -- INSERT INTO "servicio" ("id_servicio", "nombre", "descripcion", "activo", "createdAt", "updatedAt", "id_organizacion") VALUES
 -- 	(1, 'servicio 1', 'descripcion', 'true', '2023-08-09 21:40:41.855-03', '2023-08-09 21:40:41.855-03', 1),
 -- 	(2, 'servicio 2', 'descripcion 2', 'true', '2023-08-09 21:40:58.941-03', '2023-08-09 21:40:58.941-03', 2),
 -- 	(3, 'servicio 3', 'descripcion 3', 'true', '2023-08-09 21:41:08.238-03', '2023-08-09 21:41:08.238-03', 3);
 
-
+ 
 -- INSERT INTO "cliente" ("id_cliente", "apellido", "nombre", "dni", "fechaNacimiento", "genero", "email", "contacto", "telefono", "provincia", "departamento", "localidad", "domicilio", "ocupacion", "activo", "createdAt", "updatedAt") VALUES
--- 	(3, 'Perez', 'Juana', 321351, '1965-02-14 21:00:00-03', 'Femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', 54, 54028, 54028030000, 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:47:47.924-03', '2023-08-21 18:47:47.924-03'),
--- 	(4, 'Perez', 'Juana', 321352, '1965-02-14 21:00:00-03', 'Femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', 54, 54028, 54028030000, 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:48:10.821-03', '2023-08-21 18:48:10.821-03');
+-- 	(3, 'Pablo', 'Rodriguez', 4444, '2005-05-24', 'masculino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', '54', '54028', '54028030000', 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:47:47.924-03', '2023-08-21 18:47:47.924-03'),
+-- 	(4, 'Perez', 'Juana', 5555, '1965-02-14', 'femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', '54', '54028', '54028030000', 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:48:10.821-03', '2023-08-21 18:48:10.821-03');
