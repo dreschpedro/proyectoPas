@@ -5,7 +5,7 @@
   import Row from 'react-bootstrap/Row';
   import Col from 'react-bootstrap/Col';
   import Link from 'next/link';
-  import instance, { serverURL } from '../axiosConfig.js'; // Corregimos el nombre de la importación
+  import instance from '@/app/axiosConfig';
 
   const ListaOrganizaciones = () => {
     const [searchTerm, setSearchTerm] = useState('');

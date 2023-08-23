@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import instance, { serverURL } from '../../axiosConfig.js'; // Corregimos el nombre de la importación
+import instance from '@/app/axiosConfig';
 import { useParams } from 'next/navigation';
 
 
