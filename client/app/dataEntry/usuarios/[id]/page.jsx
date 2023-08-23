@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Modal } from 'react-bootstrap';
-import instance from '@/app/axiosConfig';
+import instance, { serverURL } from '@/app/axiosConfig';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useParams, useRouter } from 'next/navigation'; // Update import

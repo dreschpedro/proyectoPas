@@ -4,7 +4,7 @@ import { Form, Button, InputGroup, Modal, FormSelect } from 'react-bootstrap';
 import Link from 'next/link';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import instance from '../axiosConfig.js';
+import instance, { serverURL } from '@/app/axiosConfig';
 
 
 const fetchProvincias = async () => {
