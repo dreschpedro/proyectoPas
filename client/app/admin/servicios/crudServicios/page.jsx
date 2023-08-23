@@ -196,8 +196,10 @@ const ServicesCrud = () => {
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formName">
-              <Form.Label>Nombre del Servicio*</Form.Label>
+              {/* <Form.Label>Nombre del Servicio*</Form.Label> */}
               <Form.Control
+                className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Nombre del servicio'
                 type="text"
                 name="nombre"
                 required
@@ -208,9 +210,11 @@ const ServicesCrud = () => {
 
 
             <Form.Group controlId="formOrganizacion">
-              <Form.Label>Organización*</Form.Label>
-              <InputGroup className="mb-3">
+              {/* <Form.Label>Organización*</Form.Label> */}
+              <InputGroup >
                 <Form.Control
+                  className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+                  placeholder='Organización'
                   as="select"
                   value={serviceInfo.id_organizacion} // Cambia a serviceInfo.id_organizacion
                   onChange={(e) => setOrganizacionValue(e.target.value)} // Usa setOrganizacionValue directamente
@@ -230,6 +234,8 @@ const ServicesCrud = () => {
             <Form.Group controlId="formDescripcion">
               <Form.Label>Descripción del Servicio</Form.Label>
               <Form.Control
+                // placeholder='Descripción del Servicio'
+                className="mb-3 border border-secondary rounded rounded-1.1 shadow"
                 as="textarea"
                 name="descripcion"
                 value={selectedService?.descripcion || ''}

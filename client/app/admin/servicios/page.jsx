@@ -713,18 +713,20 @@ const RegistroServiciosRealizados = () => {
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>{selectedService ? 'Edit Service' : 'Add Service'}</Modal.Title>
+          <Modal.Title>Agregar servicio</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
           <Form onSubmit={handleModalSubmit}>
             <Form.Group controlId="formName">
-              <Form.Label>Nombre del Servicio*</Form.Label>
+              {/* <Form.Label>Nombre del Servicio*</Form.Label> */}
               <Form.Control
+                className="mb-3 border border-secondary rounded rounded-1.1 shadow"
                 type="text"
                 as='input'
                 name="nombre"
                 required
+                placeholder='Nombre del Servicio'
                 value={modalFormData.nombre}
                 onChange={handleModalInputChange}
               />
@@ -732,10 +734,12 @@ const RegistroServiciosRealizados = () => {
 
 
             <Form.Group controlId="formOrganizacion">
-              <Form.Label>Organización*</Form.Label>
-              <InputGroup className="mt-5">
+              {/* <Form.Label>Organización*</Form.Label> */}
+              <InputGroup >
                 <Form.Control
                   as="select"
+                  className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+                  placeholder='Organización'
                   value={modalFormData.id_organizacion} // Cambia a serviceInfo.id_organizacion
                   onChange={(e) => setModalOrganizacionValue(e.target.value)} // Usa setOrganizacionValue directamente
                   required
@@ -755,6 +759,8 @@ const RegistroServiciosRealizados = () => {
               <Form.Label>Descripción del Servicio</Form.Label>
               <Form.Control
                 as="textarea"
+                className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+                // placeholder='Descripción del Servicio'
                 name="descripcion"
                 value={modalFormData.descripcion}
                 onChange={handleModalInputChange}
