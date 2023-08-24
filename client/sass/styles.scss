@@ -72,8 +72,10 @@ Link{
   color: #22096F;
   background-color: #FFFFFF;
   margin-right: 10px;
-  width: 200px;
+  width: 170px;
   font: bold;
+  font-style: bold;
+  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #f4f4f4; /* Cambia el color en el hover */
@@ -95,6 +97,8 @@ Link{
   margin:auto;
   width: 100%;
   font: bold;
+  font-style: bold;
+  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #1a0752; /* Cambia el color en el hover */
@@ -106,14 +110,16 @@ Link{
 }
 
 .buttonRegistrar{
+  font-style: bold;
   border: none;
   height: 2.5rem;
   border-radius: 10px;
   color: #ffffff;
   background-color: #22096F;
   border-color: #22096F;
-  width: 200px;
+  width: 170px;
   font: bold;
+  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #1a0752; /* Cambia el color en el hover */
@@ -139,7 +145,7 @@ Link{
   border-radius: 15px;
   border-color: #22096F;
   background-color: #EFEFEF;
-
+  transition: background-color 0.3s ease;
 
 
    /* Efecto hover */
@@ -230,3 +236,23 @@ Link{font-style: none;}
 }
 
 
+.buscarbutton{
+
+  &:hover {
+    background-color: #1a0752; /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #150644; /* Cambia el color al hacer clic */
+  }
+  
+  background-color: #22096F;
+  border: none;
+  border-radius: 5px;
+  padding:5px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+
+}

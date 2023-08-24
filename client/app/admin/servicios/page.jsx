@@ -96,7 +96,8 @@ const RegistroServiciosRealizados = () => {
       const data = response.data;
       console.log('Search Result:', data);
 
-      const id_cliente = data.id_cliente;
+      const idClienteEncontrado = data.id_cliente; // Captura el id_cliente
+      const dniClienteEncontrado = data.dni; // Captura el dni
 
       const provinciaId = data.provincia;
       setSelectedProvincia(provinciaId);
@@ -107,25 +108,25 @@ const RegistroServiciosRealizados = () => {
       setSelectedDepartamento(departamentoId);
       setSelectedLocalidad(localidadId);
 
-      // Update the formData state to fill the form fields with search results
+      // Actualiza el estado del formData para llenar los campos del formulario con los resultados de la búsqueda
       setFormData((prevData) => ({
         ...prevData,
-        dni: data.dni,
+        dni: dniClienteEncontrado, // Usa el dni capturado
         nombre: data.nombre,
         apellido: data.apellido,
         fechaNacimiento: data.fechaNacimiento,
-        genero: data.genero || formData.genero, // Keep the current formData.genero if data.genero is null
+        genero: data.genero || formData.genero,
         email: data.email,
         contacto: data.contacto,
         telefono: data.telefono,
-        provincia: provinciaId,
-        departamento: departamentoId,
-        localidad: localidadId,
+        id_provincia: provinciaId,
+        id_departamento: departamentoId,
+        id_localidad: localidadId,
         ocupacion: data.ocupacion,
         domicilio: data.domicilio,
       }));
 
-      // Fetch and populate departamento and localidad based on the IDs
+      // Obtén y llena los departamentos y localidades según los IDs
       const departamentosData = await fetchDepartamentos(provinciaId);
       const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
       setDepartamentos(sortedDepartamentos);
@@ -139,6 +140,7 @@ const RegistroServiciosRealizados = () => {
       setSearchInProgress(false);
     }
   };
+
 
 
   useEffect(() => {
@@ -211,14 +213,9 @@ const RegistroServiciosRealizados = () => {
     const { name, value } = event.target;
 
     if (name === 'fechaNacimiento') {
-      const parts = value.split('/');
-      const year = parseInt(parts[2], 10);
-      const month = parseInt(parts[1], 10) - 1;
-      const day = parseInt(parts[0], 10);
-      const date = new Date(year, month, day);
       setFormData((prevData) => ({
         ...prevData,
-        fechaNacimiento: formattedDate,
+        fechaNacimiento: value, // Mantén la fecha en el formato aaaa-mm-dd
       }));
     } else {
       setFormData((prevData) => ({
@@ -229,7 +226,6 @@ const RegistroServiciosRealizados = () => {
   };
 
 
-  // Convierte la fecha de la base de datos al formato "dd/mm/aaaa"
   const dbDate = new Date(formData.fechaNacimiento);
   const formattedDate = `${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()}`;
 
@@ -237,14 +233,14 @@ const RegistroServiciosRealizados = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const formattedDateToSend = formData.fechaNacimiento.split('/').reverse().join('-');
       const dataToSend = {
-        // id_cliente: //incompleto
+        fechaNacimiento: formattedDateToSend,
         id_organizacion: formData.organizacion,
         id_servicio: formData.servicio,
         apellido: formData.apellido,
         nombre: formData.nombre,
         dni: formData.dni,
-        fechaNacimiento: formData.fechaNacimiento,
         genero: formData.genero,
         email: formData.email,
         contacto: formData.contacto,
@@ -262,9 +258,42 @@ const RegistroServiciosRealizados = () => {
         await instance.put(`/cliente/${selectedService.id_servicio}`, dataToSend);
         console.log('Cliente Editado Exitosamente');
       } else {
-        // agregar nuevo cliente
-        const response = await instance.post('/cliente/registrar', dataToSend);
-        console.log(response.data.message);
+        // Verifica si tienes un cliente existente (escenario 1) o si necesitas registrar un nuevo cliente (escenario 2)
+        if (formData.dni) {
+          // Escenario 1: Cliente existente (Tienes el dni)
+          // Aquí necesitas obtener el id_cliente del cliente existente que se encontró por DNI
+          const id_cliente = // Obtén el id_cliente del cliente encontrado por DNI
+
+            // Ahora puedes usar el id_cliente para realizar el POST con cliente existente
+            await instance.post('/serv_real/registrar_con_cliente', {
+              id_cliente: id_cliente,
+              id_servicio: formData.servicio,
+            });
+
+          console.log('Servicio registrado con cliente existente');
+        } else {
+          // Escenario 2: Nuevo cliente (No tienes el dni)
+          // Aquí debes recopilar todos los datos del formulario para el nuevo cliente
+          const nuevoClienteData = {
+            // ... (Otros datos del nuevo cliente)
+            dni: formData.dni,
+            // ... (Resto de los campos del formulario)
+          };
+
+          // Realiza el POST para registrar el nuevo cliente
+          const nuevoClienteResponse = await instance.post('/cliente/registrar', nuevoClienteData);
+
+          // Obtén el dni del nuevo cliente registrado
+          const dniNuevoCliente = nuevoClienteResponse.data.dni;
+
+          // Realiza el POST para registrar el servicio con el nuevo cliente
+          await instance.post('/serv_real/registrar_con_cliente', {
+            id_cliente: dniNuevoCliente,
+            id_servicio: formData.servicio,
+          });
+
+          console.log('Servicio registrado con nuevo cliente');
+        }
       }
 
       console.log('Saving changes');
@@ -275,6 +304,9 @@ const RegistroServiciosRealizados = () => {
       console.error('Error saving changes:', error);
     }
   };
+
+
+
 
   const setModalOrganizacionValue = (organizacionId) => {
     setModalFormData((prevModalFormData) => ({
@@ -392,12 +424,12 @@ const RegistroServiciosRealizados = () => {
       <Row>
         <Col>
 
-          <div className='d-flex flex-wrap'>
-            <h1 className='titulo'>Registrar Servicio</h1>
-            <div style={{ margin: 'auto' }} className='d-flex '>
+          <div className='d-flex flex-wrap justify-content-between tablet-width'>
+            <h1 className='titulo text-nowrap'>Registrar Servicio</h1>
+            <div className='d-flex'>
 
               <Link href="/admin/servicios/crudServicios">
-                <button className='buttonRegistrar responsive-buttons' style={{ marginLeft: '10em' }}>
+                <button className='buttonRegistrar responsive-buttons' >
                   Administrar
                 </button>
               </Link>
@@ -429,7 +461,7 @@ const RegistroServiciosRealizados = () => {
                   setFormData({ ...formData, organizacion: e.target.value });
                   handleOrganizacionChange(e.target.value);
                 }}
-                required= {handleSubmit} //incorrecto
+                required={handleSubmit} //incorrecto
               >
 
                 <option value="">Seleccionar Organización</option>
@@ -448,7 +480,7 @@ const RegistroServiciosRealizados = () => {
                 as="select"
                 value={formData.servicio}
                 onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
-                required= {handleSubmit} //incorrecto
+                required={handleSubmit} //incorrecto
               >
                 <option value="">Seleccionar Servicio</option>
                 {organizacionTieneServicios ? (
@@ -474,7 +506,6 @@ const RegistroServiciosRealizados = () => {
         </Row>
       </Form>
 
-
       <h1 className='titulo'>Información</h1>
 
       <Form onSubmit={handleSubmit} className='bordesito' >
@@ -484,10 +515,10 @@ const RegistroServiciosRealizados = () => {
           <Col md>
 
             <Form.Group controlId="formDNI">
-              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mt-5 mb-5" controlId="exampleForm.ControlInput1">
                 <div className="input-group">
                   <Form.Control
-                    className="border border-secondary rounded rounded-1.1 shadow mb-5"
+                    className="border-secondary rounded rounded-1.1 shadow "
                     type="number"
                     as="input"
                     name="dni"
@@ -498,13 +529,13 @@ const RegistroServiciosRealizados = () => {
                   />
 
                   <button
-                    className="border border-secondary rounded rounded-1.1 shadow mb-5"
+                    style={{ marginLeft: '0.5rem', borderRadius: '5px' }}
+                    className="buscarbutton"
                     onClick={() => searchByDNI(formData.dni)}
-                    type="button"
                   >
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faSearch} />
-                    </span>
+
+                    <FontAwesomeIcon icon={faSearch} style={{ color: "#FFFF", }} />
+
                   </button>
                 </div>
               </Form.Group>
@@ -545,13 +576,15 @@ const RegistroServiciosRealizados = () => {
                   className='border border-secondary rounded rounded-1.1 shadow mt-5'
                   type="date"
                   name="fechaNacimiento"
-                  value={formData.fechaNacimiento} // Mantén el valor en formato aaaa-mm-dd para que el selector de fechas funcione
+                  value={formData.fechaNacimiento} // Usa el valor sin formatear
                   required={!searchInProgress}
                   onChange={handleInputChange}
                   placeholder="dd/mm/aaaa"
                 />
+
               </Form.Group>
             </Form.Group>
+
 
             <Form.Group controlId="formGenero">
               {/* <Form.Label>Género</Form.Label> */}
@@ -642,9 +675,9 @@ const RegistroServiciosRealizados = () => {
                 className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
                 name='departamento'
-                value={formData.departamento}
+                value={selectedDepartamento}
                 onChange={(e) => {
-                  handleDepartamentoChange(e.target.value); // Mover esta función al onChange
+                  handleDepartamentoChange(e.target.value);
                 }}
                 required={!searchInProgress}
               >
@@ -663,9 +696,9 @@ const RegistroServiciosRealizados = () => {
                 className='border border-secondary rounded rounded-1.1 shadow mt-5 mt-3'
                 as="select"
                 name='localidad'
-                value={formData.localidad}
+                value={selectedLocalidad}
                 onChange={(e) => {
-                  handleLocalidadChange(e.target.value); // Mover esta función al onChange
+                  handleLocalidadChange(e.target.value);
                 }}
                 required={!searchInProgress}
               >

@@ -145,7 +145,7 @@
             </InputGroup>
           </Form.Group>
           <div className="ml-auto">
-          <button className="buttonRegistrar" style={{ marginLeft: '3rem' }}  onClick={() => handleShowModal()}>Agregar Organización</button>
+          <Button className="buttonRegistrar" style={{ marginLeft: '3rem' }}  onClick={() => handleShowModal()}>Agregar Organización</Button>
           </div>
           </Form>
         </div>
@@ -194,73 +194,75 @@
           </tbody>
         </Table>
 
-        <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal show={showModal} onHide={handleCloseModal} >
           <Modal.Header closeButton>
             <Modal.Title>{formData.id ? 'Editar Organización' : 'Agregar Organización'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={handleSubmit} className='bordesito' >
+            <Form onSubmit={handleSubmit} >
 
               <Row>
                 <Col >
 
                   <Form.Group controlId="formName">
                     <Form.Group className="" controlId="exampleForm.ControlInput1">
-                      <Form.Label>Nombre de la Organización*</Form.Label>
+                      {/* <Form.Label>Nombre de la Organización*</Form.Label> */}
                       <Form.Control
+                        className="mb-3 border border-secondary rounded rounded-1.1 shadow"
                         type="text"
                         name="nombre"
                         value={formData.nombre}
                         required
                         onChange={handleChange}
-                        placeholder="Organización Ejemplo" />
+                        placeholder="Nombre de la Organización" />
                     </Form.Group>
                   </Form.Group>
 
                   <Form.Group controlId="formDomicilio">
                     <Form.Group className="" controlId="exampleForm.ControlInput1">
-                      <Form.Label>Dirección*</Form.Label>
+                      {/* <Form.Label>Dirección*</Form.Label> */}
                       <Form.Control
+                        className="mb-3 border border-secondary rounded rounded-1.1 shadow"
                         type="text"
                         name="direccion"
                         value={formData.direccion}
                         required
                         onChange={handleChange}
-                        placeholder="Av Ejemplo 123" />
+                        placeholder="Dirección" />
                     </Form.Group>
                   </Form.Group>
 
 
                   <Form.Group controlId="formNumber">
                     <Form.Group className="" controlId="exampleForm.ControlInput1">
-                      <Form.Label>Número de Teléfono*</Form.Label>
+                      {/* <Form.Label>Número de Teléfono*</Form.Label> */}
                       <Form.Control
+                        className="mb-3 border border-secondary rounded rounded-1.1 shadow"
                         type="number"
                         name="telefono"
                         value={formData.telefono}
                         required
                         onChange={handleChange}
-                        placeholder="3764221122" />
+                        placeholder="Número de Teléfono" />
                     </Form.Group>
                   </Form.Group>
 
                   <Form.Group controlId="formEmail">
                     <Form.Group className="" controlId="exampleForm.ControlInput1">
-                      <Form.Label>Email*</Form.Label>
+                      {/* <Form.Label>Email*</Form.Label> */}
                       <Form.Control
+                        className="mb-3 border border-secondary rounded rounded-1.1 shadow"
                         type="email"
                         name="email"
                         value={formData.email}
                         required
                         onChange={handleChange}
-                        placeholder="ejemplo@correo.com" />
+                        placeholder="Email" />
                     </Form.Group>
                   </Form.Group>
 
                 </Col>
 
-                <Col md>
-                </Col>
 
                 {/* imagen de la Organización */}
                 <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
@@ -278,6 +280,7 @@
                     <Form.Group className="" controlId="exampleForm.ControlInput1">
                       <Form.Label>Descripción</Form.Label>
                       <Form.Control
+                      className="mb-3 border border-secondary rounded rounded-1.1 shadow"
                         type="text"
                         as="textarea"
                         name="descripcion"
