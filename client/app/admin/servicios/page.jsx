@@ -388,12 +388,12 @@ const RegistroServiciosRealizados = () => {
       <Row>
         <Col>
 
-          <div className='d-flex flex-wrap'>
-            <h1 className='titulo'>Registrar Servicio</h1>
-            <div style={{ margin: 'auto' }} className='d-flex '>
+          <div className='d-flex flex-wrap justify-content-between tablet-width'>
+            <h1 className='titulo text-nowrap'>Registrar Servicio</h1>
+            <div  className='d-flex'>
 
               <Link href="/admin/servicios/crudServicios">
-                <button className='buttonRegistrar responsive-buttons' style={{ marginLeft: '10em' }}>
+                <button className='buttonRegistrar responsive-buttons' >
                   Administrar
                 </button>
               </Link>
@@ -480,10 +480,10 @@ const RegistroServiciosRealizados = () => {
           <Col md>
 
             <Form.Group controlId="formDNI">
-              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mt-5 mb-5" controlId="exampleForm.ControlInput1">
                 <div className="input-group">
                   <Form.Control
-                    className="border border-secondary rounded rounded-1.1 shadow mb-5"
+                    className="border-secondary rounded rounded-1.1 shadow "
                     type="number"
                     as="input"
                     name="dni"
@@ -494,12 +494,13 @@ const RegistroServiciosRealizados = () => {
                   />
 
                   <button
-                    className="border border-secondary rounded rounded-1.1 shadow mb-5"
+                    style={{marginLeft: '0.5rem', borderRadius: '5px'}}
+                    className="buscarbutton"
                     onClick={() => searchByDNI(formData.dni)} // Call searchByDNI when the button is clicked
                   >
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faSearch} />
-                    </span>
+                    
+                      <FontAwesomeIcon icon={faSearch} style={{color: "#FFFF",}} />
+                  
                   </button>
                 </div>
               </Form.Group>
