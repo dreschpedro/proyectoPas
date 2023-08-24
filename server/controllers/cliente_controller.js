@@ -33,10 +33,9 @@ const obtener_cliente = async (req, res) => {
 };
 
 // Buscar cliente por DNI
-
 const buscar_cliente_por_dni = async (req, res) => {
   const dni = req.params.dni; // Cambia de req.query a req.params
-  console.log('DNI:', dni);  
+  console.log('DNI:', dni);
 
   try {
     const cliente = await Cliente_model.findOne({
@@ -62,32 +61,45 @@ const buscar_cliente_por_dni = async (req, res) => {
 
 
 
+// Buscar cliente por DNI
+const buscar_cliente_dni_servicio = async (dni) => {
+  try {
+    const cliente = await Cliente_model.findOne({
+      where: {
+        dni: dni,
+      },
+    });
+
+    return { success: true, message: "Cliente encontrado", data: cliente };
+  } catch (error) {
+    console.log(error);
+    return { success: false, message: "Error al buscar cliente por DNI", data: null };
+  }
+};
+
+
 
 
 // registro de cliente
-const registrar_cliente = async (req, res) => {
+const registrar_cliente = async (req) => {
   try {
     const cliente_body = req.body;
 
-    // Verifica si ya existe un cliente con el mismo DNI
     const clienteExistente = await Cliente_model.findOne({
       where: {
         dni: cliente_body.dni,
-      }
+      },
     });
 
     if (clienteExistente) {
-      return res.status(400).json({ error: "Ya existe un cliente con este DNI" });
+      return null; // Devolvemos null si ya existe un cliente con el mismo DNI
     }
 
-    // Crea el cliente en la base de datos
     const cliente_almacenado = await Cliente_model.create(cliente_body);
-
-    return res.status(200).json({ message: "Registro creado", cliente_almacenado });
+    return cliente_almacenado; // Devolvemos el cliente creado
   } catch (error) {
     console.log(error);
-    const mensaje_error = "Ocurrió un error al registrar el cliente";
-    return res.status(500).json({ error: mensaje_error });
+    return null; // Devolvemos null en caso de error
   }
 };
 
@@ -149,5 +161,6 @@ export {
   registrar_cliente,
   modificar_cliente,
   cambiar_estado_cliente,
-  buscar_cliente_por_dni // Agregar esta línea
+  buscar_cliente_por_dni,
+  buscar_cliente_dni_servicio
 };

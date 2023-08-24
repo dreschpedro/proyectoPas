@@ -14,7 +14,11 @@ const ServRealizado_model = sequelize.define(
   },
   {
     tableName: 'serv_realizado',
-    timestamps: true,
+    timestamps: {
+      createdAt: 'created_at', // Cambia el nombre de la columna
+      updatedAt: 'updated_at', // Cambia el nombre de la columna
+      type: DataTypes.DATE, // Utiliza solo la fecha y hora sin zona horaria
+    },
   }
 );
 

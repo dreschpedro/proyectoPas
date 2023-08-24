@@ -69,6 +69,7 @@ const RegistroServiciosRealizados = () => {
   });
 
   const [formData, setFormData] = useState({
+    id_cliente: '',
     organizacion: '',
     servicio: '',
     apellidos: '',
@@ -94,6 +95,8 @@ const RegistroServiciosRealizados = () => {
       const response = await instance.get(`/cliente/dni/${dni}`);
       const data = response.data;
       console.log('Search Result:', data);
+
+      const id_cliente = data.id_cliente;
 
       const provinciaId = data.provincia;
       setSelectedProvincia(provinciaId);
@@ -204,6 +207,7 @@ const RegistroServiciosRealizados = () => {
 
 
   const handleInputChange = (event) => {
+    event.preventDefault();
     const { name, value } = event.target;
 
     if (name === 'fechaNacimiento') {
@@ -234,9 +238,10 @@ const RegistroServiciosRealizados = () => {
     e.preventDefault();
     try {
       const dataToSend = {
-        organizacion: formData.organizacion,
-        servicio: formData.servicio,
-        apellidos: formData.apellidos,
+        // id_cliente: //incompleto
+        id_organizacion: formData.organizacion,
+        id_servicio: formData.servicio,
+        apellido: formData.apellido,
         nombre: formData.nombre,
         dni: formData.dni,
         fechaNacimiento: formData.fechaNacimiento,
@@ -244,21 +249,20 @@ const RegistroServiciosRealizados = () => {
         email: formData.email,
         contacto: formData.contacto,
         telefono: formData.telefono,
-        provinciaId: formData.provincia,
-        departamentoId: formData.departamento,
-        localidadId: formData.localidad,
+        id_provincia: formData.provincia,
+        id_departamento: formData.departamento,
+        id_localidad: formData.localidad,
         ocupacion: formData.ocupacion,
         domicilio: formData.domicilio,
-        id_organizacion: formData.id_organizacion,
       };
 
-      console.log('Data to send:', dataToSend); // Agregar este console.log
+      console.log('Data to send:', dataToSend);
 
       if (selectedService.id_servicio) {
         await instance.put(`/cliente/${selectedService.id_servicio}`, dataToSend);
-        console.log('Service edited successfully');
+        console.log('Cliente Editado Exitosamente');
       } else {
-        // Add a new service
+        // agregar nuevo cliente
         const response = await instance.post('/cliente/registrar', dataToSend);
         console.log(response.data.message);
       }
@@ -425,7 +429,7 @@ const RegistroServiciosRealizados = () => {
                   setFormData({ ...formData, organizacion: e.target.value });
                   handleOrganizacionChange(e.target.value);
                 }}
-                required
+                required= {handleSubmit} //incorrecto
               >
 
                 <option value="">Seleccionar Organización</option>
@@ -444,12 +448,12 @@ const RegistroServiciosRealizados = () => {
                 as="select"
                 value={formData.servicio}
                 onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
-                required
+                required= {handleSubmit} //incorrecto
               >
                 <option value="">Seleccionar Servicio</option>
                 {organizacionTieneServicios ? (
                   organizacionServicios.map((servicio) => (
-                    <option key={servicio.id} value={servicio.id}>
+                    <option key={servicio.id_servicio} value={servicio.id_servicio}>
                       {servicio.nombre}
                     </option>
                   ))
@@ -495,7 +499,8 @@ const RegistroServiciosRealizados = () => {
 
                   <button
                     className="border border-secondary rounded rounded-1.1 shadow mb-5"
-                    onClick={() => searchByDNI(formData.dni)} // Call searchByDNI when the button is clicked
+                    onClick={() => searchByDNI(formData.dni)}
+                    type="button"
                   >
                     <span className="input-group-text">
                       <FontAwesomeIcon icon={faSearch} />
@@ -703,7 +708,7 @@ const RegistroServiciosRealizados = () => {
               </Form.Group>
             </Form.Group>
 
-            
+
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
               <button type="submit" className='bouttoncancel'>
                 Cancelar
