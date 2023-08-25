@@ -352,7 +352,7 @@ function PerfilPersonal() {
         ) : (
           <>
 
-          <div></div>
+          
             <div style={{ display: 'flex',  justifyContent: 'center' }}>
               <Button
                 variant="success"

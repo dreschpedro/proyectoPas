@@ -42,19 +42,25 @@ const MenuModal = () => {
           <Modal.Title>[Username]</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form className='d-flex flex-column justify-content-center align-items-center'>
-            <Button variant="secondary" onClick={toggleModal} className=''>
-              Administrar Usuario
-            </Button>
-            <Button variant="secondary" onClick={toggleModal} className='mt-3'>
-              Ayuda y Soporte tecnico
-            </Button>
+          <Form className='d-flex flex-column justify-content-center align-items-center '>
+           
+           {/* <Link href={"/admin/usuarios/[id]"}> */}
+            <button onClick={toggleModal} className='buttonLogin' style={{ width: '50%', margin: 'auto' }}>
+                Administrar Usuario
+            </button>
+          {/* </Link> */}
+
+            {/* <Link href={"https://www.digitalfactory.com.ar/"}> */}
+            <a href={"https://www.digitalfactory.com.ar/"} onClick={toggleModal} className='mt-3 buttonLogin text-nowrap text-decoration-none d-flex justify-content-center align-items-center' style={{ width: '50%', margin: 'auto' }}> 
+                Ayuda y Soporte tecnico
+            </a>
+            {/* </Link> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={toggleModal}>
+          <button className='bouttoncancel' onClick={toggleModal}>
             Cerrar Sesion
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

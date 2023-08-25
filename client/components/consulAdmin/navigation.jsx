@@ -43,18 +43,24 @@ const MenuModal = () => {
         </Modal.Header>
         <Modal.Body>
           <Form className='d-flex flex-column justify-content-center align-items-center'>
-            <Button variant="secondary" onClick={toggleModal} className=''>
-              Administrar Usuario
-            </Button>
-            <Button variant="secondary" onClick={toggleModal} className='mt-3'>
-              Ayuda y Soporte tecnico
-            </Button>
+          <button onClick={toggleModal} className='buttonLogin' style={{ width: '50%', margin: 'auto' }}>
+
+              {/* <Link href={"/consultor/usuarios/[id]"}> */}
+                Administrar Usuario
+              {/* </Link> */}
+
+            </button>
+            <button onClick={toggleModal} className='mt-3 buttonLogin' style={{ width: '50%', margin: 'auto' }}>
+              <Link href={"https://www.digitalfactory.com.ar/"}>
+                Ayuda y Soporte tecnico
+              </Link>
+            </button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={toggleModal}>
+          <button className='bouttoncancel' onClick={toggleModal}>
             Cerrar Sesion
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>
