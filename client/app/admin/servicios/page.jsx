@@ -56,7 +56,7 @@ const RegistroServiciosRealizados = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState('');
   const [organizaciones, setOrganizaciones] = useState([]);
-  const [servicios, setServicios] = useState([]); // Inicializar aquí
+  const [servicios, setServicios] = useState([]);
   const [provincias, setProvincias] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
   const [localidades, setLocalidades] = useState([]);
@@ -90,12 +90,13 @@ const RegistroServiciosRealizados = () => {
   });
 
   const validateForm = () => {
-    if (formData.organizacion && formData.servicio) {
+    if (formData.organizacion && formData.servicio && organizacionTieneServicios) {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
     }
   };
+
 
   useEffect(() => {
     validateForm();
@@ -253,9 +254,9 @@ const RegistroServiciosRealizados = () => {
     try {
       const formattedDateToSend = formData.fechaNacimiento.split('/').reverse().join('-');
       const dataToSend = {
-        fechaNacimiento: formattedDateToSend,
         id_organizacion: formData.organizacion,
         id_servicio: formData.servicio,
+        fechaNacimiento: formattedDateToSend,
         apellido: formData.apellido,
         nombre: formData.nombre,
         dni: formData.dni,
@@ -280,22 +281,32 @@ const RegistroServiciosRealizados = () => {
         if (formData.dni) {
           // Escenario 1: Cliente existente (Tienes el dni)
           // Aquí necesitas obtener el id_cliente del cliente existente que se encontró por DNI
-          const id_cliente = // Obtén el id_cliente del cliente encontrado por DNI
+          const id_cliente = idClienteEncontrado; // Obtén el id_cliente del cliente encontrado por DNI
 
-            // Ahora puedes usar el id_cliente para realizar el POST con cliente existente
-            await instance.post('/serv_real/registrar_con_cliente', {
-              id_cliente: id_cliente,
-              id_servicio: formData.servicio,
-            });
+          // Ahora puedes usar el id_cliente para realizar el POST con cliente existente
+          await instance.post('/serv_real/registrar_con_cliente', {
+            dni: formData.dni, // Asegúrate de enviar el dni
+            id_servicio: formData.servicio,
+          });
 
           console.log('Servicio registrado con cliente existente');
         } else {
           // Escenario 2: Nuevo cliente (No tienes el dni)
           // Aquí debes recopilar todos los datos del formulario para el nuevo cliente
           const nuevoClienteData = {
-            // ... (Otros datos del nuevo cliente)
+            fechaNacimiento: formattedDateToSend, 
+            apellido: formData.apellido,
+            nombre: formData.nombre,
             dni: formData.dni,
-            // ... (Resto de los campos del formulario)
+            genero: formData.genero,
+            email: formData.email,
+            contacto: formData.contacto,
+            telefono: formData.telefono,
+            id_provincia: formData.provincia,
+            id_departamento: formData.departamento,
+            id_localidad: formData.localidad,
+            ocupacion: formData.ocupacion,
+            domicilio: formData.domicilio,
           };
 
           // Realiza el POST para registrar el nuevo cliente
@@ -306,7 +317,7 @@ const RegistroServiciosRealizados = () => {
 
           // Realiza el POST para registrar el servicio con el nuevo cliente
           await instance.post('/serv_real/registrar_con_cliente', {
-            id_cliente: dniNuevoCliente,
+            dni: dniNuevoCliente, // Asegúrate de enviar el dni
             id_servicio: formData.servicio,
           });
 
@@ -348,6 +359,7 @@ const RegistroServiciosRealizados = () => {
     setFormData((prevServiceInfo) => ({
       ...prevServiceInfo,
       id_organizacion: organizacionId,
+      servicio: '', // Reset the selected service when the organization changes
     }));
 
     // Llamada a la función para obtener servicios por organización
@@ -362,6 +374,7 @@ const RegistroServiciosRealizados = () => {
       console.log('Selected Organizacion: No se encontró la organización');
     }
   };
+
 
   const handleShowModal = (service) => {
     setSelectedService(service);

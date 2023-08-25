@@ -46,7 +46,7 @@ import routerPersonal from './routes/personal.routes.js';
 import routerProdEnt from './routes/Prod_entreg.routes.js';
 
 
-app.get('/', (req, res) => res.send(`Estas en Inicio`));
+// app.get('/', (req, res) => res.send(`Estas en Inicio`));
 
 app.use('/organizaciones/', routerOrganiz)
 app.use('/servicios', routerServicio)
