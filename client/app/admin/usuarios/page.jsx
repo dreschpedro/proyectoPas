@@ -56,7 +56,7 @@ function Usuarios() {
 
   const handlepersonalClick = (id) => {
     // Redireccionar a la página de detalle del usuario con el ID correspondiente
-    window.location.href = `/usuarios/${id}`;
+    window.location.href = `/admin/usuarios/${id}`;
   };
 
   return (

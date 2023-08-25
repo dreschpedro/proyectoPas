@@ -12,9 +12,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import Pagination from 'react-bootstrap/Pagination';
 import Image from 'next/image'
+import { useRouter } from 'next/router';
 
 
+const Navigation = () => {
+  const router = useRouter();
 
+
+const isAdminRoute = router.pathname.includes('/admin');
+
+  const goBack = () => {
+    if (isAdminRoute) {
+    window.history.back(); // Navega a la página anterior
+  }};
+
+
+  if (isAdminRoute) {
+  const goForward = () => {
+    window.history.forward(); // Navega a la página siguiente (si está disponible)
+  }};
+};
 const MenuModal = () => {
   const [showModal, setShowModal] = useState(false);
 
@@ -27,7 +44,10 @@ const MenuModal = () => {
     // Por ejemplo, redireccionar a la página de inicio de sesión
     console.log('Cerrando sesión...');
     toggleModal(); // Cerramos la modal después de hacer clic en "Cerrar Sesión"
+  
   };
+
+  
 
   return (
     <>
@@ -90,16 +110,23 @@ function Navigation2() {
               {/* estos botones de navegacion los dejo por que si pasamos el software a elcetron o ionic,
                va a ser necesario implementar esta funcionalidad*/}
               <div className='d-flex flex-nowrap'>
-                <Pagination className='mx-3 my-auto '>
-                  <Pagination.Prev className='' />
-                  <Pagination.Next className='' />
-                </Pagination>
+              
+              
+              
+              
+                {/* <Pagination className='mx-3 my-auto '>
+                  <Pagination.Prev onClick={goBack} className='mx-1' />
+                  <Pagination.Next onClick={goForward} className='mx-1' />
+                </Pagination> */}
+
+
+
 
                 {/*esto lo dejo comentado por que con gonzalo llegamos a
                  la conclucion de que se veia "cheto" pero no tenia una funcionalidad real */}
                 {/* <Form.Control
                   className='h-80 my-auto'
-                  placeholder="Buscador                            🔎"
+                  placeholder="Buscador"
                   aria-label="Buscador"
                   aria-describedby="basic-addon2"
                 /> */}
