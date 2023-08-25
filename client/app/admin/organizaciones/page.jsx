@@ -130,29 +130,6 @@ const ListaOrganizaciones = () => {
     <div>
       <h1 className='titulo'>Lista de Organizaciones</h1>
 
-      {/* <div  >
-        <Form className="mt-5 mb-5 d-flex mb-3 align-items-center">
-          <Form.Group controlId="formSearch">
-            <InputGroup>
-
-              <Form.Control
-                style={{ maxWidth: '35rem' }}
-                className=' shadow border border-secondary rounded rounded-1.1 shadow'
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Buscar"
-              />
-            </InputGroup>
-          </Form.Group>
-          <div className="ml-auto">
-            <Button className="buttonRegistrar" style={{ marginLeft: '3rem' }} onClick={() => handleShowModal()}>Agregar Organización</Button>
-          </div>
-        </Form>
-      </div> */}
-
-
-
       <div >
         <Form className="mt-5 mb-5 d-flex mb-3 align-items-center">
           <FormControl
@@ -333,7 +310,7 @@ const ListaOrganizaciones = () => {
               </button>
 
 
-              <button className='buttonRegistrar' type="submit">
+              <button className='buttonRegistrar' type="submit" style={{width: '60%'}}>
                 Registrar Organización
               </button>
             </div>

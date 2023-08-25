@@ -172,7 +172,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.username}
                 readOnly={!editing}
-                
+
                 required
                 className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='Nombre de Usuario'
@@ -190,7 +190,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.apellido}
                 readOnly={!editing}
-                
+
                 required
                 className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='Apellido'
@@ -207,7 +207,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.nombre}
                 readOnly={!editing}
-                
+
                 required
                 className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='Nombres'
@@ -224,7 +224,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.organizacion}
                 readOnly={!editing}
-                
+
                 required
                 className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='Organización'
@@ -241,7 +241,7 @@ function PerfilPersonal() {
                 type="email"
                 value={formData.email}
                 readOnly={!editing}
-                
+
                 required
                 className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='Email'
@@ -260,7 +260,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.rol}
                 readOnly={!editing}
-                
+
                 required
                 className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='Rol'
@@ -277,7 +277,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.cuilt}
                 readOnly={!editing}
-                
+
                 required
                 className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='CUIL o CUIT'
@@ -294,7 +294,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.telefono}
                 readOnly={!editing}
-                
+
                 required
                 className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='Teléfono'
@@ -311,7 +311,7 @@ function PerfilPersonal() {
                 type="text"
                 value={formData.domicilio}
                 readOnly={!editing}
-                
+
                 required
                 className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='Domicilio'
@@ -323,12 +323,12 @@ function PerfilPersonal() {
             <Form.Group className="mb-3" controlId="exampleForm.Control Input1">
               {/* <Form.Label>Profesión*</Form.Label> */}
               <Form.Control
-               
+
                 name="profesion"
                 type="text"
                 value={formData.profesion}
                 readOnly={!editing}
-                
+
                 required
                 className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='Profesión'
@@ -337,60 +337,64 @@ function PerfilPersonal() {
             </Form.Group>
           </Form.Group>
         </Col>
-      </Row>
 
-      {/* MODIFICAR/GUARDAR CAMBIOS || CANCELAR */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
-        {!editing ? (
-          <Button
-            variant="warning"
-            onClick={handleEditClick}
-            style={{ width: '200px', fontWeight: 'bold' }}
-          >
-            Modificar cuenta
-          </Button>
-        ) : (
-          <>
-
-          <div></div>
-            <div style={{ display: 'flex',  justifyContent: 'center' }}>
+        {/* MODIFICAR/GUARDAR CAMBIOS || CANCELAR */}
+        <div className='d-flex flex-wrap justify-content-center mx-auto' >
+          <div className='mx-3 mt-3'>
+            {!editing ? (
               <Button
-                variant="success"
-                name=""
-                type="submit"
-                style={{ width: '200px', fontWeight: 'bold', marginRight: '10px' }}
-              >
-                Guardar Cambios
-              </Button>
-              <Button
-                variant="danger"
-                onClick={handleCancelClick}
+                variant="warning"
+                onClick={handleEditClick}
                 style={{ width: '200px', fontWeight: 'bold' }}
               >
-                Cancelar
+                Modificar cuenta
               </Button>
-            </div>
-            {modificationError && (
-              <p style={{ color: 'red', textAlign: 'center', marginTop: '10px' }}>
-                {modificationError}
-              </p>
+            ) : (
+              <>
+
+                <div >
+                  <Button
+                    variant="success"
+                    name=""
+                    type="submit"
+                    style={{ width: '200px', fontWeight: 'bold', marginRight: '10px' }}
+                  >
+                    Guardar Cambios
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={handleCancelClick}
+                    style={{ width: '200px', fontWeight: 'bold' }}
+                  >
+                    Cancelar
+                  </Button>
+                </div>
+                {modificationError && (
+                  <p style={{ color: 'red', textAlign: 'center', marginTop: '10px' }}>
+                    {modificationError}
+                  </p>
+                )}
+              </>
             )}
-          </>
-        )}
-      </div>
+          </div>
 
-      {/* ELIMINAR CUENTA */}
+          {/* ELIMINAR CUENTA */}
 
-      
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '49px' }}>
-        <Button
-          variant="danger"
-          onClick={handleShowDeleteModal}
-          style={{ width: '200px', fontWeight: 'bold' }}
-        >
-          Eliminar cuenta
-        </Button>
-      </div>
+
+          <div className='mx-3 mt-3'>
+            <Button
+              variant="danger"
+              onClick={handleShowDeleteModal}
+              style={{ width: '200px', fontWeight: 'bold' }}
+            >
+              Eliminar cuenta
+            </Button>
+          </div>
+        </div>
+
+      </Row>
+
+
 
       {/* Delete Confirmation Modal */}
       <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>

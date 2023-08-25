@@ -49,6 +49,7 @@ const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo']
 const RegistroServiciosRealizados = () => {
 
   const [selectedProvincia, setSelectedProvincia] = useState('');
+  const [isFormValid, setIsFormValid] = useState(false);
   const [searchInProgress, setSearchInProgress] = useState(false);
   const [selectedDepartamento, setSelectedDepartamento] = useState('');
   const [selectedLocalidad, setSelectedLocalidad] = useState('');
@@ -88,6 +89,19 @@ const RegistroServiciosRealizados = () => {
     id_organizacion: '',
   });
 
+  const validateForm = () => {
+    if (formData.organizacion && formData.servicio) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  };
+
+  useEffect(() => {
+    validateForm();
+  }, [formData.organizacion, formData.servicio]);
+
+
   const searchByDNI = async (dni) => {
     setSearchInProgress(true);
     try {
@@ -119,9 +133,9 @@ const RegistroServiciosRealizados = () => {
         email: data.email,
         contacto: data.contacto,
         telefono: data.telefono,
-        id_provincia: provinciaId,
-        id_departamento: departamentoId,
-        id_localidad: localidadId,
+        provincia: provinciaId,
+        departamento: departamentoId,
+        localidad: localidadId,
         ocupacion: data.ocupacion,
         domicilio: data.domicilio,
       }));
@@ -156,8 +170,8 @@ const RegistroServiciosRealizados = () => {
 
   const handleProvinciaChange = async (provinciaId) => {
     setSelectedProvincia(provinciaId);
-    setSelectedDepartamento(''); // Reset departmento seleccionado
-    setSelectedLocalidad('');    // Reset localidad seleccionada
+    setSelectedDepartamento('');
+    setSelectedLocalidad('');
 
     const departamentosData = await fetchDepartamentos(provinciaId);
     const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
@@ -178,15 +192,14 @@ const RegistroServiciosRealizados = () => {
     setFormData((prevData) => ({
       ...prevData,
       provincia: provinciaId,
-      departamento: '', // Reiniciar el departamento seleccionado
-      localidad: '',    // Reiniciar la localidad seleccionada
+      departamento: '',
+      localidad: '',
     }));
-
   };
 
   const handleDepartamentoChange = async (departamentoId) => {
     setSelectedDepartamento(departamentoId);
-    setSelectedLocalidad(''); // Reset selected locality
+    setSelectedLocalidad('');
 
     const localidadesData = await fetchLocalidades(departamentoId);
     const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
@@ -195,17 +208,22 @@ const RegistroServiciosRealizados = () => {
     // Auto-select the locality based on the search results
     setFormData((prevData) => ({
       ...prevData,
+      departamento: departamentoId,
       localidad: '',
     }));
-
-
   };
 
 
   const handleLocalidadChange = async (localidad_id) => {
     setSelectedLocalidad(localidad_id);
-    console.log('Selected Localidad:', localidad_id); // Add this console.log
+
+    setFormData((prevData) => ({
+      ...prevData,
+      localidad: localidad_id, // Cambia localidadId a localidad_id
+    }));
+    console.log('Selected Localidad:', localidad_id);
   };
+
 
 
   const handleInputChange = (event) => {
@@ -747,7 +765,7 @@ const RegistroServiciosRealizados = () => {
                 Cancelar
               </button>
 
-              <button className='buttonRegistrar' type="submit">
+              <button className='buttonRegistrar' type="submit" disabled={!isFormValid}>
                 Registrar Servicio
               </button>
             </div>
