@@ -6,26 +6,46 @@ import Col from 'react-bootstrap';
 
 const Sidebar = () => {
   return (
-    <div className="sidebar mt-5 pt-5  fixed-start h-100 " style={{backgroundColor: '#101488'}}>
-      <Nav className='d-flex flex-column justify-content-center align-items-center' style={{backgroundColor: '#101488'}}>
-                  
-                  <Link href={"/admin/estadisticas"} style={{marginTop: '15px'}} className='custom-link'>
-                    <div className='buttoncito' >Estadísticas</div>
-                  </Link>
-                  <div className='buttoncito custom-link'>
-                  <Link href={"/admin/organizaciones"} className='custom-link'>
-                    Organizaciones
-                  </Link>
-                  </div>
-                  <div className='buttoncito'>
-                  <Link href={"/admin/servicios"} className='custom-link'>
-                    Servicios
-                  </Link>
-                  </div>
-                  <Link href={"/admin/usuarios"} className='custom-link'>
-                    <div className='buttoncito'>Usuarios</div>
-                  </Link>
-                </Nav>
+    <div className="sidebar mt-5 pt-5  fixed-start h-100 " style={{ backgroundColor: '#101488' }}>
+      <Nav className='d-flex flex-column justify-content-center align-items-center' style={{ backgroundColor: '#101488' }}>
+
+
+      <div className='buttoncito'>
+        <Link href={"/admin/consultas"} className='custom-link'>
+         <b>Consultas</b> 
+        </Link>
+        </div>
+
+
+
+      <div className='buttoncito'>
+        <Link href={"/admin/estadisticas"} className='custom-link'>
+         <b>Estadísticas</b> 
+        </Link>
+        </div>
+        
+
+
+        <div className='buttoncito custom-link'>
+          <Link href={"/admin/organizaciones"} className='custom-link'>
+          <b>Organizaciones</b> 
+          </Link>
+        </div>
+
+        <div className='buttoncito'>
+          <Link href={"/admin/servicios"} className='custom-link'>
+          <b>Servicios</b> 
+          </Link>
+        </div>
+
+        <div className='buttoncito'>
+        <Link href={"/admin/usuarios"} className='custom-link'>
+        <b>Usuarios</b> 
+        </Link>
+        </div>
+
+
+      </Nav>
     </div>
   );
 };
