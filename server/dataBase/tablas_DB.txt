@@ -1,0 +1,104 @@
+#organizacion
+{
+  "nombre": "Sanatorio Caminos",
+  "direccion": "Av San Martin 3213",
+  "telefono": "123456789",
+  "email": "caminos@sanatorio.com.ar",
+  "descripcion": "csdcsdc",
+  "imagen": "/uploads/organizacion/default_organizacion.png"
+}
+{
+  "nombre": "Universidad Nacional",
+  "direccion": "Avenida Universidad 123",
+  "telefono": "555-123-4567",
+  "email": "contacto@universidadnacional.edu",
+  "descripcion": "jkjkjkjkc",
+  "imagen": "/uploads/organizacion/company.png"
+}
+{
+  "nombre": "Organización sin fines de lucro",
+  "direccion": "Plaza de la Solidaridad 789",
+  "telefono": "555-555-5555",
+  "email": "fines@organizacion.org",
+  "descripcion": "jkjkjkjkc",
+  "imagen": "/uploads/organizacion/company_azul.png"
+}
+
+
+
+#usuario
+{
+  "username": "Juan1",
+  "password": "perez1",
+  "email": "perez1@juan.com",
+  "rol": "admin"
+}
+
+{
+  "username": "Ramon2",
+  "password": "gonzalez2",
+  "email": "gonzalez@ramon.com",
+  "rol": "Data-Entry"
+}
+
+{
+  "username": "Federico3",
+  "password": "espinosa3",
+  "email": "fede@espino.com",
+  "rol": "Consultor"
+}
+
+
+#personal
+{
+  "id_usuario": 1,
+  "id_organizacion":1,
+  "apellido": "Perez",
+  "nombre": "Juan",
+  "cuilt": "111111111",
+  "profesion": "Profesion 1",
+  "domicilio": "Posadas",
+  "telefono": "1111111111",
+  "imagen": "/uploads/personal/default_personal.png"
+}
+
+{
+  "id_usuario": 2,
+  "id_organizacion":1,
+  "apellido": "Gonzalez",
+  "nombre": "Ramon",
+  "cuilt": "222222222",
+  "profesion": "Profesion 2",
+  "domicilio": "Posadas",
+  "telefono": "2222222222",
+  "imagen": "/uploads/personal/default_personal.png"
+}
+
+{
+  "id_usuario": 3,
+  "id_organizacion":2,
+  "apellido": "Espinosa",
+  "nombre": "Federico",
+  "cuilt": "333333333",
+  "profesion": "Profesion 3",
+  "domicilio": "Posadas",
+  "telefono": "3333333333",
+  "imagen": "/uploads/personal/default_personal.png"
+}
+
+#servicio
+{
+  "nombre": "servicio 1",
+  "descripcion": "descripcion 1",
+  "id_organizacion": "1"
+}
+{
+  "nombre": "servicio 2",
+  "descripcion": "descripcion 2",
+  "id_organizacion": "2"
+}
+{
+  "nombre": "servicio 3",
+  "descripcion": "descripcion 3",
+  "id_organizacion": "3"
+}

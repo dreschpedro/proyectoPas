@@ -1,0 +1,258 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+
+$principal:#22096F;
+
+
+
+
+
+$primary: $principal;
+
+
+// Estilos personalizados
+.buttoncito  {
+  border: none;
+  background-color: #22096F;
+  margin-Top: 15px;
+
+  color: #FFFFFF;
+  width: 70%;
+  height: 2.6rem;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+Link{
+  text-decoration:none;
+}
+
+.custom-link {
+  text-decoration: none;
+  color: #FFFFFF;
+  cursor: pointer; /* Agrega un cursor de tipo puntero para indicar que es un enlace */
+}
+
+
+.iconUser{
+  height: 2rem;
+  width: 2rem;
+}
+
+/* Estilos para cambiar el color del icono del menú hamburguesa */
+.navbar-toggle-custom .navbar-toggler-icon {
+  color: #ffffff; /* Cambia este valor al color deseado */
+}
+
+.azulbg{
+  background-color: #101488;
+}
+
+.bordesito{
+  border: solid 3px;
+  border-radius: 25px;
+  border-color: #22096F;
+  padding: 2rem;
+  margin-top: 15px;
+ 
+  
+}
+
+.titulo{
+  margin-top: 5rem;
+}
+
+.bouttoncancel{
+  height: 2.5rem;
+  border: solid 3px;
+  border-radius: 10px;
+  border-color: #22096F;
+  color: #22096F;
+  background-color: #FFFFFF;
+  margin-right: 10px;
+  width: 170px;
+  font: bold;
+  font-style: bold;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f4f4f4; /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #e0e0e0; /* Cambia el color al hacer clic */
+  }
+
+}
+
+.buttonLogin{
+  border: none;
+  height: 2.5rem;
+  border-radius: 10px;
+  color: #ffffff;
+  background-color: #22096F;
+  border-color: #22096F;
+  margin:auto;
+  width: 100%;
+  font: bold;
+  font-style: bold;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1a0752; /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #150644; /* Cambia el color al hacer clic */
+  }
+}
+
+.buttonRegistrar{
+  font-style: bold;
+  border: none;
+  height: 2.5rem;
+  border-radius: 10px;
+  color: #ffffff;
+  background-color: #22096F;
+  border-color: #22096F;
+  width: 170px;
+  font: bold;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1a0752; /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #150644; /* Cambia el color al hacer clic */
+  }
+
+}
+
+.comboboxrol{
+  width: 100%;
+}
+
+.imagebutton{
+  border: solid;
+  width: 10rem;
+  height: 10rem;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
+  border-color: #22096F;
+  background-color: #EFEFEF;
+  transition: background-color 0.3s ease;
+
+
+   /* Efecto hover */
+   &:hover {
+    background-color: #9f9cff;
+    color: #FFFFFF; /* Cambiar color del texto/icono en hover */
+    cursor: pointer; /* Cambiar el cursor al pasar por encima */
+  }
+
+  /* Efecto click */
+  &:active {
+    transform: scale(0.95); /* Reducir tamaño durante el clic */
+  }
+}
+
+.imageIcon{
+  width: 8rem;
+  height: 8rem;
+  color: #22096F;
+}
+
+  // .shadow-right {
+  //   box-shadow:5px 0px 5px rgba(0, 0, 0, 0.2); /* Sombras hacia la derecha */
+  // }
+
+.homebutton{
+  border: none;
+  background-color: #101488;
+  display: flex;
+  flex-wrap: nowrap;
+ 
+
+
+  p {
+    color: #FFFFFF;
+    font-size: 0.65rem;
+    margin: 0; // Para eliminar el margen predeterminado del párrafo
+  }
+}
+
+
+Link{font-style: none;}
+
+
+.custom-thead {
+  background-color: #f8f9fa; /* Cambia el color a tu preferencia */
+  color: white; /* Cambia el color del texto a tu preferencia */
+}
+
+
+.blur-background {
+  backdrop-filter: blur(10px); /* Ajusta el valor de desenfoque según sea necesario */
+  background-color: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
+  border: solid 1px;
+  border-radius: 25px;
+  border-color: rgba(255, 255, 255, 0.5);
+  padding: 2em;
+  margin-top: 15px;
+}
+
+
+.my-px {
+  padding-left: 3rem; /* Ajusta los valores según tus necesidades */
+  padding-right: 3rem;
+}
+
+
+.custom-width {
+  width: 100%;
+}
+
+.tablet-width {
+  width: 80%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+
+.responsive-buttons {
+  margin: 10px;
+  margin-top: 5.5rem;
+
+  @media (max-width: 888px) {
+    margin-top: 1rem;
+  }
+}
+
+
+.buscarbutton{
+
+  &:hover {
+    background-color: #1a0752; /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #150644; /* Cambia el color al hacer clic */
+  }
+  
+  background-color: #22096F;
+  border: none;
+  border-radius: 5px;
+  padding:5px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+
+}
