@@ -6,7 +6,7 @@ function adminHome() {
     <div className='d-flex align-self-center justify-content-center' style={{ marginTop: '10rem' }}>
 
       <Image
-        src="/img/logoPasColor.png"
+        src="/img/logoPasColor.svg"
         width={330}
         height={300}
         alt="Picture of the author"

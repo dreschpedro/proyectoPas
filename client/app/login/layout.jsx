@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
                             <div className="d-flex flex-nowrap">
                                 <div>
                                     <Image
-                                        src="/img/logoPasColor.png"
+                                        src="/img/logoPasColor.svg"
                                         width={240}
                                         height={200}
                                         alt="Picture of the author"
