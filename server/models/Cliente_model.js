@@ -42,10 +42,6 @@ const Cliente_model = sequelize.define('cliente', {
     type: DataTypes.STRING(20),
     allowNull: false,
   },
-  provincia: {
-    type: DataTypes.STRING(200),
-    allowNull: false,
-  },
   departamento: {
     type: DataTypes.STRING(200),
     allowNull: false,

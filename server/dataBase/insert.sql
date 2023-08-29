@@ -15,9 +15,9 @@
 
 -- Volcando datos para la tabla public.cliente: -1 rows
 /*!40000 ALTER TABLE "cliente" DISABLE KEYS */;
-INSERT INTO "cliente" ("id_cliente", "apellido", "nombre", "dni", "fechaNacimiento", "genero", "email", "contacto", "telefono", "provincia", "departamento", "localidad", "domicilio", "ocupacion", "activo", "createdAt", "updatedAt") VALUES
-	(4, 'Perez', 'Juana', '5555', '1965-02-14', 'femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', '54', '54028', '54028030000', 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:48:10.821-03', '2023-08-21 18:48:10.821-03'),
-	(3, 'Rodriguez', 'Pablo', '4444', '2005-05-24', 'masculino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', '54', '54028', '54028010000', 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:47:47.924-03', '2023-08-21 18:47:47.924-03');
+INSERT INTO "cliente" ("id_cliente", "apellido", "nombre", "dni", "fechaNacimiento", "genero", "email", "contacto", "telefono", "departamento", "localidad", "domicilio", "ocupacion", "activo", "createdAt", "updatedAt") VALUES
+	(4, 'Perez', 'Juana', '5555', '1965-02-14', 'femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', '54028', '54028030000', 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:48:10.821-03', '2023-08-21 18:48:10.821-03'),
+	(3, 'Rodriguez', 'Pablo', '4444', '2005-05-24', 'masculino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', '54028', '54028010000', 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:47:47.924-03', '2023-08-21 18:47:47.924-03');
 /*!40000 ALTER TABLE "cliente" ENABLE KEYS */;
 
 -- Volcando datos para la tabla public.organizacion: -1 rows

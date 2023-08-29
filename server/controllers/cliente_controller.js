@@ -81,7 +81,7 @@ const buscar_cliente_dni_servicio = async (dni) => {
 
 
 // registro de cliente
-const registrar_cliente = async (req) => {
+const registrar_cliente = async (req, res) => {
   try {
     const cliente_body = req.body;
 
@@ -92,16 +92,17 @@ const registrar_cliente = async (req) => {
     });
 
     if (clienteExistente) {
-      return null; // Devolvemos null si ya existe un cliente con el mismo DNI
+      return res.status(409).json({ error: 'Ya existe un cliente con el mismo DNI' });
     }
 
     const cliente_almacenado = await Cliente_model.create(cliente_body);
-    return cliente_almacenado; // Devolvemos el cliente creado
+    return res.status(201).json({ message: 'Registro creado', cliente_almacenado });
   } catch (error) {
     console.log(error);
-    return null; // Devolvemos null en caso de error
+    return res.status(500).json({ error: 'Ocurrió un error al registrar el cliente' });
   }
 };
+
 
 
 
