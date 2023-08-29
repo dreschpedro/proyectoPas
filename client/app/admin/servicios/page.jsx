@@ -32,28 +32,51 @@ const RegistroServiciosRealizados = () => {
   const genreDB = ['masculino', 'femenino', 'noBinario', 'noDecir'];
   const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo'];
 
-  const provinciaId = 54;
-
   const fetchDepartamentos = async () => {
     try {
-      const response = await fetch(`https://apis.datos.gob.ar/georef/api/departamentos?provincia=${provinciaId}`);
+      const response = await fetch(`https://apis.datos.gob.ar/georef/api/departamentos?provincia=54&campos=id,nombre&max=17`);
       const data = await response.json();
+      // console.log('Departamentos Response:', response);
+      // console.log('Parsed Data:', data);
       return data.departamentos || [];
     } catch (error) {
-      console.error('Error al obtener los departamentos:', error);
+      console.error('Error fetching departamentos:', error); // Log the error
       return [];
     }
   };
+
   const fetchLocalidades = async (departamentoId) => {
     try {
       const response = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?departamento=${departamentoId}`);
       const data = await response.json();
+      // console.log('Localidades Response:', data);
       return data.localidades || [];
     } catch (error) {
-      console.error('Error al obtener las localidades:', error);
+      console.error('Error fetching localidades:', error); // Log the error
       return [];
     }
   };
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const departamentosData = await fetchDepartamentos();
+        const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        setDepartamentos(sortedDepartamentos);
+
+        // Fetch localidades based on the selectedDepartamento
+        if (selectedDepartamento) {
+          const localidadesData = await fetchLocalidades(selectedDepartamento);
+          const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+          setLocalidades(sortedLocalidades);
+        }
+      } catch (error) {
+        console.error('Error fetching initial data:', error);
+      }
+    };
+
+    fetchInitialData();
+  }, []);
 
 
   const [formData, setFormData] = useState({
@@ -137,19 +160,22 @@ const RegistroServiciosRealizados = () => {
   };
 
   const handleDepartamentoChange = async (departamentoId) => {
+    console.log('handleDepartamentoChange triggered with departamentoId:', departamentoId);
+
     setSelectedDepartamento(departamentoId);
     setSelectedLocalidad('');
 
     const localidadesData = await fetchLocalidades(departamentoId);
+    // console.log('Localidades Data:', localidadesData);
     const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
     setLocalidades(sortedLocalidades);
 
-    // Auto-select the locality based on the search results
     setFormData((prevData) => ({
       ...prevData,
       departamento: departamentoId,
       localidad: '',
     }));
+    console.log('Departamento: ', departamentoId);
   };
 
   const handleLocalidadChange = async (localidad_id) => {
@@ -157,9 +183,9 @@ const RegistroServiciosRealizados = () => {
 
     setFormData((prevData) => ({
       ...prevData,
-      localidad: localidad_id, // Cambia localidadId a localidad_id
+      localidad: localidad_id,
     }));
-    console.log('Selected Localidad:', localidad_id);
+    console.log('Localidad:', localidad_id);
   };
 
   const handleInputChange = (event) => {
@@ -204,56 +230,50 @@ const RegistroServiciosRealizados = () => {
         domicilio: formData.domicilio,
       };
 
-      console.log('Data to send:', dataToSend);
+      // console.log('Data to send:', dataToSend);
 
-      if (selectedService.id_servicio) {
-        await instance.put(`/cliente/${selectedService.id_servicio}`, dataToSend);
-        console.log('Cliente Editado Exitosamente');
-      } else {
-        // Verifica si tienes un cliente existente (escenario 1) o si necesitas registrar un nuevo cliente (escenario 2)
-        if (formData.dni) {
+      const id_cliente = formData.id_cliente;
+      if (!id_cliente) {
+        // If there's no id_cliente
+
+        const nuevoClienteData = {
+          fechaNacimiento: formattedDateToSend,
+          apellido: formData.apellido,
+          nombre: formData.nombre,
+          dni: formData.dni,
+          genero: formData.genero,
+          email: formData.email,
+          contacto: formData.contacto,
+          telefono: formData.telefono,
+          departamento: formData.departamento,
+          localidad: formData.localidad,
+          ocupacion: formData.ocupacion,
+          domicilio: formData.domicilio,
+        };
+        // Realiza el POST para registrar el nuevo cliente
+        console.log('Datos nuevo cliente:', nuevoClienteData);
+        const nuevoClienteResponse = await instance.post('/cliente/registrar', nuevoClienteData);
+
+        // Obtén el dni del nuevo cliente registrado
+        const dniNuevoCliente = nuevoClienteResponse.data.dni;
+
+        if (formData.servicio) {
+          // Realiza el POST para registrar el servicio con el nuevo cliente
+          await instance.post('/serv_real/registrar_con_cliente', {
+            dni: dniNuevoCliente,
+            id_servicio: formData.servicio,
+          });
+        } else if (formData.dni && formData.servicio) {
           // Escenario 1: Cliente existente (Tienes el dni)
-          // Aquí necesitas obtener el id_cliente del cliente existente que se encontró por DNI
-          const id_cliente = idClienteEncontrado; // Obtén el id_cliente del cliente encontrado por DNI
-
           // Ahora puedes usar el id_cliente para realizar el POST con cliente existente
           await instance.post('/serv_real/registrar_con_cliente', {
-            dni: formData.dni, // Asegúrate de enviar el dni
+            dni: formData.dni,
             id_servicio: formData.servicio,
           });
 
           console.log('Servicio registrado con cliente existente');
         } else {
-          // Escenario 2: Nuevo cliente (No tienes el dni)
-          // Aquí debes recopilar todos los datos del formulario para el nuevo cliente
-          const nuevoClienteData = {
-            fechaNacimiento: formattedDateToSend,
-            apellido: formData.apellido,
-            nombre: formData.nombre,
-            dni: formData.dni,
-            genero: formData.genero,
-            email: formData.email,
-            contacto: formData.contacto,
-            telefono: formData.telefono,
-            id_departamento: formData.departamento,
-            id_localidad: formData.localidad,
-            ocupacion: formData.ocupacion,
-            domicilio: formData.domicilio,
-          };
-
-          // Realiza el POST para registrar el nuevo cliente
-          const nuevoClienteResponse = await instance.post('/cliente/registrar', nuevoClienteData);
-
-          // Obtén el dni del nuevo cliente registrado
-          const dniNuevoCliente = nuevoClienteResponse.data.dni;
-
-          // Realiza el POST para registrar el servicio con el nuevo cliente
-          await instance.post('/serv_real/registrar_con_cliente', {
-            dni: dniNuevoCliente, // Asegúrate de enviar el dni
-            id_servicio: formData.servicio,
-          });
-
-          console.log('Servicio registrado con nuevo cliente');
+          console.log('Selecciona un servicio y carga los datos del cliente');
         }
       }
 
@@ -265,6 +285,7 @@ const RegistroServiciosRealizados = () => {
       console.error('Error saving changes:', error);
     }
   };
+
 
   const setModalOrganizacionValue = (organizacionId) => {
     setModalFormData((prevModalFormData) => ({
@@ -319,7 +340,7 @@ const RegistroServiciosRealizados = () => {
       try {
         const response = await instance.get('/organizaciones');
         setOrganizaciones(response.data);
-        console.log('Organizaciones:', response.data); // Agregar este console.log
+        // console.log('Organizaciones:', response.data); // Add this console.log
       } catch (error) {
         console.error('Error al obtener las organizaciones:', error);
       }
@@ -329,7 +350,7 @@ const RegistroServiciosRealizados = () => {
       try {
         const response = await instance.get('/servicios');
         setServicios(response.data);
-        console.log('Servicios:', response.data); // Agregar este console.log
+        // console.log('Servicios:', response.data); // Add this console.log
       } catch (error) {
         console.error('Error al obtener los servicios:', error);
       }
@@ -353,18 +374,17 @@ const RegistroServiciosRealizados = () => {
     e.preventDefault();
     try {
       const dataToSend = {
-        nombre: modalFormData.nombre, // Usa modalFormData.nombre
+        nombre: modalFormData.nombre,
         descripcion: modalFormData.descripcion,
         id_organizacion: modalFormData.id_organizacion,
       };
 
-      console.log('Data to send:', dataToSend); // Agregar este console.log
+      console.log('Data to send:', dataToSend);
 
       if (selectedService.id_servicio) {
         await instance.put(`/servicios/${selectedService.id_servicio}`, dataToSend);
         console.log('Service edited successfully');
       } else {
-        // Add a new service
         const response = await instance.post('/servicios/registrar', dataToSend);
         console.log(response.data.message);
       }
@@ -613,13 +633,12 @@ const RegistroServiciosRealizados = () => {
                 className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
                 name='departamento'
-                value={selectedDepartamento}
+                value={formData.departamento}
                 onChange={(e) => {
                   handleDepartamentoChange(e.target.value);
                 }}
                 required={!searchInProgress}
               >
-
                 <option value="">Seleccione el Departamento</option>
                 {departamentos.map((departamento) => (
                   <option key={departamento.id} value={departamento.id}>
@@ -627,6 +646,7 @@ const RegistroServiciosRealizados = () => {
                   </option>
                 ))}
               </FormSelect>
+
             </Form.Group>
 
             <Form.Group controlId="formLocalidad" className='mt-5'>
@@ -634,13 +654,12 @@ const RegistroServiciosRealizados = () => {
                 className='border border-secondary rounded rounded-1.1 shadow mt-5 mt-3'
                 as="select"
                 name='localidad'
-                value={selectedLocalidad}
+                value={selectedLocalidad} // Make sure this value matches the initial value
                 onChange={(e) => {
                   handleLocalidadChange(e.target.value);
                 }}
                 required={!searchInProgress}
               >
-
                 <option value="">Seleccione la Localidad</option>
                 {localidades.map((localidad) => (
                   <option key={localidad.id} value={localidad.id}>
@@ -649,7 +668,6 @@ const RegistroServiciosRealizados = () => {
                 ))}
               </FormSelect>
             </Form.Group>
-
 
             <Form.Group controlId="formDomicilio">
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
@@ -679,7 +697,6 @@ const RegistroServiciosRealizados = () => {
               </Form.Group>
             </Form.Group>
 
-
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
               <button type="submit" className='bouttoncancel'>
                 Cancelar
@@ -691,9 +708,7 @@ const RegistroServiciosRealizados = () => {
             </div>
 
           </Col>
-
         </Row>
-
       </Form>
 
       <Modal show={showModal} onHide={handleCloseModal}>
