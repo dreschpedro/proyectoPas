@@ -6,7 +6,7 @@ export default function Home() {
   useEffect(() => {
     // Redireccionar a /servicios después de un breve retraso (por ejemplo, 1 segundo)
     const timer = setTimeout(() => {
-      window.location.href = '/servicios';
+      window.location.href = '/admin/servicios';
     }, 1000);
 
     return () => clearTimeout(timer); // Limpieza al desmontar el componente
@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div>
       <h1>Home page</h1>
-      <p>Redirigiendo a /servicios...</p>
+      <p>Redirigiendo a Servicios...</p>
     </div>
   );
 }

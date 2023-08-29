@@ -5,50 +5,11 @@ import Link from 'next/link';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import instance, { serverURL } from '@/app/axiosConfig';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-
-const fetchProvincias = async () => {
-  try {
-    const response = await fetch('https://apis.datos.gob.ar/georef/api/provincias?campos=id,nombre');
-    const data = await response.json();
-    return data.provincias || [];
-  } catch (error) {
-    console.error('Error al obtener las provincias:', error);
-    return [];
-  }
-};
-
-const fetchDepartamentos = async (provinciaId) => {
-  try {
-    const response = await fetch(`https://apis.datos.gob.ar/georef/api/departamentos?provincia=${provinciaId}`);
-    const data = await response.json();
-    return data.departamentos || [];
-  } catch (error) {
-    console.error('Error al obtener los departamentos:', error);
-    return [];
-  }
-};
-
-const fetchLocalidades = async (departamentoId) => {
-  try {
-    const response = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?departamento=${departamentoId}`);
-    const data = await response.json();
-    return data.localidades || [];
-  } catch (error) {
-    console.error('Error al obtener las localidades:', error);
-    return [];
-  }
-};
-
-const genreDB = ['masculino', 'femenino', 'noBinario', 'noDecir'];
-const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo'];
-
 const RegistroServiciosRealizados = () => {
 
-  const [selectedProvincia, setSelectedProvincia] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
   const [searchInProgress, setSearchInProgress] = useState(false);
   const [selectedDepartamento, setSelectedDepartamento] = useState('');
@@ -57,7 +18,6 @@ const RegistroServiciosRealizados = () => {
   const [selectedService, setSelectedService] = useState('');
   const [organizaciones, setOrganizaciones] = useState([]);
   const [servicios, setServicios] = useState([]);
-  const [provincias, setProvincias] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
   const [localidades, setLocalidades] = useState([]);
   const [organizacionServicios, setOrganizacionServicios] = useState([]);
@@ -68,6 +28,33 @@ const RegistroServiciosRealizados = () => {
     organizacion: '',
     id_organizacion: '',
   });
+
+  const genreDB = ['masculino', 'femenino', 'noBinario', 'noDecir'];
+  const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo'];
+
+  const provinciaId = 54;
+
+  const fetchDepartamentos = async () => {
+    try {
+      const response = await fetch(`https://apis.datos.gob.ar/georef/api/departamentos?provincia=${provinciaId}`);
+      const data = await response.json();
+      return data.departamentos || [];
+    } catch (error) {
+      console.error('Error al obtener los departamentos:', error);
+      return [];
+    }
+  };
+  const fetchLocalidades = async (departamentoId) => {
+    try {
+      const response = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?departamento=${departamentoId}`);
+      const data = await response.json();
+      return data.localidades || [];
+    } catch (error) {
+      console.error('Error al obtener las localidades:', error);
+      return [];
+    }
+  };
+
 
   const [formData, setFormData] = useState({
     id_cliente: '',
@@ -81,7 +68,6 @@ const RegistroServiciosRealizados = () => {
     email: '',
     contacto: '',
     telefono: '',
-    provincia: '',
     departamento: '',
     localidad: '',
     ocupacion: '',
@@ -97,11 +83,9 @@ const RegistroServiciosRealizados = () => {
     }
   };
 
-
   useEffect(() => {
     validateForm();
   }, [formData.organizacion, formData.servicio]);
-
 
   const searchByDNI = async (dni) => {
     setSearchInProgress(true);
@@ -113,9 +97,6 @@ const RegistroServiciosRealizados = () => {
 
       const idClienteEncontrado = data.id_cliente; // Captura el id_cliente
       const dniClienteEncontrado = data.dni; // Captura el dni
-
-      const provinciaId = data.provincia;
-      setSelectedProvincia(provinciaId);
 
       const departamentoId = data.departamento;
       const localidadId = data.localidad;
@@ -134,7 +115,6 @@ const RegistroServiciosRealizados = () => {
         email: data.email,
         contacto: data.contacto,
         telefono: data.telefono,
-        provincia: provinciaId,
         departamento: departamentoId,
         localidad: localidadId,
         ocupacion: data.ocupacion,
@@ -142,7 +122,7 @@ const RegistroServiciosRealizados = () => {
       }));
 
       // Obtén y llena los departamentos y localidades según los IDs
-      const departamentosData = await fetchDepartamentos(provinciaId);
+      const departamentosData = await fetchDepartamentos();
       const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
       setDepartamentos(sortedDepartamentos);
 
@@ -154,48 +134,6 @@ const RegistroServiciosRealizados = () => {
     } finally {
       setSearchInProgress(false);
     }
-  };
-
-
-
-  useEffect(() => {
-    const fetchProvinciasSorted = async () => {
-      const provinciasData = await fetchProvincias();
-      const sortedProvincias = provinciasData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-      setProvincias(sortedProvincias);
-    };
-
-    fetchProvinciasSorted();
-  }, []);
-
-
-  const handleProvinciaChange = async (provinciaId) => {
-    setSelectedProvincia(provinciaId);
-    setSelectedDepartamento('');
-    setSelectedLocalidad('');
-
-    const departamentosData = await fetchDepartamentos(provinciaId);
-    const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-    setDepartamentos(sortedDepartamentos);
-    setLocalidades([]);
-
-    const selectedOrganizacion = organizaciones.find(org => org.id_organizacion === provinciaId);
-    if (selectedOrganizacion) {
-      const serviciosDeOrganizacion = servicios.filter(servicio => servicio.id_organizacion === selectedOrganizacion.id_organizacion);
-      setOrganizacionServicios(serviciosDeOrganizacion);
-      setOrganizacionTieneServicios(serviciosDeOrganizacion.length > 0);
-    } else {
-      setOrganizacionServicios([]);
-      setOrganizacionTieneServicios(false);
-    }
-
-    // Auto-select province, department, and locality from search results
-    setFormData((prevData) => ({
-      ...prevData,
-      provincia: provinciaId,
-      departamento: '',
-      localidad: '',
-    }));
   };
 
   const handleDepartamentoChange = async (departamentoId) => {
@@ -214,7 +152,6 @@ const RegistroServiciosRealizados = () => {
     }));
   };
 
-
   const handleLocalidadChange = async (localidad_id) => {
     setSelectedLocalidad(localidad_id);
 
@@ -224,8 +161,6 @@ const RegistroServiciosRealizados = () => {
     }));
     console.log('Selected Localidad:', localidad_id);
   };
-
-
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -243,7 +178,6 @@ const RegistroServiciosRealizados = () => {
       }));
     }
   };
-
 
   const dbDate = new Date(formData.fechaNacimiento);
   const formattedDate = `${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()}`;
@@ -264,7 +198,6 @@ const RegistroServiciosRealizados = () => {
         email: formData.email,
         contacto: formData.contacto,
         telefono: formData.telefono,
-        id_provincia: formData.provincia,
         id_departamento: formData.departamento,
         id_localidad: formData.localidad,
         ocupacion: formData.ocupacion,
@@ -294,7 +227,7 @@ const RegistroServiciosRealizados = () => {
           // Escenario 2: Nuevo cliente (No tienes el dni)
           // Aquí debes recopilar todos los datos del formulario para el nuevo cliente
           const nuevoClienteData = {
-            fechaNacimiento: formattedDateToSend, 
+            fechaNacimiento: formattedDateToSend,
             apellido: formData.apellido,
             nombre: formData.nombre,
             dni: formData.dni,
@@ -302,7 +235,6 @@ const RegistroServiciosRealizados = () => {
             email: formData.email,
             contacto: formData.contacto,
             telefono: formData.telefono,
-            id_provincia: formData.provincia,
             id_departamento: formData.departamento,
             id_localidad: formData.localidad,
             ocupacion: formData.ocupacion,
@@ -333,9 +265,6 @@ const RegistroServiciosRealizados = () => {
       console.error('Error saving changes:', error);
     }
   };
-
-
-
 
   const setModalOrganizacionValue = (organizacionId) => {
     setModalFormData((prevModalFormData) => ({
@@ -374,7 +303,6 @@ const RegistroServiciosRealizados = () => {
       console.log('Selected Organizacion: No se encontró la organización');
     }
   };
-
 
   const handleShowModal = (service) => {
     setSelectedService(service);
@@ -649,6 +577,9 @@ const RegistroServiciosRealizados = () => {
               </Form.Group>
             </Form.Group>
 
+          </Col>
+          <Col md>
+
             <Form.Group controlId="formContacto">
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Contacto</Form.Label> */}
@@ -663,9 +594,6 @@ const RegistroServiciosRealizados = () => {
               </Form.Group>
             </Form.Group>
 
-          </Col>
-          <Col md>
-
             <Form.Group controlId="formTelefoono">
               <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
                 {/* <Form.Label>Teléfono</Form.Label> */}
@@ -678,27 +606,6 @@ const RegistroServiciosRealizados = () => {
                   onChange={handleInputChange}
                   placeholder="Telefono" />
               </Form.Group>
-            </Form.Group>
-
-            <Form.Group controlId="formProvincia">
-              <FormSelect
-                className='border border-secondary rounded rounded-1.1 shadow mt-5'
-                as="select"
-                name='provincia'
-                value={selectedProvincia}  // Use "selectedProvincia" here
-                onChange={(e) => {
-                  const selectedValue = e.target.value;
-                  handleProvinciaChange(selectedValue);
-                }}
-                required={!searchInProgress}
-              >
-                <option value="">Seleccione la Provincia</option>
-                {provincias.map((provincia) => (
-                  <option key={provincia.id} value={provincia.id}>
-                    {provincia.nombre}
-                  </option>
-                ))}
-              </FormSelect>
             </Form.Group>
 
             <Form.Group controlId="formDepartamento">
