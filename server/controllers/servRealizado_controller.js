@@ -1,4 +1,4 @@
-import { buscar_cliente_dni_servicio, registrar_cliente } from "./cliente_controller.js";
+import { buscar_cliente_dni_servicio } from "./cliente_controller.js";
 import ServRealizado_model from "../models/ServRealizado_model.js";
 
 // FUNCIONALIDADES
@@ -34,6 +34,8 @@ const obtener_servReal = async (req, res) => {
 };
 
 
+
+
 const registrar_servReal_con_cliente = async (req, res) => {
   const { dni, id_servicio } = req.body;
 
@@ -43,18 +45,8 @@ const registrar_servReal_con_cliente = async (req, res) => {
 
     if (clienteResponse.success) {
       const cliente = clienteResponse.data;
+      console.log('cliente: ', cliente);
       let id_cliente = cliente.id_cliente;
-
-      if (!cliente) {
-        // Si no se encontró el cliente, crea uno nuevo y toma su id_cliente
-        const clienteCreado = await registrar_cliente({ body: { dni } });
-
-        if (clienteCreado) {
-          id_cliente = clienteCreado.id_cliente;
-        } else {
-          return res.status(400).json({ error: "No se pudo registrar el cliente" });
-        }
-      }
 
       // Crea el registro de servicioRealizado con id_cliente y id_servicio
       const servReal_body = { id_cliente, id_servicio };
@@ -70,6 +62,9 @@ const registrar_servReal_con_cliente = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
+
+
 
 
 // modifica los datos buscando por id

@@ -118,8 +118,8 @@ const RegistroServiciosRealizados = () => {
       const data = response.data;
       console.log('Search Result:', data);
 
-      const idClienteEncontrado = data.id_cliente; // Captura el id_cliente
-      const dniClienteEncontrado = data.dni; // Captura el dni
+      const idClienteEncontrado = data.id_cliente;
+      const dniClienteEncontrado = data.dni;
 
       const departamentoId = data.departamento;
       const localidadId = data.localidad;
@@ -130,7 +130,8 @@ const RegistroServiciosRealizados = () => {
       // Actualiza el estado del formData para llenar los campos del formulario con los resultados de la búsqueda
       setFormData((prevData) => ({
         ...prevData,
-        dni: dniClienteEncontrado, // Usa el dni capturado
+        id_cliente: idClienteEncontrado,
+        dni: dniClienteEncontrado,
         nombre: data.nombre,
         apellido: data.apellido,
         fechaNacimiento: data.fechaNacimiento,
@@ -156,6 +157,63 @@ const RegistroServiciosRealizados = () => {
       console.error('Error al buscar por DNI:', error);
     } finally {
       setSearchInProgress(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formattedDateToSend = formData.fechaNacimiento.split('/').reverse().join('-');
+
+      const id_cliente = formData.id_cliente;
+      if (!id_cliente) {
+        // Si no hay un id_cliente
+
+        const nuevoClienteData = {
+          fechaNacimiento: formattedDateToSend,
+          apellido: formData.apellido,
+          nombre: formData.nombre,
+          dni: formData.dni,
+          genero: formData.genero,
+          email: formData.email,
+          contacto: formData.contacto,
+          telefono: formData.telefono,
+          departamento: formData.departamento,
+          localidad: formData.localidad,
+          ocupacion: formData.ocupacion,
+          domicilio: formData.domicilio,
+        };
+        // Realiza el POST para registrar el nuevo cliente
+        console.log('Datos nuevo cliente:', nuevoClienteData);
+        const nuevoClienteResponse = await instance.post('/cliente/registrar', nuevoClienteData);
+
+        // Obtén el dni del nuevo cliente registrado
+        const dniNuevoCliente = nuevoClienteResponse.data.dni;
+
+        // Realiza el POST para registrar el servicio con el nuevo cliente
+        await instance.post('/serv_real/registrar_con_cliente', {
+          dni: dniNuevoCliente,
+          id_servicio: formData.servicio,
+        });
+      } else {
+        if (formData.dni && formData.servicio) {
+          // Ahora puedes usar el id_cliente para realizar el POST con cliente existente
+          await instance.post('/serv_real/registrar_con_cliente', {
+            dni: formData.dni,
+            id_servicio: formData.servicio,
+          });
+
+          console.log('Servicio registrado con cliente existente');
+        } else {
+          console.log('Selecciona un servicio y carga los datos del cliente');
+        }
+
+        console.log('Saving changes');
+        // Fetch updated services and close modal
+        fetchServicios();
+      }
+    } catch (error) {
+      console.error('Error saving changes:', error);
     }
   };
 
@@ -207,84 +265,6 @@ const RegistroServiciosRealizados = () => {
 
   const dbDate = new Date(formData.fechaNacimiento);
   const formattedDate = `${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()}`;
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const formattedDateToSend = formData.fechaNacimiento.split('/').reverse().join('-');
-      const dataToSend = {
-        id_organizacion: formData.organizacion,
-        id_servicio: formData.servicio,
-        fechaNacimiento: formattedDateToSend,
-        apellido: formData.apellido,
-        nombre: formData.nombre,
-        dni: formData.dni,
-        genero: formData.genero,
-        email: formData.email,
-        contacto: formData.contacto,
-        telefono: formData.telefono,
-        id_departamento: formData.departamento,
-        id_localidad: formData.localidad,
-        ocupacion: formData.ocupacion,
-        domicilio: formData.domicilio,
-      };
-
-      // console.log('Data to send:', dataToSend);
-
-      const id_cliente = formData.id_cliente;
-      if (!id_cliente) {
-        // If there's no id_cliente
-
-        const nuevoClienteData = {
-          fechaNacimiento: formattedDateToSend,
-          apellido: formData.apellido,
-          nombre: formData.nombre,
-          dni: formData.dni,
-          genero: formData.genero,
-          email: formData.email,
-          contacto: formData.contacto,
-          telefono: formData.telefono,
-          departamento: formData.departamento,
-          localidad: formData.localidad,
-          ocupacion: formData.ocupacion,
-          domicilio: formData.domicilio,
-        };
-        // Realiza el POST para registrar el nuevo cliente
-        console.log('Datos nuevo cliente:', nuevoClienteData);
-        const nuevoClienteResponse = await instance.post('/cliente/registrar', nuevoClienteData);
-
-        // Obtén el dni del nuevo cliente registrado
-        const dniNuevoCliente = nuevoClienteResponse.data.dni;
-
-        if (formData.servicio) {
-          // Realiza el POST para registrar el servicio con el nuevo cliente
-          await instance.post('/serv_real/registrar_con_cliente', {
-            dni: dniNuevoCliente,
-            id_servicio: formData.servicio,
-          });
-        } else if (formData.dni && formData.servicio) {
-          // Escenario 1: Cliente existente (Tienes el dni)
-          // Ahora puedes usar el id_cliente para realizar el POST con cliente existente
-          await instance.post('/serv_real/registrar_con_cliente', {
-            dni: formData.dni,
-            id_servicio: formData.servicio,
-          });
-
-          console.log('Servicio registrado con cliente existente');
-        } else {
-          console.log('Selecciona un servicio y carga los datos del cliente');
-        }
-      }
-
-      console.log('Saving changes');
-      // Fetch updated services and close modal
-      fetchServicios();
-      handleCloseModal();
-    } catch (error) {
-      console.error('Error saving changes:', error);
-    }
-  };
 
 
   const setModalOrganizacionValue = (organizacionId) => {
@@ -431,7 +411,8 @@ const RegistroServiciosRealizados = () => {
 
             <Form.Group controlId="formOrganizacion">
               {/* <Form.Label>Organización*</Form.Label> */}
-              <FormSelect className="mb-5 border border-secondary rounded rounded-1.1 shadow"
+              <FormSelect
+                className="mb-5 border border-secondary rounded rounded-1.1 shadow"
                 as="select"
                 name='organizacion'
                 value={formData.organizacion}
@@ -440,9 +421,7 @@ const RegistroServiciosRealizados = () => {
                   setFormData({ ...formData, organizacion: e.target.value });
                   handleOrganizacionChange(e.target.value);
                 }}
-                required={handleSubmit} //incorrecto
               >
-
                 <option value="">Seleccionar Organización</option>
                 {organizaciones.map((organizacion) => (
                   <option key={organizacion.id_organizacion} value={organizacion.id_organizacion}>
@@ -451,6 +430,7 @@ const RegistroServiciosRealizados = () => {
                 ))}
               </FormSelect>
             </Form.Group>
+
 
             <Form.Group controlId="formServicio">
               {/* <Form.Label>Servicio*</Form.Label> */}
@@ -510,7 +490,11 @@ const RegistroServiciosRealizados = () => {
                   <button
                     style={{ marginLeft: '0.5rem', borderRadius: '5px' }}
                     className="buscarbutton"
-                    onClick={() => searchByDNI(formData.dni)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      searchByDNI(formData.dni);
+                    }
+                    }
                   >
 
                     <FontAwesomeIcon icon={faSearch} style={{ color: "#FFFF", }} />
