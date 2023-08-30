@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body className={inter.className}>
-
+                <div style={{ width: '100%', height: '100%'}}>
                 <Image
                     alt="manos"
                     src="/img/loginBackground.png"
@@ -30,25 +30,32 @@ export default function RootLayout({ children }) {
                     fill
                     sizes="100vw"
                     style={{
+                        minHeight:'100vh',
+                        width:'100%',
                         objectFit: 'cover',
+                        backgroundAttachment: 'fixed',
+                        
                         
                     }}
                 />
-
-                <Container style={{ position: 'absolute' }} >
+                </div>
+                {/* <picture>
+                    <img src="/public/img/loginBackground.png" alt="" />
+                </picture> */}
+                <Container style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }} >
                     <Row>
 
                         <Col className="d-flex align-items-center flex-column mt-0 mt-lg-5 mt-lg-5  col-md-6 col-sm-12">
                             <h1 className="text-white mt-5 d-none d-sm-block d-md-block ">BIENVENIDO</h1>
 
-                            <div className="d-flex flex-nowrap">
+                            <div className="d-flex flex-nowrap m-5">
                                 <div>
                                     <Image
                                         src="/img/logoPasColor.svg"
                                         width={240}
                                         height={200}
                                         alt="Picture of the author"
-                                        
+
                                     />
                                 </div>
                                 <div class="d-flex  align-items-center">
@@ -61,31 +68,31 @@ export default function RootLayout({ children }) {
 
 
                         <Col className="mt-0 mt-lg-5 mt-lg-5 col-md-6 col-sm-12">
-                            <div className="mt-5">
+                            <div className="mt-5" style={{height: '600px'}}>
                                 {children}
                             </div>
                         </Col>
                     </Row>
 
-                    <div className="d-flex justify-content-between mt-5 px-3 fixed-sm-bottom">
+                    <div className="d-flex justify-content-between  mt-5 px-3 fixed-sm-bottom">
                         <div className="">
-                        <Image
-                            src="/img/misionesGob.png"
-                            width={130}
-                            height={50}
-                            alt="Picture of the author"
+                            <Image
+                                src="/img/misionesGob.png"
+                                width={130}
+                                height={50}
+                                alt="Picture of the author"
                             />
 
                         </div>
                         <div>
                             <div className="d-flex flex-nowrap  ">
-                                <p className="text-center">Desarrollado por</p>
-                            <Image  
-                                src="/img/SM 2023 - DIGITAL FACTORY color 1.png"
-                                width={80}
-                                height={40}
-                                alt="Picture of the author"
-                            />
+                                <p className=" mx-2 mt-1 ext-center text-white">Desarrollado por</p>
+                                <Image
+                                    src="/img/SM 2023 - DIGITAL FACTORY color 1.png"
+                                    width={80}
+                                    height={40}
+                                    alt="Picture of the author"
+                                />
                             </div>
                         </div>
 
