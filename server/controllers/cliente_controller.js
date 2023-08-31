@@ -96,12 +96,15 @@ const registrar_cliente = async (req, res) => {
     }
 
     const cliente_almacenado = await Cliente_model.create(cliente_body);
-    return res.status(201).json({ message: 'Registro creado', cliente_almacenado });
+
+    // Devolver la respuesta con la propiedad dni
+    return res.status(201).json({ message: 'Registro creado', cliente_almacenado, dni: cliente_almacenado.dni });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: 'Ocurrió un error al registrar el cliente' });
   }
 };
+
 
 
 

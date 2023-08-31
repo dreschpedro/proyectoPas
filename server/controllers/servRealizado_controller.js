@@ -40,19 +40,18 @@ const registrar_servReal_con_cliente = async (req, res) => {
   const { dni, id_servicio } = req.body;
 
   try {
-    // Busca un cliente por DNI
+    // Usar await para esperar la respuesta asincrónica
     const clienteResponse = await buscar_cliente_dni_servicio(dni);
 
     if (clienteResponse.success) {
       const cliente = clienteResponse.data;
-      console.log('cliente: ', cliente);
       let id_cliente = cliente.id_cliente;
 
       // Crea el registro de servicioRealizado con id_cliente y id_servicio
       const servReal_body = { id_cliente, id_servicio };
       const servReal_almacenado = await ServRealizado_model.create(servReal_body);
 
-      return res.status(200).json({ message: "Registro creado", servReal_almacenado });
+      return res.status(200).json({ message: "Registro creado exitosamente", servReal_almacenado });
     } else {
       return res.status(400).json({ error: "No se pudo buscar el cliente por DNI" });
     }
@@ -62,6 +61,7 @@ const registrar_servReal_con_cliente = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
 
 
 
