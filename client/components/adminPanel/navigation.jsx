@@ -8,12 +8,16 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import Pagination from 'react-bootstrap/Pagination';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Navigation = () => {
   const router = useRouter();
@@ -94,17 +98,22 @@ function Navigation2() {
         <Navbar key={expand} expand={expand} className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
           <Container fluid>
             <Navbar.Brand href="#" className="mx-4 d-flex flex-nowrap">
-              <Link href="/admin" style={{ textDecoration: 'none' }}>
-                <button className='homebutton ' >
+              
+
+              <div style={{marginLeft:'13px', width: '184px', }}>
+
+                <button className='homebutton d-flex flex-nowrap' >
+                <Link href="/admin" style={{ textDecoration: 'none', display: 'flex', flex: 'none', flexWrap: 'nowrap', padding:'auto'}}>
                   <Image
                     src="/img/pas-blanco.png"
                     width={30}
                     height={30}
                     alt="Picture of the author"
                   />
-                  <p >Programa de <br /> Asitencia Solidaria</p>
+                  <p ><b> Programa de <br /> Asitencia Solidaria</b></p>
+                  </Link>
                 </button>
-              </Link>
+                </div>
 
 
               {/* estos botones de navegacion los dejo por que si pasamos el software a elcetron o ionic,
@@ -145,24 +154,44 @@ function Navigation2() {
               <Offcanvas.Body>
                 <Nav className="d-flex justify-content-center align-items-center flex-grow-1 pe-3 d-lg-none">
 
-                  <div className='buttoncito' ><MenuModal /></div>
+                 
+                <div className='buttoncito'>
+          <Link href={"/admin/consultas"} className='custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faComment} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Consultas</b>
+          </Link>
+        </div>
 
-                  <Link href={"/admin/estadisticas"} style={{ marginTop: '15px' }} className='custom-link'>
-                    <div className='buttoncito' >Estadísticas</div>
-                  </Link>
-                  <div className='buttoncito custom-link'>
-                    <Link href={"/admin/organizaciones"} className='custom-link'>
-                      Organizaciones
-                    </Link>
-                  </div>
-                  <div className='buttoncito'>
-                    <Link href={"/admin/servicios"} className='custom-link'>
-                      Servicios
-                    </Link>
-                  </div>
-                  <Link href={"/admin/usuarios"} className='custom-link'>
-                    <div className='buttoncito'>Usuarios</div>
-                  </Link>
+
+        <div className='buttoncito'>
+          <Link href={"/admin/estadisticas"} className='custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faChartLine} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Estadísticas</b>
+          </Link>
+        </div>
+
+
+
+        <div className='buttoncito custom-link'>
+          <Link href={"/admin/organizaciones"} className='custom-link d-flex  align-items-center'>
+            <FontAwesomeIcon icon={faBuilding} style={{ color: "#ffffff", marginRight:'15px' }} />
+            <b>Organizaciones</b>
+          </Link>
+        </div>
+
+        <div className='buttoncito'>
+          <Link href={"/admin/servicios"} className='custom-link d-flex  align-items-center'>
+            <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff" , marginRight:'15px'}} />
+            <b>Servicios</b>
+          </Link>
+        </div>
+
+        <div className='buttoncito'>
+          <Link href={"/admin/usuarios"} className='custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faUsers} style={{ color: "#ffffff", marginRight:'15px' }} />
+            <b>Usuarios</b>
+          </Link>
+        </div>
                 </Nav>
                 <MenuModal />
               </Offcanvas.Body>

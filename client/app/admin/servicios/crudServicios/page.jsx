@@ -2,6 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Table, InputGroup, Button, Modal, Form } from 'react-bootstrap';
 import instance, { serverURL } from '@/app/axiosConfig';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+
 
 const ServicesCrud = () => {
   const [services, setServices] = useState([]);
@@ -140,10 +144,10 @@ const ServicesCrud = () => {
 
   return (
     <Container className='mt-3'>
-     <div className='d-flex flex-wrap mb-3'>
+     <div className='d-flex justify-content-between flex-wrap mb-3'>
       <h1 className='titulo'>Gestión de Servicios</h1>
       <button
-       className='buttonRegistrar responsive-buttons' style={{ marginLeft: '10em'}}
+       className='buttonRegistrar responsive-buttons'
         size="lg"
         onClick={() => handleShowModal()}
       >
@@ -167,21 +171,21 @@ const ServicesCrud = () => {
               <td>{service.nombre}</td>
               <td>{service.descripcion}</td>
               <td>{service.organizacion?.nombre}</td>
-              <td className="d-flex justify-content-center flex-column">
+              <td className="d-flex justify-content-center ">
                 <Button
-                  style={{ width: '200px', fontWeight: 'bold', margin: '5px' }}
+                  style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
                   variant="outline-warning"
                   onClick={() => handleShowModal(service)} // Pasamos el servicio seleccionado
                 >
-                  Modificar
+                  <FontAwesomeIcon icon={faPencilAlt} />
                 </Button>
 
                 <Button
                   variant="outline-danger"
                   onClick={() => handleShowDeleteModal(service)}
-                  style={{ width: '200px', fontWeight: 'bold', margin: '5px' }}
+                  style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
                 >
-                  Eliminar Servicio
+                  <FontAwesomeIcon icon={faTrashAlt}/>
                 </Button>
               </td>
             </tr>

@@ -34,17 +34,10 @@ export default function RootLayout({ children }) {
         <Col sm={2} className='d-none d-lg-block'>
         <Nav2 className="mt-5 pt-5 fixed-start "/>
         </Col>
-        <Col className='mt-5'>
+        <Col className='mt-5' style={{marginLeft:'70px', marginRight:'70px'}}>
         {children}
         </Col>
-      </Row>
-
-
-      {/* <div className='contenedor pt-5 d-flex mx-0'>
-      <Sidebar/>
-      {children}
-      </div> */}
-      
+      </Row>      
       
       </body>
     </html>

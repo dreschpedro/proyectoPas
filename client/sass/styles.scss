@@ -1,11 +1,11 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 
-$principal:#22096F;
+$principal: #22096F;
 
 
 
-.bodyLogin{
+.bodyLogin {
   background: url(../public/img/loginBackground.png) no-repeat center center fixed;
   background-size: cover;
 }
@@ -14,60 +14,73 @@ $primary: $principal;
 
 
 // Estilos personalizados
-.buttoncito  {
+.buttoncito {
   border: none;
   background-color: #22096F;
   margin-Top: 15px;
 
   color: #FFFFFF;
-  width: 70%;
-  height: 2.6rem;
+  width: 80%;
+  height: 46px;
   border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 10px 20px;
+
+  &:hover {
+    background-color: #1a0752;
+    /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #150644;
+    /* Cambia el color al hacer clic */
+  }
+
+  
+
 }
 
-Link{
-  text-decoration:none;
+Link {
+  text-decoration: none;
 }
 
 .custom-link {
   text-decoration: none;
   color: #FFFFFF;
-  cursor: pointer; /* Agrega un cursor de tipo puntero para indicar que es un enlace */
+  cursor: pointer;
+  /* Agrega un cursor de tipo puntero para indicar que es un enlace */
 }
 
 
-.iconUser{
+.iconUser {
   height: 2rem;
   width: 2rem;
 }
 
 /* Estilos para cambiar el color del icono del menú hamburguesa */
 .navbar-toggle-custom .navbar-toggler-icon {
-  color: #ffffff; /* Cambia este valor al color deseado */
+  color: #ffffff;
+  /* Cambia este valor al color deseado */
 }
 
-.azulbg{
+.azulbg {
   background-color: #101488;
 }
 
-.bordesito{
+.bordesito {
   border: solid 3px;
   border-radius: 25px;
   border-color: #22096F;
   padding: 2rem;
   margin-top: 15px;
- 
-  
+
+
 }
 
-.titulo{
+.titulo {
   margin-top: 5rem;
 }
 
-.bouttoncancel{
+.bouttoncancel {
   height: 2.5rem;
   border: solid 3px;
   border-radius: 10px;
@@ -81,38 +94,42 @@ Link{
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #f4f4f4; /* Cambia el color en el hover */
+    background-color: #f4f4f4;
+    /* Cambia el color en el hover */
   }
 
   &:active {
-    background-color: #e0e0e0; /* Cambia el color al hacer clic */
+    background-color: #e0e0e0;
+    /* Cambia el color al hacer clic */
   }
 
 }
 
-.buttonLogin{
+.buttonLogin {
   border: none;
   height: 2.5rem;
   border-radius: 10px;
   color: #ffffff;
   background-color: #22096F;
   border-color: #22096F;
-  margin:auto;
+  margin: auto;
   width: 100%;
   font: bold;
   font-style: bold;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #1a0752; /* Cambia el color en el hover */
+    background-color: #1a0752;
+    /* Cambia el color en el hover */
   }
 
   &:active {
-    background-color: #150644; /* Cambia el color al hacer clic */
+    background-color: #150644;
+    /* Cambia el color al hacer clic */
   }
 }
 
-.buttonRegistrar{
+.buttonRegistrar {
   font-style: bold;
   border: none;
   height: 2.5rem;
@@ -125,20 +142,22 @@ Link{
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #1a0752; /* Cambia el color en el hover */
+    background-color: #1a0752;
+    /* Cambia el color en el hover */
   }
 
   &:active {
-    background-color: #150644; /* Cambia el color al hacer clic */
+    background-color: #150644;
+    /* Cambia el color al hacer clic */
   }
 
 }
 
-.comboboxrol{
+.comboboxrol {
   width: 100%;
 }
 
-.imagebutton{
+.imagebutton {
   border: solid;
   width: 10rem;
   height: 10rem;
@@ -151,35 +170,38 @@ Link{
   transition: background-color 0.3s ease;
 
 
-   /* Efecto hover */
-   &:hover {
+  /* Efecto hover */
+  &:hover {
     background-color: #9f9cff;
-    color: #FFFFFF; /* Cambiar color del texto/icono en hover */
-    cursor: pointer; /* Cambiar el cursor al pasar por encima */
+    color: #FFFFFF;
+    /* Cambiar color del texto/icono en hover */
+    cursor: pointer;
+    /* Cambiar el cursor al pasar por encima */
   }
 
   /* Efecto click */
   &:active {
-    transform: scale(0.95); /* Reducir tamaño durante el clic */
+    transform: scale(0.95);
+    /* Reducir tamaño durante el clic */
   }
 }
 
-.imageIcon{
+.imageIcon {
   width: 8rem;
   height: 8rem;
   color: #22096F;
 }
 
-  // .shadow-right {
-  //   box-shadow:5px 0px 5px rgba(0, 0, 0, 0.2); /* Sombras hacia la derecha */
-  // }
+// .shadow-right {
+//   box-shadow:5px 0px 5px rgba(0, 0, 0, 0.2); /* Sombras hacia la derecha */
+// }
 
-.homebutton{
+.homebutton {
   border: none;
   background-color: #101488;
   display: flex;
   flex-wrap: nowrap;
- 
+
 
 
   p {
@@ -190,18 +212,24 @@ Link{
 }
 
 
-Link{font-style: none;}
+Link {
+  font-style: none;
+}
 
 
 .custom-thead {
-  background-color: #f8f9fa; /* Cambia el color a tu preferencia */
-  color: white; /* Cambia el color del texto a tu preferencia */
+  background-color: #f8f9fa;
+  /* Cambia el color a tu preferencia */
+  color: white;
+  /* Cambia el color del texto a tu preferencia */
 }
 
 
 .blur-background {
-  backdrop-filter: blur(10px); /* Ajusta el valor de desenfoque según sea necesario */
-  background-color: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
+  backdrop-filter: blur(10px);
+  /* Ajusta el valor de desenfoque según sea necesario */
+  background-color: rgba(255, 255, 255, 0.5);
+  /* Fondo semitransparente */
   border: solid 1px;
   border-radius: 25px;
   border-color: rgba(255, 255, 255, 0.5);
@@ -210,10 +238,11 @@ Link{font-style: none;}
 }
 
 
-.my-px {
-  padding-left: 3rem; /* Ajusta los valores según tus necesidades */
-  padding-right: 3rem;
-}
+// .my-px {
+//   padding-left: 3rem;
+//   /* Ajusta los valores según tus necesidades --- por cosas como esta no hay que usar chatgpt*/
+//   padding-right: 3rem;
+// }
 
 
 .custom-width {
@@ -239,16 +268,18 @@ Link{font-style: none;}
 }
 
 
-.buscarbutton{
+.buscarbutton {
 
   &:hover {
-    background-color: #1a0752; /* Cambia el color en el hover */
+    background-color: #1a0752;
+    /* Cambia el color en el hover */
   }
 
   &:active {
-    background-color: #150644; /* Cambia el color al hacer clic */
+    background-color: #150644;
+    /* Cambia el color al hacer clic */
   }
-  
+
   background-color: #22096F;
   border: none;
   border-radius: 5px;
@@ -258,4 +289,32 @@ Link{font-style: none;}
   align-items: center;
   transition: background-color 0.3s ease;
 
+}
+
+.headerInicio{
+  background-color: #D73337;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 10px;
+}
+
+.article1Inicio{
+  background: rgb(23,23,139);
+background: linear-gradient(90deg, rgba(23,23,139,1) 36%, rgba(199,200,228,1) 100%);
+display: flex;
+justify-content: space-around;
+align-content: center;
+padding: 80px;
+}
+
+.article2Inicio{
+background-color: #FFFFFF;
+}
+
+.footerInicio{
+  border-top: #17168A 3px solid;
+  background: rgb(36,51,68);
+background: linear-gradient(90deg, rgba(36,51,68,1) 21%, rgba(221,223,226,1) 100%);
 }
