@@ -40,7 +40,7 @@ const registrar_servReal_con_cliente = async (req, res) => {
   const { dni, id_servicio } = req.body;
 
   try {
-    // Busca un cliente por DNI
+    // Usar await para esperar la respuesta asincrónica
     const clienteResponse = await buscar_cliente_dni_servicio(dni);
 
     if (clienteResponse.success) {
@@ -62,6 +62,7 @@ const registrar_servReal_con_cliente = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
 
 
 

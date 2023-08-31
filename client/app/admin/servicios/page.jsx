@@ -189,12 +189,15 @@ const RegistroServiciosRealizados = () => {
 
         // Obtén el dni del nuevo cliente registrado
         const dniNuevoCliente = nuevoClienteResponse.data.dni;
+        console.log('dniNuevoCliente: ', dniNuevoCliente);
 
         // Realiza el POST para registrar el servicio con el nuevo cliente
-        await instance.post('/serv_real/registrar_con_cliente', {
+        const servRealResponse = await instance.post('/serv_real/registrar_con_cliente', {
           dni: dniNuevoCliente,
           id_servicio: formData.servicio,
         });
+
+        console.log('Servicio registrado con nuevo cliente', servRealResponse.data);
       } else {
         if (formData.dni && formData.servicio) {
           // Ahora puedes usar el id_cliente para realizar el POST con cliente existente
@@ -439,7 +442,6 @@ const RegistroServiciosRealizados = () => {
                 as="select"
                 value={formData.servicio}
                 onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
-                required={handleSubmit} //incorrecto
               >
                 <option value="">Seleccionar Servicio</option>
                 {organizacionTieneServicios ? (
