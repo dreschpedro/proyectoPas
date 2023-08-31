@@ -96,7 +96,7 @@ const registrar_cliente = async (req, res) => {
     }
 
     const cliente_almacenado = await Cliente_model.create(cliente_body);
-    
+
     // Devolver la respuesta con la propiedad dni
     return res.status(201).json({ message: 'Registro creado', cliente_almacenado, dni: cliente_almacenado.dni });
   } catch (error) {

@@ -29,6 +29,34 @@ const RegistroServiciosRealizados = () => {
     id_organizacion: '',
   });
 
+  const [modalConfig, setModalConfig] = useState({
+    show: false,
+    color: 'green', // Default color
+    message: '',
+    time: 2000, // Default time in milliseconds
+  });
+
+  const handleShowStatus = (options) => {
+    setModalConfig({
+      show: true,
+      color: options.color || 'green',
+      message: options.message || '',
+      time: options.time || 2000,
+    });
+
+    // Close the modal after the specified time
+    setTimeout(() => {
+      handleCloseModalStatus();
+    }, modalConfig.time);
+  };
+
+  const handleCloseModalStatus = () => {
+    setModalConfig({
+      ...modalConfig,
+      show: false,
+    });
+  };
+
   const genreDB = ['masculino', 'femenino', 'noBinario', 'noDecir'];
   const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo'];
 
@@ -77,7 +105,6 @@ const RegistroServiciosRealizados = () => {
 
     fetchInitialData();
   }, []);
-
 
   const [formData, setFormData] = useState({
     id_cliente: '',
@@ -269,7 +296,6 @@ const RegistroServiciosRealizados = () => {
   const dbDate = new Date(formData.fechaNacimiento);
   const formattedDate = `${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()}`;
 
-
   const setModalOrganizacionValue = (organizacionId) => {
     setModalFormData((prevModalFormData) => ({
       ...prevModalFormData,
@@ -364,13 +390,8 @@ const RegistroServiciosRealizados = () => {
 
       console.log('Data to send:', dataToSend);
 
-      if (selectedService.id_servicio) {
-        await instance.put(`/servicios/${selectedService.id_servicio}`, dataToSend);
-        console.log('Service edited successfully');
-      } else {
-        const response = await instance.post('/servicios/registrar', dataToSend);
-        console.log(response.data.message);
-      }
+      const response = await instance.post('/servicios/registrar', dataToSend);
+      console.log(response.data.message);
 
       console.log('Saving changes');
       // Fetch updated services and close modal
@@ -458,14 +479,21 @@ const RegistroServiciosRealizados = () => {
             </Form.Group>
 
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
-              <button onClick={handleShowModal} className='buttonRegistrar'>
+              <button
+                className='buttonRegistrar'
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleShowModal()
+                }}
+
+              >
                 Nuevo Servicio
               </button>
             </div>
 
           </Col>
         </Row>
-      </Form>
+      </Form >
 
       <h1 className='titulo'>Información</h1>
 
@@ -766,6 +794,16 @@ const RegistroServiciosRealizados = () => {
               </button>
             </div>
           </Form>
+        </Modal.Body>
+      </Modal>
+
+      //modal para los res.status
+      <Modal show={modalConfig.show} onHide={handleCloseModalStatus}>
+        <Modal.Header closeButton>
+          <Modal.Title>Resultado</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ color: modalConfig.color }}>{modalConfig.message}</div>
         </Modal.Body>
       </Modal>
     </>
