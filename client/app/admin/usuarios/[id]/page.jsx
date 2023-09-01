@@ -145,7 +145,6 @@ function PerfilPersonal() {
     }
   };
 
-
   const handleConfirmationClose = () => {
     setShowConfirmation(false);
     if (accountDeleted) {
@@ -355,7 +354,6 @@ function PerfilPersonal() {
                 <div >
                   <Button
                     variant="success"
-                    name=""
                     type="submit"
                     style={{ width: '200px', fontWeight: 'bold', marginRight: '10px' }}
                   >
@@ -378,9 +376,6 @@ function PerfilPersonal() {
             )}
           </div>
 
-          {/* ELIMINAR CUENTA */}
-
-
           <div className='mx-3 mt-3'>
             <Button
               variant="danger"
@@ -391,10 +386,7 @@ function PerfilPersonal() {
             </Button>
           </div>
         </div>
-
       </Row>
-
-
 
       {/* Delete Confirmation Modal */}
       <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>

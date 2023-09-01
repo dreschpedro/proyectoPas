@@ -784,7 +784,8 @@ const RegistroServiciosRealizados = () => {
               <button
                 className='bouttoncancel'
                 type="button"
-                onClick={handleCloseModal}>
+                onClick={handleCloseModal}
+              >
                 Cerrar
               </button>
               <button
@@ -797,7 +798,7 @@ const RegistroServiciosRealizados = () => {
         </Modal.Body>
       </Modal>
 
-      //modal para los res.status
+      {/* modal para los res.status */}
       <Modal show={modalConfig.show} onHide={handleCloseModalStatus}>
         <Modal.Header closeButton>
           <Modal.Title>Resultado</Modal.Title>
