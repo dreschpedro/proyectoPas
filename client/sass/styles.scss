@@ -35,7 +35,7 @@ $primary: $principal;
     /* Cambia el color al hacer clic */
   }
 
-  
+
 
 }
 
@@ -238,6 +238,19 @@ Link {
 }
 
 
+.blur-background2 {
+  backdrop-filter: blur(1px);
+  /* Ajusta el valor de desenfoque según sea necesario */
+  background-color: rgba(0, 0, 0, 0.35);
+  /* Fondo semitransparente */
+  border: solid 1px;
+  border-radius: 5px;
+  border-color: rgba(0, 0, 0, 0.35);
+  padding: 20px;
+  margin-top: 15px;
+}
+
+
 // .my-px {
 //   padding-left: 3rem;
 //   /* Ajusta los valores según tus necesidades --- por cosas como esta no hay que usar chatgpt*/
@@ -291,7 +304,7 @@ Link {
 
 }
 
-.headerInicio{
+.headerInicio {
   background-color: #D73337;
   color: #FFFFFF;
   display: flex;
@@ -300,21 +313,53 @@ Link {
   padding: 10px;
 }
 
-.article1Inicio{
-  background: rgb(23,23,139);
-background: linear-gradient(90deg, rgba(23,23,139,1) 36%, rgba(199,200,228,1) 100%);
-display: flex;
-justify-content: space-around;
-align-content: center;
-padding: 80px;
+.article1Inicio {
+  background: rgb(23, 23, 139);
+  background: linear-gradient(90deg, rgba(23, 23, 139, 1) 36%, rgba(199, 200, 228, 1) 100%);
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+
 }
 
-.article2Inicio{
-background-color: #FFFFFF;
+.article2Inicio {
+  background-color: #FFFFFF;
 }
 
-.footerInicio{
+.footerInicio {
   border-top: #17168A 3px solid;
-  background: rgb(36,51,68);
-background: linear-gradient(90deg, rgba(36,51,68,1) 21%, rgba(221,223,226,1) 100%);
+  background: rgb(36, 51, 68);
+  background: linear-gradient(90deg, rgba(36, 51, 68, 1) 21%, rgba(221, 223, 226, 1) 100%);
+}
+
+.contbutton1 {
+  width: 250px;
+  height: 90%;
+  margin: 20px;
+}
+
+.contbutton2 {
+  width: 250px;
+  height: 90%;
+  margin: 20px;
+
+}
+
+.part1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4344A2;
+  border: solid 1px;
+  border-color: #230B71;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.part2{
+  background-color: #ffffff;
+  border: solid 1px;
+  border-color: #BDBDBD;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }

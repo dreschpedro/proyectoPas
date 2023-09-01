@@ -9,19 +9,20 @@ import Carousel from 'react-bootstrap/Carousel';
 function layout() {
     return (
         <>
-            <div style={{ width: '100%', height: '9vh' }} className='headerInicio'>
+            <div style={{ width: '100%', height: '12vh' }} className='headerInicio'>
                 <h1><b>#COMPROMISO DESDE EL CORAZÓN </b></h1> <FontAwesomeIcon icon={faHeart}
                     style={{ width: '50px', height: '50px', marginLeft: '25px' }} />
             </div>
-            <div style={{ width: '100%', height: '40vh' }} className='article1Inicio'>
+            <div style={{ width: '100%', height: '50vh' }} className='article1Inicio'>
 
-                <div className="d-flex flex-nowrap">
+                <div className="d-flex flex-nowrap my-auto">
                     <div>
                         <Image
                             src="/img/logoPasColor.svg"
                             width={180}
                             height={140}
                             alt="Picture of the author"
+
                         />
                     </div>
                     <div class="d-flex  align-items-center">
@@ -29,60 +30,87 @@ function layout() {
                     </div>
                 </div>
 
-                <div style={{width:'300px',height:'300px'}}>
-                    <Carousel data-bs-theme="dark">
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="holder.js/800x400?text=First slide&bg=f5f5f5"
-                                alt="First slide"
-                            />
-                            <Carousel.Caption>
-                                <h5>First slide label</h5>
-                                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="holder.js/800x400?text=Second slide&bg=eee"
-                                alt="Second slide"
-                            />
-                            <Carousel.Caption>
-                                <h5>Second slide label</h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="holder.js/800x400?text=Third slide&bg=e5e5e5"
-                                alt="Third slide"
-                            />
-                            <Carousel.Caption>
-                                <h5>Third slide label</h5>
-                                <p>
-                                    Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-                                </p>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                    </Carousel>
+                <div className='position-relative my-auto'>
+                    <Image
+                        src="/img/elvice.svg"
+                        width={510}
+                        height={259}
+                        alt="Picture of the author"
+                    />
+
+                    <div className='position-absolute top-0 start-0 end-0 bottom-0 d-flex flex-column justify-content-center align-items-center '>
+                        <div className='blur-background2 ' style={{ marginLeft: '45%', marginTop: '15%' }}>
+                            <p style={{ fontFamily: 'Marcellus SC', color: '#FFFFFF' }}>Una locura las cosas que <br /> pasan en el PAS cahabón 🤯🤙🤑</p>
+                            <button className='buttonRegistrar' style={{ borderRadius: '5px', width: '130px', marginLeft: '100px' }}>
+                                <b> <a style={{ color: 'inherit', textDecoration: 'none' }} href="https://vicegobernacion.misiones.gob.ar/">+ Información</a></b>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
 
+
+
+
             </div>
-            <div style={{ width: '100%', height: '40vh' }} className='article2Inicio'></div>
+            <div style={{ width: '100%', height: '50vh' }} className='article2Inicio d-flex justify-content-center aling-content-center'>
+
+                <div className='contbutton1'>
+                    <div className='d-flex flex-column' style={{ backgroundColor: '#DC1F25' }}>
+                        <Image
+                            src="/img/provinciaTransparente.svg"
+                            width={150}
+                            height={70}
+                            alt="Picture of the author"
+
+                        />
+
+                        <Image
+                            src="/img/pas-blanco 1.svg"
+                            width={150}
+                            height={110}
+                            alt="Picture of the author"
+
+                        />
+                    </div>
+                    <div>Programa de Asistencia Solidaria - VICEGOBERNACIÓN</div>
+                </div>
+                <div className='contbutton2'>
+                    <div className='d-flex flex-column justify-content-center aling-content-center part1' >
+                        <Image
+                            src="/img/provinciaTransparente.svg"
+                            width={150}
+                            height={70}
+                            alt="Picture of the author"
+
+                        />
+                        <div className='mt-4 mb-4'>
+                            <Image
+                                src="/img/pas-blanco 1.svg"
+                                width={150}
+                                height={110}
+                                alt="Picture of the author"
+
+                            />
+                        </div>
+                    </div >
+
+                    <div className='part2'><p>Programa de Asistencia Solidaria -
+                        P.A.S</p></div>
+                </div>
+
+            </div>
 
 
             <div style={{ width: '100%', height: '18vh' }} className='footerInicio'>
 
 
 
-                <div style={{ margin: '30px' }}>
+                <div style={{ margin: '20px' }}>
                     <Image
-                        src="/img/misionesGob.png"
-                        width={190}
-                        height={80}
+                        src="/img/provinciaTransparente.svg"
+                        width={180}
+                        height={70}
                         alt="Picture of the author"
 
                     />
