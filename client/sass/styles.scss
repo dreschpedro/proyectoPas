@@ -336,7 +336,15 @@ Link {
   width: 250px;
   height: 90%;
   margin: 20px;
+  transition: all 0.3s ease; /* Transición para suavizar el efecto */
 }
+
+// /* Estilos para el efecto hover */
+// .contbutton1:hover {
+//   width: 280px; /* Ancho aumentado */
+//   height: 95%; /* Altura aumentada */
+//   margin: 15px; /* Margen reducido */
+// }
 
 .contbutton2 {
   width: 250px;
@@ -360,6 +368,15 @@ Link {
   background-color: #ffffff;
   border: solid 1px;
   border-color: #BDBDBD;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-size: 10px;
+}
+
+.texto-centrado {
+  text-align: center; /* Centra el texto horizontalmente */
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  /* Ajusta la altura según tus necesidades */
 }

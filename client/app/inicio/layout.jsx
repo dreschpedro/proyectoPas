@@ -56,7 +56,7 @@ function layout() {
             <div style={{ width: '100%', height: '50vh' }} className='article2Inicio d-flex justify-content-center aling-content-center'>
 
                 <div className='contbutton1'>
-                    <div className='d-flex flex-column' style={{ backgroundColor: '#DC1F25' }}>
+                    <div className='d-flex flex-column part1' style={{ backgroundColor: '#DC1F25' }}>
                         <Image
                             src="/img/provinciaTransparente.svg"
                             width={150}
@@ -64,16 +64,17 @@ function layout() {
                             alt="Picture of the author"
 
                         />
-
+                     <div className='mt-3 mb-3'>
                         <Image
                             src="/img/pas-blanco 1.svg"
-                            width={150}
-                            height={110}
+                            width={100}
+                            height={60}
                             alt="Picture of the author"
-
                         />
                     </div>
-                    <div>Programa de Asistencia Solidaria - VICEGOBERNACIÓN</div>
+
+                    </div>
+                    <div className='part2 text-center'>Programa de Asistencia Solidaria - VICEGOBERNACIÓN</div>
                 </div>
                 <div className='contbutton2'>
                     <div className='d-flex flex-column justify-content-center aling-content-center part1' >
@@ -82,37 +83,31 @@ function layout() {
                             width={150}
                             height={70}
                             alt="Picture of the author"
-
                         />
-                        <div className='mt-4 mb-4'>
+
+                        <div className='mt-3 mb-3'>
                             <Image
                                 src="/img/pas-blanco 1.svg"
-                                width={150}
-                                height={110}
+                                width={100}
+                                height={60}
                                 alt="Picture of the author"
-
                             />
                         </div>
                     </div >
 
-                    <div className='part2'><p>Programa de Asistencia Solidaria -
+                    <div className='part2 text-center '><p>Programa de Asistencia Solidaria -
                         P.A.S</p></div>
                 </div>
-
             </div>
 
 
             <div style={{ width: '100%', height: '18vh' }} className='footerInicio'>
-
-
-
                 <div style={{ margin: '20px' }}>
                     <Image
                         src="/img/provinciaTransparente.svg"
                         width={180}
                         height={70}
                         alt="Picture of the author"
-
                     />
                 </div>
             </div>
