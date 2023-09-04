@@ -1,9 +1,6 @@
 import organizacion_model from "../models/Organizacion_model.js";
 import { getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from '../helpers/imagen.js';
 
-
-
-
 // FUNCIONALIDADES
 // consulta de todos los registros
 const listar_organizacion = async (req, res) => {
@@ -17,11 +14,18 @@ const listar_organizacion = async (req, res) => {
   }
 };
 
-
-
-
-
-
+const listar_organizacion_activo = async (req, res) => {
+  try {
+    const organizacion = await organizacion_model.findAll({
+      where: { activo: true }
+    });
+    return res.status(200).json(organizacion);
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = "Ocurrió un error al obtener los registros de organizacion";
+    return res.status(500).json({ error: mensaje_error });
+  }
+};
 
 // consulta por un registro (por id)
 const obtener_organizacion = async (req, res) => {
@@ -41,14 +45,6 @@ const obtener_organizacion = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
-
-
-
-
-
-
-
-
 
 // Registro de organizacion
 const registrar_organizacion = async (req, res) => {
@@ -92,18 +88,6 @@ const registrar_organizacion = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
 // modifica los datos buscando por id
 const modificar_organizacion = async (req, res) => {
   const organizacion_id = req.params.id;
@@ -123,10 +107,6 @@ const modificar_organizacion = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
-
-
-
-
 
 // elimina por id
 const eliminar_organizacion = async (req, res) => {
@@ -148,18 +128,33 @@ const eliminar_organizacion = async (req, res) => {
   }
 };
 
+const cambiar_estado_organizacion = async (req, res) => {
+  const organizacion_id = req.params.id;
 
+  try {
+    const organizacion = await organizacion_model.findByPk(organizacion_id);
 
+    if (!organizacion) {
+      const mensaje = 'No se encontró el registro solicitado';
+      return res.status(404).send(mensaje);
+    }
 
-
-
-
+    await organizacion.update({ activo: !organizacion.activo }); // Cambia el estado activo
+    return res.status(200).json({ message: 'Estado modificado', activo: organizacion.activo });
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = 'Ocurrió un error al cambiar el estado del registro';
+    return res.status(500).json({ error: mensaje_error });
+  }
+};
 
 // exports
 export {
   listar_organizacion,
+  listar_organizacion_activo,
   obtener_organizacion,
   registrar_organizacion,
   modificar_organizacion,
   eliminar_organizacion,
+  cambiar_estado_organizacion
 };

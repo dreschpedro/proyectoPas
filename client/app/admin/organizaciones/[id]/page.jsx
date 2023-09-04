@@ -1,8 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { Form, Button, InputGroup } from 'react-bootstrap';
+import { Form, Button, InputGroup, Modal } from 'react-bootstrap';
 import instance, { serverURL } from '@/app/axiosConfig';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 
 const PerfilOrganizacion = () => {
@@ -10,6 +10,8 @@ const PerfilOrganizacion = () => {
 
   const [OrganizacionData, setOrganizacionData] = useState({});
   const [editing, setEditing] = useState(false);
+  const [accountDeleted, setAccountDeleted] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [formData, setFormData] = useState({
     nombre: '',
     direccion: '',
@@ -18,6 +20,7 @@ const PerfilOrganizacion = () => {
     descripcion: '',
   });
 
+  const router = useRouter();
 
   useEffect(() => {
     // Realiza la solicitud GET para obtener los datos de la organizacion por su ID
@@ -99,6 +102,36 @@ const PerfilOrganizacion = () => {
       }
     } catch (error) {
       console.error('Error al guardar los cambios:', error.message);
+    }
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await instance.put(`/organizaciones/estado/${id}`);
+      console.log('Cuenta eliminada exitosamente');
+      setAccountDeleted(true);
+      handleCloseDeleteModal(); // Close the delete modal
+
+      // Redirect to "/organizaciones" after a short delay
+      setTimeout(() => {
+        router.push('/admin/organizaciones');
+      }, 1500); // 1.5 seconds delay before redirection
+    } catch (error) {
+      console.error('Error al eliminar la cuenta:', error.message);
+    }
+  };
+
+  const handleConfirmationClose = () => {
+    setShowConfirmation(false);
+    if (accountDeleted) {
+      // Redirect to "/organizaciones" after a short delay
+      setTimeout(() => {
+        router.push('/admin/organizaciones');
+      }, 2000); // 1.5 seconds delay before redirection
     }
   };
 
@@ -254,6 +287,34 @@ const PerfilOrganizacion = () => {
         </div>
 
       </Form>
+
+      {/* Delete Confirmation Modal */}
+      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Cambio de Estado</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Está seguro que desea eliminar su cuenta?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDeleteModal}>
+            Cancelar
+          </Button>
+          <Button variant="danger" onClick={handleDeleteAccount}>
+            Eliminar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Account Deleted Confirmation */}
+      <Modal show={accountDeleted} onHide={handleConfirmationClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Cuenta Eliminada Exitosamente</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          La cuenta ha sido eliminada exitosamente.
+        </Modal.Body>
+      </Modal>
     </>
   );
 };

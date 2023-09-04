@@ -5,19 +5,32 @@ import instance, { serverURL } from '@/app/axiosConfig';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-
+import { useRouter, useParams } from 'next/navigation'; // Agrega esta importación para usar el enrutador
 
 const ServicesCrud = () => {
+  const router = useRouter(); // Inicializa el enrutador
   const [services, setServices] = useState([]);
-  const [organizaciones, setOrganizaciones] = useState([]); // Agregar estado para las organizaciones
+  const [organizaciones, setOrganizaciones] = useState([]);
+  const [updatedServices, setUpdatedServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedService, setSelectedService] = useState(null);
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
+  const [selectedService, setSelectedService] = useState({
+    nombre: '',
+    descripcion: '',
+  }); // Inicializa selectedService con valores vacíos
   const [serviceInfo, setServiceInfo] = useState({
     id_organizacion: '',
-    Organizacion: '', // Combobox para la organización que realiza el servicio
   });
+  const [accountDeleted, setAccountDeleted] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false); // Agrega el estado para mostrar el mensaje de confirmación
+
+  const handleChange = (e) => {
+    setSelectedService({
+      ...selectedService,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   useEffect(() => {
     const fetchOrganizaciones = async () => {
@@ -32,9 +45,7 @@ const ServicesCrud = () => {
     const fetchServicios = async () => {
       try {
         const response = await instance.get('/servicios');
-        console.log(`Datos del back: `);
-        console.log(response.data);
-        setServices(response.data);
+        setUpdatedServices(response.data);
       } catch (error) {
         console.error('Error al obtener los servicios:', error);
       }
@@ -44,25 +55,28 @@ const ServicesCrud = () => {
     fetchServicios();
   }, []);
 
-  const handleChange = (e) => {
-    setSelectedService({
-      ...selectedService,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-
   const handleCloseModal = () => {
+    setSelectedServiceId(null);
     setShowModal(false);
   };
 
-  const handleShowDeleteModal = (service) => {
-    setSelectedService(service);
+  const handleShowDeleteModal = (serviceId) => {
+    setSelectedServiceId(serviceId);
     setShowDeleteModal(true);
   };
 
   const handleCloseDeleteModal = () => {
     setShowDeleteModal(false);
+  };
+
+  const handleConfirmationClose = () => {
+    setShowConfirmation(false);
+    if (accountDeleted) {
+      // Redirect to "/organizaciones" after a short delay
+      setTimeout(() => {
+        router.push('/admin/servicios/crudServicios');
+      }, 2000); // 1.5 seconds delay before redirection
+    }
   };
 
   const setOrganizacionValue = (organizacionId) => {
@@ -72,32 +86,41 @@ const ServicesCrud = () => {
     }));
   };
 
-
   const handleShowModal = (service) => {
-    setSelectedService(service);
-
-    if (service && service.id_servicio) {
-      setOrganizacionValue(service.id_organizacion);
-    } else {
-      setOrganizacionValue(''); // Restablecer el valor de id_organizacion
-    }
-
+    setSelectedServiceId(service.id_servicio);
+    setSelectedService(service); // Actualiza selectedService con los datos del servicio seleccionado
+    setServiceInfo({ id_organizacion: service.id_organizacion }); // Inicializa serviceInfo con la organización del servicio seleccionado
     setShowModal(true);
-    console.log("Datos del servicio seleccionado:", service);
-  };
-
-  const handleCloseConfirmation = () => {
-    console.log('Cerrando modal de confirmación');
-    setShowConfirmation(false);
   };
 
   const showAndCloseConfirmation = () => {
-    console.log('Mostrando modal de confirmación');
     setShowConfirmation(true);
     setTimeout(() => {
-      console.log('Cerrando modal de confirmación');
       setShowConfirmation(false);
-    }, 2000); // Cerrar el modal después de 2 segundos (2000 ms)
+    }, 2000);
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await instance.put(`/servicios/estado/${selectedServiceId}`);
+      console.log('Servicio eliminado exitosamente');
+
+      // Agrega el servicio eliminado a la lista de servicios actualizados
+      const updatedService = services.find(service => service.id_servicio === selectedServiceId);
+      if (updatedService) {
+        setUpdatedServices([updatedService, ...updatedServices]);
+      }
+
+      setAccountDeleted(true);
+      handleCloseDeleteModal();
+      showAndCloseConfirmation();
+
+      setTimeout(() => {
+        router.push('/admin/servicios/crudServicios');
+      }, 1500); // Redirige después de 1.5 segundos
+    } catch (error) {
+      console.error('Error al eliminar el servicio:', error.message);
+    }
   };
 
 
@@ -105,14 +128,14 @@ const ServicesCrud = () => {
     e.preventDefault();
     try {
       const dataToSend = {
-        nombre: selectedService.nombre, 
+        nombre: selectedService.nombre,
         descripcion: selectedService.descripcion,
         id_organizacion: serviceInfo.id_organizacion,
       };
 
-      if (selectedService.id_servicio) {
+      if (selectedServiceId) {
         // Editar un servicio existente
-        await instance.put(`/servicios/${selectedService.id_servicio}`, dataToSend);
+        await instance.put(`/servicios/${selectedServiceId}`, dataToSend);
         console.log('Servicio editado exitosamente');
       } else {
         // Agregar un nuevo servicio
@@ -121,38 +144,25 @@ const ServicesCrud = () => {
       }
 
       console.log('Guardando cambios');
-      fetchServices();
-      showAndCloseConfirmation(); // Mostrar mensaje de confirmación y cerrar después de 2 segundos
+      fetchServicios();
+      showAndCloseConfirmation();
       handleCloseModal();
     } catch (error) {
       console.error('Error al guardar los cambios:', error);
     }
   };
 
-  const handleDeleteService = async () => {
-    try {
-      await instance.put(`/servicios/estado/${selectedService.id_servicio}`);
-      console.log('Servicio eliminado exitosamente');
-      console.log('Eliminando servicio');
-      fetchServices();
-      handleCloseDeleteModal();
-      showAndCloseConfirmation(); // Mostrar mensaje de confirmación y cerrar después de 2 segundos
-    } catch (error) {
-      console.error('Error al eliminar el servicio:', error.message);
-    }
-  };
-
   return (
     <Container className='mt-3'>
-     <div className='d-flex justify-content-between flex-wrap mb-3'>
-      <h1 className='titulo'>Gestión de Servicios</h1>
-      <button
-       className='buttonRegistrar responsive-buttons'
-        size="lg"
-        onClick={() => handleShowModal()}
-      >
-        Agregar Servicio
-      </button>
+      <div className='d-flex justify-content-between flex-wrap mb-3'>
+        <h1 className='titulo'>Gestión de Servicios</h1>
+        <button
+          className='buttonRegistrar responsive-buttons'
+          size="lg"
+          onClick={() => handleShowModal({ id_servicio: null, id_organizacion: '', nombre: '', descripcion: '' })}
+        >
+          Agregar Servicio
+        </button>
       </div>
       <Table striped bordered hover>
         <thead>
@@ -165,7 +175,7 @@ const ServicesCrud = () => {
           </tr>
         </thead>
         <tbody>
-          {services.map((service) => (
+          {updatedServices.map((service) => (
             <tr key={service.id_servicio} style={{ marginBottom: '10px' }}>
               <td>{service.id_servicio}</td>
               <td>{service.nombre}</td>
@@ -175,53 +185,50 @@ const ServicesCrud = () => {
                 <Button
                   style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
                   variant="outline-warning"
-                  onClick={() => handleShowModal(service)} // Pasamos el servicio seleccionado
+                  onClick={() => handleShowModal(service)}
                 >
                   <FontAwesomeIcon icon={faPencilAlt} />
                 </Button>
-
                 <Button
                   variant="outline-danger"
-                  onClick={() => handleShowDeleteModal(service)}
+                  onClick={() => handleShowDeleteModal(service.id_servicio)}
                   style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
                 >
-                  <FontAwesomeIcon icon={faTrashAlt}/>
+                  <FontAwesomeIcon icon={faTrashAlt} />
                 </Button>
               </td>
             </tr>
           ))}
+
         </tbody>
       </Table>
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>{selectedService ? 'Editar Servicio' : 'Agregar Servicio'}</Modal.Title>
+          <Modal.Title>{selectedServiceId ? 'Editar Servicio' : 'Agregar Servicio'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formName">
-              {/* <Form.Label>Nombre del Servicio*</Form.Label> */}
               <Form.Control
                 className="mb-3 border border-secondary rounded rounded-1.1 shadow"
                 placeholder='Nombre del servicio'
                 type="text"
                 name="nombre"
                 required
-                value={selectedService?.nombre || ''}
+                value={selectedService.nombre}
                 onChange={handleChange}
               />
             </Form.Group>
 
-
             <Form.Group controlId="formOrganizacion">
-              {/* <Form.Label>Organización*</Form.Label> */}
-              <InputGroup >
+              <InputGroup>
                 <Form.Control
                   className="mb-3 border border-secondary rounded rounded-1.1 shadow"
                   placeholder='Organización'
                   as="select"
-                  value={serviceInfo.id_organizacion} // Cambia a serviceInfo.id_organizacion
-                  onChange={(e) => setOrganizacionValue(e.target.value)} // Usa setOrganizacionValue directamente
+                  value={serviceInfo.id_organizacion}
+                  onChange={(e) => setOrganizacionValue(e.target.value)}
                   required
                 >
                   <option value="">Seleccionar Organización</option>
@@ -231,24 +238,22 @@ const ServicesCrud = () => {
                     </option>
                   ))}
                 </Form.Control>
-
               </InputGroup>
             </Form.Group>
 
             <Form.Group controlId="formDescripcion">
               <Form.Label>Descripción del Servicio</Form.Label>
               <Form.Control
-                // placeholder='Descripción del Servicio'
                 className="mb-3 border border-secondary rounded rounded-1.1 shadow"
                 as="textarea"
                 name="descripcion"
-                value={selectedService?.descripcion || ''}
+                value={selectedService.descripcion}
                 onChange={handleChange}
               />
             </Form.Group>
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
               <button type="button" className='bouttoncancel' onClick={handleCloseModal}>Cerrar</button>
-              {selectedService ? (
+              {selectedServiceId ? (
                 <button className='buttonRegistrar' type="submit">Guardar Cambios</button>
               ) : (
                 <button className='buttonRegistrar' type="submit">Agregar Servicio</button>
@@ -264,11 +269,27 @@ const ServicesCrud = () => {
         </Modal.Header>
         <Modal.Body>¿Está seguro que desea eliminar el Servicio?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDeleteModal}>Cancelar</Button>
-          <Button variant="danger" onClick={handleDeleteService}>Eliminar</Button>
+          <Button
+            variant="secondary"
+            onClick={handleCloseDeleteModal}>
+            Cancelar
+          </Button>
+          <Button
+            variant="danger"
+            onClick={handleDeleteAccount}>
+            Eliminar
+          </Button>
         </Modal.Footer>
       </Modal>
 
+      <Modal show={showConfirmation} onHide={handleConfirmationClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Operación Exitosa</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Servicio Eliminado Exitosamente!
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };

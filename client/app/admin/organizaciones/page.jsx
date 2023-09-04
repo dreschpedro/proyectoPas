@@ -1,7 +1,7 @@
 //front
 "use client";
 import React, { useState, useEffect } from 'react';
-import {  FormControl, Modal, Form, Table, Button, InputGroup } from 'react-bootstrap';
+import { FormControl, Modal, Form, Table, Button, InputGroup } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
@@ -25,7 +25,7 @@ const ListaOrganizaciones = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await instance.get('/organizaciones');
+        const response = await instance.get('/organizaciones/');
         setListaOrganizaciones(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de Organizaciones:', error);
@@ -114,13 +114,9 @@ const ListaOrganizaciones = () => {
     }
   };
 
-
-
-
-
   console.log('listaOrganizaciones: \n', listaOrganizaciones);
 
-  const handleUserClick = (id) => {
+  const handleOrganizacionClick = (id) => {
     // Redireccionar a la página de detalle del usuario con el ID correspondiente
     window.location.href = `/admin/organizaciones/${id}`;
   };
@@ -142,24 +138,21 @@ const ListaOrganizaciones = () => {
           />
 
           <div className="ml-auto" style={{ display: 'flex', marginLeft: 'auto' }}>
-            <Button style={{ whiteSpace: 'nowrap', backgroundColor: '#22096f', marginLeft: '3rem', fontStyle: 'bold',
-    border: 'none',
-    height: '2.5rem',
-    borderRadius: '10px',
-    color: '#ffffff',
-    borderColor: '#22096F',
-    width: '170px',
-    font: 'bold',
-    transition: 'background-color 0.3s ease',
-    whiteSpace: 'nowrap', }} className="buttonRegistrar" onClick={() => handleShowModal()}>Crear Organización</Button>
+            <Button style={{
+              whiteSpace: 'nowrap', backgroundColor: '#22096f', marginLeft: '3rem', fontStyle: 'bold',
+              border: 'none',
+              height: '2.5rem',
+              borderRadius: '10px',
+              color: '#ffffff',
+              borderColor: '#22096F',
+              width: '170px',
+              font: 'bold',
+              transition: 'background-color 0.3s ease',
+              whiteSpace: 'nowrap',
+            }} className="buttonRegistrar" onClick={() => handleShowModal()}>Crear Organización</Button>
           </div>
         </Form>
       </div>
-
-
-
-
-
 
       <Table striped bordered hover responsive>
         <thead>
@@ -177,7 +170,7 @@ const ListaOrganizaciones = () => {
           {filteredData ? (
             filteredData.map((organizacion) => (
               <tr key={organizacion.id_organizacion}
-                onClick={() => handleUserClick(organizacion.id_organizacion)}
+                onClick={() => handleOrganizacionClick(organizacion.id_organizacion)}
                 style={{ cursor: 'pointer' }}>
                 <td>{organizacion.id_organizacion}</td>
                 <td>{organizacion.nombre}</td>
@@ -214,7 +207,6 @@ const ListaOrganizaciones = () => {
 
             <Row>
               <Col >
-
                 <Form.Group controlId="formName">
                   <Form.Group className="" controlId="exampleForm.ControlInput1">
                     {/* <Form.Label>Nombre de la Organización*</Form.Label> */}
@@ -243,7 +235,6 @@ const ListaOrganizaciones = () => {
                   </Form.Group>
                 </Form.Group>
 
-
                 <Form.Group controlId="formNumber">
                   <Form.Group className="" controlId="exampleForm.ControlInput1">
                     {/* <Form.Label>Número de Teléfono*</Form.Label> */}
@@ -271,9 +262,7 @@ const ListaOrganizaciones = () => {
                       placeholder="Email" />
                   </Form.Group>
                 </Form.Group>
-
               </Col>
-
 
               {/* imagen de la Organización */}
               <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
@@ -310,7 +299,7 @@ const ListaOrganizaciones = () => {
               </button>
 
 
-              <button className='buttonRegistrar' type="submit" style={{width: '60%'}}>
+              <button className='buttonRegistrar' type="submit" style={{ width: '60%' }}>
                 Registrar Organización
               </button>
             </div>
