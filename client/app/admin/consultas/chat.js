@@ -1,6 +1,8 @@
 'use client'
 
 import { useChat } from 'ai/react';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -8,22 +10,23 @@ export default function Chat() {
   })
 
   return (
+      
 
-
-    <div className='bordesito'>
-      <ul>
+    <div>
+      <ul className='chat'>
         {messages.map((m, index) => (
-          <li key={index}>
+          <li className='chatMessage' key={index}>
+            <div className='border border-secondary rounded rounded-1.1 shadow m-auto'>
             {m.role === 'user' ? 'User: ' : 'AI: '}
-            {m.content}
+            {m.content}</div>
           </li>
         ))}
       </ul>
 
-      <form onSubmit={handleSubmit}>
+      <form className='sentDeConsultas' onSubmit={handleSubmit}>
         <div className='d-flex flex-nowrap justify-content-center'>
-          <input className='border border-secondary rounded rounded-1.1 shadow' value={input} onChange={handleInputChange} />
-          <button className='buttonRegistrar my-auto mx-3' type="submit">enviar</button>
+          <input className='border border-secondary rounded rounded-1.1 shadow m-auto inputChat' value={input} onChange={handleInputChange} />
+          <button className='buttonChat my-auto mx-2' type="submit"><FontAwesomeIcon icon={faPaperPlane} style={{color: "#ffffff",}} /></button>
         </div>
       </form>
     </div>

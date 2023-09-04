@@ -7,9 +7,11 @@ export default function Page() {
   
   return (
   <>
-    <h1 className='titulo mb-5'>Consultas</h1>
+  <div className='cajamisteriosa'>
+    <h1 className='text-center mb-5 tituloConusultas'>ChatBot P.A.S</h1>
   
   <Chat />
+  </div>
   </>
   
   )
