@@ -12,6 +12,7 @@ const ListaOrganizaciones = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [filteredData, setFilteredData] = useState(null);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [listaOrganizaciones, setListaOrganizaciones] = useState([]);
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const ListaOrganizaciones = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await instance.get('/organizaciones/');
+        const response = await instance.get('/organizaciones');
         setListaOrganizaciones(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de Organizaciones:', error);
@@ -84,7 +85,6 @@ const ListaOrganizaciones = () => {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -108,15 +108,43 @@ const ListaOrganizaciones = () => {
         }
       });
 
-      // Resto del código de manejo de respuesta...
+      // Verificar si la respuesta es exitosa
+      if (response.status === 200) {
+        // Mostrar el modal de éxito
+        setShowSuccessAlert(true);
+
+        // Establecer un temporizador para ocultar el modal después de 3 segundos
+        setTimeout(() => {
+          setShowSuccessAlert(false);
+        }, 3000);
+      } else {
+        // Mostrar el modal de error con el mensaje del servidor
+        const responseData = await response.json();
+        alert(responseData.error); // Puedes personalizar el mensaje de error como desees
+        setShowErrorAlert(true);
+
+        // Establecer un temporizador para ocultar el modal de error después de 3 segundos
+        setTimeout(() => {
+          setShowErrorAlert(false);
+        }, 3000);
+      }
     } catch (error) {
       console.error('Error al guardar la organización:', error);
+      // Mostrar el modal de error genérico en caso de error
+      setShowErrorAlert(true);
+
+      // Establecer un temporizador para ocultar el modal de error después de 3 segundos
+      setTimeout(() => {
+        setShowErrorAlert(false);
+      }, 3000);
     }
   };
 
+
+
   console.log('listaOrganizaciones: \n', listaOrganizaciones);
 
-  const handleOrganizacionClick = (id) => {
+  const handleUserClick = (id) => {
     // Redireccionar a la página de detalle del usuario con el ID correspondiente
     window.location.href = `/admin/organizaciones/${id}`;
   };
@@ -170,7 +198,7 @@ const ListaOrganizaciones = () => {
           {filteredData ? (
             filteredData.map((organizacion) => (
               <tr key={organizacion.id_organizacion}
-                onClick={() => handleOrganizacionClick(organizacion.id_organizacion)}
+                onClick={() => handleUserClick(organizacion.id_organizacion)}
                 style={{ cursor: 'pointer' }}>
                 <td>{organizacion.id_organizacion}</td>
                 <td>{organizacion.nombre}</td>
@@ -207,6 +235,7 @@ const ListaOrganizaciones = () => {
 
             <Row>
               <Col >
+
                 <Form.Group controlId="formName">
                   <Form.Group className="" controlId="exampleForm.ControlInput1">
                     {/* <Form.Label>Nombre de la Organización*</Form.Label> */}
@@ -235,6 +264,7 @@ const ListaOrganizaciones = () => {
                   </Form.Group>
                 </Form.Group>
 
+
                 <Form.Group controlId="formNumber">
                   <Form.Group className="" controlId="exampleForm.ControlInput1">
                     {/* <Form.Label>Número de Teléfono*</Form.Label> */}
@@ -262,7 +292,9 @@ const ListaOrganizaciones = () => {
                       placeholder="Email" />
                   </Form.Group>
                 </Form.Group>
+
               </Col>
+
 
               {/* imagen de la Organización */}
               <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
@@ -314,6 +346,16 @@ const ListaOrganizaciones = () => {
         </Modal.Header>
         <Modal.Body>
           La organización se ha creado exitosamente.
+        </Modal.Body>
+      </Modal>
+
+      {/* Modal que muestra el error */}
+      <Modal show={showErrorAlert} onHide={() => setShowErrorAlert(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Ya existe una Organización con este Email !
         </Modal.Body>
       </Modal>
 

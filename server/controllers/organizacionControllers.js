@@ -65,26 +65,28 @@ const registrar_organizacion = async (req, res) => {
       imagen_path = saveImageAndGetPath(req, 'organizacion', req.file.filename);
     }
 
-    // Crear la organización en la base de datos
+    const organizacionExistente = await organizacion_model.findOne({ where: { email } });
+
+    if (organizacionExistente) {
+      return res.status(400).json({ error: "Ya existe una organización con este email" });
+    }
+
+    // Si no existe, procede a crear la organización
     const organizacion_almacenado = await organizacion_model.create({
       nombre,
       direccion,
       telefono,
       email,
       descripcion,
-      imagen: imagen_path // Guardar la ruta de la imagen en la base de datos
+      imagen: imagen_path
     });
 
     return res.status(200).json({ message: "Organización creada", organizacion_almacenado });
+
   } catch (error) {
     console.log(error);
     const mensaje_error = "Ocurrió un error al registrar la organización";
     return res.status(500).json({ error: mensaje_error });
-  } finally {
-    // Eliminar la imagen temporal si no es la imagen por defecto
-    if (imagen_path && imagen_path !== getDefaultImagePath('organizacion', 'default_organizacion.png')) {
-      deleteTempImage(imagen_path, 'organizacion', req.file.filename);
-    }
   }
 };
 
