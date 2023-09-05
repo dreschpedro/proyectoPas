@@ -424,7 +424,7 @@ const RegistroServiciosRealizados = () => {
 
     const fetchServicios = async () => {
       try {
-        const response = await instance.get('/servicios');
+        const response = await instance.get('/servicios/activo');
         setServicios(response.data);
         // console.log('Servicios:', response.data); // Add this console.log
       } catch (error) {

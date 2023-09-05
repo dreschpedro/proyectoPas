@@ -1,9 +1,23 @@
 import organizacion_model from "../models/Organizacion_model.js";
 import Servicio_model from "../models/Servicio_model.js";
 
-// FUNCIONALIDADES
 // consulta de todos los registros
 const listar_servicio = async (req, res) => {
+  try {
+    const servicios = await Servicio_model.findAll({
+      include: [{ model: organizacion_model, attributes: ["id_organizacion", "nombre"] }],
+    });
+    return res.status(200).json(servicios);
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = "Ocurrió un error al obtener los registros de servicios";
+    return res.status(500).json({ error: mensaje_error });
+  }
+};
+
+
+//consulta por los servicios activos
+const listar_servicio_activo = async (req, res) => {
   try {
     const servicio = await Servicio_model.findAll({
       where: { activo: true },
@@ -108,8 +122,6 @@ const cambiar_estado_servicio = async (req, res) => {
   }
 };
 
-
-
 // consulta de servicios por organización
 const listar_servicio_por_organizacion = async (req, res) => {
   const organizacion_id = req.params.organizacion_id;
@@ -134,6 +146,7 @@ const listar_servicio_por_organizacion = async (req, res) => {
 // exports
 export {
   listar_servicio,
+  listar_servicio_activo,
   obtener_servicio,
   registrar_servicio,
   modificar_servicio,

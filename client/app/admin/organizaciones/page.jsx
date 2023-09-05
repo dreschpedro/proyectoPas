@@ -1,7 +1,7 @@
 //front
 "use client";
 import React, { useState, useEffect } from 'react';
-import {  FormControl, Modal, Form, Table, Button, InputGroup } from 'react-bootstrap';
+import { FormControl, Modal, Form, Table, Button, InputGroup } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
@@ -12,6 +12,7 @@ const ListaOrganizaciones = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [filteredData, setFilteredData] = useState(null);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [listaOrganizaciones, setListaOrganizaciones] = useState([]);
   const [formData, setFormData] = useState({
@@ -84,7 +85,6 @@ const ListaOrganizaciones = () => {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -108,13 +108,37 @@ const ListaOrganizaciones = () => {
         }
       });
 
-      // Resto del código de manejo de respuesta...
+      // Verificar si la respuesta es exitosa
+      if (response.status === 200) {
+        // Mostrar el modal de éxito
+        setShowSuccessAlert(true);
+
+        // Establecer un temporizador para ocultar el modal después de 3 segundos
+        setTimeout(() => {
+          setShowSuccessAlert(false);
+        }, 3000);
+      } else {
+        // Mostrar el modal de error con el mensaje del servidor
+        const responseData = await response.json();
+        alert(responseData.error); // Puedes personalizar el mensaje de error como desees
+        setShowErrorAlert(true);
+
+        // Establecer un temporizador para ocultar el modal de error después de 3 segundos
+        setTimeout(() => {
+          setShowErrorAlert(false);
+        }, 3000);
+      }
     } catch (error) {
       console.error('Error al guardar la organización:', error);
+      // Mostrar el modal de error genérico en caso de error
+      setShowErrorAlert(true);
+
+      // Establecer un temporizador para ocultar el modal de error después de 3 segundos
+      setTimeout(() => {
+        setShowErrorAlert(false);
+      }, 3000);
     }
   };
-
-
 
 
 
@@ -142,24 +166,21 @@ const ListaOrganizaciones = () => {
           />
 
           <div className="ml-auto" style={{ display: 'flex', marginLeft: 'auto' }}>
-            <Button style={{ whiteSpace: 'nowrap', backgroundColor: '#22096f', marginLeft: '3rem', fontStyle: 'bold',
-    border: 'none',
-    height: '2.5rem',
-    borderRadius: '10px',
-    color: '#ffffff',
-    borderColor: '#22096F',
-    width: '170px',
-    font: 'bold',
-    transition: 'background-color 0.3s ease',
-    whiteSpace: 'nowrap', }} className="buttonRegistrar" onClick={() => handleShowModal()}>Crear Organización</Button>
+            <Button style={{
+              whiteSpace: 'nowrap', backgroundColor: '#22096f', marginLeft: '3rem', fontStyle: 'bold',
+              border: 'none',
+              height: '2.5rem',
+              borderRadius: '10px',
+              color: '#ffffff',
+              borderColor: '#22096F',
+              width: '170px',
+              font: 'bold',
+              transition: 'background-color 0.3s ease',
+              whiteSpace: 'nowrap',
+            }} className="buttonRegistrar" onClick={() => handleShowModal()}>Crear Organización</Button>
           </div>
         </Form>
       </div>
-
-
-
-
-
 
       <Table striped bordered hover responsive>
         <thead>
@@ -310,7 +331,7 @@ const ListaOrganizaciones = () => {
               </button>
 
 
-              <button className='buttonRegistrar' type="submit" style={{width: '60%'}}>
+              <button className='buttonRegistrar' type="submit" style={{ width: '60%' }}>
                 Registrar Organización
               </button>
             </div>
@@ -325,6 +346,16 @@ const ListaOrganizaciones = () => {
         </Modal.Header>
         <Modal.Body>
           La organización se ha creado exitosamente.
+        </Modal.Body>
+      </Modal>
+
+      {/* Modal que muestra el error */}
+      <Modal show={showErrorAlert} onHide={() => setShowErrorAlert(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Ya existe una Organización con este Email !
         </Modal.Body>
       </Modal>
 

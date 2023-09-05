@@ -5,10 +5,12 @@ import path from "path";
 
 import {
   listar_organizacion,
+  listar_organizacion_activo,
   obtener_organizacion,
   registrar_organizacion,
   modificar_organizacion,
-  eliminar_organizacion
+  eliminar_organizacion,
+  cambiar_estado_organizacion
 } from '../controllers/organizacionControllers.js';
 
 const router = express.Router();
@@ -32,9 +34,12 @@ const upload = multer({ storage: storage });
 
 // Rutas para las organizaciones
 router.get('/', listar_organizacion);
+router.get('/activo/', listar_organizacion_activo);
 router.get('/:id', obtener_organizacion);
 router.post('/registrar', upload.single('imagen'), registrar_organizacion);
 router.put('/:id', modificar_organizacion);
+router.put('/estado/:id', cambiar_estado_organizacion);
 router.delete('/:id', eliminar_organizacion);
+
 
 export default router;

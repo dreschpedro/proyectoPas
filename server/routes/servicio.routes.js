@@ -2,6 +2,7 @@ import express from "express";
 // ...
 import {
   listar_servicio,
+  listar_servicio_activo,
   listar_servicio_por_organizacion,
   obtener_servicio,
   registrar_servicio,
@@ -12,6 +13,7 @@ import {
 const router = express.Router();
 
 router.get('/', listar_servicio);
+router.get('/activo', listar_servicio_activo);
 router.get("/organizacion/:organizacion_id", listar_servicio_por_organizacion);
 router.get('/:id', obtener_servicio);
 router.post('/registrar', registrar_servicio);

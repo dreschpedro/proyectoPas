@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
+import Organizacion_model from './Organizacion_model.js';
 
 const Producto_model = sequelize.define('producto', {
   id_producto: {
@@ -31,6 +32,8 @@ const Producto_model = sequelize.define('producto', {
     tableName: 'producto',
     timestamps: true,
   });
+
+Producto_model.belongsTo(Organizacion_model, { foreignKey: 'id_organizacion' });
 
 // Crear la tabla "Porducto" en la base de datos
 Producto_model.sync({ force: false }).then(() => {
