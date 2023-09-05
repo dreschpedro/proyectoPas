@@ -339,19 +339,26 @@ Link {
   transition: all 0.3s ease; /* Transición para suavizar el efecto */
 }
 
-// /* Estilos para el efecto hover */
-// .contbutton1:hover {
-//   width: 280px; /* Ancho aumentado */
-//   height: 95%; /* Altura aumentada */
-//   margin: 15px; /* Margen reducido */
-// }
+/* Estilos para el efecto hover */
+.contbutton1:hover {
+  // width: 280px; /* Ancho aumentado */
+  // height: 95%; /* Altura aumentada */
+  // margin: 15px; /* Margen reducido */
+
+  transform: scaleX(1.1) scaleY(1.1);
+}
 
 .contbutton2 {
   width: 250px;
   height: 90%;
   margin: 20px;
-
+  transition: all 0.3s ease;
 }
+
+.contbutton2:hover {
+  transform: scaleX(1.1) scaleY(1.1);
+}
+
 
 .part1 {
   display: flex;
@@ -379,4 +386,75 @@ Link {
   justify-content: center; /* Centra el contenido horizontalmente */
   align-items: center; /* Centra el contenido verticalmente */
   /* Ajusta la altura según tus necesidades */
+}
+
+.tituloConusultas{
+  background-color: #4344A1;
+  color: #FFFFFF;
+  width: 100%;
+  margin: auto;
+  height: 70px;
+  border-radius: 22px 22px 0px 0px;
+  line-height: 1.5;
+
+}
+
+.cajamisteriosa{
+  margin-top: 5rem;
+  border: solid #4344A1 2px;
+  border-radius: 25px;
+  padding: 0;
+  
+}
+
+.sentDeConsultas{
+  background-color: #4344A1;
+  color: #FFFFFF;
+  width: 100%;
+  margin: 0;
+  height: 70px;
+  border-radius: 0px 0px 22px 22px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.chat{
+  min-height: 40vh;
+}
+
+.inputChat{
+  width: 400px;
+  height: 30px;
+}
+
+
+.buttonChat {
+  font-style: bold;
+  border: none;
+  height: 30px;
+  border-radius: 10px;
+  color: #ffffff;
+  background-color: #22096F;
+  border-color: #22096F;
+  width: 35px;
+  font: bold;
+  transition: background-color 0.3s ease;
+  padding: 0;
+
+  &:hover {
+    background-color: #1a0752;
+    /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #150644;
+    /* Cambia el color al hacer clic */
+  }
+
+}
+
+
+.chatMessage{
+  margin: 20px;
 }

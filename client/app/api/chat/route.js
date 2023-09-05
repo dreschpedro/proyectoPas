@@ -139,22 +139,12 @@ const servicios = [
 ];
 
 const serviciosJSON = JSON.stringify(servicios);
-console.log(serviciosJSON);
-
-
-
-
-
-
-
-
-
-
 
 const apiConfig = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
+let enviarContenido = true;
 const openai = new OpenAIApi(apiConfig)
 
 // Build a prompt from the messages
@@ -162,15 +152,24 @@ function buildPrompt(messages) {
   return (
     messages
       .map(({ content, role }) => {
+
         if (role === 'user') {
-          return `Human: ${serviciosJSON} ${usersJSON}, ${content}`;
+          if (enviarContenido) {
+            return `Human: ${serviciosJSON} ${usersJSON} ${content} `
+          } else {
+            return `Human: ${content}`;
+          };
+          
         } else {
           return `Assistant: ${content}`;
         }
+        
       })
       .join('\n\n') + 'Assistant:'
   );
 }
+
+
 
 export async function POST(req) {
   // Extract the `messages` from the body of the request
