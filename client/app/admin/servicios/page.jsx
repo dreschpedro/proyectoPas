@@ -8,6 +8,73 @@ import instance, { serverURL } from '@/app/axiosConfig';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
+
+// const [formData2, setFormData2] = useState({
+//   organizacion: '',
+//   productos: '',
+//   servicios: '',
+// });
+
+const handleSubmit2 = (e) => {
+  e.preventDefault();
+  const { organizacion, productos, servicios } = formData2;
+  console.log('Valores del segundo formulario:', organizacion, productos, servicios);
+};
+
+const createTable = (formData2) => {
+  // Verifica si hay información para mostrar en la tabla
+
+  
+  if (
+    formData2.organizacion &&
+    formData2.servicio &&
+    formData2.cantidad
+  ) {
+    return (
+      <Table striped bordered hover>
+        {/* Encabezados de la tabla */}
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Organización</th>
+            <th>Productos</th>
+            <th>Cantidad de Productos</th>
+            <th>Servicios</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* Contenido de la tabla */}
+          <tr>
+            <td>{/* ID de servicio */}</td>
+            <td>{formData.organizacion}</td>
+            <td>{/* Nombre de productos */}</td>
+            <td>{formData.cantidad}</td>
+            <td>{formData.servicio}</td>
+            <td>
+              {/* Botones de acciones */}
+              <Button
+                variant="outline-warning"
+                onClick={() => handleShowModal()}
+              >
+                Modificar
+              </Button>
+              <Button
+                variant="outline-danger"
+                onClick={() => handleShowDeleteModal()}
+              >
+                Eliminar
+              </Button>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+    );
+  } else {
+    return null; // No hay información para mostrar, retorna null
+  }
+};
+
 const RegistroServiciosRealizados = () => {
 
   const [isFormValid, setIsFormValid] = useState(false);
@@ -407,17 +474,23 @@ const RegistroServiciosRealizados = () => {
       <Row>
         <Col>
 
-          <div className='d-flex flex-wrap justify-content-between tablet-width'>
+          <div className='d-flex flex-wrap justify-content-between tablet-width text-nowrap'>
             <h1 className='titulo text-nowrap'>Registrar Servicio</h1>
             <div className='d-flex'>
 
               <Link href="/admin/servicios/crudServicios">
-                <button className='buttonRegistrar responsive-buttons' >
-                  Administrar
+                <button className='buttonRegistrar m-1' >
+                  Servicios
+                </button>
+              </Link>
+
+              <Link href="/admin/servicios/crudProductos">
+                <button className='buttonRegistrar m-1' >
+                  Productos
                 </button>
               </Link>
               <Link href="/admin/servicios/historial">
-                <button className='bouttoncancel responsive-buttons' >
+                <button className='bouttoncancel m-1' >
                   Historial
                 </button>
               </Link>
@@ -427,7 +500,7 @@ const RegistroServiciosRealizados = () => {
 
 
       </Row>
-      <Form onSubmit={handleSubmit} className='bordesito tablet-width'>
+      <Form onSubmit={handleSubmit2} className='bordesito tablet-width'>
 
         <Row>
           <Col>
@@ -456,6 +529,35 @@ const RegistroServiciosRealizados = () => {
             </Form.Group>
 
 
+            <Form.Group controlId="formServicio" className="d-flex mb-3 align-items-center">
+              {/* <Form.Label>Servicio*</Form.Label> */}
+              <FormSelect
+                className="border border-secondary rounded rounded-1.1 shadow"
+                // style={{ width: '40px' }}
+                name='servicio'
+                as="select"
+                value={formData.servicio}
+                onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
+              >
+                <option value="">Seleccionar Producto</option>
+                {organizacionTieneServicios ? (
+                  organizacionServicios.map((servicio) => (
+                    <option key={servicio.id_servicio} value={servicio.id_servicio}>
+                      {servicio.nombre}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No tiene productos registrados</option>
+                )}
+              </FormSelect>
+              <Form.Control
+                className='border border-secondary rounded rounded-1.1 shadow ml-1'
+                style={{ marginLeft:'10px', width:'104px'}}
+                type="number"
+                placeholder="Cantidad"
+              />
+            </Form.Group>
+
             <Form.Group controlId="formServicio">
               {/* <Form.Label>Servicio*</Form.Label> */}
               <FormSelect className="mt-5 mt-3 border border-secondary rounded rounded-1.1 shadow"
@@ -482,12 +584,11 @@ const RegistroServiciosRealizados = () => {
               <button
                 className='buttonRegistrar'
                 onClick={(e) => {
-                  e.preventDefault();
-                  handleShowModal()
+                  createTable(formData2)
                 }}
 
               >
-                Nuevo Servicio
+                Agregar
               </button>
             </div>
 

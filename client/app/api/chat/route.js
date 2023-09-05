@@ -159,7 +159,7 @@ function buildPrompt(messages) {
           } else {
             return `Human: ${content}`;
           };
-          
+          enviarContenido = false
         } else {
           return `Assistant: ${content}`;
         }

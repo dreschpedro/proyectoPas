@@ -48,7 +48,7 @@ const Sidebar = () => {
         <div className='buttoncito'>
           <Link href={"/admin/servicios"} className='custom-link d-flex  align-items-center'>
             <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff" , marginRight:'15px'}} />
-            <b>Servicios</b>
+            <b>Productos</b>
           </Link>
         </div>
 
