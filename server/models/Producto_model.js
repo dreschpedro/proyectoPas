@@ -12,17 +12,6 @@ const Producto_model = sequelize.define('producto', {
     type: DataTypes.STRING(100),
     allowNull: false,
   },
-  precio: {
-    type: DataTypes.NUMERIC(10, 2),
-    allowNull: false,
-  },
-  entregado: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-  },
-  fecha_entrega: {
-    type: DataTypes.DATEONLY,
-  },
   activo: {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
