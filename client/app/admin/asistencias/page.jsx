@@ -608,6 +608,9 @@ const RegistroServiciosRealizados = () => {
 
 
                   {/* inicio componente 3 */}
+
+
+                  
       <h1 className='titulo'>Información</h1>
 
       <Form onSubmit={handleSubmit} className='bordesito' >

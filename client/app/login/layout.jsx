@@ -74,7 +74,7 @@ export default function RootLayout({ children }) {
                         </Col>
                     </Row>
 
-                    <div className="d-flex justify-content-between  mt-5 px-3 fixed-sm-bottom">
+                    <div className="d-flex justify-content-between  mt-5 px-3 ">
                         <div className="">
                             <Image
                                 src="/img/misionesGob.png"

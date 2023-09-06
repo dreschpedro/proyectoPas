@@ -145,13 +145,13 @@ const ServicesCrud = () => {
   return (
     <Container className='mt-3'>
      <div className='d-flex justify-content-between flex-wrap mb-3'>
-      <h1 className='titulo'>Gestión de Servicios</h1>
+      <h1 className='titulo'>Gestión de Productos</h1>
       <button
        className='buttonRegistrar responsive-buttons'
         size="lg"
         onClick={() => handleShowModal()}
       >
-        Agregar Servicio
+        Agregar Productos
       </button>
       </div>
       <Table striped bordered hover>
