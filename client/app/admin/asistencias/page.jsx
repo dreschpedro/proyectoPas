@@ -523,7 +523,12 @@ const RegistroServiciosRealizados = () => {
       </Form >
       {/* fin comoponente 2 */}
 
-      {/* inicio componente 2 */}
+
+
+                  {/* inicio componente 3 */}
+
+
+                  
       <h1 className='titulo'>Información</h1>
       <Form onSubmit={handleSubmit} className='bordesito' >
 

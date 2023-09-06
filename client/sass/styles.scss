@@ -34,10 +34,33 @@ $primary: $principal;
     background-color: #150644;
     /* Cambia el color al hacer clic */
   }
-
-
-
 }
+
+
+.buttoncitoReg {
+  border: none;
+  background-color: #22096F;
+  margin-Top: 15px;
+  // display: flex;
+  // justify-content: center;
+  // align-content: center;
+  color: #FFFFFF;
+  width: 200px;
+  height: 46px;
+  border-radius: 10px;
+  padding: 10px 20px;
+
+  &:hover {
+    background-color: #1a0752;
+    /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #150644;
+    /* Cambia el color al hacer clic */
+  }
+}
+
 
 Link {
   text-decoration: none;

@@ -9,6 +9,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 // ...
 
@@ -38,24 +39,18 @@ const Sidebar = () => {
 
 
 
-        <div className='buttoncito custom-link'>
-          <Link href={"/admin/organizaciones"} className='custom-link d-flex  align-items-center'>
-            <FontAwesomeIcon icon={faBuilding} style={{ color: "#ffffff", marginRight:'15px' }} />
-            <b>Organizaciones</b>
-          </Link>
-        </div>
-
+       
         <div className='buttoncito'>
-          <Link href={"/admin/servicios"} className='custom-link d-flex  align-items-center'>
+          <Link href={"/admin/asistencias"} className='custom-link d-flex  align-items-center'>
             <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff" , marginRight:'15px'}} />
-            <b>Productos</b>
+            <b>Asistencias</b>
           </Link>
         </div>
 
         <div className='buttoncito'>
-          <Link href={"/admin/usuarios"} className='custom-link d-flex align-items-center'>
-            <FontAwesomeIcon icon={faUsers} style={{ color: "#ffffff", marginRight:'15px' }} />
-            <b>Usuarios</b>
+          <Link href={"/admin/registros"} className='custom-link d-flex  align-items-center'>
+            <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff" , marginRight:'15px'}} />
+            <b>Registros</b>
           </Link>
         </div>
 
