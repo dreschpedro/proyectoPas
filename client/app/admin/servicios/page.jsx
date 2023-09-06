@@ -473,7 +473,7 @@ const RegistroServiciosRealizados = () => {
     <>
       <Row>
         <Col>
-
+          {/* inicio componente 1 */}
           <div className='d-flex flex-wrap justify-content-between tablet-width text-nowrap'>
             <h1 className='titulo text-nowrap'>Registrar Servicio</h1>
             <div className='d-flex'>
@@ -496,6 +496,8 @@ const RegistroServiciosRealizados = () => {
               </Link>
             </div>
           </div>
+
+          {/* fin componente 1 */}
         </Col>
 
 
@@ -504,6 +506,10 @@ const RegistroServiciosRealizados = () => {
 
         <Row>
           <Col>
+
+            {/* inicio componente 2 */}
+
+
             {/* Seleccionar Organizacion y Servicio */}
 
             <Form.Group controlId="formOrganizacion">
@@ -592,10 +598,16 @@ const RegistroServiciosRealizados = () => {
               </button>
             </div>
 
+
+                {/* fin comoponente 2 */}
+
           </Col>
         </Row>
       </Form >
 
+
+
+                  {/* inicio componente 3 */}
       <h1 className='titulo'>Información</h1>
 
       <Form onSubmit={handleSubmit} className='bordesito' >
@@ -825,6 +837,9 @@ const RegistroServiciosRealizados = () => {
           </Col>
         </Row>
       </Form>
+
+
+                    {/* fin componente 3 */}
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
