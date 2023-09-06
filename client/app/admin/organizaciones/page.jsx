@@ -140,8 +140,6 @@ const ListaOrganizaciones = () => {
     }
   };
 
-
-
   console.log('listaOrganizaciones: \n', listaOrganizaciones);
 
   const handleUserClick = (id) => {

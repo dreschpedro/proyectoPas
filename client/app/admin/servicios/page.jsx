@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { Form, Button, InputGroup, Modal, FormSelect } from 'react-bootstrap';
+import { Form, FormSelect } from 'react-bootstrap';
 import Link from 'next/link';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -15,65 +15,64 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 //   servicios: '',
 // });
 
-const handleSubmit2 = (e) => {
-  e.preventDefault();
-  const { organizacion, productos, servicios } = formData2;
-  console.log('Valores del segundo formulario:', organizacion, productos, servicios);
-};
+// const handleSubmit2 = (e) => {
+//   e.preventDefault();
+//   const { organizacion, productos, servicios } = formData2;
+//   console.log('Valores del segundo formulario:', organizacion, productos, servicios);
+// };
 
-const createTable = (formData2) => {
-  // Verifica si hay información para mostrar en la tabla
+// const createTable = (formData2) => {
+//   // Verifica si hay información para mostrar en la tabla
 
-  
-  if (
-    formData2.organizacion &&
-    formData2.servicio &&
-    formData2.cantidad
-  ) {
-    return (
-      <Table striped bordered hover>
-        {/* Encabezados de la tabla */}
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Organización</th>
-            <th>Productos</th>
-            <th>Cantidad de Productos</th>
-            <th>Servicios</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* Contenido de la tabla */}
-          <tr>
-            <td>{/* ID de servicio */}</td>
-            <td>{formData.organizacion}</td>
-            <td>{/* Nombre de productos */}</td>
-            <td>{formData.cantidad}</td>
-            <td>{formData.servicio}</td>
-            <td>
-              {/* Botones de acciones */}
-              <Button
-                variant="outline-warning"
-                onClick={() => handleShowModal()}
-              >
-                Modificar
-              </Button>
-              <Button
-                variant="outline-danger"
-                onClick={() => handleShowDeleteModal()}
-              >
-                Eliminar
-              </Button>
-            </td>
-          </tr>
-        </tbody>
-      </Table>
-    );
-  } else {
-    return null; // No hay información para mostrar, retorna null
-  }
-};
+//   if (
+//     formData2.organizacion &&
+//     formData2.servicio &&
+//     formData2.cantidad
+//   ) {
+//     return (
+//       <Table striped bordered hover>
+//         {/* Encabezados de la tabla */}
+//         <thead>
+//           <tr>
+//             <th>ID</th>
+//             <th>Organización</th>
+//             <th>Productos</th>
+//             <th>Cantidad de Productos</th>
+//             <th>Servicios</th>
+//             <th>Acciones</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {/* Contenido de la tabla */}
+//           <tr>
+//             <td>{/* ID de servicio */}</td>
+//             <td>{formData.organizacion}</td>
+//             <td>{/* Nombre de productos */}</td>
+//             <td>{formData.cantidad}</td>
+//             <td>{formData.servicio}</td>
+//             <td>
+//               {/* Botones de acciones */}
+//               <Button
+//                 variant="outline-warning"
+//                 onClick={() => handleShowModal()}
+//               >
+//                 Modificar
+//               </Button>
+//               <Button
+//                 variant="outline-danger"
+//                 onClick={() => handleShowDeleteModal()}
+//               >
+//                 Eliminar
+//               </Button>
+//             </td>
+//           </tr>
+//         </tbody>
+//       </Table>
+//     );
+//   } else {
+//     return null; // No hay información para mostrar, retorna null
+//   }
+// };
 
 const RegistroServiciosRealizados = () => {
 
@@ -81,97 +80,80 @@ const RegistroServiciosRealizados = () => {
   const [searchInProgress, setSearchInProgress] = useState(false);
   const [selectedDepartamento, setSelectedDepartamento] = useState('');
   const [selectedLocalidad, setSelectedLocalidad] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [selectedService, setSelectedService] = useState('');
   const [organizaciones, setOrganizaciones] = useState([]);
   const [servicios, setServicios] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
   const [localidades, setLocalidades] = useState([]);
   const [organizacionServicios, setOrganizacionServicios] = useState([]);
   const [organizacionTieneServicios, setOrganizacionTieneServicios] = useState(true);
-  const [modalFormData, setModalFormData] = useState({
-    nombre: '',
-    descripcion: '',
-    organizacion: '',
-    id_organizacion: '',
-  });
 
-  const [modalConfig, setModalConfig] = useState({
-    show: false,
-    color: 'green', // Default color
-    message: '',
-    time: 2000, // Default time in milliseconds
-  });
-
-  const handleShowStatus = (options) => {
-    setModalConfig({
-      show: true,
-      color: options.color || 'green',
-      message: options.message || '',
-      time: options.time || 2000,
-    });
-
-    // Close the modal after the specified time
-    setTimeout(() => {
-      handleCloseModalStatus();
-    }, modalConfig.time);
-  };
-
-  const handleCloseModalStatus = () => {
-    setModalConfig({
-      ...modalConfig,
-      show: false,
-    });
-  };
-
-  const genreDB = ['masculino', 'femenino', 'noBinario', 'noDecir'];
-  const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo'];
-
-  const fetchDepartamentos = async () => {
-    try {
-      const response = await fetch(`https://apis.datos.gob.ar/georef/api/departamentos?provincia=54&campos=id,nombre&max=17`);
-      const data = await response.json();
-      // console.log('Departamentos Response:', response);
-      // console.log('Parsed Data:', data);
-      return data.departamentos || [];
-    } catch (error) {
-      console.error('Error fetching departamentos:', error); // Log the error
-      return [];
-    }
-  };
-
-  const fetchLocalidades = async (departamentoId) => {
-    try {
-      const response = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?departamento=${departamentoId}`);
-      const data = await response.json();
-      // console.log('Localidades Response:', data);
-      return data.localidades || [];
-    } catch (error) {
-      console.error('Error fetching localidades:', error); // Log the error
-      return [];
-    }
-  };
+  {/* Funciones 1er Form */ }
 
   useEffect(() => {
-    const fetchInitialData = async () => {
+    const fetchOrganizaciones = async () => {
       try {
-        const departamentosData = await fetchDepartamentos();
-        const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-        setDepartamentos(sortedDepartamentos);
-
-        // Fetch localidades based on the selectedDepartamento
-        if (selectedDepartamento) {
-          const localidadesData = await fetchLocalidades(selectedDepartamento);
-          const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-          setLocalidades(sortedLocalidades);
-        }
+        const response = await instance.get('/organizaciones');
+        setOrganizaciones(response.data);
+        // console.log('Organizaciones:', response.data); // Add this console.log
       } catch (error) {
-        console.error('Error fetching initial data:', error);
+        console.error('Error al obtener las organizaciones:', error);
       }
     };
 
-    fetchInitialData();
+    const fetchServicios = async () => {
+      try {
+        const response = await instance.get('/servicios/activo');
+        setServicios(response.data);
+        // console.log('Servicios:', response.data); // Add this console.log
+      } catch (error) {
+        console.error('Error al obtener los servicios:', error);
+      }
+    };
+
+    fetchOrganizaciones();
+    fetchServicios();
   }, []);
+
+  const handleSubmit2 = (e) => {
+    e.preventDefault();
+    const { organizacion, productos, servicios } = formData2;
+    console.log('Valores del segundo formulario:', organizacion, productos, servicios);
+  };
+
+  const fetchServiciosPorOrganizacion = async (organizacionId) => {
+    try {
+      const response = await instance.get(`/servicios/organizacion/${organizacionId}`);
+      const servicios = response.data;
+      setOrganizacionServicios(servicios);
+      setOrganizacionTieneServicios(servicios.length > 0);
+    } catch (error) {
+      console.error('Error al obtener los servicios:', error);
+    }
+  };
+
+  const handleOrganizacionChange = async (organizacionId) => {
+    setFormData((prevServiceInfo) => ({
+      ...prevServiceInfo,
+      id_organizacion: organizacionId,
+      servicio: '', // Reset the selected service when the organization changes
+    }));
+
+    // Llamada a la función para obtener servicios por organización
+    fetchServiciosPorOrganizacion(organizacionId);
+
+    // Buscar la organización seleccionada
+    const selectedOrganizacion = organizaciones.find(org => org.id_organizacion === organizacionId);
+
+    if (selectedOrganizacion) {
+      console.log('Selected Organizacion ID:', selectedOrganizacion.id_organizacion);
+    } else {
+      console.log('Selected Organizacion: No se encontró la organización');
+    }
+  };
+
+  {/*Fin Funciones 1er Form */ }
+
+  {/* Funciones 2do Form */ }
 
   const [formData, setFormData] = useState({
     id_cliente: '',
@@ -192,6 +174,11 @@ const RegistroServiciosRealizados = () => {
     id_organizacion: '',
   });
 
+  {/* este useEffect y validateForm, validan si estan seleccionados una organizacion y servicio */ }
+  useEffect(() => {
+    validateForm();
+  }, [formData.organizacion, formData.servicio]);
+
   const validateForm = () => {
     if (formData.organizacion && formData.servicio && organizacionTieneServicios) {
       setIsFormValid(true);
@@ -200,9 +187,8 @@ const RegistroServiciosRealizados = () => {
     }
   };
 
-  useEffect(() => {
-    validateForm();
-  }, [formData.organizacion, formData.servicio]);
+  const genreDB = ['masculino', 'femenino', 'noBinario', 'noDecir'];
+  const genreView = ['Masculino', 'Femenino', 'No Binario', 'Prefiero no Decirlo'];
 
   const searchByDNI = async (dni) => {
     setSearchInProgress(true);
@@ -254,14 +240,109 @@ const RegistroServiciosRealizados = () => {
     }
   };
 
+  const fetchDepartamentos = async () => {
+    try {
+      const response = await fetch(`https://apis.datos.gob.ar/georef/api/departamentos?provincia=54&campos=id,nombre&max=17`);
+      const data = await response.json();
+      // console.log('Departamentos Response:', response);
+      // console.log('Parsed Data:', data);
+      return data.departamentos || [];
+    } catch (error) {
+      console.error('Error fetching departamentos:', error); // Log the error
+      return [];
+    }
+  };
+
+  const fetchLocalidades = async (departamentoId) => {
+    try {
+      const response = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?departamento=${departamentoId}`);
+      const data = await response.json();
+      // console.log('Localidades Response:', data);
+      return data.localidades || [];
+    } catch (error) {
+      console.error('Error fetching localidades:', error); // Log the error
+      return [];
+    }
+  };
+
+  const handleDepartamentoChange = async (departamentoId) => {
+    console.log('handleDepartamentoChange triggered with departamentoId:', departamentoId);
+
+    setSelectedDepartamento(departamentoId);
+    setSelectedLocalidad('');
+
+    const localidadesData = await fetchLocalidades(departamentoId);
+    // console.log('Localidades Data:', localidadesData);
+    const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    setLocalidades(sortedLocalidades);
+
+    setFormData((prevData) => ({
+      ...prevData,
+      departamento: departamentoId,
+      localidad: '',
+    }));
+    console.log('Departamento: ', departamentoId);
+  };
+
+  const handleLocalidadChange = async (localidad_id) => {
+    setSelectedLocalidad(localidad_id);
+
+    setFormData((prevData) => ({
+      ...prevData,
+      localidad: localidad_id,
+    }));
+    console.log('Localidad:', localidad_id);
+  };
+
+  const dbDate = new Date(formData.fechaNacimiento);
+  const formattedDate = `${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()}`;
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const departamentosData = await fetchDepartamentos();
+        const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        setDepartamentos(sortedDepartamentos);
+
+        // Fetch localidades based on the selectedDepartamento
+        if (selectedDepartamento) {
+          const localidadesData = await fetchLocalidades(selectedDepartamento);
+          const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+          setLocalidades(sortedLocalidades);
+        }
+      } catch (error) {
+        console.error('Error fetching initial data:', error);
+      }
+    };
+
+    fetchInitialData();
+  }, []);
+
+  const handleInputChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+
+    if (name === 'fechaNacimiento') {
+      setFormData((prevData) => ({
+        ...prevData,
+        fechaNacimiento: value, // Mantén la fecha en el formato aaaa-mm-dd
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formattedDateToSend = formData.fechaNacimiento.split('/').reverse().join('-');
 
       const id_cliente = formData.id_cliente;
+      // Si no hay un id_cliente
       if (!id_cliente) {
-        // Si no hay un id_cliente
 
         const nuevoClienteData = {
           fechaNacimiento: formattedDateToSend,
@@ -314,166 +395,12 @@ const RegistroServiciosRealizados = () => {
     }
   };
 
-  const handleDepartamentoChange = async (departamentoId) => {
-    console.log('handleDepartamentoChange triggered with departamentoId:', departamentoId);
-
-    setSelectedDepartamento(departamentoId);
-    setSelectedLocalidad('');
-
-    const localidadesData = await fetchLocalidades(departamentoId);
-    // console.log('Localidades Data:', localidadesData);
-    const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-    setLocalidades(sortedLocalidades);
-
-    setFormData((prevData) => ({
-      ...prevData,
-      departamento: departamentoId,
-      localidad: '',
-    }));
-    console.log('Departamento: ', departamentoId);
-  };
-
-  const handleLocalidadChange = async (localidad_id) => {
-    setSelectedLocalidad(localidad_id);
-
-    setFormData((prevData) => ({
-      ...prevData,
-      localidad: localidad_id,
-    }));
-    console.log('Localidad:', localidad_id);
-  };
-
-  const handleInputChange = (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-
-    if (name === 'fechaNacimiento') {
-      setFormData((prevData) => ({
-        ...prevData,
-        fechaNacimiento: value, // Mantén la fecha en el formato aaaa-mm-dd
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
-
-  const dbDate = new Date(formData.fechaNacimiento);
-  const formattedDate = `${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()}`;
-
-  const setModalOrganizacionValue = (organizacionId) => {
-    setModalFormData((prevModalFormData) => ({
-      ...prevModalFormData,
-      id_organizacion: organizacionId,
-    }));
-  };
-
-  const fetchServiciosPorOrganizacion = async (organizacionId) => {
-    try {
-      const response = await instance.get(`/servicios/organizacion/${organizacionId}`);
-      const servicios = response.data;
-      setOrganizacionServicios(servicios);
-      setOrganizacionTieneServicios(servicios.length > 0);
-    } catch (error) {
-      console.error('Error al obtener los servicios:', error);
-    }
-  };
-
-  const handleOrganizacionChange = async (organizacionId) => {
-    setFormData((prevServiceInfo) => ({
-      ...prevServiceInfo,
-      id_organizacion: organizacionId,
-      servicio: '', // Reset the selected service when the organization changes
-    }));
-
-    // Llamada a la función para obtener servicios por organización
-    fetchServiciosPorOrganizacion(organizacionId);
-
-    // Buscar la organización seleccionada
-    const selectedOrganizacion = organizaciones.find(org => org.id_organizacion === organizacionId);
-
-    if (selectedOrganizacion) {
-      console.log('Selected Organizacion ID:', selectedOrganizacion.id_organizacion);
-    } else {
-      console.log('Selected Organizacion: No se encontró la organización');
-    }
-  };
-
-  const handleShowModal = (service) => {
-    setSelectedService(service);
-    setShowModal(true);
-    // Additional code to set initial values if editing an existing service
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  useEffect(() => {
-    const fetchOrganizaciones = async () => {
-      try {
-        const response = await instance.get('/organizaciones');
-        setOrganizaciones(response.data);
-        // console.log('Organizaciones:', response.data); // Add this console.log
-      } catch (error) {
-        console.error('Error al obtener las organizaciones:', error);
-      }
-    };
-
-    const fetchServicios = async () => {
-      try {
-        const response = await instance.get('/servicios/activo');
-        setServicios(response.data);
-        // console.log('Servicios:', response.data); // Add this console.log
-      } catch (error) {
-        console.error('Error al obtener los servicios:', error);
-      }
-    };
-
-    fetchOrganizaciones();
-    fetchServicios();
-  }, []);
-
-  const handleModalInputChange = (event) => {
-    const { name, value } = event.target;
-    setModalFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    console.log('Modal form data:', modalFormData);
-  };
-
-  const handleModalSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const dataToSend = {
-        nombre: modalFormData.nombre,
-        descripcion: modalFormData.descripcion,
-        id_organizacion: modalFormData.id_organizacion,
-      };
-
-      console.log('Data to send:', dataToSend);
-
-      const response = await instance.post('/servicios/registrar', dataToSend);
-      console.log(response.data.message);
-
-      console.log('Saving changes');
-      // Fetch updated services and close modal
-      fetchServicios();
-      handleCloseModal();
-    } catch (error) {
-      console.error('Error saving changes:', error);
-    }
-  };
+  {/*Fin Funciones 2do Form */ }
 
   return (
     <>
       <Row>
         <Col>
-          {/* inicio componente 1 */}
           <div className='d-flex flex-wrap justify-content-between tablet-width text-nowrap'>
             <h1 className='titulo text-nowrap'>Registrar Servicio</h1>
             <div className='d-flex'>
@@ -497,21 +424,16 @@ const RegistroServiciosRealizados = () => {
             </div>
           </div>
 
-          {/* fin componente 1 */}
         </Col>
 
 
       </Row>
-      <Form onSubmit={handleSubmit2} className='bordesito tablet-width'>
 
+      <Form onSubmit={handleSubmit2} className='bordesito tablet-width'>
+        {/* inicio componente 1 */}
         <Row>
           <Col>
-
-            {/* inicio componente 2 */}
-
-
             {/* Seleccionar Organizacion y Servicio */}
-
             <Form.Group controlId="formOrganizacion">
               {/* <Form.Label>Organización*</Form.Label> */}
               <FormSelect
@@ -558,7 +480,7 @@ const RegistroServiciosRealizados = () => {
               </FormSelect>
               <Form.Control
                 className='border border-secondary rounded rounded-1.1 shadow ml-1'
-                style={{ marginLeft:'10px', width:'104px'}}
+                style={{ marginLeft: '10px', width: '104px' }}
                 type="number"
                 placeholder="Cantidad"
               />
@@ -592,24 +514,17 @@ const RegistroServiciosRealizados = () => {
                 onClick={(e) => {
                   createTable(formData2)
                 }}
-
               >
                 Agregar
               </button>
             </div>
-
-
-                {/* fin comoponente 2 */}
-
           </Col>
         </Row>
       </Form >
+      {/* fin comoponente 2 */}
 
-
-
-                  {/* inicio componente 3 */}
+      {/* inicio componente 2 */}
       <h1 className='titulo'>Información</h1>
-
       <Form onSubmit={handleSubmit} className='bordesito' >
 
         <Row>
@@ -837,92 +752,6 @@ const RegistroServiciosRealizados = () => {
           </Col>
         </Row>
       </Form>
-
-
-                    {/* fin componente 3 */}
-
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Agregar servicio</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-
-          <Form onSubmit={handleModalSubmit}>
-            <Form.Group controlId="formName">
-              {/* <Form.Label>Nombre del Servicio*</Form.Label> */}
-              <Form.Control
-                className="mb-3 border border-secondary rounded rounded-1.1 shadow"
-                type="text"
-                as='input'
-                name="nombre"
-                required
-                placeholder='Nombre del Servicio'
-                value={modalFormData.nombre}
-                onChange={handleModalInputChange}
-              />
-            </Form.Group>
-
-
-            <Form.Group controlId="formOrganizacion">
-              {/* <Form.Label>Organización*</Form.Label> */}
-              <InputGroup >
-                <Form.Control
-                  as="select"
-                  className="mb-3 border border-secondary rounded rounded-1.1 shadow"
-                  placeholder='Organización'
-                  value={modalFormData.id_organizacion} // Cambia a serviceInfo.id_organizacion
-                  onChange={(e) => setModalOrganizacionValue(e.target.value)} // Usa setOrganizacionValue directamente
-                  required
-                >
-                  <option value="">Seleccionar Organización</option>
-                  {organizaciones.map((organizacion) => (
-                    <option key={organizacion.id_organizacion} value={organizacion.id_organizacion}>
-                      {organizacion.nombre}
-                    </option>
-                  ))}
-                </Form.Control>
-
-              </InputGroup>
-            </Form.Group>
-
-            <Form.Group controlId="formDescripcion">
-              <Form.Label>Descripción del Servicio</Form.Label>
-              <Form.Control
-                as="textarea"
-                className="mb-3 border border-secondary rounded rounded-1.1 shadow"
-                // placeholder='Descripción del Servicio'
-                name="descripcion"
-                value={modalFormData.descripcion}
-                onChange={handleModalInputChange}
-              />
-            </Form.Group>
-            <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
-              <button
-                className='bouttoncancel'
-                type="button"
-                onClick={handleCloseModal}
-              >
-                Cerrar
-              </button>
-              <button
-                className='buttonRegistrar'
-                type="submit">
-                Agregar Servicio
-              </button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
-
-      {/* modal para los res.status */}
-      <Modal show={modalConfig.show} onHide={handleCloseModalStatus}>
-        <Modal.Header closeButton>
-          <Modal.Title>Resultado</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div style={{ color: modalConfig.color }}>{modalConfig.message}</div>
-        </Modal.Body>
-      </Modal>
     </>
   );
 };
