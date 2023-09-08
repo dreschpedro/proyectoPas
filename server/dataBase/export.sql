@@ -23,13 +23,21 @@ INSERT INTO "cliente" ("id_cliente", "apellido", "nombre", "dni", "fechaNacimien
 -- Volcando datos para la tabla public.organizacion: -1 rows
 /*!40000 ALTER TABLE "organizacion" DISABLE KEYS */;
 INSERT INTO "organizacion" ("id_organizacion", "nombre", "direccion", "telefono", "email", "descripcion", "imagen", "activo", "createdAt", "updatedAt") VALUES
-	(1, 'Sanatorio Caminos', 'Av San Martin 3213', '123456789', 'caminos@sanatorio.com.ar', 'csdcsdc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-02 21:22:08.114-03', '2023-08-02 21:22:08.114-03'),
 	(2, 'Universidad Nacional', 'Avenida Universidad 123', '555-123-4567', 'contacto@universidadnacional.edu', 'jkjkjkjkc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-02 21:22:16.815-03', '2023-08-02 21:22:16.815-03'),
 	(3, 'Organización sin fines de lucro', 'Plaza de la Solidaridad 789', '555-555-5555', 'fines@organizacion.org', 'jkjkjkjkc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-02 21:22:30.354-03', '2023-08-02 21:22:30.354-03'),
 	(4, 'jjjjjjjj', 'av org 1', '3216816516', 'csd@fd', 'cdsc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-08 18:44:42.206-03', '2023-08-08 18:44:42.206-03'),
 	(5, 'Juancsdcsdcsdc', 'San Martín 2256', '1111111111', 'perez1@juan.com', 'xaaaaaaaa', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-08 18:49:30.126-03', '2023-08-08 18:49:30.126-03'),
-	(6, 'Sanatorio Boratti', 'San Martín 2256', '3216816516', 'boratti@sanatorio.com.ar', 'dccccc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-08 18:50:37.915-03', '2023-08-08 18:50:37.915-03');
+	(6, 'Sanatorio Boratti', 'San Martín 2256', '3216816516', 'boratti@sanatorio.com.ar', 'dccccc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-08 18:50:37.915-03', '2023-08-08 18:50:37.915-03'),
+	(1, 'Sanatorio Caminos', 'Av San Martin 3213', '123456789', 'caminos@sanatorio.com.ar', 'csdcsdc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-02 21:22:08.114-03', '2023-09-08 11:52:59.55-03');
 /*!40000 ALTER TABLE "organizacion" ENABLE KEYS */;
+
+-- Volcando datos para la tabla public.personal: -1 rows
+/*!40000 ALTER TABLE "personal" DISABLE KEYS */;
+INSERT INTO "personal" ("id_personal", "apellido", "nombre", "cuilt", "domicilio", "profesion", "telefono", "imagen", "activo", "createdAt", "updatedAt", "id_organizacion", "id_usuario") VALUES
+	(1, 'Perez', 'Juancsdcsdcsdc', '111111111', 'Posadascdcd', 'Profesion 1', '1111111111', '/uploads/personal/default_personal.png', 'true', '2023-08-02 21:25:04.971-03', '2023-08-03 14:20:12.701-03', 1, 1),
+	(3, 'Espinosa', 'Federico', '999999', 'Posadas', 'Profesion 3', '3333333333', '/uploads/personal/default_personal.png', 'true', '2023-08-02 21:25:18.566-03', '2023-08-03 14:21:18.054-03', 2, 3),
+	(2, 'Gonzalez', 'Ramon', '222222222', 'Posadas', 'Profesion 3', '8888888', '/uploads/personal/default_personal.png', 'false', '2023-08-02 21:25:12.903-03', '2023-08-24 10:08:36.778-03', 1, 2);
+/*!40000 ALTER TABLE "personal" ENABLE KEYS */;
 
 -- Volcando datos para la tabla public.producto: -1 rows
 /*!40000 ALTER TABLE "producto" DISABLE KEYS */;
@@ -73,14 +81,6 @@ INSERT INTO "usuario" ("id_usuario", "username", "password", "email", "token", "
 	(2, 'Ramon2', '$2b$10$PUP.GxwbyUEHrEspluCOd.1RdkYOzxKOErW9kmnEsigBqyhjLrqlS', 'gonzalez@ramon.com', '0.96695835254248391691022248357', 'false', 'Data-Entry', 'true', '2023-08-02 21:24:08.278-03', '2023-08-02 21:24:08.433-03'),
 	(3, 'Federico3', '$2b$10$t5S8waS87VsyjSH.I.gR2ubluR6bfc.zBSdtep7efv35svy6Qnsqi', 'fede@espino.com', '0.28504958233006161691022253920', 'false', 'Consultor', 'true', '2023-08-02 21:24:13.84-03', '2023-08-02 21:24:13.998-03');
 /*!40000 ALTER TABLE "usuario" ENABLE KEYS */;
-
--- Volcando datos para la tabla public.personal: -1 rows
-/*!40000 ALTER TABLE "personal" DISABLE KEYS */;
-INSERT INTO "personal" ("id_personal", "apellido", "nombre", "cuilt", "domicilio", "profesion", "telefono", "imagen", "activo", "createdAt", "updatedAt", "id_organizacion", "id_usuario") VALUES
-	(1, 'Perez', 'Juancsdcsdcsdc', '111111111', 'Posadascdcd', 'Profesion 1', '1111111111', '/uploads/personal/default_personal.png', 'true', '2023-08-02 21:25:04.971-03', '2023-08-03 14:20:12.701-03', 1, 1),
-	(3, 'Espinosa', 'Federico', '999999', 'Posadas', 'Profesion 3', '3333333333', '/uploads/personal/default_personal.png', 'true', '2023-08-02 21:25:18.566-03', '2023-08-03 14:21:18.054-03', 2, 3),
-	(2, 'Gonzalez', 'Ramon', '222222222', 'Posadas', 'Profesion 3', '8888888', '/uploads/personal/default_personal.png', 'false', '2023-08-02 21:25:12.903-03', '2023-08-24 10:08:36.778-03', 1, 2);
-/*!40000 ALTER TABLE "personal" ENABLE KEYS */;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
