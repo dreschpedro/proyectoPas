@@ -5,9 +5,21 @@ import instance, { serverURL } from '@/app/axiosConfig';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { GET } from '../../../api/crudProductos/route.js';
 
 
-const ServicesCrud = () => {
+
+
+
+// const fetchData = async () => {
+//   const data = await GET();
+//   console.log(data);
+// };
+
+// fetchData();
+
+const ProductsCrud = () => {
+  const [listaProductos, setListaProductos] = useState([])
   const [services, setServices] = useState([]);
   const [organizaciones, setOrganizaciones] = useState([]); // Agregar estado para las organizaciones
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +30,42 @@ const ServicesCrud = () => {
     id_organizacion: '',
     Organizacion: '', // Combobox para la organización que realiza el servicio
   });
+
+ 
+
+  // const products = GET()
+
+  // const productData = products.map(product => {
+  //   return {
+  //     name: product.name,
+  //     description: product.description
+  //   }
+  // })
+
+  // setProductData(productData)
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const productos = await GET();
+        console.log(`productos: `, productos);
+
+        if (Array.isArray(productos)) {
+          setListaProductos(productos);
+        } else {
+          console.error('La respuesta de GET no es un array:', productos);
+        }
+      } catch (error) {
+        console.error('Error al obtener la lista de Organizaciones:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
 
   useEffect(() => {
     const fetchOrganizaciones = async () => {
@@ -141,6 +189,9 @@ const ServicesCrud = () => {
       console.error('Error al eliminar el servicio:', error.message);
     }
   };
+
+
+  const [data, setdata] = useState([]);
 
   return (
     <Container className='mt-3'>
@@ -273,4 +324,4 @@ const ServicesCrud = () => {
   );
 };
 
-export default ServicesCrud;
+export default ProductsCrud;
