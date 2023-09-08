@@ -259,14 +259,14 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 function form2() {
   return (
     <>
-           {/* inicio componente 2 */}
+      {/* inicio componente 2 */}
 
 
-                  
-           <h1 className='titulo'>Información</h1>
-      <Form 
-      // onSubmit={handleSubmit} 
-      className='bordesito' >
+
+      <h1 className='titulo'>Información</h1>
+      <Form
+        // onSubmit={handleSubmit} 
+        className='bordesito' >
 
         <Row>
 
@@ -289,11 +289,11 @@ function form2() {
                   <button
                     style={{ marginLeft: '0.5rem', borderRadius: '5px' }}
                     className="buscarbutton"
-                    // onClick={(e) => {
-                    //   e.preventDefault();
-                    //   searchByDNI(formData.dni);
-                    // }
-                    // }
+                  // onClick={(e) => {
+                  //   e.preventDefault();
+                  //   searchByDNI(formData.dni);
+                  // }
+                  // }
                   >
 
                     <FontAwesomeIcon icon={faSearch} style={{ color: "#FFFF", }} />
@@ -354,9 +354,9 @@ function form2() {
                 className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
                 name="genero"
-                // value={formData.genero}
-                // onChange={handleInputChange}
-                // required={!searchInProgress}
+              // value={formData.genero}
+              // onChange={handleInputChange}
+              // required={!searchInProgress}
               >
                 <option value="">Seleccione el Género</option>
                 {/* {genreDB.map((genero, index) => (
@@ -416,11 +416,11 @@ function form2() {
                 className='border border-secondary rounded rounded-1.1 shadow mt-5'
                 as="select"
                 name='departamento'
-                // value={formData.departamento}
-                // onChange={(e) => {
-                //   handleDepartamentoChange(e.target.value);
-                // }}
-                // required={!searchInProgress}
+              // value={formData.departamento}
+              // onChange={(e) => {
+              //   handleDepartamentoChange(e.target.value);
+              // }}
+              // required={!searchInProgress}
               >
                 <option value="">Seleccione el Departamento</option>
                 {/* {departamentos.map((departamento) => (
@@ -437,11 +437,11 @@ function form2() {
                 className='border border-secondary rounded rounded-1.1 shadow mt-5 mt-3'
                 as="select"
                 name='localidad'
-                // value={selectedLocalidad} // Make sure this value matches the initial value
-                // onChange={(e) => {
-                //   handleLocalidadChange(e.target.value);
-                // }}
-                // required={!searchInProgress}
+              // value={selectedLocalidad} // Make sure this value matches the initial value
+              // onChange={(e) => {
+              //   handleLocalidadChange(e.target.value);
+              // }}
+              // required={!searchInProgress}
               >
                 <option value="">Seleccione la Localidad</option>
                 {/* {localidades.map((localidad) => (
@@ -487,7 +487,7 @@ function form2() {
 
               <button className='buttonRegistrar' type="submit"
               //  disabled={!isFormValid}
-               >
+              >
                 Registrar Servicio
               </button>
             </div>
@@ -496,7 +496,7 @@ function form2() {
         </Row>
       </Form>
     </>
-    )
+  )
 }
 
 export default form2

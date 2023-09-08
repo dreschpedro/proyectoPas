@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Form1 from '@/components/form1';
-import Form2 from '@/components/form2';
+import Form1 from '@/components/formDesplegables';
+import Form2 from '@/components/formCliente';
 
 
 const RegistroServiciosRealizados = () => {

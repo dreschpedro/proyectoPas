@@ -75,9 +75,9 @@ import instance, { serverURL } from '@/app/axiosConfig';
 function form1() {
   return (
     <>
-    <Form 
-    // onSubmit={handleSubmit2}
-     className='bordesito tablet-width'>
+      <Form
+        // onSubmit={handleSubmit2}
+        className='bordesito tablet-width'>
         {/* inicio componente 1 */}
         <Row>
           <Col>
@@ -112,8 +112,8 @@ function form1() {
                 // style={{ width: '40px' }}
                 name='servicio'
                 as="select"
-                // value={formData.servicio}
-                // onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
+              // value={formData.servicio}
+              // onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
               >
                 <option value="">Seleccionar Producto</option>
                 {/* {organizacionTieneServicios ? (
@@ -139,8 +139,8 @@ function form1() {
               <FormSelect className="mt-5 mt-3 border border-secondary rounded rounded-1.1 shadow"
                 name='servicio'
                 as="select"
-                // value={formData.servicio}
-                // onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
+              // value={formData.servicio}
+              // onChange={(e) => setFormData({ ...formData, servicio: e.target.value })}
               >
                 <option value="">Seleccionar Servicio</option>
                 {/* {organizacionTieneServicios ? (
@@ -159,9 +159,9 @@ function form1() {
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
               <button
                 className='buttonRegistrar'
-                // onClick={(e) => {
-                //   createTable(formData2)
-                // }}
+              // onClick={(e) => {
+              //   createTable(formData2)
+              // }}
               >
                 Agregar
               </button>
