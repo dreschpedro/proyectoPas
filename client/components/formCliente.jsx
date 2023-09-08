@@ -256,7 +256,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 
 
-function form2() {
+function formCliente() {
   return (
     <>
       {/* inicio componente 2 */}
@@ -499,4 +499,4 @@ function form2() {
   )
 }
 
-export default form2
+export default formCliente

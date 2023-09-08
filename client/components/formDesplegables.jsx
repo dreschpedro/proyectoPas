@@ -72,7 +72,7 @@ import instance, { serverURL } from '@/app/axiosConfig';
 
 
 
-function form1() {
+function formDesplegables() {
   return (
     <>
       <Form
@@ -174,4 +174,4 @@ function form1() {
   )
 }
 
-export default form1
+export default formDesplegables

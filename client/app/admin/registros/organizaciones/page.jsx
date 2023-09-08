@@ -6,16 +6,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import instance, { serverURL } from '@/app/axiosConfig';
-import avisoModal from '@/components/adminPanel/modales/avisoModal';
-import crearOrganizacion from '@/components/adminPanel/modales/crearOrganizacion';
+import avisoModal from '@/components/modales/avisoModal';
+import crearOrganizacion from '@/components/modales/crearOrganizacion';
+import { GET } from '@/app/api/organizaciones/route'
 
 const ListaOrganizaciones = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [filteredData, setFilteredData] = useState(null);
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [listaOrganizaciones, setListaOrganizaciones] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -27,8 +26,14 @@ const ListaOrganizaciones = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await instance.get('/organizaciones');
-        setListaOrganizaciones(response.data);
+        const organizaciones = await GET();
+        console.log(`organizaciones: `, organizaciones);
+
+        if (Array.isArray(organizaciones)) {
+          setListaOrganizaciones(organizaciones);
+        } else {
+          console.error('La respuesta de GET no es un array:', organizaciones);
+        }
       } catch (error) {
         console.error('Error al obtener la lista de Organizaciones:', error);
       }
@@ -36,6 +41,7 @@ const ListaOrganizaciones = () => {
 
     fetchData();
   }, []);
+
 
   // Filtrar los datos cuando el término de búsqueda cambie
   useEffect(() => {
@@ -225,7 +231,7 @@ const ListaOrganizaciones = () => {
         </tbody>
       </Table>
 
-      <avisoModal/>
+      <avisoModal />
 
     </div>
   );
