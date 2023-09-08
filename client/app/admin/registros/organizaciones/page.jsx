@@ -231,7 +231,7 @@ const ListaOrganizaciones = () => {
         </tbody>
       </Table>
 
-      <avisoModal />
+      {/* <avisoModal /> */}
 
     </div>
   );
