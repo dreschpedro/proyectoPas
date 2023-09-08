@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 
 // Define la URL de la API
-const api = 'http://localhost:3005/api/organizaciones/activo';
+const api = 'http://localhost:3005/organizaciones/activo';
 
 // Función para obtener las organizaciones desde la API
 export const GET = async () => {

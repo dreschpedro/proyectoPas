@@ -48,14 +48,17 @@ import routerProdEnt from './routes/Prod_entreg.routes.js';
 
 // app.get('/', (req, res) => res.send(`Estas en Inicio`));
 
-app.use('/api/organizaciones/', routerOrganiz)
-app.use('/api/servicios', routerServicio)
-app.use('/api/producto', routerProducto)
-app.use('/api/usuarios', routerUsuario)
-app.use('/api/cliente', routerCliente)
-app.use('/api/personal', routerPersonal)
-app.use('/api/serv_real', routerServReal)
-app.use('/api/entregar', routerProdEnt)
+app.use('/organizaciones/', routerOrganiz)
+app.use('/servicios', routerServicio)
+app.use('/producto', routerProducto)
+app.use('/usuarios', routerUsuario)
+app.use('/cliente', routerCliente)
+app.use('/personal', routerPersonal)
+app.use('/serv_real', routerServReal)
+app.use('/entregar', routerProdEnt)
+
+
+// app.use('/uploads', express.static('uploads'));
 
 
 
