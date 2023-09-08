@@ -31,7 +31,42 @@ INSERT INTO "organizacion" ("id_organizacion", "nombre", "direccion", "telefono"
 	(6, 'Sanatorio Boratti', 'San Martín 2256', '3216816516', 'boratti@sanatorio.com.ar', 'dccccc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-08 18:50:37.915-03', '2023-08-08 18:50:37.915-03');
 /*!40000 ALTER TABLE "organizacion" ENABLE KEYS */;
 
+-- Volcando datos para la tabla public.producto: -1 rows
+/*!40000 ALTER TABLE "producto" DISABLE KEYS */;
+INSERT INTO "producto" ("id_producto", "nombre", "activo", "createdAt", "updatedAt", "id_organizacion") VALUES
+	(1, 'Desinfectante de manos', 'true', '2023-09-06 11:18:10.297-03', '2023-09-06 11:18:10.297-03', 1),
+	(3, 'Jabon liquido', 'false', '2023-09-06 11:34:16.861-03', '2023-09-06 11:51:12.46-03', 1),
+	(2, 'Guantes de Nitrilo', 'false', '2023-09-06 11:34:01.695-03', '2023-09-06 11:51:17.969-03', 1),
+	(4, 'Medicina General', 'true', '2023-09-06 11:18:10.297-03', '2023-09-06 11:18:10.297-03', 2),
+	(5, 'Revista de Medicos', 'true', '2023-09-06 11:34:01.695-03', '2023-09-06 11:34:01.695-03', 2),
+	(6, 'IAs en el salon de clases', 'true', '2023-09-06 11:34:16.861-03', '2023-09-06 11:34:16.861-03', 2);
+/*!40000 ALTER TABLE "producto" ENABLE KEYS */;
 
+-- Volcando datos para la tabla public.prod_entreg: -1 rows
+/*!40000 ALTER TABLE "prod_entreg" DISABLE KEYS */;
+/*!40000 ALTER TABLE "prod_entreg" ENABLE KEYS */;
+
+-- Volcando datos para la tabla public.servicio: -1 rows
+/*!40000 ALTER TABLE "servicio" DISABLE KEYS */;
+INSERT INTO "servicio" ("id_servicio", "nombre", "descripcion", "activo", "createdAt", "updatedAt", "id_organizacion") VALUES
+	(1, 'servicio 1', 'descripcion', 'true', '2023-08-09 21:40:41.855-03', '2023-08-09 21:40:41.855-03', 1),
+	(2, 'servicio 2', 'descripcion 2', 'true', '2023-08-09 21:40:58.941-03', '2023-08-09 21:40:58.941-03', 2),
+	(4, 'servicio 4', 'descripcion', 'true', '2023-08-09 21:40:41.855-03', '2023-08-09 21:40:41.855-03', 1),
+	(5, 'servicio 5', 'descripcion 2', 'true', '2023-08-09 21:40:58.941-03', '2023-08-09 21:40:58.941-03', 2),
+	(6, 'servicio 6', 'descripcion 3', 'true', '2023-08-09 21:41:08.238-03', '2023-08-09 21:41:08.238-03', 3),
+	(3, 'servicio 3', 'descripcion 3', 'false', '2023-08-09 21:41:08.238-03', '2023-09-06 11:48:35.903-03', 3);
+/*!40000 ALTER TABLE "servicio" ENABLE KEYS */;
+
+-- Volcando datos para la tabla public.serv_realizado: -1 rows
+/*!40000 ALTER TABLE "serv_realizado" DISABLE KEYS */;
+INSERT INTO "serv_realizado" ("id_serv_realizado", "createdAt", "updatedAt", "id_servicio", "id_cliente", "id_usuario") VALUES
+	(1, '2023-08-24 09:29:34.202-03', '2023-08-24 09:29:34.202-03', 2, 4, 2),
+	(2, '2023-08-24 09:29:54.1-03', '2023-08-24 09:29:54.1-03', 3, 3, 1),
+	(3, '2023-08-24 09:30:06.055-03', '2023-08-24 09:30:06.055-03', 2, 3, 3),
+	(8, '2023-08-24 10:25:44.931-03', '2023-08-24 10:25:44.931-03', 6, 4, 2);
+/*!40000 ALTER TABLE "serv_realizado" ENABLE KEYS */;
+
+-- Volcando datos para la tabla public.usuario: -1 rows
 /*!40000 ALTER TABLE "usuario" DISABLE KEYS */;
 INSERT INTO "usuario" ("id_usuario", "username", "password", "email", "token", "confirmado", "rol", "activo", "createdAt", "updatedAt") VALUES
 	(1, 'Juan1', '$2b$10$jodfEF8kEPjhmSbgyvZ3Q.toK/kAqgdU7/P7Z5eXIG.MixgjbQSKW', 'perez1@juan.com', '0.54540856590168781691022238596', 'false', 'admin', 'true', '2023-08-02 21:23:58.53-03', '2023-08-02 21:23:58.659-03'),
@@ -46,37 +81,6 @@ INSERT INTO "personal" ("id_personal", "apellido", "nombre", "cuilt", "domicilio
 	(3, 'Espinosa', 'Federico', '999999', 'Posadas', 'Profesion 3', '3333333333', '/uploads/personal/default_personal.png', 'true', '2023-08-02 21:25:18.566-03', '2023-08-03 14:21:18.054-03', 2, 3),
 	(2, 'Gonzalez', 'Ramon', '222222222', 'Posadas', 'Profesion 3', '8888888', '/uploads/personal/default_personal.png', 'false', '2023-08-02 21:25:12.903-03', '2023-08-24 10:08:36.778-03', 1, 2);
 /*!40000 ALTER TABLE "personal" ENABLE KEYS */;
-
--- Volcando datos para la tabla public.producto: -1 rows
-/*!40000 ALTER TABLE "producto" DISABLE KEYS */;
-/*!40000 ALTER TABLE "producto" ENABLE KEYS */;
-
--- Volcando datos para la tabla public.prod_entreg: -1 rows
-/*!40000 ALTER TABLE "prod_entreg" DISABLE KEYS */;
-/*!40000 ALTER TABLE "prod_entreg" ENABLE KEYS */;
-
--- Volcando datos para la tabla public.servicio: -1 rows
-/*!40000 ALTER TABLE "servicio" DISABLE KEYS */;
-INSERT INTO "servicio" ("id_servicio", "nombre", "descripcion", "activo", "createdAt", "updatedAt", "id_organizacion") VALUES
-	(1, 'servicio 1', 'descripcion', 'true', '2023-08-09 21:40:41.855-03', '2023-08-09 21:40:41.855-03', 1),
-	(2, 'servicio 2', 'descripcion 2', 'true', '2023-08-09 21:40:58.941-03', '2023-08-09 21:40:58.941-03', 2),
-	(3, 'servicio 3', 'descripcion 3', 'true', '2023-08-09 21:41:08.238-03', '2023-08-09 21:41:08.238-03', 3),
-	(4, 'servicio 4', 'descripcion', 'true', '2023-08-09 21:40:41.855-03', '2023-08-09 21:40:41.855-03', 1),
-	(5, 'servicio 5', 'descripcion 2', 'true', '2023-08-09 21:40:58.941-03', '2023-08-09 21:40:58.941-03', 2),
-	(6, 'servicio 6', 'descripcion 3', 'true', '2023-08-09 21:41:08.238-03', '2023-08-09 21:41:08.238-03', 3);
-/*!40000 ALTER TABLE "servicio" ENABLE KEYS */;
-
--- Volcando datos para la tabla public.serv_realizado: -1 rows
-/*!40000 ALTER TABLE "serv_realizado" DISABLE KEYS */;
-INSERT INTO "serv_realizado" ("id_serv_realizado", "createdAt", "updatedAt", "id_servicio", "id_cliente") VALUES
-	(1, '2023-08-24 09:29:34.202-03', '2023-08-24 09:29:34.202-03', 2, 4),
-	(2, '2023-08-24 09:29:54.1-03', '2023-08-24 09:29:54.1-03', 3, 3),
-	(3, '2023-08-24 09:30:06.055-03', '2023-08-24 09:30:06.055-03', 2, 3),
-	(8, '2023-08-24 10:25:44.931-03', '2023-08-24 10:25:44.931-03', 6, 4);
-/*!40000 ALTER TABLE "serv_realizado" ENABLE KEYS */;
-
--- Volcando datos para la tabla public.usuario: -1 rows
-
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
