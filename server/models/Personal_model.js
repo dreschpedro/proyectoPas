@@ -4,7 +4,7 @@ import Organizacion_model from './Organizacion_model.js';
 import Usuario_model from './Usuario_model.js';
 
 const Personal_model = sequelize.define('personal', {
-  id_personal: {
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -48,10 +48,10 @@ const Personal_model = sequelize.define('personal', {
   });
 
 // Relación con la tabla organizacion
-Personal_model.belongsTo(Organizacion_model, { foreignKey: 'id_organizacion' });
+Personal_model.belongsTo(Organizacion_model, { foreignKey: 'id' });
 
 // Relación con la tabla Usuario
-Personal_model.belongsTo(Usuario_model, { foreignKey: 'id_usuario' });
+Personal_model.belongsTo(Usuario_model, { foreignKey: 'id' });
 
 
 // Crear la tabla "Personal" en la base de datos

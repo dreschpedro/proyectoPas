@@ -3,7 +3,7 @@ import sequelize from '../config/db.js';
 import Organizacion_model from './Organizacion_model.js';
 
 const Producto_model = sequelize.define('producto', {
-  id_producto: {
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -11,6 +11,10 @@ const Producto_model = sequelize.define('producto', {
   nombre: {
     type: DataTypes.STRING(100),
     allowNull: false,
+  },
+  detalle: {
+    type: DataTypes.STRING(),
+    allowNull: true,
   },
   activo: {
     type: DataTypes.BOOLEAN,
@@ -22,7 +26,7 @@ const Producto_model = sequelize.define('producto', {
     timestamps: true,
   });
 
-Producto_model.belongsTo(Organizacion_model, { foreignKey: 'id_organizacion' });
+Producto_model.belongsTo(Organizacion_model, { foreignKey: 'id' });
 
 // Crear la tabla "Porducto" en la base de datos
 Producto_model.sync({ force: false }).then(() => {
