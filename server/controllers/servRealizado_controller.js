@@ -37,7 +37,7 @@ const obtener_servReal = async (req, res) => {
 
 
 const registrar_servReal_con_cliente = async (req, res) => {
-  const { dni, id_servicio } = req.body;
+  const { dni, id_servicio, id_usuario } = req.body;
 
   try {
     // Usar await para esperar la respuesta asincrónica
@@ -47,8 +47,8 @@ const registrar_servReal_con_cliente = async (req, res) => {
       const cliente = clienteResponse.data;
       let id_cliente = cliente.id_cliente;
 
-      // Crea el registro de servicioRealizado con id_cliente y id_servicio
-      const servReal_body = { id_cliente, id_servicio };
+      // Crea el registro de servicioRealizado con id_cliente, id_servicio y id_usuario
+      const servReal_body = { id_cliente, id_servicio, id_usuario };
       const servReal_almacenado = await ServRealizado_model.create(servReal_body);
 
       return res.status(200).json({ message: "Registro creado exitosamente", servReal_almacenado });

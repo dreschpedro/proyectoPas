@@ -63,7 +63,7 @@ function Login() {
     event.preventDefault();
     
     try {
-      const response = await instance.post('/login', {
+      const response = await instance.post('/usuarios/login', {
         email: formData.email,
         password: formData.password,
         

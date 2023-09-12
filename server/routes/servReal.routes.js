@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get('/', listar_servReal);
 router.get('/:id', obtener_servReal);
-router.post("/registrar_con_cliente", registrar_servReal_con_cliente);
+router.post("/registrar", registrar_servReal_con_cliente);
 router.put('/:id', modificar_servReal);
 router.delete('/:id', eliminar_servReal)
 

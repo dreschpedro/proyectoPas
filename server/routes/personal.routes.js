@@ -1,6 +1,7 @@
 import express from "express";
 import {
     listar_personal,
+    listar_personal_activo,
     obtener_personal,
     registrar_personal,
     modificar_personal,
@@ -10,6 +11,7 @@ import {
 const router = express.Router();
 
 router.get('/', listar_personal);
+router.get('/activo', listar_personal_activo);
 router.get('/:id', obtener_personal);
 router.post('/registrar', registrar_personal);
 router.put('/:id', modificar_personal);
