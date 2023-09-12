@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import formDesplegables from '@/components/formDesplegables';
-import formCliente from '@/components/formCliente';
+import FormDesplegables from '@/components/formDesplegables';
+import FormCliente from '@/components/formCliente';
 
 
 const RegistroServiciosRealizados = () => {
@@ -40,8 +40,8 @@ const RegistroServiciosRealizados = () => {
         </Col>
       </Row>
 
-      <formDesplegables />
-      <formCliente />
+      <FormDesplegables />
+      <FormCliente />
 
 
     </>

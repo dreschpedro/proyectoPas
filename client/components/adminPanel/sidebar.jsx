@@ -18,7 +18,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = () => {
   return (
-    <div className="sidebar mt-5 pt-5  fixed-start h-100 " style={{ backgroundColor: '#101488', width:'230px'}}>
+    <div className="sidebar mt-5 pt-5  fixed-start h-100 " style={{ backgroundColor: '#101488', width: '230px' }}>
       <Nav className='d-flex flex-column justify-content-center align-items-center' style={{ backgroundColor: '#101488' }}>
 
 
@@ -39,17 +39,17 @@ const Sidebar = () => {
 
 
 
-       
+
         <div className='buttoncito'>
           <Link href={"/admin/asistencias"} className='custom-link d-flex  align-items-center'>
-            <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff" , marginRight:'15px'}} />
+            <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff", marginRight: '15px' }} />
             <b>Asistencias</b>
           </Link>
         </div>
 
         <div className='buttoncito'>
           <Link href={"/admin/registros"} className='custom-link d-flex  align-items-center'>
-            <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff" , marginRight:'15px'}} />
+            <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff", marginRight: '15px' }} />
             <b>Registros</b>
           </Link>
         </div>

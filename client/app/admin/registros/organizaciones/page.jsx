@@ -2,11 +2,13 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { FormControl, Modal, Form, Table, Button, InputGroup } from 'react-bootstrap';
+import dynamic from 'next/dynamic'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import instance, { serverURL } from '@/app/axiosConfig';
-import avisoModal from '@/components/modales/avisoModal';
+// import AlertaModal from '@/components/modales/alertaModal';
+const AlertaModal = dynamic(() => import('@/components/modales/alertaModal'), { ssr: false })
 import crearOrganizacion from '@/components/modales/crearOrganizacion';
 import { GET } from '@/app/api/organizaciones/route'
 
@@ -182,7 +184,7 @@ const ListaOrganizaciones = () => {
               font: 'bold',
               transition: 'background-color 0.3s ease',
               whiteSpace: 'nowrap',
-            }} className="buttonRegistrar" onClick={() => handleShowModal()}>Crear Organización</Button>
+            }} className="buttonRegistrar" onClick={() => handleShowModal({})}>Crear Organización</Button>
           </div>
         </Form>
       </div>
@@ -231,7 +233,12 @@ const ListaOrganizaciones = () => {
         </tbody>
       </Table>
 
-      {/* <avisoModal /> */}
+
+      <AlertaModal
+        titulo={'todo correcto'}
+        estado={'correcto'}
+        mensaje={'Se ha registrado correctamente'}
+      />
 
     </div>
   );

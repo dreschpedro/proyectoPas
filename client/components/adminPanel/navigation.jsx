@@ -18,23 +18,26 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const Navigation = () => {
   const router = useRouter();
 
 
-const isAdminRoute = router.pathname.includes('/admin');
+  const isAdminRoute = router.pathname.includes('/admin');
 
   const goBack = () => {
     if (isAdminRoute) {
-    window.history.back(); // Navega a la página anterior
-  }};
+      window.history.back(); // Navega a la página anterior
+    }
+  };
 
 
   if (isAdminRoute) {
-  const goForward = () => {
-    window.history.forward(); // Navega a la página siguiente (si está disponible)
-  }};
+    const goForward = () => {
+      window.history.forward(); // Navega a la página siguiente (si está disponible)
+    }
+  };
 };
 const MenuModal = () => {
   const [showModal, setShowModal] = useState(false);
@@ -48,10 +51,10 @@ const MenuModal = () => {
     // Por ejemplo, redireccionar a la página de inicio de sesión
     console.log('Cerrando sesión...');
     toggleModal(); // Cerramos la modal después de hacer clic en "Cerrar Sesión"
-  
+
   };
 
-  
+
 
   return (
     <>
@@ -67,16 +70,16 @@ const MenuModal = () => {
         </Modal.Header>
         <Modal.Body>
           <Form className='d-flex flex-column justify-content-center align-items-center '>
-           
-           {/* <Link href={"/admin/usuarios/[id]"}> */}
+
+            {/* <Link href={"/admin/usuarios/[id]"}> */}
             <button onClick={toggleModal} className='buttonLogin' style={{ width: '50%', margin: 'auto' }}>
-                Administrar Usuario
+              Administrar Usuario
             </button>
-          {/* </Link> */}
+            {/* </Link> */}
 
             {/* <Link href={"https://www.digitalfactory.com.ar/"}> */}
-            <a href={"https://www.digitalfactory.com.ar/"} onClick={toggleModal} className='mt-3 buttonLogin text-nowrap text-decoration-none d-flex justify-content-center align-items-center' style={{ width: '50%', margin: 'auto' }}> 
-                Ayuda y Soporte tecnico
+            <a href={"https://www.digitalfactory.com.ar/"} onClick={toggleModal} className='mt-3 buttonLogin text-nowrap text-decoration-none d-flex justify-content-center align-items-center' style={{ width: '50%', margin: 'auto' }}>
+              Ayuda y Soporte tecnico
             </a>
             {/* </Link> */}
           </Form>
@@ -98,31 +101,31 @@ function Navigation2() {
         <Navbar key={expand} expand={expand} className=" mb-3 fixed-top" style={{ backgroundColor: '#101488' }}>
           <Container fluid>
             <Navbar.Brand href="#" className="mx-4 d-flex flex-nowrap">
-              
 
-              <div style={{marginLeft:'13px', width: '184px', }}>
+
+              <div style={{ marginLeft: '13px', width: '184px', }}>
 
                 <button className='homebutton d-flex flex-nowrap' >
-                <Link href="/admin" style={{ textDecoration: 'none', display: 'flex', flex: 'none', flexWrap: 'nowrap', padding:'auto'}}>
-                  <Image
-                    src="/img/pas-blanco.png"
-                    width={30}
-                    height={30}
-                    alt="Picture of the author"
-                  />
-                  <p ><b> Programa de <br /> Asitencia Solidaria</b></p>
+                  <Link href="/admin" style={{ textDecoration: 'none', display: 'flex', flex: 'none', flexWrap: 'nowrap', padding: 'auto' }}>
+                    <Image
+                      src="/img/pas-blanco.png"
+                      width={30}
+                      height={30}
+                      alt="Picture of the author"
+                    />
+                    <p ><b> Programa de <br /> Asitencia Solidaria</b></p>
                   </Link>
                 </button>
-                </div>
+              </div>
 
 
               {/* estos botones de navegacion los dejo por que si pasamos el software a elcetron o ionic,
                va a ser necesario implementar esta funcionalidad*/}
               <div className='d-flex flex-nowrap'>
-              
-              
-              
-              
+
+
+
+
                 {/* <Pagination className='mx-3 my-auto '>
                   <Pagination.Prev onClick={goBack} className='mx-1' />
                   <Pagination.Next onClick={goForward} className='mx-1' />
@@ -154,44 +157,38 @@ function Navigation2() {
               <Offcanvas.Body>
                 <Nav className="d-flex justify-content-center align-items-center flex-grow-1 pe-3 d-lg-none">
 
-                 
-                <div className='buttoncito'>
-          <Link href={"/admin/consultas"} className='custom-link d-flex align-items-center'>
-            <FontAwesomeIcon icon={faComment} style={{ color: "#ffffff", marginRight: '15px' }} />
-            <b>Consultas</b>
-          </Link>
-        </div>
+
+                  <div className='buttoncito'>
+                    <Link href={"/admin/consultas"} className='custom-link d-flex align-items-center'>
+                      <FontAwesomeIcon icon={faComment} style={{ color: "#ffffff", marginRight: '15px' }} />
+                      <b>Consultas</b>
+                    </Link>
+                  </div>
 
 
-        <div className='buttoncito'>
-          <Link href={"/admin/estadisticas"} className='custom-link d-flex align-items-center'>
-            <FontAwesomeIcon icon={faChartLine} style={{ color: "#ffffff", marginRight: '15px' }} />
-            <b>Estadísticas</b>
-          </Link>
-        </div>
+                  <div className='buttoncito'>
+                    <Link href={"/admin/estadisticas"} className='custom-link d-flex align-items-center'>
+                      <FontAwesomeIcon icon={faChartLine} style={{ color: "#ffffff", marginRight: '15px' }} />
+                      <b>Estadísticas</b>
+                    </Link>
+                  </div>
 
 
 
-        <div className='buttoncito custom-link'>
-          <Link href={"/admin/organizaciones"} className='custom-link d-flex  align-items-center'>
-            <FontAwesomeIcon icon={faBuilding} style={{ color: "#ffffff", marginRight:'15px' }} />
-            <b>Organizaciones</b>
-          </Link>
-        </div>
 
-        <div className='buttoncito'>
-          <Link href={"/admin/servicios"} className='custom-link d-flex  align-items-center'>
-            <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff" , marginRight:'15px'}} />
-            <b>Servicios</b>
-          </Link>
-        </div>
+                  <div className='buttoncito'>
+                    <Link href={"/admin/asistencias"} className='custom-link d-flex  align-items-center'>
+                      <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff", marginRight: '15px' }} />
+                      <b>Asistencias</b>
+                    </Link>
+                  </div>
 
-        <div className='buttoncito'>
-          <Link href={"/admin/usuarios"} className='custom-link d-flex align-items-center'>
-            <FontAwesomeIcon icon={faUsers} style={{ color: "#ffffff", marginRight:'15px' }} />
-            <b>Usuarios</b>
-          </Link>
-        </div>
+                  <div className='buttoncito'>
+                    <Link href={"/admin/registros"} className='custom-link d-flex  align-items-center'>
+                      <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff", marginRight: '15px' }} />
+                      <b>Registros</b>
+                    </Link>
+                  </div>
                 </Nav>
                 <MenuModal />
               </Offcanvas.Body>
