@@ -85,11 +85,31 @@ const eliminar_prodEnt = async (req, res) => {
   }
 };
 
+const cambiar_estado_prodEnt = async (req, res) => {
+  const prodEnt_id = req.params.id;
+
+  try {
+    const prodEnt = await ProdEntreg_model.findByPk(prodEnt_id);
+
+    if (!prodEnt) {
+      const mensaje = 'No se encontró el registro solicitado';
+      return res.status(404).send(mensaje);
+    }
+
+    await prodEnt.update({ activo: !prodEnt.activo }); // Cambia el estado activo
+    return res.status(200).json({ message: 'Estado modificado', activo: prodEnt.activo });
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = 'Ocurrió un error al cambiar el estado del registro';
+    return res.status(500).json({ error: mensaje_error });
+  }
+};
 // exports
 export {
   listar_prodEnt,
   obtener_prodEnt,
   registrar_prodEnt,
   modificar_prodEnt,
-  eliminar_prodEnt
+  eliminar_prodEnt,
+  cambiar_estado_prodEnt
 };

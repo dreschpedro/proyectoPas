@@ -16,70 +16,83 @@
 -- Volcando datos para la tabla public.cliente: -1 rows
 /*!40000 ALTER TABLE "cliente" DISABLE KEYS */;
 INSERT INTO "cliente" ("id_cliente", "apellido", "nombre", "dni", "fechaNacimiento", "genero", "email", "contacto", "telefono", "departamento", "localidad", "domicilio", "ocupacion", "activo", "createdAt", "updatedAt") VALUES
-	(4, 'Perez', 'Juana', '5555', '1965-02-14', 'femenino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', '54028', '54028030000', 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:48:10.821-03', '2023-08-21 18:48:10.821-03'),
-	(3, 'Rodriguez', 'Pablo', '4444', '2005-05-24', 'masculino', 'cjsdbh@nkdfjvn.com', '65165165', '651651651', '54028', '54028010000', 'dvfdf 651651', 'Docente', 'true', '2023-08-21 18:47:47.924-03', '2023-08-21 18:47:47.924-03');
+	(1, 'Rodriguez', 'Ramon', '1234343', '1973-02-21', 'masculino', 'ramon@gmail.com', '21212121', '323323232', '54028', '54028030000', 'Av San Martin 213', 'albañil', 'true', '2023-09-12 10:24:10.782-03', '2023-09-12 10:24:10.782-03'),
+	(2, 'epinola', 'gabriela', '83873832', '1993-12-01', 'femenino', 'gabriela@gmail.com', '3434988984', '1212123232', '54028', '54028010000', 'av san justo 213', 'maestra', 'true', '2023-09-12 10:27:01.61-03', '2023-09-12 10:27:01.61-03'),
+	(3, 'gomez', 'jaqueline', '7872328', '1999-07-15', 'femenino', 'jaqueline@gmail.com', '72763763', '32721980', '54042', '54042070000', 'av guacurari 213', 'pediatra', 'true', '2023-09-12 10:30:46.721-03', '2023-09-12 10:30:46.721-03');
 /*!40000 ALTER TABLE "cliente" ENABLE KEYS */;
 
 -- Volcando datos para la tabla public.organizacion: -1 rows
 /*!40000 ALTER TABLE "organizacion" DISABLE KEYS */;
 INSERT INTO "organizacion" ("id_organizacion", "nombre", "direccion", "telefono", "email", "descripcion", "imagen", "activo", "createdAt", "updatedAt") VALUES
-	(2, 'Universidad Nacional', 'Avenida Universidad 123', '555-123-4567', 'contacto@universidadnacional.edu', 'jkjkjkjkc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-02 21:22:16.815-03', '2023-08-02 21:22:16.815-03'),
-	(3, 'Organización sin fines de lucro', 'Plaza de la Solidaridad 789', '555-555-5555', 'fines@organizacion.org', 'jkjkjkjkc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-02 21:22:30.354-03', '2023-08-02 21:22:30.354-03'),
-	(4, 'jjjjjjjj', 'av org 1', '3216816516', 'csd@fd', 'cdsc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-08 18:44:42.206-03', '2023-08-08 18:44:42.206-03'),
-	(5, 'Juancsdcsdcsdc', 'San Martín 2256', '1111111111', 'perez1@juan.com', 'xaaaaaaaa', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-08 18:49:30.126-03', '2023-08-08 18:49:30.126-03'),
-	(6, 'Sanatorio Boratti', 'San Martín 2256', '3216816516', 'boratti@sanatorio.com.ar', 'dccccc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-08 18:50:37.915-03', '2023-08-08 18:50:37.915-03'),
-	(1, 'Sanatorio Caminos', 'Av San Martin 3213', '123456789', 'caminos@sanatorio.com.ar', 'csdcsdc', '/uploads/organizacion/default_organizacion.png', 'true', '2023-08-02 21:22:08.114-03', '2023-09-08 11:52:59.55-03');
+	(1, 'Organización Ejemplo 1', '123 Calle Principal', '+1234567890', 'ejemplo1@example.com', 'Esta es una organización de ejemplo número 1.', '/uploads/organizacion/default_organizacion.png', 'true', '2023-09-12 08:43:07.593-03', '2023-09-12 08:43:07.593-03'),
+	(2, 'Organización Ejemplo 2', 'Calle Principal 234', '3223567890', 'ejemplo2@example.com', 'Esta es una organización de ejemplo número 2', '/uploads/organizacion/default_organizacion.png', 'true', '2023-09-12 08:43:51.709-03', '2023-09-12 08:43:51.709-03'),
+	(3, 'estelar Moon', 'Calle Rivadavia 234', '3223567890', 'star@example.com', 'Esta es una organización de ejemplo número 3', '/uploads/organizacion/default_organizacion.png', 'true', '2023-09-12 08:47:08.988-03', '2023-09-12 08:47:08.988-03');
 /*!40000 ALTER TABLE "organizacion" ENABLE KEYS */;
 
 -- Volcando datos para la tabla public.personal: -1 rows
 /*!40000 ALTER TABLE "personal" DISABLE KEYS */;
 INSERT INTO "personal" ("id_personal", "apellido", "nombre", "cuilt", "domicilio", "profesion", "telefono", "imagen", "activo", "createdAt", "updatedAt", "id_organizacion", "id_usuario") VALUES
-	(1, 'Perez', 'Juancsdcsdcsdc', '111111111', 'Posadascdcd', 'Profesion 1', '1111111111', '/uploads/personal/default_personal.png', 'true', '2023-08-02 21:25:04.971-03', '2023-08-03 14:20:12.701-03', 1, 1),
-	(3, 'Espinosa', 'Federico', '999999', 'Posadas', 'Profesion 3', '3333333333', '/uploads/personal/default_personal.png', 'true', '2023-08-02 21:25:18.566-03', '2023-08-03 14:21:18.054-03', 2, 3),
-	(2, 'Gonzalez', 'Ramon', '222222222', 'Posadas', 'Profesion 3', '8888888', '/uploads/personal/default_personal.png', 'false', '2023-08-02 21:25:12.903-03', '2023-08-24 10:08:36.778-03', 1, 2);
+	(1, 'Rodriguez', 'Estela', '726372367', 'Calle Ejemplo 123', 'Pediatra', '3223567890', '/uploads/personal/default_personal.png', 'true', '2023-09-12 09:19:11.277-03', '2023-09-12 09:19:11.277-03', 1, 1),
+	(2, 'Esquivel', 'Ramon', '6767632', 'Av Ejemplo 8998', 'Administrativo', '12123223', '/uploads/personal/default_personal.png', 'true', '2023-09-12 09:21:27.116-03', '2023-09-12 09:21:27.116-03', 2, 2),
+	(3, 'Pastini', 'Fernando', '213243443', 'Av Chocolate 535', 'Abogado', '6276327632', '/uploads/personal/default_personal.png', 'true', '2023-09-12 09:23:04.743-03', '2023-09-12 09:23:04.743-03', 3, 3);
 /*!40000 ALTER TABLE "personal" ENABLE KEYS */;
 
 -- Volcando datos para la tabla public.producto: -1 rows
 /*!40000 ALTER TABLE "producto" DISABLE KEYS */;
-INSERT INTO "producto" ("id_producto", "nombre", "activo", "createdAt", "updatedAt", "id_organizacion") VALUES
-	(1, 'Desinfectante de manos', 'true', '2023-09-06 11:18:10.297-03', '2023-09-06 11:18:10.297-03', 1),
-	(3, 'Jabon liquido', 'false', '2023-09-06 11:34:16.861-03', '2023-09-06 11:51:12.46-03', 1),
-	(2, 'Guantes de Nitrilo', 'false', '2023-09-06 11:34:01.695-03', '2023-09-06 11:51:17.969-03', 1),
-	(4, 'Medicina General', 'true', '2023-09-06 11:18:10.297-03', '2023-09-06 11:18:10.297-03', 2),
-	(5, 'Revista de Medicos', 'true', '2023-09-06 11:34:01.695-03', '2023-09-06 11:34:01.695-03', 2),
-	(6, 'IAs en el salon de clases', 'true', '2023-09-06 11:34:16.861-03', '2023-09-06 11:34:16.861-03', 2);
+INSERT INTO "producto" ("id_producto", "nombre", "detalle", "activo", "createdAt", "updatedAt", "id_organizacion") VALUES
+	(9, 'acta nacimiento', 'detalle producto', 'true', '2023-09-12 09:46:55.32-03', '2023-09-12 09:46:55.32-03', 2),
+	(1, 'Aguja Esterilizada', 'detalle producto', 'true', '2023-09-12 09:39:15.293-03', '2023-09-12 10:11:08.555-03', 1),
+	(2, 'Guantes de Nitrilo', 'detalle producto', 'true', '2023-09-12 09:39:42.398-03', '2023-09-12 10:11:40.199-03', 1),
+	(3, 'Gotas para ojos', 'detalle producto', 'true', '2023-09-12 09:40:18.802-03', '2023-09-12 10:11:42.598-03', 1),
+	(4, 'dni nuevo', 'detalle producto', 'true', '2023-09-12 09:40:51.003-03', '2023-09-12 10:11:44.407-03', 2),
+	(5, 'pasaporte nuevo', 'detalle producto', 'true', '2023-09-12 09:41:06.171-03', '2023-09-12 10:11:45.946-03', 2),
+	(6, 'vacuna covid', 'detalle producto', 'true', '2023-09-12 09:42:08.486-03', '2023-09-12 10:11:47.55-03', 3),
+	(7, 'sesion psicologia', 'detalle producto', 'true', '2023-09-12 09:42:23.993-03', '2023-09-12 10:11:49.296-03', 3),
+	(8, 'estudio de sangre', 'detalle producto', 'true', '2023-09-12 09:42:37.261-03', '2023-09-12 10:11:51.594-03', 3);
 /*!40000 ALTER TABLE "producto" ENABLE KEYS */;
 
 -- Volcando datos para la tabla public.prod_entreg: -1 rows
 /*!40000 ALTER TABLE "prod_entreg" DISABLE KEYS */;
+INSERT INTO "prod_entreg" ("id_prod_entreg", "entregado", "fecha_entrega", "createdAt", "updatedAt", "id_serv_realizado", "id_producto") VALUES
+	(1, 'false', '2023-09-11', '2023-09-12 13:44:55.121-03', '2023-09-12 13:44:55.121-03', 1, 9),
+	(2, 'true', '2023-08-11', '2023-09-12 13:45:26.426-03', '2023-09-12 13:45:26.426-03', 2, 7),
+	(3, 'false', '2023-08-11', '2023-09-12 13:45:58.966-03', '2023-09-12 13:45:58.966-03', 3, 7),
+	(4, 'false', '2023-09-01', '2023-09-12 13:46:30.196-03', '2023-09-12 13:46:30.196-03', 4, 3);
 /*!40000 ALTER TABLE "prod_entreg" ENABLE KEYS */;
 
 -- Volcando datos para la tabla public.servicio: -1 rows
 /*!40000 ALTER TABLE "servicio" DISABLE KEYS */;
 INSERT INTO "servicio" ("id_servicio", "nombre", "descripcion", "activo", "createdAt", "updatedAt", "id_organizacion") VALUES
-	(1, 'servicio 1', 'descripcion', 'true', '2023-08-09 21:40:41.855-03', '2023-08-09 21:40:41.855-03', 1),
-	(2, 'servicio 2', 'descripcion 2', 'true', '2023-08-09 21:40:58.941-03', '2023-08-09 21:40:58.941-03', 2),
-	(4, 'servicio 4', 'descripcion', 'true', '2023-08-09 21:40:41.855-03', '2023-08-09 21:40:41.855-03', 1),
-	(5, 'servicio 5', 'descripcion 2', 'true', '2023-08-09 21:40:58.941-03', '2023-08-09 21:40:58.941-03', 2),
-	(6, 'servicio 6', 'descripcion 3', 'true', '2023-08-09 21:41:08.238-03', '2023-08-09 21:41:08.238-03', 3),
-	(3, 'servicio 3', 'descripcion 3', 'false', '2023-08-09 21:41:08.238-03', '2023-09-06 11:48:35.903-03', 3);
+	(1, 'pediatria', 'descripcion servicio', 'true', '2023-09-12 09:31:14.869-03', '2023-09-12 09:31:14.869-03', 1),
+	(2, 'oftamologia', 'descripcion servicio', 'true', '2023-09-12 09:31:34.653-03', '2023-09-12 09:31:34.653-03', 1),
+	(3, 'clinica general', 'descripcion servicio', 'true', '2023-09-12 09:31:58.842-03', '2023-09-12 09:31:58.842-03', 1),
+	(4, 'registro dni', 'descripcion servicio', 'true', '2023-09-12 09:32:42.673-03', '2023-09-12 09:32:42.673-03', 2),
+	(5, 'registro pasaporte', 'descripcion servicio', 'true', '2023-09-12 09:32:50.226-03', '2023-09-12 09:32:50.226-03', 2),
+	(6, 'matrimonio', 'descripcion servicio', 'true', '2023-09-12 09:32:57.759-03', '2023-09-12 09:32:57.759-03', 2),
+	(7, 'psicologia', 'descripcion servicio', 'true', '2023-09-12 09:35:01.744-03', '2023-09-12 09:35:01.744-03', 3),
+	(8, 'bioquimica', 'descripcion servicio', 'true', '2023-09-12 09:35:19.269-03', '2023-09-12 09:35:19.269-03', 3),
+	(9, 'vacunacion', 'descripcion servicio', 'true', '2023-09-12 09:35:40.136-03', '2023-09-12 09:35:40.136-03', 3);
 /*!40000 ALTER TABLE "servicio" ENABLE KEYS */;
 
 -- Volcando datos para la tabla public.serv_realizado: -1 rows
 /*!40000 ALTER TABLE "serv_realizado" DISABLE KEYS */;
 INSERT INTO "serv_realizado" ("id_serv_realizado", "createdAt", "updatedAt", "id_servicio", "id_cliente", "id_usuario") VALUES
-	(1, '2023-08-24 09:29:34.202-03', '2023-08-24 09:29:34.202-03', 2, 4, 2),
-	(2, '2023-08-24 09:29:54.1-03', '2023-08-24 09:29:54.1-03', 3, 3, 1),
-	(3, '2023-08-24 09:30:06.055-03', '2023-08-24 09:30:06.055-03', 2, 3, 3),
-	(8, '2023-08-24 10:25:44.931-03', '2023-08-24 10:25:44.931-03', 6, 4, 2);
+	(1, '2023-09-12 11:03:42.683-03', '2023-09-12 11:03:42.683-03', 1, 1, 1),
+	(2, '2023-09-12 11:13:59.167-03', '2023-09-12 11:13:59.167-03', 2, 1, 1),
+	(3, '2023-09-12 11:14:24.723-03', '2023-09-12 11:14:24.723-03', 2, 2, 1),
+	(4, '2023-09-12 11:14:28.803-03', '2023-09-12 11:14:28.803-03', 1, 2, 1),
+	(5, '2023-09-12 11:14:46.826-03', '2023-09-12 11:14:46.826-03', 1, 1, 3),
+	(6, '2023-09-12 11:14:57.897-03', '2023-09-12 11:14:57.897-03', 3, 1, 3),
+	(7, '2023-09-12 11:20:31.046-03', '2023-09-12 11:20:31.046-03', 4, 1, 3);
 /*!40000 ALTER TABLE "serv_realizado" ENABLE KEYS */;
 
 -- Volcando datos para la tabla public.usuario: -1 rows
 /*!40000 ALTER TABLE "usuario" DISABLE KEYS */;
 INSERT INTO "usuario" ("id_usuario", "username", "password", "email", "token", "confirmado", "rol", "activo", "createdAt", "updatedAt") VALUES
-	(1, 'Juan1', '$2b$10$jodfEF8kEPjhmSbgyvZ3Q.toK/kAqgdU7/P7Z5eXIG.MixgjbQSKW', 'perez1@juan.com', '0.54540856590168781691022238596', 'false', 'admin', 'true', '2023-08-02 21:23:58.53-03', '2023-08-02 21:23:58.659-03'),
-	(2, 'Ramon2', '$2b$10$PUP.GxwbyUEHrEspluCOd.1RdkYOzxKOErW9kmnEsigBqyhjLrqlS', 'gonzalez@ramon.com', '0.96695835254248391691022248357', 'false', 'Data-Entry', 'true', '2023-08-02 21:24:08.278-03', '2023-08-02 21:24:08.433-03'),
-	(3, 'Federico3', '$2b$10$t5S8waS87VsyjSH.I.gR2ubluR6bfc.zBSdtep7efv35svy6Qnsqi', 'fede@espino.com', '0.28504958233006161691022253920', 'false', 'Consultor', 'true', '2023-08-02 21:24:13.84-03', '2023-08-02 21:24:13.998-03');
+	(2, 'ramon', '$2b$10$f7c6TFSwny0xvIOhiTIj0eCJHOcisx8lYElsR7eNMXFLmFktS1E7q', 'ramon@data', '0.62700046751299681694520222030', 'false', 'data-entry', 'true', '2023-09-12 09:03:41.856-03', '2023-09-12 09:03:42.189-03'),
+	(3, 'fernando', '$2b$10$RcgT/i7aJw9c/M/sigWJRecGc9Jco9mQLFWY2LiQAvT.mLLeQSdqa', 'fer@fideo', '', 'true', 'consultor', 'true', '2023-09-12 09:05:37.402-03', '2023-09-12 09:06:56.863-03'),
+	(4, 'federico', '$2b$10$37LT.4tUh4NFRsIX2KPIou.7v8G/EKUudBxK0cF5aRS4mM0FRxU1.', 'fede@admin', '', 'true', 'data-entry', 'true', '2023-09-12 09:50:54.997-03', '2023-09-12 09:51:55.4-03'),
+	(1, 'admin', '$2b$10$fTk.lt2DMBtnZYPM0Mxpuen9LtgeQtkX0BhVkxNYZs53ubcj27Elu', 'admin@admin.com', '', 'true', 'admin', 'true', '2023-09-12 09:01:01.8-03', '2023-09-12 09:08:59.592-03');
 /*!40000 ALTER TABLE "usuario" ENABLE KEYS */;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
