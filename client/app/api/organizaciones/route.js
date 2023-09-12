@@ -25,7 +25,6 @@ export const GET = async () => {
   }
 };
 
-
 //Crear una organizacion
 export const POST = async (req) => {
   const organizacion = await req.json()
