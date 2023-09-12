@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import instance, { serverURL } from '@/app/axiosConfig';
-import avisoModal from '@/components/modales/avisoModal';
+// import avisoModal from '@/components/modales/avisoModal';
 import crearOrganizacion from '@/components/modales/crearOrganizacion';
 import { GET } from '@/app/api/crudProductos/route'
 import CrudTable from '@/components/crudTable';

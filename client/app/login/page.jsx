@@ -61,11 +61,14 @@ function Login() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
     try {
       const response = await instance.post('/login', {
-        username: formData.username,
+        email: formData.email,
         password: formData.password,
+        
       });
+      console.log('este es el correo', formData.email)
       if (response.status === 200) {
         console.log('funciona');
         window.location.href = 'http://localhost:/admin';
@@ -90,7 +93,7 @@ function Login() {
                 name='username'
                 required
                 placeholder="Nombre de Usuario"
-                value={formData.username}
+                value={formData.email}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -115,7 +118,8 @@ function Login() {
 
         <div style={{ display: 'flex', flexDirection: 'column', marginTop: '49px' }}>
           <button className='buttonLogin' type="submit">
-            <Link href={"/admin"}style={{color:'#ffffff'}}>Iniciar Sesión</Link>
+            {/* <Link href={"/admin"}style={{color:'#ffffff'}}>Iniciar Sesión</Link> */}
+            protegenos señor con tu espiritu
           </button>
           <div className='mt-5 mb-3 d-flex align-items-center justify-content-center'>
             <Link style={{ color: '#22096F' }} href={"/login/recuperar"}><b>Recuperar Contraseña</b></Link>
