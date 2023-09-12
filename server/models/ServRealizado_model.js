@@ -7,7 +7,7 @@ import Usuario_model from './Usuario_model.js';
 const ServRealizado_model = sequelize.define(
   'serv_realizado',
   {
-    id: {
+    id_serv_realizado: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -18,14 +18,14 @@ const ServRealizado_model = sequelize.define(
     timestamps: {
       createdAt: 'created_at',
       updatedAt: 'updated_at',
-      type: DataTypes.DATE,
+      type: DataTypes.timestamptz,
     },
   }
 );
 
-ServRealizado_model.belongsTo(Servicio_model, { foreignKey: 'id' });
-ServRealizado_model.belongsTo(Cliente_model, { foreignKey: 'id' });
-ServRealizado_model.belongsTo(Usuario_model, { foreignKey: 'id' });
+ServRealizado_model.belongsTo(Servicio_model, { foreignKey: 'id_servicio' });
+ServRealizado_model.belongsTo(Cliente_model, { foreignKey: 'id_cliente' });
+ServRealizado_model.belongsTo(Usuario_model, { foreignKey: 'id_usuario' });
 
 // Crear la tabla "serv_realizados" en la base de datos
 ServRealizado_model.sync({ force: false }).then(() => {

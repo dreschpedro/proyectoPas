@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const serverURL = 'https://b23jjswp-3005.brs.devtunnels.ms/';
+const serverURL = 'http://localhost:3005';
 
 const instance = axios.create({
   baseURL: serverURL,

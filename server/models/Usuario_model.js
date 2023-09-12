@@ -3,7 +3,7 @@ import sequelize from '../config/db.js';
 import bcrypt from 'bcrypt';
 
 const Usuario_model = sequelize.define('usuario', {
-  id: {
+  id_usuario: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -24,17 +24,17 @@ const Usuario_model = sequelize.define('usuario', {
     trim: true,
     unique: true,
   },
+  rol: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    trim: true,
+  },
   token: {
     type: DataTypes.STRING,
   },
   confirmado: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
-  },
-  rol: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    trim: true,
   },
   activo: {
     type: DataTypes.BOOLEAN,

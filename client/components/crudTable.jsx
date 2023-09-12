@@ -55,10 +55,10 @@ const crudTable = ({ data }) => {
     fetchServicios();
   }, []);
 
-    const handleCloseModal = () => {
-      setSelecteditemId(null);
-      setShowModal(false);
-    };
+  //   const handleCloseModal = () => {
+  //     setSelecteditemId(null);
+  //     setShowModal(false);
+  //   };
 
   const handleShowDeleteModal = (itemId) => {
     setSelecteditemId(itemId);
@@ -69,15 +69,15 @@ const crudTable = ({ data }) => {
     setShowDeleteModal(false);
   };
 
-  // const handleConfirmationClose = () => {
-  //   setShowConfirmation(false);
-  //   if (accountDeleted) {
-  //     // Redirect to "/organizaciones" after a short delay
-  //     setTimeout(() => {
-  //       router.push('/admin/servicios/crudServicios');
-  //     }, 2000); // 1.5 seconds delay before redirection
-  //   }
-  // };
+  const handleConfirmationClose = () => {
+    setShowConfirmation(false);
+    if (accountDeleted) {
+      // Redirect to "/organizaciones" after a short delay
+      setTimeout(() => {
+        router.push('/admin/servicios/crudServicios');
+      }, 2000); // 1.5 seconds delay before redirection
+    }
+  };
 
   const setOrganizacionValue = (organizacionId) => {
     setitemInfo((previtemInfo) => ({

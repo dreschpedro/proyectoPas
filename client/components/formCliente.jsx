@@ -111,7 +111,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 // const fetchLocalidades = async (departamentoId) => {
 //   try {
-//     const response = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?departamento=${departamentoId}`);
+//     const response = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?departamento=${departamentoId}&campos=id,nombre`);
 //     const data = await response.json();
 //     // console.log('Localidades Response:', data);
 //     return data.localidades || [];

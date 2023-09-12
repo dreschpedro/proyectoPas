@@ -19,6 +19,18 @@ const listar_personal = async (req, res) => {
   }
 };
 
+//consulta por los personal activos
+const listar_personal_activo = async (req, res) => {
+  try {
+    const personal = await Personal_model.findAll();
+    return res.status(200).json(personal);
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = "Ocurrió un error al obtener los registros de personal";
+    return res.status(500).json({ error: mensaje_error });
+  }
+};
+
 
 // consulta de todos los registros con activo: true
 const obtener_personal = async (req, res) => {
@@ -136,6 +148,7 @@ const cambiar_estado_personal = async (req, res) => {
 // exports
 export {
   listar_personal,
+  listar_personal_activo,
   obtener_personal,
   registrar_personal,
   modificar_personal,
