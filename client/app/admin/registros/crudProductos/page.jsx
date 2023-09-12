@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import instance, { serverURL } from '@/app/axiosConfig';
-import avisoModal from '@/components/modales/avisoModal';
+// import avisoModal from '@/components/modales/avisoModal';
 import crearOrganizacion from '@/components/modales/crearOrganizacion';
 import { GET } from '@/app/api/crudProductos/route'
 import CrudTable from '@/components/crudTable';
@@ -184,7 +184,7 @@ const ListaOrganizaciones = () => {
   return (
 
     <div>
-      <h1 className='titulo'>Lista de Organizaciones</h1>
+      <h1 className='titulo'>Lista de Productos</h1>
 
       <div >
         <Form className="mt-5 mb-5 d-flex mb-3 align-items-center">
@@ -209,13 +209,15 @@ const ListaOrganizaciones = () => {
               font: 'bold',
               transition: 'background-color 0.3s ease',
               whiteSpace: 'nowrap',
-            }} className="buttonRegistrar" onClick={() => handleShowModal()}>Crear Organización</Button>
+            }} className="buttonRegistrar" onClick={() => handleShowModal()}>Crear Producto</Button>
           </div>
         </Form>
+
+        <CrudTable data={data}/>
+
       </div>
 
-      <CrudTable data={data}/>
-
+      
       <avisoModal />
 
     </div>

@@ -271,7 +271,9 @@ const crudTable = ({ data }) => {
         </Modal.Footer>
       </Modal>
 
-      <Modal show={showConfirmation} onHide={handleConfirmationClose}>
+      <Modal show={showConfirmation} 
+      // onHide={handleConfirmationClose}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Operación Exitosa</Modal.Title>
         </Modal.Header>
