@@ -5,7 +5,7 @@ import Producto_model from './Producto_model.js';
 
 
 const ProdEntreg_model = sequelize.define('prod_entreg', {
-  id_prod_entreg: {
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -25,11 +25,11 @@ const ProdEntreg_model = sequelize.define('prod_entreg', {
 );
 
 ProdEntreg_model.belongsTo(ServRealizado_model, {
-  foreignKey: 'id_serv_realizado',
+  foreignKey: 'id',
 });
 
 ProdEntreg_model.belongsTo(Producto_model, {
-  foreignKey: 'id_producto',
+  foreignKey: 'id',
 });
 
 // Crear la tabla "Producto Entregado" en la base de datos

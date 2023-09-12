@@ -3,7 +3,7 @@ import sequelize from '../config/db.js';
 import bcrypt from 'bcrypt';
 
 const Usuario_model = sequelize.define('usuario', {
-  id_usuario: {
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,

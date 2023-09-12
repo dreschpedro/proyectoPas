@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
 
 const organizacion_model = sequelize.define('organizacion', {
-  id_organizacion: {
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -48,7 +48,7 @@ const organizacion_model = sequelize.define('organizacion', {
     timestamps: true,
   });
 
-organizacion_model.sync({ force: false }).then(() => {
+organizacion_model.sync({ force: false }, { alter: true }).then(() => {
   // console.log('Tabla "organizacion" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "organizacion":', error);
