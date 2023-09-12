@@ -3,25 +3,27 @@ import { NextResponse } from "next/server";
 
 
 
-const ruta = `http://localhost:3005/api/producto`
-
-export const GET = async () => {    
-    const result = await fetch(`${ruta}/activo`,{        
+// Función para obtener las organizaciones desde la API
+export const GET = async (api) => {
+    try {
+      const result = await fetch(api, {
         headers: {
-            "Content-type": "application/json"
+          "Content-type": "application/json"
         }
-    })
-    const products =  await result.json()
-    // const resultArray = await result
-    // console.log('los products')
-    // console.log(products)
-    // const organizationData = products.map(product => product.organizacion)
-    // console.log(organizationData)
-    // console.log(resultArray)
-    
-    return products
-    // return NextResponse.json({data:products})
-};
+      });
+  
+      if (!result.ok) {
+        throw new Error(`Error al obtener las organizaciones: ${result.statusText}`);
+      }
+  
+      const datos = await result.json();
+      return datos;
+    } catch (error) {
+      console.error('Error al obtener la lista de Organizaciones:', error);
+      throw error; // Re-lanzamos el error para manejarlo en la página
+    }
+  };
+  
 //Crear un producto
 export const POST = async (req)=>{
     const product = await req.json()
