@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { fetchDepartamentos, fetchLocalidades } from '@/app/api/funciones/regional';
-import { Input, Select } from './Input';
+import { Grupo, Input, Select } from './Input';
 
 
 function FormCliente() {
@@ -140,7 +140,6 @@ function FormCliente() {
   }, []);
 
   const handleInputChange = (event) => {
-    event.preventDefault();
     const { name, value } = event.target;
 
     if (name === 'fechaNacimiento') {
@@ -155,6 +154,7 @@ function FormCliente() {
       }));
     }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -265,50 +265,55 @@ function FormCliente() {
               </Form.Group>
             </Form.Group>
 
-            <Form.Group controlId="formApellido">
-              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
-                {/* <Form.Label>Apellidos</Form.Label> */}
-                <Form.Control
-                  className='border border-secondary rounded rounded-1.1 shadow mb-5'
-                  type="text"
-                  name="apellido"
-                  // value={formData.apellido}
-                  // required={!searchInProgress}
-                  // onChange={handleInputChange}
-                  placeholder="Apellidos" />
-              </Form.Group>
-            </Form.Group>
+            {/* <Grupo className="mt-5 mb-5">
+              <div className="input-group">
+                <Input name={'dni'}
+                  className={'border-secondary rounded rounded-1.1 shadow'}
+                  type={'numero'}
+                  value={formData.dni}
+                  required={''}
+                  onChange={handleInputChange}
+                  placeholder={'DNI'}
+                ></Input>
+                <button
+                  style={{ marginLeft: '0.5rem', borderRadius: '5px' }}
+                  className="buscarbutton"
+                // onClick={(e) => {
+                //   e.preventDefault();
+                //   searchByDNI(formData.dni);
+                // }
+                // }
+                >
 
-            <Form.Group controlId="formName">
-              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
-                {/* <Form.Label>Nombres</Form.Label> */}
-                <Form.Control
-                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
-                  type="text"
-                  name="nombre"
-                  // value={formData.nombre}
-                  // required={!searchInProgress}
-                  // onChange={handleInputChange}
-                  placeholder="Nombres" />
-              </Form.Group>
-            </Form.Group>
+                  <FontAwesomeIcon icon={faSearch} style={{ color: "#FFFF", }} />
 
-            <Form.Group controlId="formName">
-              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
-                {/* <Form.Label>Fecha Nacimiento</Form.Label> */}
-                <Form.Control
-                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
-                  type="date"
-                  name="fechaNacimiento"
-                  // value={formData.fechaNacimiento} // Usa el valor sin formatear
-                  // required={!searchInProgress}
-                  // onChange={handleInputChange}
-                  placeholder="dd/mm/aaaa"
-                />
+                </button>
+              </div>
+            </Grupo> */}
 
-              </Form.Group>
-            </Form.Group>
+            <Input name={'apellido'}
+              type={'string'}
+              value={formData.apellido}
+              required={''}
+              onChange={handleInputChange}
+              placeholder={'Apellidos'}
+            ></Input>
 
+            <Input name={'nombre'}
+              type={'string'}
+              value={formData.nombre}
+              required={''}
+              onChange={handleInputChange}
+              placeholder={'Nombres'}
+            ></Input>
+
+            <Input name={'fechaNacimiento'}
+              type={'date'}
+              value={formData.fechaNacimiento}
+              required={''}
+              onChange={handleInputChange}
+            // placeholder={'dd/mm/aaaa'}
+            ></Input>
 
             <Form.Group controlId="formGenero">
               {/* <Form.Label>Género</Form.Label> */}
@@ -329,152 +334,54 @@ function FormCliente() {
               </FormSelect>
             </Form.Group>
 
-            <Form.Group controlId="formEmail">
-              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
-                {/* <Form.Label>Email (Opcional)</Form.Label> */}
-                <Form.Control
-                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
-                  type="email"
-                  name="email"
-                  // value={formData.email}
-                  // onChange={handleInputChange}
-                  placeholder="Email" />
-              </Form.Group>
-            </Form.Group>
+            <Input name={'email'}
+              type={'email'}
+              value={formData.email}
+              required={''}
+              onChange={handleInputChange}
+              placeholder={'Email'}
+            ></Input>
 
           </Col>
           <Col md>
 
-            {/* <Form.Group controlId="formContacto">
-              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
-                <Form.Control
-                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
-                  type="number"
-                  name="contacto"
-                  value={formData.contacto}
-                  required={!searchInProgress}
-                  onChange={handleInputChange}
-                  placeholder="Contacto" />
-              </Form.Group>
-            </Form.Group> */}
-
-            <Input
-              name={'contacto'}
-              type={'number'}
+            <Input name={'contacto'}
+              type={'numero'}
               value={formData.contacto}
               required={''}
-              as={'input'}
               onChange={handleInputChange}
               placeholder={'Contacto'}
             ></Input>
 
-
-
-            <Select name={''} as={''} value={''} required={''} onChange={''} mensaje={''}></Select>
-
-            {/* <Form.Group controlId={`form-${name}`}>
-              <Form.Group className="mt-5" controlId={`Form.Control-${name}`}>
-                <Form.Control
-                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
-                  type={type}
-                  name={name}
-                  value={value}
-                  required={required}
-                  onChange={onChange}
-                  placeholder={placeholder} />
-              </Form.Group>
-            </Form.Group> */}
-
-            <Form.Group controlId="formTelefoono">
-              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
-                {/* <Form.Label>Teléfono</Form.Label> */}
-                <Form.Control
-                  className='border border-secondary rounded rounded-1.1 shadow mt-5'
-                  type="number"
-                  name="telefono"
-                  // value={formData.telefono}
-                  // required={!searchInProgress}
-                  // onChange={handleInputChange}
-                  placeholder="Telefono" />
-              </Form.Group>
-            </Form.Group>
-
-            {/* <Form.Group controlId="formDepartamento">
-              <FormSelect
-                className='border border-secondary rounded rounded-1.1 shadow mt-5'
-                as="select"
-                name='departamento'
-              // value={formData.departamento}
-              // onChange={(e) => {
-              //   handleDepartamentoChange(e.target.value);
-              // }}
-              // required={!searchInProgress}
-              >
-                <option value="">Seleccione el Departamento</option>
-                {/* {departamentos.map((departamento) => (
-                  <option key={departamento.id} value={departamento.id}>
-                    {departamento.nombre}
-                  </option>
-                ))} */}
-            {/* </FormSelect>
-            </Form.Group> */}
-
-            <Select
-              name={'departamento'}
+            <Select name={'departamento'}
               value={formData.departamento}
               required={''}
               onChange={handleDepartamentoChange}
               mensaje={'el Departamento'}
             ></Select>
 
-            <Form.Group controlId="formLocalidad" className='mt-5'>
-              <FormSelect
-                className='border border-secondary rounded rounded-1.1 shadow mt-5 mt-3'
-                as="select"
-                name='localidad'
-              // value={selectedLocalidad} // Make sure this value matches the initial value
-              // onChange={(e) => {
-              //   handleLocalidadChange(e.target.value);
-              // }}
-              // required={!searchInProgress}
-              // placeholder='Seleccione la Localidad'
-              >
-                <option >Seleccione la Localidad</option>
-                {/* {localidades.map((localidad) => (
-                  <option key={localidad.id} value={localidad.id}>
-                    {localidad.nombre}
-                  </option>
-                ))} */}
-              </FormSelect>
-            </Form.Group>
+            <Select name={'departamento'}
+              value={formData.departamento}
+              required={''}
+              onChange={handleDepartamentoChange}
+              mensaje={'la Localidad'}
+            ></Select>
 
-            <Form.Group controlId="formDomicilio">
-              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
-                {/* <Form.Label>Domicilio</Form.Label> */}
-                <Form.Control
-                  className='border border-secondary rounded rounded-1.1 shadow mt-5 mt-3'
-                  type="text"
-                  name="domicilio"
-                  // value={formData.domicilio}
-                  // required={!searchInProgress}
-                  // onChange={handleInputChange}
-                  placeholder="Domicilio" />
-              </Form.Group>
-            </Form.Group>
+            <Input name={'domicilio'}
+              type={'text'}
+              value={formData.domicilio}
+              required={''}
+              onChange={handleInputChange}
+              placeholder={'Domicilio'}
+            ></Input>
 
-            <Form.Group controlId="formOcupacion">
-              <Form.Group className="mt-5" controlId="exampleForm.ControlInput1">
-                {/* <Form.Label>Ocupacion</Form.Label> */}
-                <Form.Control
-                  className='border border-secondary rounded rounded-1.1 shadow mt-3'
-                  type="text"
-                  name="ocupacion"
-                  // value={formData.ocupacion}
-                  // required={!searchInProgress}
-                  // onChange={handleInputChange}
-                  placeholder="Ocupacion" />
-              </Form.Group>
-            </Form.Group>
+            <Input name={'ocupacion'}
+              type={'string'}
+              value={formData.ocupacion}
+              required={''}
+              onChange={handleInputChange}
+              placeholder={'Ocupación'}
+            ></Input>
 
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
               <button type="submit" className='bouttoncancel'>
