@@ -5,9 +5,21 @@ import Servicio_model from "../models/Servicio_model.js";
 const listar_servicio = async (req, res) => {
   try {
     const servicios = await Servicio_model.findAll({
-      include: [{ model: organizacion_model, attributes: ["id_organizacion", "nombre"] }],
+      include: [
+        {
+          model: organizacion_model,
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
+        },
+      ],
     });
-    return res.status(200).json(servicios);
+    // A continuación, puedes mapear el resultado para ajustar la estructura de salida
+    const serviciosConOrganizacion = servicios.map((servicio) => ({
+      ...servicio.get(), // Copiar todos los campos de 'servicio'
+      organizacion: servicio.organizacion.nombre, // Tomamos solo el nombre de la organización
+    }));
+
+    return res.status(200).json(serviciosConOrganizacion);
   } catch (error) {
     console.log(error);
     const mensaje_error = "Ocurrió un error al obtener los registros de servicios";
@@ -15,15 +27,26 @@ const listar_servicio = async (req, res) => {
   }
 };
 
-
 //consulta por los servicios activos
 const listar_servicio_activo = async (req, res) => {
   try {
     const servicio = await Servicio_model.findAll({
       where: { activo: true },
-      include: [{ model: organizacion_model, attributes: ["id_organizacion", "nombre"] }],
+      include: [
+        {
+          model: organizacion_model,
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
+        },
+      ],
     });
-    return res.status(200).json(servicio);
+    // A continuación, puedes mapear el resultado para ajustar la estructura de salida
+    const serviciosConOrganizacion = servicio.map((servicio) => ({
+      ...servicio.get(), // Copiar todos los campos de 'servicio'
+      organizacion: servicio.organizacion.nombre, // Tomamos solo el nombre de la organización
+    }));
+
+    return res.status(200).json(serviciosConOrganizacion);
   } catch (error) {
     console.log(error);
     const mensaje_error = "Ocurrió un error al obtener los registros de servicio";
@@ -36,30 +59,28 @@ const obtener_servicio = async (req, res) => {
   const servicio_id = req.params.id;
 
   try {
-    const servicio = await Servicio_model.findOne({
-      where: {
-        id_servicio: servicio_id,
-        activo: true
-      },
+    const servicio = await Servicio_model.findByPk(servicio_id, {
       include: [
         {
           model: organizacion_model,
-          attributes: ["id_organizacion", "nombre"],
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
         },
       ],
     });
 
-    // Corrige la consulta para obtener la organización
-    const organizacion = await organizacion_model.findByPk(servicio.id_organizacion, {
-      attributes: ["nombre"],
-    });
-
     if (!servicio) {
-      const mensaje = 'No se encontró el registro solicitado';
+      const mensaje = "No se encontró el registro solicitado";
       return res.status(404).send(mensaje);
     }
 
-    return res.status(200).json({ servicio, organizacion });
+    // Modificamos la respuesta para reemplazar 'organizacion' con el nombre
+    const servicioConNombreOrganizacion = {
+      ...servicio.get(), // Copiamos todos los campos de 'servicio'
+      organizacion: servicio.organizacion.nombre, // Reemplazamos 'organizacion'
+    };
+
+    return res.status(200).json(servicioConNombreOrganizacion);
   } catch (error) {
     console.log(error);
     const mensaje_error = 'Ocurrió un error al obtener el registro de servicio';
