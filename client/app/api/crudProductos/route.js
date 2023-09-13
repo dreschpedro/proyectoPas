@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 
 
-// Función para obtener las organizaciones desde la API
+// Función para obtener las productos desde la API
 export const GET = async (api) => {
     try {
       const result = await fetch(api, {
@@ -13,13 +13,15 @@ export const GET = async (api) => {
       });
   
       if (!result.ok) {
-        throw new Error(`Error al obtener las organizaciones: ${result.statusText}`);
+        throw new Error(`Error al obtener las productos: ${result.statusText}`);
       }
   
       const datos = await result.json();
+      console.log('aca estan los datos de los', datos);
       return datos;
+      
     } catch (error) {
-      console.error('Error al obtener la lista de Organizaciones:', error);
+      console.error('Error al obtener la lista de productos:', error);
       throw error; // Re-lanzamos el error para manejarlo en la página
     }
   };

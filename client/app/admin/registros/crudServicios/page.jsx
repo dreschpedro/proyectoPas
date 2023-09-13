@@ -6,8 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useRouter, useParams } from 'next/navigation'; // Agrega esta importación para usar el enrutador
+import CrudTable from '@/components/crudTable';
+import axios from 'axios';
+
 
 const ServicesCrud = () => {
+  const [datos, setDatos] = useState([]);
   const router = useRouter(); // Inicializa el enrutador
   const [services, setServices] = useState([]);
   const [organizaciones, setOrganizaciones] = useState([]);
@@ -135,13 +139,14 @@ const ServicesCrud = () => {
 
       if (selectedServiceId) {
         // Editar un servicio existente
-        await instance.put(`/servicios/${selectedServiceId}`, dataToSend);
+        await axios.put(`${serverURL}/servicios/${selectedServiceId}`, dataToSend);
         console.log('Servicio editado exitosamente');
       } else {
         // Agregar un nuevo servicio
-        const response = await instance.post('/servicios/registrar', dataToSend);
+        const response = await axios.post(`${serverURL}/servicios/registrar`, dataToSend);
         console.log(response.data.message);
       }
+      handleCloseModal()
 
       console.log('Guardando cambios');
       fetchServicios();
@@ -151,6 +156,20 @@ const ServicesCrud = () => {
       console.error('Error al guardar los cambios:', error);
     }
   };
+
+  //GET DE LA TABLA
+  useState(() => {
+
+    axios.get(`${serverURL}/servicios/activo`)
+      .then(response => {
+        setDatos(response.data);
+      })
+      .catch(error => {
+        console.error("Error: ", error);
+      })
+  }, []);
+  //FIN DEL GET DE LA TABLA
+
 
   return (
     <Container className='mt-3'>
@@ -164,44 +183,12 @@ const ServicesCrud = () => {
           Agregar Servicio
         </button>
       </div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff', borderTopLeftRadius: '5px' }}>ID</th>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Nombre</th>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Descripción</th>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Organización</th>
-            <th style={{ borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {updatedServices.map((service) => (
-            <tr key={service.id_servicio} style={{ marginBottom: '10px' }}>
-              <td>{service.id_servicio}</td>
-              <td>{service.nombre}</td>
-              <td>{service.descripcion}</td>
-              <td>{service.organizacion?.nombre}</td>
-              <td className="d-flex justify-content-center ">
-                <Button
-                  style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
-                  variant="outline-warning"
-                  onClick={() => handleShowModal(service)}
-                >
-                  <FontAwesomeIcon icon={faPencilAlt} />
-                </Button>
-                <Button
-                  variant="outline-danger"
-                  onClick={() => handleShowDeleteModal(service.id_servicio)}
-                  style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
-                >
-                  <FontAwesomeIcon icon={faTrashAlt} />
-                </Button>
-              </td>
-            </tr>
-          ))}
 
-        </tbody>
-      </Table>
+      {/* COMPONENTE TABLA */}
+      <CrudTable data={datos} />
+
+
+
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
