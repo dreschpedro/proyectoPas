@@ -16,6 +16,7 @@ const ProdEntreg_model = sequelize.define('prod_entreg', {
   },
   fecha_entrega: {
     type: DataTypes.DATEONLY,
+    allowNull: true,
   },
 },
   {
