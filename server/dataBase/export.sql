@@ -39,16 +39,16 @@ INSERT INTO "personal" ("id_personal", "apellido", "nombre", "cuilt", "domicilio
 
 -- Volcando datos para la tabla public.producto: -1 rows
 /*!40000 ALTER TABLE "producto" DISABLE KEYS */;
-INSERT INTO "producto" ("id_producto", "nombre", "detalle", "activo", "createdAt", "updatedAt", "id_organizacion") VALUES
-	(9, 'acta nacimiento', 'detalle producto', 'true', '2023-09-12 09:46:55.32-03', '2023-09-12 09:46:55.32-03', 2),
-	(1, 'Aguja Esterilizada', 'detalle producto', 'true', '2023-09-12 09:39:15.293-03', '2023-09-12 10:11:08.555-03', 1),
-	(2, 'Guantes de Nitrilo', 'detalle producto', 'true', '2023-09-12 09:39:42.398-03', '2023-09-12 10:11:40.199-03', 1),
-	(3, 'Gotas para ojos', 'detalle producto', 'true', '2023-09-12 09:40:18.802-03', '2023-09-12 10:11:42.598-03', 1),
-	(4, 'dni nuevo', 'detalle producto', 'true', '2023-09-12 09:40:51.003-03', '2023-09-12 10:11:44.407-03', 2),
-	(5, 'pasaporte nuevo', 'detalle producto', 'true', '2023-09-12 09:41:06.171-03', '2023-09-12 10:11:45.946-03', 2),
-	(6, 'vacuna covid', 'detalle producto', 'true', '2023-09-12 09:42:08.486-03', '2023-09-12 10:11:47.55-03', 3),
-	(7, 'sesion psicologia', 'detalle producto', 'true', '2023-09-12 09:42:23.993-03', '2023-09-12 10:11:49.296-03', 3),
-	(8, 'estudio de sangre', 'detalle producto', 'true', '2023-09-12 09:42:37.261-03', '2023-09-12 10:11:51.594-03', 3);
+INSERT INTO "producto" ("id_producto", "nombre", "descripcion", "activo", "createdAt", "updatedAt", "id_organizacion") VALUES
+	(9, 'acta nacimiento', 'descripcion producto', 'true', '2023-09-12 09:46:55.32-03', '2023-09-12 09:46:55.32-03', 2),
+	(1, 'Aguja Esterilizada', 'descripcion producto', 'true', '2023-09-12 09:39:15.293-03', '2023-09-12 10:11:08.555-03', 1),
+	(2, 'Guantes de Nitrilo', 'descripcion producto', 'true', '2023-09-12 09:39:42.398-03', '2023-09-12 10:11:40.199-03', 1),
+	(3, 'Gotas para ojos', 'descripcion producto', 'true', '2023-09-12 09:40:18.802-03', '2023-09-12 10:11:42.598-03', 1),
+	(4, 'dni nuevo', 'descripcion producto', 'true', '2023-09-12 09:40:51.003-03', '2023-09-12 10:11:44.407-03', 2),
+	(5, 'pasaporte nuevo', 'descripcion producto', 'true', '2023-09-12 09:41:06.171-03', '2023-09-12 10:11:45.946-03', 2),
+	(6, 'vacuna covid', 'descripcion producto', 'true', '2023-09-12 09:42:08.486-03', '2023-09-12 10:11:47.55-03', 3),
+	(7, 'sesion psicologia', 'descripcion producto', 'true', '2023-09-12 09:42:23.993-03', '2023-09-12 10:11:49.296-03', 3),
+	(8, 'estudio de sangre', 'descripcion producto', 'true', '2023-09-12 09:42:37.261-03', '2023-09-12 10:11:51.594-03', 3);
 /*!40000 ALTER TABLE "producto" ENABLE KEYS */;
 
 -- Volcando datos para la tabla public.prod_entreg: -1 rows
