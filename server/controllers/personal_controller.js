@@ -1,20 +1,36 @@
 import Personal_model from "../models/Personal_model.js";
 import Usuario_model from "../models/Usuario_model.js";
 import { getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from "../helpers/imagen.js";
-import Organizacion_model from "../models/Organizacion_model.js";
+import organizacion_model from "../models/Organizacion_model.js";
 
 // Consulta de todos los registros activos
 const listar_personal = async (req, res) => {
   try {
-    const personal = await Personal_model.findAll({
-      where: { activo: true },
-      include: [{ model: Usuario_model, attributes: ["username"] }],
+    const personals = await Personal_model.findAll({
+      include: [
+        {
+          model: organizacion_model,
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
+        },
+        {
+          model: Usuario_model,
+          attributes: ["username"],
+          raw: true
+        }
+      ],
     });
+    // A continuación, puedes mapear el resultado para ajustar la estructura de salida
+    const personalsConOrganizacion = personals.map((personal) => ({
+      ...personal.get(), // Copiar todos los campos de 'personal'
+      organizacion: personal.organizacion.nombre, // Tomamos solo el nombre de la organización
+      usuario: personal.usuario.username
+    }));
 
-    return res.status(200).json(personal);
+    return res.status(200).json(personalsConOrganizacion);
   } catch (error) {
     console.log(error);
-    const mensaje_error = 'Ocurrió un error al obtener los registros de personal';
+    const mensaje_error = "Ocurrió un error al obtener los registros de personals";
     return res.status(500).json({ error: mensaje_error });
   }
 };
@@ -22,8 +38,29 @@ const listar_personal = async (req, res) => {
 //consulta por los personal activos
 const listar_personal_activo = async (req, res) => {
   try {
-    const personal = await Personal_model.findAll();
-    return res.status(200).json(personal);
+    const personal = await Personal_model.findAll({
+      where: { activo: true },
+      include: [
+        {
+          model: organizacion_model,
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
+        },
+        {
+          model: Usuario_model,
+          attributes: ["username"],
+          raw: true
+        }
+      ],
+    });
+    // A continuación, puedes mapear el resultado para ajustar la estructura de salida
+    const personalsConOrganizacion = personal.map((personal) => ({
+      ...personal.get(), // Copiar todos los campos de 'personal'
+      organizacion: personal.organizacion.nombre, // Tomamos solo el nombre de la organización
+      usuario: personal.usuario.username
+    }));
+
+    return res.status(200).json(personalsConOrganizacion);
   } catch (error) {
     console.log(error);
     const mensaje_error = "Ocurrió un error al obtener los registros de personal";
@@ -31,33 +68,38 @@ const listar_personal_activo = async (req, res) => {
   }
 };
 
-
 // consulta de todos los registros con activo: true
 const obtener_personal = async (req, res) => {
   const personal_id = req.params.id;
 
   try {
     const personal = await Personal_model.findOne({
-      where: { id_personal: personal_id, activo: true }, // Agregar condición de activo: true
+      where: { id_personal: personal_id, activo: true },
       include: [
+        {
+          model: organizacion_model,
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
+        },
         {
           model: Usuario_model,
           attributes: ["username", "email", "rol"],
-        },
+        }
       ],
     });
 
-    // Corrige la consulta para obtener la organización
-    const organizacion = await Organizacion_model.findByPk(personal.id_organizacion, {
-      attributes: ["nombre"],
-    });
+    // Modificamos la respuesta para reemplazar 'organizacion' con el nombre
+    const personalConOrganizacion = {
+      ...personal.get(), // Copiamos todos los campos de 'personal'
+      organizacion: personal.organizacion.nombre, // Reemplazamos 'organizacion'
+    };
 
     if (!personal) {
       const mensaje = 'No se encontró el registro solicitado';
       return res.status(404).send(mensaje);
     }
 
-    return res.status(200).json({ personal, organizacion }); // Devuelve también la organización
+    return res.status(200).json({ personalConOrganizacion }); // Devuelve también la organización
   } catch (error) {
     console.log(error);
     const mensaje_error = 'Ocurrió un error al obtener el registro de personal';
@@ -97,8 +139,6 @@ const registrar_personal = async (req, res) => {
   }
 };
 
-
-// modifica los datos buscando por id
 // Modifica los datos de un registro activo por id
 const modificar_personal = async (req, res) => {
   const personal_id = req.params.id;
@@ -122,7 +162,6 @@ const modificar_personal = async (req, res) => {
   }
 };
 
-
 // Cambiar el estado 'activo' del registro por id
 const cambiar_estado_personal = async (req, res) => {
   const personal_id = req.params.id;
@@ -143,7 +182,6 @@ const cambiar_estado_personal = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
-
 
 // exports
 export {
