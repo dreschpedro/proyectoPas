@@ -33,9 +33,6 @@ const obtener_servReal = async (req, res) => {
   }
 };
 
-
-
-
 const registrar_servReal_con_cliente = async (req, res) => {
   const { dni, id_servicio, id_usuario } = req.body;
 
@@ -61,11 +58,6 @@ const registrar_servReal_con_cliente = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
-
-
-
-
-
 
 // modifica los datos buscando por id
 const modificar_servReal = async (req, res) => {

@@ -1,11 +1,26 @@
 import ProdEntreg_model from "../models/ProdEntreg_model.js";
+import Producto_model from "../models/Producto_model.js";
 
 // FUNCIONALIDADES
 // consulta de todos los registros
 const listar_prodEnt = async (req, res) => {
   try {
-    const prodEnt = await ProdEntreg_model.findAll();
-    return res.status(200).json(prodEnt);
+    const prodEnt = await ProdEntreg_model.findAll({
+      include: [
+        {
+          model: Producto_model,
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
+        },
+      ],
+    });
+    // A continuación, puedes mapear el resultado para ajustar la estructura de salida
+    const prodEntConProducto = prodEnt.map((prodEntregado) => ({
+      ...prodEntregado.get(), // Copiar todos los campos de 'prodEntregado'
+      producto: prodEntregado.producto.nombre, // Tomamos solo el nombre de la organización
+    }));
+
+    return res.status(200).json(prodEntConProducto);
   } catch (error) {
     console.log(error);
     const mensaje_error = "Ocurrió un error al obtener los registros de prodEnt";
@@ -16,18 +31,33 @@ const listar_prodEnt = async (req, res) => {
 // consulta por un registro (por id)
 const obtener_prodEnt = async (req, res) => {
   const prodEnt_id = req.params.id;
+
   try {
-    const prodEnt = await ProdEntreg_model.findByPk(prodEnt_id);
+    const prodEnt = await ProdEntreg_model.findByPk(prodEnt_id, {
+      include: [
+        {
+          model: Producto_model,
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
+        },
+      ],
+    });
 
     if (!prodEnt) {
       const mensaje = "No se encontró el registro solicitado";
       return res.status(404).send(mensaje);
     }
 
-    return res.status(200).json(prodEnt);
+    // Modificamos la respuesta para reemplazar 'producto' con el nombre
+    const prodEntConProducto = {
+      ...prodEnt.get(), // Copiamos todos los campos de 'prodEnt'
+      producto: prodEnt.producto.nombre, // Reemplazamos 'producto'
+    };
+
+    return res.status(200).json(prodEntConProducto);
   } catch (error) {
     console.log(error);
-    const mensaje_error = "Ocurrió un error al obtener el registro de prodEnt";
+    const mensaje_error = 'Ocurrió un error al obtener el registro de prodEnt';
     return res.status(500).json({ error: mensaje_error });
   }
 };

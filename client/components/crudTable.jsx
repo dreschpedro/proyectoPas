@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useRouter, useParams } from 'next/navigation'; // Agrega esta importación para usar el enrutador
+import axios from 'axios';
 
 const crudTable = ({ data }) => {
   const router = useRouter(); // Inicializa el enrutador
+  const params = useParams();
   const [items, setitems] = useState([]);
   const [organizaciones, setOrganizaciones] = useState([]);
   const [updateditems, setUpdateditems] = useState([]);
@@ -55,10 +57,10 @@ const crudTable = ({ data }) => {
     fetchServicios();
   }, []);
 
-  //   const handleCloseModal = () => {
-  //     setSelecteditemId(null);
-  //     setShowModal(false);
-  //   };
+    const handleCloseModal = () => {
+      setSelecteditemId(null);
+      setShowModal(false);
+    };
 
   const handleShowDeleteModal = (itemId) => {
     setSelecteditemId(itemId);
@@ -102,7 +104,7 @@ const crudTable = ({ data }) => {
 
   const handleDeleteAccount = async () => {
     try {
-      await instance.put(`/servicios/estado/${selecteditemId}`);
+      await axios.put(`${serverURL}/servicios/estado/${selecteditemId}`);
       console.log('Servicio eliminado exitosamente');
 
       // Agrega el servicio eliminado a la lista de servicios actualizados
@@ -135,18 +137,18 @@ const crudTable = ({ data }) => {
 
       if (selecteditemId) {
         // Editar un servicio existente
-        await instance.put(`/servicios/${selecteditemId}`, dataToSend);
+        await axios.put(`${serverURL}/servicios/${selecteditemId}`, dataToSend);
         console.log('Servicio editado exitosamente');
       } else {
         // Agregar un nuevo servicio
-        const response = await instance.post('/servicios/registrar', dataToSend);
+        const response = await axios.post(`${serverURL}/servicios/registrar`, dataToSend);
         console.log(response.data.message);
       }
-
+      handleCloseModal();
       console.log('Guardando cambios');
       fetchServicios();
       showAndCloseConfirmation();
-      handleCloseModal();
+      
     } catch (error) {
       console.error('Error al guardar los cambios:', error);
     }
@@ -167,10 +169,10 @@ const crudTable = ({ data }) => {
         </thead>
         <tbody>
           {data.map((item) => (
-            <tr key={item.id_servicio} style={{ marginBottom: '10px' }}>
+            <tr key={item.id_producto} style={{ marginBottom: '10px' }}>
               <td>{item.nombre}</td>
               <td>{item.descripcion}</td>
-              <td>{item.organizacion}</td>
+              <td>{item.organizacion.nombre}</td>
               <td className="d-flex justify-content-center ">
                 <Button
                   style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
@@ -192,7 +194,9 @@ const crudTable = ({ data }) => {
         </tbody>
       </Table>
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} 
+      onHide={handleCloseModal}
+      >
         <Modal.Header closeButton>
           <Modal.Title>{selecteditemId ? 'Editar Servicio' : 'Agregar Servicio'}</Modal.Title>
         </Modal.Header>
@@ -241,7 +245,9 @@ const crudTable = ({ data }) => {
               />
             </Form.Group>
             <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
-              <button type="button" className='bouttoncancel' onClick={handleCloseModal}>Cerrar</button>
+              <button type="button" className='bouttoncancel'
+               onClick={handleCloseModal}
+               >Cerrar</button>
               {selecteditemId ? (
                 <button className='buttonRegistrar' type="submit">Guardar Cambios</button>
               ) : (
