@@ -49,7 +49,7 @@ import routerProdEnt from './routes/Prod_entreg.routes.js';
 // app.get('/', (req, res) => res.send(`Estas en Inicio`));
 
 app.use('/organizaciones/', routerOrganiz)
-app.use('/servicios', routerServicio)
+app.use('/servicios', routerServicio) 
 app.use('/producto', routerProducto)
 app.use('/usuarios', routerUsuario)
 app.use('/cliente', routerCliente)

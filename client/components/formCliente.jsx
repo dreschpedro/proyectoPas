@@ -11,8 +11,11 @@ import { Grupo, Input, Select } from './Input';
 
 
 function FormCliente() {
-
-  {/* Funciones 2do Form */ }
+  const [departamentos, setDepartamentos] = useState([]);
+  const [localidades, setLocalidades] = useState([]);
+  const [selectedDepartamento, setSelectedDepartamento] = useState()
+  const [selectedLocalidad, setSelectedLocalidad] = useState()
+  const [searchInProgress, setSearchInProgress] = useState()
 
   const [formData, setFormData] = useState({
     id_cliente: '',
@@ -86,24 +89,32 @@ function FormCliente() {
     }
   };
 
-  const handleDepartamentoChange = async (departamentoId) => {
-    console.log('handleDepartamentoChange triggered with departamentoId:', departamentoId);
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const departamentosData = await fetchDepartamentos();
+        const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        console.log('departamentosData: ', departamentosData);
+        setDepartamentos(departamentosData);
+      } catch (error) {
+        console.error('Error fetching initial data:', error);
+      }
+    };
 
-    setSelectedDepartamento(departamentoId);
-    setSelectedLocalidad('');
+    fetchInitialData(); // Llamar a la función al montar el componente
+  }, []); // Pase un arreglo vacío como segundo argumento para que se ejecute solo al montar el componente
 
-    const localidadesData = await fetchLocalidades(departamentoId);
-    // console.log('Localidades Data:', localidadesData);
-    const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-    setLocalidades(sortedLocalidades);
+  const handleDepartamentoChange = async (departamento_id) => {
+    setSelectedDepartamento(departamento_id);
 
     setFormData((prevData) => ({
       ...prevData,
-      departamento: departamentoId,
+      departamento: departamento_id,
       localidad: '',
     }));
-    console.log('Departamento: ', departamentoId);
+    console.log('departamento:', departamento_id);
   };
+
 
   const handleLocalidadChange = async (localidad_id) => {
     setSelectedLocalidad(localidad_id);
@@ -117,27 +128,6 @@ function FormCliente() {
 
   const dbDate = new Date(formData.fechaNacimiento);
   const formattedDate = `${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()}`;
-
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        const departamentosData = await fetchDepartamentos();
-        const sortedDepartamentos = departamentosData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-        setDepartamentos(sortedDepartamentos);
-
-        // Fetch localidades based on the selectedDepartamento
-        if (selectedDepartamento) {
-          const localidadesData = await fetchLocalidades(selectedDepartamento);
-          const sortedLocalidades = localidadesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-          setLocalidades(sortedLocalidades);
-        }
-      } catch (error) {
-        console.error('Error fetching initial data:', error);
-      }
-    };
-
-    fetchInitialData();
-  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -154,7 +144,6 @@ function FormCliente() {
       }));
     }
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -216,80 +205,26 @@ function FormCliente() {
     }
   };
 
-  {/*Fin Funciones 2do Form */ }
-
-
   return (
     <>
-      {/* inicio componente 2 */}
-
-
-
       <h1 className='titulo'>Información</h1>
       <Form
         // onSubmit={handleSubmit} 
-        className='bordesito' >
+        className='bordesito'
+      >
 
         <Row>
-
           <Col md>
 
-            <Form.Group controlId="formDNI">
-              <Form.Group className="mt-5 mb-5" controlId="exampleForm.ControlInput1">
-                <div className="input-group">
-                  <Form.Control
-                    className="border-secondary rounded rounded-1.1 shadow "
-                    type="number"
-                    as="input"
-                    name="dni"
-                    // value={formData.dni}
-                    // required={!searchInProgress}
-                    // onChange={handleInputChange}
-                    placeholder="DNI"
-                  />
-
-                  <button
-                    style={{ marginLeft: '0.5rem', borderRadius: '5px' }}
-                    className="buscarbutton"
-                  // onClick={(e) => {
-                  //   e.preventDefault();
-                  //   searchByDNI(formData.dni);
-                  // }
-                  // }
-                  >
-
-                    <FontAwesomeIcon icon={faSearch} style={{ color: "#FFFF", }} />
-
-                  </button>
-                </div>
-              </Form.Group>
-            </Form.Group>
-
-            {/* <Grupo className="mt-5 mb-5">
-              <div className="input-group">
-                <Input name={'dni'}
-                  className={'border-secondary rounded rounded-1.1 shadow'}
-                  type={'numero'}
-                  value={formData.dni}
-                  required={''}
-                  onChange={handleInputChange}
-                  placeholder={'DNI'}
-                ></Input>
-                <button
-                  style={{ marginLeft: '0.5rem', borderRadius: '5px' }}
-                  className="buscarbutton"
-                // onClick={(e) => {
-                //   e.preventDefault();
-                //   searchByDNI(formData.dni);
-                // }
-                // }
-                >
-
-                  <FontAwesomeIcon icon={faSearch} style={{ color: "#FFFF", }} />
-
-                </button>
-              </div>
-            </Grupo> */}
+            <Input name={'dni'}
+              type={'numero'}
+              isComposed
+              value={formData.dni}
+              required={''}
+              onChange={handleInputChange}
+              placeholder={'DNI'}
+            >
+            </Input>
 
             <Input name={'apellido'}
               type={'string'}
@@ -315,24 +250,18 @@ function FormCliente() {
             // placeholder={'dd/mm/aaaa'}
             ></Input>
 
-            <Form.Group controlId="formGenero">
-              {/* <Form.Label>Género</Form.Label> */}
-              <FormSelect
-                className='border border-secondary rounded rounded-1.1 shadow mt-5'
-                as="select"
-                name="genero"
-              // value={formData.genero}
-              // onChange={handleInputChange}
-              // required={!searchInProgress}
-              >
-                <option value="">Seleccione el Género</option>
-                {/* {genreDB.map((genero, index) => (
-                  <option key={genero} value={genero}>
-                    {genreView[index]}
-                  </option>
-                ))} */}
-              </FormSelect>
-            </Form.Group>
+            <Select name='genero'
+              value={formData.genero}
+              onChange={handleInputChange}
+              mensaje='el Género'
+            >
+              <option value="">Seleccione el Género</option>
+              {genreDB.map((genero, index) => (
+                <option key={genero} value={genero}>
+                  {genreView[index]}
+                </option>
+              ))}
+            </Select>
 
             <Input name={'email'}
               type={'email'}
@@ -353,19 +282,30 @@ function FormCliente() {
               placeholder={'Contacto'}
             ></Input>
 
-            <Select name={'departamento'}
-              value={formData.departamento}
-              required={''}
+            <Select name='departamento'
+              value={selectedDepartamento}
               onChange={handleDepartamentoChange}
-              mensaje={'el Departamento'}
-            ></Select>
+            >
+              <option>Seleccione el Departamento</option>
+              {departamentos.map((departamento) => (
+                <option key={departamento.id} value={departamento.id}>
+                  {departamento.nombre}
+                </option>
+              ))}
+            </Select>
 
-            <Select name={'departamento'}
-              value={formData.departamento}
-              required={''}
-              onChange={handleDepartamentoChange}
-              mensaje={'la Localidad'}
-            ></Select>
+            {/* <Select name='localidad'
+              value={formData.genero}
+              onChange={handleInputChange}
+              mensaje='el Género'
+            >
+              <option value="">Seleccione la Localidad</option>
+              {genreDB.map((genero, index) => (
+                <option key={genero} value={genero}>
+                  {genreView[index]}
+                </option>
+              ))}
+            </Select> */}
 
             <Input name={'domicilio'}
               type={'text'}
