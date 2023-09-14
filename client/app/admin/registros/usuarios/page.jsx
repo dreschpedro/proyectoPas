@@ -74,7 +74,7 @@ function Usuarios() {
           />
 
           <div className="ml-auto"  style={{ display: 'flex', marginLeft: 'auto' }}>
-            <Link href="/admin/usuarios/usuarioCreate">
+            <Link href="/admin/registros/usuarios/usuarioCreate">
               <button className="buttonRegistrar" style={{ marginLeft: '3rem' }}>
                 Crear Usuario
               </button>
