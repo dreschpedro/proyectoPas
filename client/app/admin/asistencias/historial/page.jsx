@@ -18,7 +18,7 @@ const HistorialServicios = () => {
       usuarioRegistro: 'Usuario 1',
       beneficiario: 'Juan Pérez',
       dni: '12345678',
-      cantidadRealizaciones: 3,
+      // cantidadRealizaciones: 3,
     },
     {
       nombreServicio: 'Servicio 2',
@@ -29,7 +29,7 @@ const HistorialServicios = () => {
       usuarioRegistro: 'Usuario 2',
       beneficiario: 'María Gómez',
       dni: '87654321',
-      cantidadRealizaciones: 1,
+      // cantidadRealizaciones: 1,
     },
     {
       nombreServicio: 'Servicio 3',
@@ -40,7 +40,7 @@ const HistorialServicios = () => {
       usuarioRegistro: 'Usuario 3',
       beneficiario: 'Carlos Ramírez',
       dni: '78901234',
-      cantidadRealizaciones: 2,
+      // cantidadRealizaciones: 2,
     },
     // Agrega más datos de ejemplo aquí
   ];
@@ -126,7 +126,7 @@ const HistorialServicios = () => {
                 <td>{servicio.usuarioRegistro}</td>
                 <td>{servicio.beneficiario}</td>
                 <td>{servicio.dni}</td>
-                <td >{servicio.cantidadRealizaciones}</td>
+                {/* <td >{servicio.cantidadRealizaciones}</td> */}
               </tr>
             ))
           ) : (
@@ -143,7 +143,7 @@ const HistorialServicios = () => {
                 <td>{servicio.usuarioRegistro}</td>
                 <td>{servicio.beneficiario}</td>
                 <td>{servicio.dni}</td>
-                <td>{servicio.cantidadRealizaciones}</td>
+                {/* <td>{servicio.cantidadRealizaciones}</td> */}
               </tr>
             ))
           )}

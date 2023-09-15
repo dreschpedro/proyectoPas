@@ -54,6 +54,13 @@ const Sidebar = () => {
           </Link>
         </div>
 
+        <div className='buttoncito'>
+          <Link href={"/admin/registros"} className='custom-link d-flex  align-items-center'>
+            <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Ordenes</b>
+          </Link>
+        </div>
+
 
       </Nav>
     </div>
