@@ -57,6 +57,7 @@ const ServicesCrud = () => {
 
     fetchOrganizaciones();
     fetchServicios();
+   
   }, []);
 
   const handleCloseModal = () => {
@@ -119,12 +120,13 @@ const ServicesCrud = () => {
       handleCloseDeleteModal();
       showAndCloseConfirmation();
 
-      setTimeout(() => {
-        router.push('/admin/servicios/crudServicios');
-      }, 1500); // Redirige después de 1.5 segundos
+      // setTimeout(() => {
+      //   router.push('/admin/servicios/crudServicios');
+      // }, 1500); // Redirige después de 1.5 segundos []
     } catch (error) {
       console.error('Error al eliminar el servicio:', error.message);
     }
+    updateData();
   };
 
 
@@ -151,16 +153,23 @@ const ServicesCrud = () => {
       console.log('Guardando cambios');
       fetchServicios();
       showAndCloseConfirmation();
+      
       handleCloseModal();
     } catch (error) {
       console.error('Error al guardar los cambios:', error);
     }
+    updateData();
   };
+
+
+
+ //ACA IRIA LA ORGANIZACION SI TUVIERAMOS LOGIN ECHO Y LOS CONTROLADORE ACCTUALIZADOS....
+  const organizacion =''
 
   //GET DE LA TABLA
   useState(() => {
 
-    axios.get(`${serverURL}/servicios/activo`)
+    axios.get(`${serverURL}/servicios/activo${organizacion}`)
       .then(response => {
         // console.log('aca esta el response: ', response)
         setDatos(response.data);
@@ -171,7 +180,24 @@ const ServicesCrud = () => {
   }, []);
   //FIN DEL GET DE LA TABLA
 
-console.log('estos dson los datos de servicios: ', datos)
+
+
+  //ACTUALIZAR DATOS DE LA TABLA(se tubo que hacer aparte por la logica de JS)
+
+  const updateData = () => {
+    axios.get(`${serverURL}/servicios/activo${organizacion}`)
+      .then(response => {
+        setDatos(response.data);
+      })
+      .catch(error => {
+        console.error("Error: ", error);
+      });
+  };
+  
+
+  //ACTUALIZAR DATOS DE LA TABLA FIN.
+
+
 
   return (
     <Container className='mt-3'>
@@ -207,7 +233,7 @@ console.log('estos dson los datos de servicios: ', datos)
           <Button
             style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
             variant="outline-warning"
-            // onClick={() => handleShowModal(item)}
+            onClick={() => handleShowModal(item)}
           >
 
             
@@ -215,7 +241,7 @@ console.log('estos dson los datos de servicios: ', datos)
           </Button>
           <Button
             variant="outline-danger"
-            // onClick={() => handleShowDeleteModal(item.id_servicio)}
+            onClick={() => handleShowDeleteModal(item.id_servicio)}
             style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
           >
             <FontAwesomeIcon icon={faTrashAlt} />
@@ -230,7 +256,8 @@ console.log('estos dson los datos de servicios: ', datos)
 onHide={handleCloseModal}
 >
   <Modal.Header closeButton>
-    <Modal.Title>{selecteditemId ? 'Editar Servicio' : 'Agregar Servicio'}</Modal.Title>
+    <Modal.Title>
+      {selectedServiceId ? 'Editar Servicio' : 'Agregar Servicio'}</Modal.Title>
   </Modal.Header>
   <Modal.Body>
     <Form onSubmit={handleSubmit}>
@@ -241,7 +268,7 @@ onHide={handleCloseModal}
           type="text"
           name="nombre"
           required
-          value={selecteditem.nombre}
+          value={selectedService.nombre}
           onChange={handleChange}
         />
       </Form.Group>
@@ -252,7 +279,7 @@ onHide={handleCloseModal}
             className="mb-3 border border-secondary rounded rounded-1.1 shadow"
             placeholder='Organización'
             as="select"
-            value={itemInfo.id_organizacion}
+            value={serviceInfo.id_organizacion}
             onChange={(e) => setOrganizacionValue(e.target.value)}
             required
           >
@@ -272,7 +299,7 @@ onHide={handleCloseModal}
           className="mb-3 border border-secondary rounded rounded-1.1 shadow"
           as="textarea"
           name="descripcion"
-          value={selecteditem.descripcion}
+          value={selectedService.descripcion}
           onChange={handleChange}
         />
       </Form.Group>
@@ -280,7 +307,7 @@ onHide={handleCloseModal}
         <button type="button" className='bouttoncancel'
          onClick={handleCloseModal}
          >Cerrar</button>
-        {selecteditemId ? (
+        {selectedServiceId ? (
           <button className='buttonRegistrar' type="submit">Guardar Cambios</button>
         ) : (
           <button className='buttonRegistrar' type="submit">Agregar Servicio</button>
