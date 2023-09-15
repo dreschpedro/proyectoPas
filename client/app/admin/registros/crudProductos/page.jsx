@@ -2,17 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Table, InputGroup, Button, Modal, Form } from 'react-bootstrap';
 import instance, { serverURL } from '@/app/axiosConfig';
-<<<<<<< HEAD
-import AlertaModal from '@/components/modales/alertaModal';
-// import avisoModal from '@/components/modales/avisoModal';
-import crearOrganizacion from '@/components/modales/crearOrganizacion';
-// import { GET } from '@/app/api/crudProductos/route'
-=======
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useRouter, useParams } from 'next/navigation'; // Agrega esta importación para usar el enrutador
->>>>>>> bc61577192d3ad093e7ed3298fc26225b58e31a6
 import CrudTable from '@/components/crudTable';
 import axios from 'axios';
 
@@ -184,38 +177,6 @@ const ServicesCrud = () => {
       .catch(error => {
         console.error("Error: ", error);
       })
-<<<<<<< HEAD
-    /*     async function getUser() {
-          try {
-            const response = await axios.get('http://localhost:3005/producto/activo');
-            const datosProductos = await result.json();
-            return(response);
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      
-      getUser();  */
-
-
-    /* const fetchData = async () => {
-      try {
-        const organizaciones = await GET(ruta);
-        console.log(`productos: `, data);
-
-        if (Array.isArray(organizaciones)) {
-          setListaOrganizaciones(organizaciones);
-        } else {
-          console.error('La respuesta de GET no es un array:', data);
-        }
-      } catch (error) {
-        console.error('Error al obtener la lista de Organizaciones:', error);
-      }
-    };
-
-    fetchData(); */
-=======
->>>>>>> bc61577192d3ad093e7ed3298fc26225b58e31a6
   }, []);
   //FIN DEL GET DE LA TABLA
 
