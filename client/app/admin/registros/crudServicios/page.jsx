@@ -187,9 +187,6 @@ const ServicesCrud = () => {
       {/* COMPONENTE TABLA */}
       <CrudTable data={datos} />
 
-
-
-
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>{selectedServiceId ? 'Editar Servicio' : 'Agregar Servicio'}</Modal.Title>

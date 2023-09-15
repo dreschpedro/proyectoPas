@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import instance, { serverURL } from '@/app/axiosConfig';
+import AlertaModal from '@/components/modales/alertaModal';
 // import avisoModal from '@/components/modales/avisoModal';
 import crearOrganizacion from '@/components/modales/crearOrganizacion';
 // import { GET } from '@/app/api/crudProductos/route'
@@ -38,17 +39,17 @@ const ListaOrganizaciones = () => {
       .catch(error => {
         console.error("Error: ", error);
       })
-/*     async function getUser() {
-      try {
-        const response = await axios.get('http://localhost:3005/producto/activo');
-        const datosProductos = await result.json();
-        return(response);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  
-  getUser();  */
+    /*     async function getUser() {
+          try {
+            const response = await axios.get('http://localhost:3005/producto/activo');
+            const datosProductos = await result.json();
+            return(response);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      
+      getUser();  */
 
 
     /* const fetchData = async () => {
@@ -241,12 +242,12 @@ const ListaOrganizaciones = () => {
           </div>
         </Form>
 
-        <CrudTable data={datos}/>
+        <CrudTable data={datos} />
 
       </div>
 
-      
-      <avisoModal />
+
+      <AlertaModal />
 
     </div>
   );
