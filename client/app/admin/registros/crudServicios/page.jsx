@@ -57,6 +57,7 @@ const ServicesCrud = () => {
 
     fetchOrganizaciones();
     fetchServicios();
+   
   }, []);
 
   const handleCloseModal = () => {
@@ -119,12 +120,13 @@ const ServicesCrud = () => {
       handleCloseDeleteModal();
       showAndCloseConfirmation();
 
-      setTimeout(() => {
-        router.push('/admin/servicios/crudServicios');
-      }, 1500); // Redirige después de 1.5 segundos
+      // setTimeout(() => {
+      //   router.push('/admin/servicios/crudServicios');
+      // }, 1500); // Redirige después de 1.5 segundos []
     } catch (error) {
       console.error('Error al eliminar el servicio:', error.message);
     }
+    updateData();
   };
 
 
@@ -151,17 +153,25 @@ const ServicesCrud = () => {
       console.log('Guardando cambios');
       fetchServicios();
       showAndCloseConfirmation();
+      
       handleCloseModal();
     } catch (error) {
       console.error('Error al guardar los cambios:', error);
     }
+    updateData();
   };
+
+
+
+ //ACA IRIA LA ORGANIZACION SI TUVIERAMOS LOGIN ECHO Y LOS CONTROLADORE ACCTUALIZADOS....
+  const organizacion =''
 
   //GET DE LA TABLA
   useState(() => {
 
-    axios.get(`${serverURL}/servicios/activo`)
+    axios.get(`${serverURL}/servicios/activo${organizacion}`)
       .then(response => {
+        // console.log('aca esta el response: ', response)
         setDatos(response.data);
       })
       .catch(error => {
@@ -169,6 +179,24 @@ const ServicesCrud = () => {
       })
   }, []);
   //FIN DEL GET DE LA TABLA
+
+
+
+  //ACTUALIZAR DATOS DE LA TABLA(se tubo que hacer aparte por la logica de JS)
+
+  const updateData = () => {
+    axios.get(`${serverURL}/servicios/activo${organizacion}`)
+      .then(response => {
+        setDatos(response.data);
+      })
+      .catch(error => {
+        console.error("Error: ", error);
+      });
+  };
+  
+
+  //ACTUALIZAR DATOS DE LA TABLA FIN.
+
 
 
   return (
@@ -182,10 +210,142 @@ const ServicesCrud = () => {
         >
           Agregar Servicio
         </button>
-      </div>
+        </div>
 
-      {/* COMPONENTE TABLA */}
-      <CrudTable data={datos} />
+
+<Table striped bordered hover>
+  <thead>
+    <tr>
+
+      <th style={{ backgroundColor: '#101488', color: '#ffffff', borderTopLeftRadius: '5px' }}>Nombre</th>
+      <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Descripción</th>
+      <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Organización</th>
+      <th style={{ borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {datos.map((item) => (
+      <tr key={item.id_producto} style={{ marginBottom: '10px' }}>
+        <td>{item.nombre}</td>
+        <td>{item.descripcion}</td>
+        <td>{item.organizacion}</td>
+        <td className="d-flex justify-content-center ">
+          <Button
+            style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
+            variant="outline-warning"
+            onClick={() => handleShowModal(item)}
+          >
+
+            
+            <FontAwesomeIcon icon={faPencilAlt} />
+          </Button>
+          <Button
+            variant="outline-danger"
+            onClick={() => handleShowDeleteModal(item.id_servicio)}
+            style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
+          >
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </Button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</Table>
+
+<Modal show={showModal} 
+onHide={handleCloseModal}
+>
+  <Modal.Header closeButton>
+    <Modal.Title>
+      {selectedServiceId ? 'Editar Servicio' : 'Agregar Servicio'}</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="formName">
+        <Form.Control
+          className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+          placeholder='Nombre del servicio'
+          type="text"
+          name="nombre"
+          required
+          value={selectedService.nombre}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="formOrganizacion">
+        <InputGroup>
+          <Form.Control
+            className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+            placeholder='Organización'
+            as="select"
+            value={serviceInfo.id_organizacion}
+            onChange={(e) => setOrganizacionValue(e.target.value)}
+            required
+          >
+            <option value="">Seleccionar Organización</option>
+            {organizaciones.map((organizacion) => (
+              <option key={organizacion.id_organizacion} value={organizacion.id_organizacion}>
+                {organizacion.nombre}
+              </option>
+            ))}
+          </Form.Control>
+        </InputGroup>
+      </Form.Group>
+
+      <Form.Group controlId="formDescripcion">
+        <Form.Label>Descripción del Servicio</Form.Label>
+        <Form.Control
+          className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+          as="textarea"
+          name="descripcion"
+          value={selectedService.descripcion}
+          onChange={handleChange}
+        />
+      </Form.Group>
+      <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
+        <button type="button" className='bouttoncancel'
+         onClick={handleCloseModal}
+         >Cerrar</button>
+        {selectedServiceId ? (
+          <button className='buttonRegistrar' type="submit">Guardar Cambios</button>
+        ) : (
+          <button className='buttonRegistrar' type="submit">Agregar Servicio</button>
+        )}
+      </div>
+    </Form>
+  </Modal.Body>
+</Modal>
+
+<Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+  <Modal.Header closeButton>
+    <Modal.Title>Eliminar Servicio</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>¿Está seguro que desea eliminar el Servicio?</Modal.Body>
+  <Modal.Footer>
+    <Button
+      variant="secondary"
+      onClick={handleCloseDeleteModal}>
+      Cancelar
+    </Button>
+    <Button
+      variant="danger"
+      onClick={handleDeleteAccount}>
+      Eliminar
+    </Button>
+  </Modal.Footer>
+</Modal>
+
+<Modal show={showConfirmation} 
+// onHide={handleConfirmationClose}
+>
+  <Modal.Header closeButton>
+    <Modal.Title>Operación Exitosa</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    Servicio Eliminado Exitosamente!
+  </Modal.Body>
+</Modal>
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>

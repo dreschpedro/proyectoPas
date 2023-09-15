@@ -1,44 +1,190 @@
-//front
-"use client";
+"use client"
 import React, { useState, useEffect } from 'react';
-import { FormControl, Modal, Form, Table, Button, InputGroup } from 'react-bootstrap';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Link from 'next/link';
+import { Container, Table, InputGroup, Button, Modal, Form } from 'react-bootstrap';
 import instance, { serverURL } from '@/app/axiosConfig';
+<<<<<<< HEAD
 import AlertaModal from '@/components/modales/alertaModal';
 // import avisoModal from '@/components/modales/avisoModal';
 import crearOrganizacion from '@/components/modales/crearOrganizacion';
 // import { GET } from '@/app/api/crudProductos/route'
+=======
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { useRouter, useParams } from 'next/navigation'; // Agrega esta importación para usar el enrutador
+>>>>>>> bc61577192d3ad093e7ed3298fc26225b58e31a6
 import CrudTable from '@/components/crudTable';
 import axios from 'axios';
 
-const ListaOrganizaciones = () => {
+
+const ServicesCrud = () => {
   const [datos, setDatos] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  // const [listaOrganizaciones, setListaOrganizaciones] = useState([]);
-  // const [filteredData, setFilteredData] = useState([]);
-  // const [showModal, setShowModal] = useState(false);
-  // const [formData, setFormData] = useState({
-  //   nombre: '',
-  //   email: '',
-  //   imagen: '',
-  //   telefono: '',
-  //   direccion: '',
-  // });
+  const router = useRouter(); // Inicializa el enrutador
+  const [services, setServices] = useState([]);
+  const [organizaciones, setOrganizaciones] = useState([]);
+  const [updatedServices, setUpdatedServices] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
+  const [selectedService, setSelectedService] = useState({
+    nombre: '',
+    descripcion: '',
+  }); // Inicializa selectedService con valores vacíos
+  const [serviceInfo, setServiceInfo] = useState({
+    id_organizacion: '',
+  });
+  const [accountDeleted, setAccountDeleted] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false); // Agrega el estado para mostrar el mensaje de confirmación
+
+  const handleChange = (e) => {
+    setSelectedService({
+      ...selectedService,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  useEffect(() => {
+    const fetchOrganizaciones = async () => {
+      try {
+        const response = await instance.get('/organizaciones');
+        setOrganizaciones(response.data);
+      } catch (error) {
+        console.error('Error al obtener las organizaciones:', error);
+      }
+    };
+
+    const fetchServicios = async () => {
+      try {
+        const response = await instance.get('/servicios');
+        setUpdatedServices(response.data);
+      } catch (error) {
+        console.error('Error al obtener los servicios:', error);
+      }
+    };
+
+    fetchOrganizaciones();
+    fetchServicios();
+   
+  }, []);
+
+  const handleCloseModal = () => {
+    setSelectedServiceId(null);
+    setShowModal(false);
+  };
+
+  const handleShowDeleteModal = (serviceId) => {
+    setSelectedServiceId(serviceId);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleConfirmationClose = () => {
+    setShowConfirmation(false);
+    if (accountDeleted) {
+      // Redirect to "/organizaciones" after a short delay
+      setTimeout(() => {
+        router.push('/admin/servicios/crudServicios');
+      }, 2000); // 1.5 seconds delay before redirection
+    }
+  };
+
+  const setOrganizacionValue = (organizacionId) => {
+    setServiceInfo((prevServiceInfo) => ({
+      ...prevServiceInfo,
+      id_organizacion: organizacionId,
+    }));
+  };
+
+  const handleShowModal = (service) => {
+    setSelectedServiceId(service.id_servicio);
+    setSelectedService(service); // Actualiza selectedService con los datos del servicio seleccionado
+    setServiceInfo({ id_organizacion: service.id_organizacion }); // Inicializa serviceInfo con la organización del servicio seleccionado
+    setShowModal(true);
+  };
+
+  const showAndCloseConfirmation = () => {
+    setShowConfirmation(true);
+    setTimeout(() => {
+      setShowConfirmation(false);
+    }, 2000);
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await instance.put(`/servicios/estado/${selectedServiceId}`);
+      console.log('Servicio eliminado exitosamente');
+
+      // Agrega el servicio eliminado a la lista de servicios actualizados
+      const updatedService = services.find(service => service.id_servicio === selectedServiceId);
+      if (updatedService) {
+        setUpdatedServices([updatedService, ...updatedServices]);
+      }
+
+      setAccountDeleted(true);
+      handleCloseDeleteModal();
+      showAndCloseConfirmation();
+
+      // setTimeout(() => {
+      //   router.push('/admin/servicios/crudServicios');
+      // }, 1500); // Redirige después de 1.5 segundos []
+    } catch (error) {
+      console.error('Error al eliminar el servicio:', error.message);
+    }
+    updateData();
+  };
 
 
-  // const ruta = `http://localhost:3005/producto`
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const dataToSend = {
+        nombre: selectedService.nombre,
+        descripcion: selectedService.descripcion,
+        id_organizacion: serviceInfo.id_organizacion,
+      };
 
+      if (selectedServiceId) {
+        // Editar un servicio existente
+        await axios.put(`${serverURL}/servicios/${selectedServiceId}`, dataToSend);
+        console.log('Servicio editado exitosamente');
+      } else {
+        // Agregar un nuevo servicio
+        const response = await axios.post(`${serverURL}/servicios/registrar`, dataToSend);
+        console.log(response.data.message);
+      }
+      handleCloseModal()
+
+      console.log('Guardando cambios');
+      fetchServicios();
+      showAndCloseConfirmation();
+      
+      handleCloseModal();
+    } catch (error) {
+      console.error('Error al guardar los cambios:', error);
+    }
+    updateData();
+  };
+
+
+
+ //ACA IRIA LA ORGANIZACION SI TUVIERAMOS LOGIN ECHO Y LOS CONTROLADORE ACCTUALIZADOS....
+  const organizacion =''
+
+  //GET DE LA TABLA
   useState(() => {
 
-    axios.get(`${serverURL}/producto/activo`)
+    axios.get(`${serverURL}/producto/activo${organizacion}`)
       .then(response => {
+        // console.log('aca esta el response: ', response)
         setDatos(response.data);
       })
       .catch(error => {
         console.error("Error: ", error);
       })
+<<<<<<< HEAD
     /*     async function getUser() {
           try {
             const response = await axios.get('http://localhost:3005/producto/activo');
@@ -68,189 +214,270 @@ const ListaOrganizaciones = () => {
     };
 
     fetchData(); */
+=======
+>>>>>>> bc61577192d3ad093e7ed3298fc26225b58e31a6
   }, []);
-
-
-  // // Filtrar los datos cuando el término de búsqueda cambie
-  // useEffect(() => {
-  //   if (searchTerm) {
-  //     const filteredData = listaOrganizaciones.filter((organizacion) => {
-  //       return (
-  //         organizacion.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //         organizacion.direccion.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //         organizacion.telefono.includes(searchTerm) ||
-  //         organizacion.email.toLowerCase().includes(searchTerm.toLowerCase())
-  //       );
-  //     });
-  //     setFilteredData(filteredData);
-  //   } else {
-  //     // Si no hay término de búsqueda, mostrar todos los datos
-  //     setFilteredData(listaOrganizaciones);
-  //   }
-  // }, [searchTerm, listaOrganizaciones]);
-
-  // const handleShowModal = (Organ) => {
-  //   if (Organ) {
-  //     setFormData(Organ);
-  //   } else {
-  //     setFormData({
-  //       id: '',
-  //       name: '',
-  //       description: '',
-  //     });
-  //   }
-  //   setShowModal(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setShowModal(false);
-  // };
-
-  // const handleChange = (e) => {
-  //   if (e.target.type === 'file') {
-  //     setFormData({
-  //       ...formData,
-  //       [e.target.name]: e.target.files[0],
-  //     });
-  //   } else {
-  //     setFormData({
-  //       ...formData,
-  //       [e.target.name]: e.target.value,
-  //     });
-  //   }
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const formDataToSend = new FormData();
-  //     formDataToSend.append('nombre', formData.nombre);
-  //     formDataToSend.append('direccion', formData.direccion);
-  //     formDataToSend.append('telefono', formData.telefono);
-  //     formDataToSend.append('email', formData.email);
-  //     formDataToSend.append('descripcion', formData.descripcion);
-
-  //     if (formData.imagen instanceof File) {
-  //       formDataToSend.append('imagen', formData.imagen);
-  //     }
-
-  //     console.log('Datos enviados al backend:', formDataToSend);
-
-  //     const response = await instance.post('/organizaciones/registrar', formDataToSend, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data'
-  //       }
-  //     });
-
-  //     // Verificar si la respuesta es exitosa
-  //     if (response.status === 200) {
-  //       // Mostrar el modal de éxito
-  //       setShowSuccessAlert(true);
-
-  //       // Establecer un temporizador para ocultar el modal después de 3 segundos
-  //       setTimeout(() => {
-  //         setShowSuccessAlert(false);
-  //       }, 3000);
-  //     } else {
-  //       // Mostrar el modal de error con el mensaje del servidor
-  //       const responseData = await response.json();
-  //       alert(responseData.error); // Puedes personalizar el mensaje de error como desees
-  //       setShowErrorAlert(true);
-
-  //       // Establecer un temporizador para ocultar el modal de error después de 3 segundos
-  //       setTimeout(() => {
-  //         setShowErrorAlert(false);
-  //       }, 3000);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error al guardar la organización:', error);
-  //     // Mostrar el modal de error genérico en caso de error
-  //     setShowErrorAlert(true);
-
-  //     // Establecer un temporizador para ocultar el modal de error después de 3 segundos
-  //     setTimeout(() => {
-  //       setShowErrorAlert(false);
-  //     }, 3000);
-  //   }
-  // };
-
-  // console.log('listaOrganizaciones: \n', listaOrganizaciones);
-
-  // const handleUserClick = (id) => {
-  //   // Redireccionar a la página de detalle del usuario con el ID correspondiente
-  //   window.location.href = `/admin/organizaciones/${id}`;
-  // };
+  //FIN DEL GET DE LA TABLA
 
 
 
+  //ACTUALIZAR DATOS DE LA TABLA(se tubo que hacer aparte por la logica de JS)
 
+  const updateData = () => {
+    axios.get(`${serverURL}/producto/activo${organizacion}`)
+      .then(response => {
+        setDatos(response.data);
+      })
+      .catch(error => {
+        console.error("Error: ", error);
+      });
+  };
+  
 
-  // const data = [
-  //   {
-  //     "id_producto": 1,
-  //     "nombre": "producto 1",
-  //     "descripcion": "Descripción del producto 1",
-  //     "organizacion": "Organización A"
-  //   },
-  //   {
-  //     "id_producto": 2,
-  //     "nombre": "producto 2",
-  //     "descripcion": "Descripción del producto 2",
-  //     "organizacion": "Organización B"
-  //   },
-  //   {
-  //     "id_producto": 3,
-  //     "nombre": "producto 3",
-  //     "descripcion": "Descripción del producto 3",
-  //     "organizacion": "Organización C"
-  //   }
-  // ]
+  //ACTUALIZAR DATOS DE LA TABLA FIN.
 
-  // console.log(datos)
 
 
   return (
+    <Container className='mt-3'>
+      <div className='d-flex justify-content-between flex-wrap mb-3'>
+        <h1 className='titulo'>Gestión de Productos</h1>
+        <button
+          className='buttonRegistrar responsive-buttons'
+          size="lg"
+          onClick={() => handleShowModal({ id_producto: null, id_organizacion: '', nombre: '', descripcion: '' })}
+        >
+          Agregar Servicio
+        </button>
+        </div>
 
-    <div>
-      <h1 className='titulo'>Lista de Productos</h1>
 
-      <div >
-        <Form className="mt-5 mb-5 d-flex mb-3 align-items-center">
-          <FormControl
-            type="text"
-            placeholder="Buscar"
-            className="mr-2 shadow border border-secondary rounded rounded-1.1 shadow"
-            style={{ maxWidth: '35rem' }}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+<Table striped bordered hover>
+  <thead>
+    <tr>
 
-          <div className="ml-auto" style={{ display: 'flex', marginLeft: 'auto' }}>
-            <Button style={{
-              whiteSpace: 'nowrap', backgroundColor: '#22096f', marginLeft: '3rem', fontStyle: 'bold',
-              border: 'none',
-              height: '2.5rem',
-              borderRadius: '10px',
-              color: '#ffffff',
-              borderColor: '#22096F',
-              width: '170px',
-              font: 'bold',
-              transition: 'background-color 0.3s ease',
-              whiteSpace: 'nowrap',
-            }} className="buttonRegistrar" onClick={() => handleShowModal()}>Crear Producto</Button>
-          </div>
-        </Form>
+      <th style={{ backgroundColor: '#101488', color: '#ffffff', borderTopLeftRadius: '5px' }}>Nombre</th>
+      <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Descripción</th>
+      <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Organización</th>
+      <th style={{ borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {datos.map((item) => (
+      <tr key={item.id_producto} style={{ marginBottom: '10px' }}>
+        <td>{item.nombre}</td>
+        <td>{item.descripcion}</td>
+        <td>{item.organizacion}</td>
+        <td className="d-flex justify-content-center ">
+          <Button
+            style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
+            variant="outline-warning"
+            onClick={() => handleShowModal(item)}
+          >
 
-        <CrudTable data={datos} />
+            
+            <FontAwesomeIcon icon={faPencilAlt} />
+          </Button>
+          <Button
+            variant="outline-danger"
+            onClick={() => handleShowDeleteModal(item.id_servicio)}
+            style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
+          >
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </Button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</Table>
 
+<Modal show={showModal} 
+onHide={handleCloseModal}
+>
+  <Modal.Header closeButton>
+    <Modal.Title>
+      {selectedServiceId ? 'Editar Servicio' : 'Agregar Servicio'}</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="formName">
+        <Form.Control
+          className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+          placeholder='Nombre del servicio'
+          type="text"
+          name="nombre"
+          required
+          value={selectedService.nombre}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="formOrganizacion">
+        <InputGroup>
+          <Form.Control
+            className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+            placeholder='Organización'
+            as="select"
+            value={serviceInfo.id_organizacion}
+            onChange={(e) => setOrganizacionValue(e.target.value)}
+            required
+          >
+            <option value="">Seleccionar Organización</option>
+            {organizaciones.map((organizacion) => (
+              <option key={organizacion.id_organizacion} value={organizacion.id_organizacion}>
+                {organizacion.nombre}
+              </option>
+            ))}
+          </Form.Control>
+        </InputGroup>
+      </Form.Group>
+
+      <Form.Group controlId="formDescripcion">
+        <Form.Label>Descripción del Servicio</Form.Label>
+        <Form.Control
+          className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+          as="textarea"
+          name="descripcion"
+          value={selectedService.descripcion}
+          onChange={handleChange}
+        />
+      </Form.Group>
+      <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
+        <button type="button" className='bouttoncancel'
+         onClick={handleCloseModal}
+         >Cerrar</button>
+        {selectedServiceId ? (
+          <button className='buttonRegistrar' type="submit">Guardar Cambios</button>
+        ) : (
+          <button className='buttonRegistrar' type="submit">Agregar Servicio</button>
+        )}
       </div>
+    </Form>
+  </Modal.Body>
+</Modal>
+
+<Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+  <Modal.Header closeButton>
+    <Modal.Title>Eliminar Servicio</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>¿Está seguro que desea eliminar el Servicio?</Modal.Body>
+  <Modal.Footer>
+    <Button
+      variant="secondary"
+      onClick={handleCloseDeleteModal}>
+      Cancelar
+    </Button>
+    <Button
+      variant="danger"
+      onClick={handleDeleteAccount}>
+      Eliminar
+    </Button>
+  </Modal.Footer>
+</Modal>
+
+<Modal show={showConfirmation} 
+// onHide={handleConfirmationClose}
+>
+  <Modal.Header closeButton>
+    <Modal.Title>Operación Exitosa</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    Servicio Eliminado Exitosamente!
+  </Modal.Body>
+</Modal>
 
 
-      <AlertaModal />
 
-    </div>
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{selectedServiceId ? 'Editar Servicio' : 'Agregar Servicio'}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formName">
+              <Form.Control
+                className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+                placeholder='Nombre del servicio'
+                type="text"
+                name="nombre"
+                required
+                value={selectedService.nombre}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formOrganizacion">
+              <InputGroup>
+                <Form.Control
+                  className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+                  placeholder='Organización'
+                  as="select"
+                  value={serviceInfo.id_organizacion}
+                  onChange={(e) => setOrganizacionValue(e.target.value)}
+                  required
+                >
+                  <option value="">Seleccionar Organización</option>
+                  {organizaciones.map((organizacion) => (
+                    <option key={organizacion.id_organizacion} value={organizacion.id_organizacion}>
+                      {organizacion.nombre}
+                    </option>
+                  ))}
+                </Form.Control>
+              </InputGroup>
+            </Form.Group>
+
+            <Form.Group controlId="formDescripcion">
+              <Form.Label>Descripción del Servicio</Form.Label>
+              <Form.Control
+                className="mb-3 border border-secondary rounded rounded-1.1 shadow"
+                as="textarea"
+                name="descripcion"
+                value={selectedService.descripcion}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
+              <button type="button" className='bouttoncancel' onClick={handleCloseModal}>Cerrar</button>
+              {selectedServiceId ? (
+                <button className='buttonRegistrar' type="submit">Guardar Cambios</button>
+              ) : (
+                <button className='buttonRegistrar' type="submit">Agregar Servicio</button>
+              )}
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Eliminar Servicio</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>¿Está seguro que desea eliminar el Servicio?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={handleCloseDeleteModal}>
+            Cancelar
+          </Button>
+          <Button
+            variant="danger"
+            onClick={handleDeleteAccount}>
+            Eliminar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showConfirmation} onHide={handleConfirmationClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Operación Exitosa</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Servicio Eliminado Exitosamente!
+        </Modal.Body>
+      </Modal>
+    </Container>
   );
 };
 
-export default ListaOrganizaciones;
+export default ServicesCrud;
