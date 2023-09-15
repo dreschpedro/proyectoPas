@@ -1,6 +1,7 @@
 import Personal_model from "../models/Personal_model.js";
 import Usuario_model from "../models/Usuario_model.js";
 import { getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from "../helpers/imagen.js";
+import sequelize from '../config/db.js';
 import organizacion_model from "../models/Organizacion_model.js";
 
 // Consulta de todos los registros activos
@@ -120,9 +121,20 @@ const registrar_personal = async (req, res) => {
       imagen_path = saveImageAndGetPath(req, 'personal', 'default_personal.png');
     }
 
-    // Crear el registro de personal en la base de datos
+    // Obtener el valor máximo actual de id_personal
+    const maxIdResult = await sequelize.query('SELECT MAX(id_personal) AS max_id FROM Personal', {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const maxId = maxIdResult[0].max_id || 0; // Si no hay registros, establecer a 0
+
+    // Asignar el nuevo id sumando 1 al valor máximo actual
+    const nuevoId = maxId + 1;
+
+    // Crear el registro de personal en la base de datos con el nuevo id
     const personal_almacenado = await Personal_model.create({
       ...personal_body,
+      id_personal: nuevoId, // Asignar el nuevo id aquí
       imagen: imagen_path // Guardar la ruta de la imagen en la base de datos
     });
 
@@ -138,6 +150,7 @@ const registrar_personal = async (req, res) => {
     }
   }
 };
+
 
 // Modifica los datos de un registro activo por id
 const modificar_personal = async (req, res) => {

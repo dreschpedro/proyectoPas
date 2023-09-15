@@ -1,3 +1,4 @@
+import sequelize from '../config/db.js';
 import ProdEntreg_model from "../models/ProdEntreg_model.js";
 import Producto_model from "../models/Producto_model.js";
 
@@ -66,6 +67,20 @@ const obtener_prodEnt = async (req, res) => {
 const registrar_prodEnt = async (req, res) => {
   try {
     const prodEnt_body = req.body;
+
+    // Obtener el valor máximo actual de id_prod_entreg
+    const maxIdResult = await sequelize.query('SELECT MAX(id_prod_entreg) AS max_id FROM prod_entreg', {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const maxId = maxIdResult[0].max_id || 0; // Si no hay registros, establecer a 0
+
+    // Asignar el nuevo id sumando 1 al valor máximo actual
+    const nuevoId = maxId + 1;
+
+    // Agregar el nuevo ID al cuerpo de la solicitud
+    prodEnt_body.id_prod_entreg = nuevoId;
+
     const prodEnt_almacenado = await ProdEntreg_model.create(prodEnt_body);
     return res.status(200).json({ message: "Registro creado", prodEnt_almacenado });
   } catch (error) {

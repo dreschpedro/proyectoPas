@@ -1,4 +1,5 @@
 import organizacion_model from "../models/Organizacion_model.js";
+import sequelize from '../config/db.js';
 import Servicio_model from "../models/Servicio_model.js";
 
 // consulta de todos los registros
@@ -92,8 +93,22 @@ const obtener_servicio = async (req, res) => {
 const registrar_servicio = async (req, res) => {
   try {
     const servicio_body = req.body;
-    console.log(servicio_body)
+
+    // Obtener el valor máximo actual de id_servicio
+    const maxIdResult = await sequelize.query('SELECT MAX(id_servicio) AS max_id FROM servicio', {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const maxId = maxIdResult[0].max_id || 0; // Si no hay registros, establecer a 0
+
+    // Asignar el nuevo id sumando 1 al valor máximo actual
+    const nuevoId = maxId + 1;
+
+    // Asignar el nuevo ID al servicio
+    servicio_body.id_servicio = nuevoId;
+
     const servicio_almacenado = await Servicio_model.create(servicio_body);
+
     return res.status(200).json({ message: "Registro creado", servicio_almacenado });
   } catch (error) {
     console.log(error);
@@ -101,6 +116,7 @@ const registrar_servicio = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
 
 // modifica los datos buscando por id
 const modificar_servicio = async (req, res) => {

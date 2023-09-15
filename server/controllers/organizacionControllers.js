@@ -1,4 +1,5 @@
 import organizacion_model from "../models/Organizacion_model.js";
+import sequelize from '../config/db.js';
 import { getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from '../helpers/imagen.js';
 
 // FUNCIONALIDADES
@@ -71,8 +72,19 @@ const registrar_organizacion = async (req, res) => {
       return res.status(400).json({ error: "Ya existe una organización con este email" });
     }
 
-    // Si no existe, procede a crear la organización
+    // Obtener el valor máximo actual de id_organizacion
+    const maxIdResult = await sequelize.query('SELECT MAX(id_organizacion) AS max_id FROM organizacion', {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const maxId = maxIdResult[0].max_id || 0; // Si no hay registros, establecer a 0
+
+    // Asignar el nuevo id sumando 1 al valor máximo actual
+    const nuevoId = maxId + 1;
+
+    // Crear la organización con el nuevo id
     const organizacion_almacenado = await organizacion_model.create({
+      id_organizacion: nuevoId,
       nombre,
       direccion,
       telefono,

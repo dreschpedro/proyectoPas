@@ -16,6 +16,11 @@ const Producto_model = sequelize.define('producto', {
     type: DataTypes.STRING(),
     allowNull: true,
   },
+  stock: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0
+  },
   activo: {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
@@ -29,7 +34,7 @@ const Producto_model = sequelize.define('producto', {
 Producto_model.belongsTo(Organizacion_model, { foreignKey: 'id_organizacion' });
 
 // Crear la tabla "Porducto" en la base de datos
-Producto_model.sync({ force: false }).then(() => {
+Producto_model.sync({ force: false }, { alter: true }).then(() => {
   // console.log('Tabla "Porducto" creada exitosamente.');
 }).catch((error) => {
   console.log('Error al crear la tabla "Producto":', error);

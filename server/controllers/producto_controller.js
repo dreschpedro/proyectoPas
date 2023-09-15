@@ -1,11 +1,11 @@
 import Producto_model from "../models/Producto_model.js";
 import organizacion_model from "../models/Organizacion_model.js";
+import sequelize from '../config/db.js';
 
 // consulta de todos los registros
 const listar_productos = async (req, res) => {
   try {
     const productos = await Producto_model.findAll({
-      // include: [{ model: organizacion_model, attributes: ["id_organizacion", "nombre"] }],
       include: [
         {
           model: organizacion_model,
@@ -120,12 +120,27 @@ const obtener_producto = async (req, res) => {
   }
 };
 
-
 // registro de producto
 const registrar_producto = async (req, res) => {
   try {
     const producto_body = req.body;
-    const producto_almacenado = await Producto_model.create(producto_body);
+
+    // Obtener el valor máximo actual de id_producto
+    const maxIdResult = await sequelize.query('SELECT MAX(id_producto) AS max_id FROM producto', {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const maxId = maxIdResult[0].max_id || 0; // Si no hay registros, establecer a 0
+
+    // Asignar el nuevo id sumando 1 al valor máximo actual
+    const nuevoId = maxId + 1;
+
+    // Crear el producto con el nuevo id
+    const producto_almacenado = await Producto_model.create({
+      id_producto: nuevoId, // Asegúrate de que el modelo tenga una propiedad id_producto
+      ...producto_body // Copiar el resto de las propiedades desde el cuerpo de la solicitud
+    });
+
     return res.status(200).json({ message: "Registro creado", producto_almacenado });
   } catch (error) {
     console.log(error);
@@ -133,6 +148,7 @@ const registrar_producto = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
 
 // modifica los datos buscando por id
 const modificar_producto = async (req, res) => {

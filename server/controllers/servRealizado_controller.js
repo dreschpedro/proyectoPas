@@ -1,6 +1,7 @@
 import { buscar_cliente_dni_servicio } from "./cliente_controller.js";
 import ServRealizado_model from "../models/ServRealizado_model.js";
 
+
 // FUNCIONALIDADES
 // consulta de todos los registros
 const listar_servReal = async (req, res) => {
@@ -34,7 +35,7 @@ const obtener_servReal = async (req, res) => {
 };
 
 const registrar_servReal_con_cliente = async (req, res) => {
-  const { dni, id_servicio, id_usuario } = req.body;
+  const { dni, id_servicio, id_usuario, ubicacion } = req.body;
 
   try {
     // Usar await para esperar la respuesta asincrónica
@@ -44,8 +45,18 @@ const registrar_servReal_con_cliente = async (req, res) => {
       const cliente = clienteResponse.data;
       let id_cliente = cliente.id_cliente;
 
-      // Crea el registro de servicioRealizado con id_cliente, id_servicio y id_usuario
-      const servReal_body = { id_cliente, id_servicio, id_usuario };
+      // Obtener el valor máximo actual de id_servRealizado
+      const maxIdResult = await sequelize.query('SELECT MAX(id_servRealizado) AS max_id FROM ServRealizado', {
+        type: sequelize.QueryTypes.SELECT
+      });
+
+      const maxId = maxIdResult[0].max_id || 0; // Si no hay registros, establecer a 0
+
+      // Asignar el nuevo id sumando 1 al valor máximo actual
+      const nuevoId = maxId + 1;
+
+      // Crea el registro de servicioRealizado con el nuevo id, id_cliente, id_servicio y id_usuario
+      const servReal_body = { id_servRealizado: nuevoId, id_cliente, id_servicio, id_usuario, ubicacion };
       const servReal_almacenado = await ServRealizado_model.create(servReal_body);
 
       return res.status(200).json({ message: "Registro creado exitosamente", servReal_almacenado });
@@ -58,6 +69,7 @@ const registrar_servReal_con_cliente = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
 
 // modifica los datos buscando por id
 const modificar_servReal = async (req, res) => {

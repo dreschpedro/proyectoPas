@@ -1,4 +1,5 @@
 import Cliente_model from "../models/Cliente_model.js";
+import sequelize from '../config/db.js';
 
 // FUNCIONALIDADES
 // consulta de todos los registros
@@ -57,10 +58,6 @@ const buscar_cliente_por_dni = async (req, res) => {
   }
 };
 
-
-
-
-
 // Buscar cliente por DNI
 const buscar_cliente_dni_servicio = async (dni) => {
   try {
@@ -77,9 +74,6 @@ const buscar_cliente_dni_servicio = async (dni) => {
   }
 };
 
-
-
-
 // registro de cliente
 const registrar_cliente = async (req, res) => {
   try {
@@ -95,7 +89,21 @@ const registrar_cliente = async (req, res) => {
       return res.status(409).json({ error: 'Ya existe un cliente con el mismo DNI' });
     }
 
-    const cliente_almacenado = await Cliente_model.create(cliente_body);
+    // Obtener el valor máximo actual de id_cliente
+    const maxIdResult = await sequelize.query('SELECT MAX(id_cliente) AS max_id FROM cliente', {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    const maxId = maxIdResult[0].max_id || 0; // Si no hay registros, establecer a 0
+
+    // Asignar el nuevo id sumando 1 al valor máximo actual
+    const nuevoId = maxId + 1;
+
+    // Crear el cliente con el nuevo id
+    const cliente_almacenado = await Cliente_model.create({
+      id_cliente: nuevoId, // Establecer el nuevo id
+      ...cliente_body // Resto de los campos del cliente
+    });
 
     // Devolver la respuesta con la propiedad dni
     return res.status(201).json({ message: 'Registro creado', cliente_almacenado, dni: cliente_almacenado.dni });
@@ -104,16 +112,6 @@ const registrar_cliente = async (req, res) => {
     return res.status(500).json({ error: 'Ocurrió un error al registrar el cliente' });
   }
 };
-
-
-
-
-
-
-
-
-
-
 
 
 // modifica los datos buscando por id
@@ -156,7 +154,6 @@ const cambiar_estado_cliente = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
-
 
 // Exportar la función
 export {

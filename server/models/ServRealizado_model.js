@@ -11,7 +11,12 @@ const ServRealizado_model = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    }
+    },
+    ubicacion: {
+      type: DataTypes.STRING(200),
+      allowNull: false,
+      defaultValue: 'posadas'
+    },
   },
   {
     tableName: 'serv_realizado',
