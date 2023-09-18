@@ -41,7 +41,6 @@ const registrar = async (req, res) => {
   }
 };
 
-
 const autenticar = async (req, res) => {
   const { email, password } = req.body;
 
@@ -77,7 +76,6 @@ const autenticar = async (req, res) => {
     return res.status(500).json({ msg: "Ocurrió un error al autenticar el usuario" });
   }
 };
-
 
 const confirmar = async (req, res) => {
   const { token } = req.params;

@@ -55,6 +55,40 @@ const listar_servicio_activo = async (req, res) => {
   }
 };
 
+
+const listar_servicio_pas_completo = async (req, res) => {
+  try {
+    const servicio = await Servicio_model.findAll({
+      where: { activo: true },
+      include: [
+        {
+          model: organizacion_model,
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
+        },
+      ],
+    });
+
+    // Filtrar las organizaciones que no se llamen "vicegobernacion"
+    const serviciosFiltrados = servicio.filter((servicio) => {
+      const organizacionNombre = servicio.organizacion.nombre;
+      return organizacionNombre.toLowerCase() !== "vicegobernacion";
+    });
+
+    // A continuación, puedes mapear el resultado para ajustar la estructura de salida
+    const serviciosConOrganizacion = serviciosFiltrados.map((servicio) => ({
+      ...servicio.get(), // Copiar todos los campos de 'servicio'
+      organizacion: servicio.organizacion.nombre, // Tomamos solo el nombre de la organización
+    }));
+
+    return res.status(200).json(serviciosConOrganizacion);
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = "Ocurrió un error al obtener los registros de servicio";
+    return res.status(500).json({ error: mensaje_error });
+  }
+};
+
 // consulta por un registro (por id)
 const obtener_servicio = async (req, res) => {
   const servicio_id = req.params.id;
@@ -184,6 +218,7 @@ const listar_servicio_por_organizacion = async (req, res) => {
 export {
   listar_servicio,
   listar_servicio_activo,
+  listar_servicio_pas_completo,
   obtener_servicio,
   registrar_servicio,
   modificar_servicio,

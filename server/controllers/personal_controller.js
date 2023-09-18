@@ -69,6 +69,39 @@ const listar_personal_activo = async (req, res) => {
   }
 };
 
+const listar_personal_pas_completo = async (req, res) => {
+  try {
+    const personal = await Personal_model.findAll({
+      where: { activo: true },
+      include: [
+        {
+          model: organizacion_model,
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
+        },
+      ],
+    });
+
+    // Filtrar las organizaciones que no se llamen "vicegobernacion"
+    const personalsFiltrados = personal.filter((personal) => {
+      const organizacionNombre = personal.organizacion.nombre;
+      return organizacionNombre.toLowerCase() !== "vicegobernacion";
+    });
+
+    // A continuación, puedes mapear el resultado para ajustar la estructura de salida
+    const personalsConOrganizacion = personalsFiltrados.map((personal) => ({
+      ...personal.get(), // Copiar todos los campos de 'personal'
+      organizacion: personal.organizacion.nombre, // Tomamos solo el nombre de la organización
+    }));
+
+    return res.status(200).json(personalsConOrganizacion);
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = "Ocurrió un error al obtener los registros de personal";
+    return res.status(500).json({ error: mensaje_error });
+  }
+};
+
 // consulta de todos los registros con activo: true
 const obtener_personal = async (req, res) => {
   const personal_id = req.params.id;
@@ -200,6 +233,7 @@ const cambiar_estado_personal = async (req, res) => {
 export {
   listar_personal,
   listar_personal_activo,
+  listar_personal_pas_completo,
   obtener_personal,
   registrar_personal,
   modificar_personal,

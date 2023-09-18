@@ -87,6 +87,39 @@ const listar_producto_por_organizacion = async (req, res) => {
   }
 };
 
+const listar_producto_pas_completo = async (req, res) => {
+  try {
+    const producto = await Producto_model.findAll({
+      where: { activo: true },
+      include: [
+        {
+          model: organizacion_model,
+          attributes: ["nombre"], // Solo seleccionamos el nombre
+          raw: true, // Esto devuelve los resultados en formato plano, no objetos Sequelize
+        },
+      ],
+    });
+
+    // Filtrar las organizaciones que no se llamen "vicegobernacion"
+    const productosFiltrados = producto.filter((producto) => {
+      const organizacionNombre = producto.organizacion.nombre;
+      return organizacionNombre.toLowerCase() !== "vicegobernacion";
+    });
+
+    // A continuación, puedes mapear el resultado para ajustar la estructura de salida
+    const productosConOrganizacion = productosFiltrados.map((producto) => ({
+      ...producto.get(), // Copiar todos los campos de 'producto'
+      organizacion: producto.organizacion.nombre, // Tomamos solo el nombre de la organización
+    }));
+
+    return res.status(200).json(productosConOrganizacion);
+  } catch (error) {
+    console.log(error);
+    const mensaje_error = "Ocurrió un error al obtener los registros de productos";
+    return res.status(500).json({ error: mensaje_error });
+  }
+};
+
 // consulta por un registro (por id)
 const obtener_producto = async (req, res) => {
   const producto_id = req.params.id;
@@ -194,6 +227,7 @@ const cambiar_estado_producto = async (req, res) => {
 export {
   listar_productos,
   listar_producto_activo,
+  listar_producto_pas_completo,
   listar_producto_por_organizacion,
   obtener_producto,
   registrar_producto,
