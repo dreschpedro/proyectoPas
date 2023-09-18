@@ -118,7 +118,7 @@ const PerfilOrganizacion = () => {
 
       // Redirect to "/organizaciones" after a short delay
       setTimeout(() => {
-        router.push('/admin/organizaciones');
+        router.push('/admin/registros/organizaciones');
       }, 1500); // 1.5 seconds delay before redirection
     } catch (error) {
       console.error('Error al eliminar la cuenta:', error.message);
@@ -130,7 +130,7 @@ const PerfilOrganizacion = () => {
     if (accountDeleted) {
       // Redirect to "/organizaciones" after a short delay
       setTimeout(() => {
-        router.push('/admin/organizaciones');
+        router.push('/admin/registros/organizaciones');
       }, 2000); // 1.5 seconds delay before redirection
     }
   };

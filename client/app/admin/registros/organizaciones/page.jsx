@@ -29,7 +29,7 @@ const ListaOrganizaciones = () => {
     const fetchData = async () => {
       try {
         const organizaciones = await GET();
-        console.log(`organizaciones: `, organizaciones);
+        // console.log(`organizaciones: `, organizaciones);
 
         if (Array.isArray(organizaciones)) {
           setListaOrganizaciones(organizaciones);
@@ -63,16 +63,8 @@ const ListaOrganizaciones = () => {
     }
   }, [searchTerm, listaOrganizaciones]);
 
-  const handleShowModal = (Organ) => {
-    if (Organ) {
-      setFormData(Organ);
-    } else {
-      setFormData({
-        id: '',
-        name: '',
-        description: '',
-      });
-    }
+  const handleShowModal = () => {
+    
     setShowModal(true);
   };
 
@@ -149,11 +141,11 @@ const ListaOrganizaciones = () => {
     }
   };
 
-  console.log('listaOrganizaciones: \n', listaOrganizaciones);
+  // console.log('listaOrganizaciones: \n', listaOrganizaciones);
 
   const handleUserClick = (id) => {
     // Redireccionar a la página de detalle del usuario con el ID correspondiente
-    window.location.href = `/admin/organizaciones/${id}`;
+    window.location.href = `/admin/registros/organizaciones/${id}`;
   };
 
   return (
@@ -173,18 +165,31 @@ const ListaOrganizaciones = () => {
           />
 
           <div className="ml-auto" style={{ display: 'flex', marginLeft: 'auto' }}>
-            <Button style={{
-              whiteSpace: 'nowrap', backgroundColor: '#22096f', marginLeft: '3rem', fontStyle: 'bold',
-              border: 'none',
-              height: '2.5rem',
-              borderRadius: '10px',
-              color: '#ffffff',
-              borderColor: '#22096F',
-              width: '170px',
-              font: 'bold',
-              transition: 'background-color 0.3s ease',
-              whiteSpace: 'nowrap',
-            }} className="buttonRegistrar" onClick={() => handleShowModal({})}>Crear Organización</Button>
+            
+            
+          <Link style={{
+              textDecoration: 'none',  // Para quitar el subrayado
+               color: 'white' 
+               }} href={"/admin/registros/organizaciones/organizacionCreate"}>
+            <button style={{
+              // whiteSpace: 'nowrap', backgroundColor: '#22096f', marginLeft: '3rem', fontStyle: 'bold',
+              // border: 'none',
+              // height: '2.5rem',
+              // borderRadius: '10px',
+              // color: '#ffffff',
+              // borderColor: '#22096F',
+              // width: '170px',
+              // font: 'bold',
+              // transition: 'background-color 0.3s ease',
+              // whiteSpace: 'nowrap',
+                 
+
+            }} className="buttonRegistrar" onClick={() => handleShowModal()}>
+              
+              Crear Organización
+              
+              </button>
+              </Link>
           </div>
         </Form>
       </div>
@@ -234,11 +239,11 @@ const ListaOrganizaciones = () => {
       </Table>
 
 
-      <AlertaModal
+      {/* <AlertaModal
         titulo={'todo correcto'}
         estado={'correcto'}
         mensaje={'Se ha registrado correctamente'}
-      />
+      /> */}
 
     </div>
   );
