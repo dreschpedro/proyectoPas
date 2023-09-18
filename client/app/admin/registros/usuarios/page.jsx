@@ -52,7 +52,7 @@ function Usuarios() {
     setFilteredPersonalData(modifiedFilteredPersonalData);
   }, [PersonalData, searchTerm]);
 
-  console.log('lista Usuarios: \n', PersonalData);
+  // console.log('lista Usuarios: \n', PersonalData);
 
   const handlepersonalClick = (id) => {
     // Redireccionar a la página de detalle del usuario con el ID correspondiente
@@ -111,7 +111,7 @@ function Usuarios() {
                 </td>
                 <td>{personal.nombre}</td>
                 <td>{personal.apellido}</td>
-                <td>{personal.usuario?.username}</td> {/* Ajustar esta línea */}
+                <td>{personal.usuario}</td> {/* Ajustar esta línea */}
               </tr>
             ))
           ) : null}

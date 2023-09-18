@@ -64,7 +64,7 @@ const MenuModal = () => {
 
       </div>
 
-      <Modal show={showModal} onHide={toggleModal}>
+      <Modal show={showModal} onHide={toggleModal} >
         <Modal.Header closeButton>
           <Modal.Title>[Username]</Modal.Title>
         </Modal.Header>

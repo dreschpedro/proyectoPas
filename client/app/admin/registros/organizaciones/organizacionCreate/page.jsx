@@ -5,6 +5,9 @@ import instance, { serverURL } from '@/app/axiosConfig';
 import { Container } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileImage } from '@fortawesome/free-solid-svg-icons';
 
 function RegistroOrganizacions() {
 
@@ -84,83 +87,108 @@ function RegistroOrganizacions() {
 
             <Form.Group controlId="formName">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Nombre de la Organización*</Form.Label>
+                {/* <Form.Label>Nombre de la Organización*</Form.Label> */}
                 <Form.Control
+                className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="text"
                   name="nombre"
                   value={formData.nombre}
                   required
                   onChange={handleInputChange}
-                  placeholder="Organización Ejemplo" />
+                  placeholder="Nombre de la Organización" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formDomicilio">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Dirección*</Form.Label>
+                {/* <Form.Label>Dirección*</Form.Label> */}
                 <Form.Control
+                className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="text"
                   name="direccion"
                   value={formData.direccion}
                   required
                   onChange={handleInputChange}
-                  placeholder="Av Ejemplo 123" />
+                  placeholder="Dirección" />
               </Form.Group>
             </Form.Group>
 
 
             <Form.Group controlId="formNumber">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Número de Teléfono*</Form.Label>
+                {/* <Form.Label>Número de Teléfono*</Form.Label> */}
                 <Form.Control
+                className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="number"
                   name="telefono"
                   value={formData.telefono}
                   required
                   onChange={handleInputChange}
-                  placeholder="3764221122" />
+                  placeholder="Número de Teléfono" />
               </Form.Group>
             </Form.Group>
 
             <Form.Group controlId="formEmail">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Email*</Form.Label>
+                {/* <Form.Label>Email*</Form.Label> */}
                 <Form.Control
+                className='shadow border border-secondary rounded rounded-1.1 shadow mb-4 '
                   type="email"
                   name="email"
                   value={formData.email}
                   required
                   onChange={handleInputChange}
-                  placeholder="ejemplo@correo.com" />
+                  placeholder="Email" />
               </Form.Group>
             </Form.Group>
 
           </Col>
 
-          <Col md>
-          </Col>
+          {/* <Col md>
+          </Col> */}
 
           {/* imagen de la Organización */}
           <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
 
-            <Form.Group controlId="formFile">
+            {/* <Form.Group controlId="formFile">
               <Form.Label>Subir imagen</Form.Label>
               <Form.Control
                 type="file"
                 name="imagen"
                 value={formData.imagen}
                 onChange={handleImageUpload} />
-            </Form.Group>
+            </Form.Group> */}
+
+
+<Form.Group controlId="formFile">
+
+<div className="d-flex align-items-center imagebutton">
+  <FontAwesomeIcon icon={faFileImage} className="imageIcon" />
+  <Form.Control
+
+    type="file"
+    name="imagen"
+    className="d-none shadow border border-secondary rounded rounded-1.1 shadow mb-4"
+    onChange={handleImageUpload}
+  />
+</div>
+<Form.Label className='d-flex justify-content-center mb-5'>Seleccionar imagen del Organismo</Form.Label>
+</Form.Group>
 
           </Col>
         </Row>
 
         <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
-          <button type="submit" className='bouttoncancel'>
+        <Link style={{
+              textDecoration:'none',
+              color: '#22096F',
+            }} href={"/admin/registros/organizaciones"}>
+          <button className='bouttoncancel' style={{}}>
             Cancelar
           </button>
+          </Link>
 
-          <button className='buttonRegistrar' type="submit">
+          <button className='buttonRegistrar' style={{ whiteSpace: 'nowrap', width:'190px' }} type="submit">
             Registrar Organización
           </button>
         </div>

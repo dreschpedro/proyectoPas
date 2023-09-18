@@ -108,8 +108,8 @@ const HistorialServicios = () => {
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Organización</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Usuario Registro</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Nombre Beneficiario</th>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>DNI</th>
-            <th style={{borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Cantidad de Realizaciones</th>
+            <th style={{borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>DNI</th>
+            {/* <th style={{borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Cantidad de Realizaciones</th> */}
           </tr>
         </thead>
         <tbody>

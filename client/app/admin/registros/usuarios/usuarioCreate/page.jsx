@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
 
 
 function RegistroUsuarios() {
@@ -41,7 +42,7 @@ function RegistroUsuarios() {
   useEffect(() => {
     instance.get('/organizaciones/')
       .then((response) => {
-        console.log('Respuesta del backend:', response.data);
+        // console.log('Respuesta del backend:', response.data);
         setOrganizaciones(response.data);
       })
       .catch((error) => console.error('Error al obtener las Organizaciones:', error));
@@ -383,10 +384,11 @@ function RegistroUsuarios() {
         </Row>
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '49px' }}>
+          <Link href={"/admin/registros/usuarios"}>
           <button type="submit" className='bouttoncancel'>
             Cancelar
           </button>
-
+          </Link>
           <button className='buttonRegistrar' type="submit">
             Registrar
           </button>
