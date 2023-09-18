@@ -11,6 +11,14 @@ INSERT INTO "organizacion" ("id_organizacion", "nombre", "direccion", "telefono"
 	(9, 'pas', 'Calle asistencia 234', '3223567890', 'pas@programa.com', 'Este es el PAS', '/uploads/organizacion/default_organizacion.png', 'true', '2023-09-18 09:27:50.271-03', '2023-09-18 09:27:50.271-03'),
 	(10, 'vicegobernacion', 'Calle vicegobernacion 234', '3223567890', 'vicegobernacion@ministerio.com', 'ministerio de vicegobernacion', '/uploads/organizacion/default_organizacion.png', 'true', '2023-09-18 09:28:31.094-03', '2023-09-18 09:28:31.094-03');
 
+INSERT INTO "usuario" ("id_usuario", "username", "password", "email", "rol", "token", "confirmado", "activo", "createdAt", "updatedAt") VALUES
+	(2, 'ramon', '$2b$10$f7c6TFSwny0xvIOhiTIj0eCJHOcisx8lYElsR7eNMXFLmFktS1E7q', 'ramon@data', 'data-entry', '0.62700046751299681694520222030', 'false', 'true', '2023-09-12 09:03:41.856-03', '2023-09-12 09:03:42.189-03'),
+	(3, 'fernando', '$2b$10$RcgT/i7aJw9c/M/sigWJRecGc9Jco9mQLFWY2LiQAvT.mLLeQSdqa', 'fer@fideo', 'consultor', '', 'true', 'true', '2023-09-12 09:05:37.402-03', '2023-09-12 09:06:56.863-03'),
+	(4, 'federico', '$2b$10$37LT.4tUh4NFRsIX2KPIou.7v8G/EKUudBxK0cF5aRS4mM0FRxU1.', 'fede@admin', 'data-entry', '', 'true', 'true', '2023-09-12 09:50:54.997-03', '2023-09-12 09:51:55.4-03'),
+	(1, 'admin', '$2b$10$fTk.lt2DMBtnZYPM0Mxpuen9LtgeQtkX0BhVkxNYZs53ubcj27Elu', 'admin@admin.com', 'admin', '', 'true', 'true', '2023-09-12 09:01:01.8-03', '2023-09-12 09:08:59.592-03'),
+	(5, 'vicegob', '$2b$10$eEQefu0dVYWZ4xAzZD6pc.nQKZNqQU3Nyy/Wh3Kxb2jTjJlu5Vs6q', 'vicegob@admin.com', 'admin', '0.42134875694560671695042156236', 'false', 'true', '2023-09-18 10:02:36.04-03', '2023-09-18 10:02:36.397-03');
+
+
 INSERT INTO "personal" ("id_personal", "apellido", "nombre", "cuilt", "domicilio", "profesion", "telefono", "imagen", "activo", "createdAt", "updatedAt", "id_organizacion", "id_usuario") VALUES
 	(1, 'Rodriguez', 'Estela', '726372367', 'Calle Ejemplo 123', 'Pediatra', '3223567890', '/uploads/personal/default_personal.png', 'true', '2023-09-12 09:19:11.277-03', '2023-09-12 09:19:11.277-03', 2, 1),
 	(3, 'Pastini', 'Fernando', '213243443', 'Av Chocolate 535', 'Abogado', '6276327632', '/uploads/personal/default_personal.png', 'true', '2023-09-12 09:23:04.743-03', '2023-09-12 09:23:04.743-03', 2, 3),
@@ -31,11 +39,6 @@ INSERT INTO "producto" ("id_producto", "nombre", "descripcion", "activo", "creat
 	(11, 'comida', NULL, 'true', '2023-09-18 09:50:54.709-03', '2023-09-18 09:50:54.709-03', 10, 0),
 	(12, 'papeles', NULL, 'true', '2023-09-18 09:51:29.181-03', '2023-09-18 09:51:29.181-03', 10, 0);
 
-INSERT INTO "prod_entreg" ("id_prod_entreg", "entregado", "fecha_entrega", "createdAt", "updatedAt", "id_serv_realizado", "id_producto") VALUES
-	(1, 'false', '2023-09-01', '2023-09-15 11:36:28.577-03', '2023-09-15 11:36:28.577-03', 4, 3),
-	(2, 'false', '2023-08-11', '2023-09-15 11:42:01.544-03', '2023-09-15 11:42:01.544-03', 3, 7),
-	(3, 'true', '2023-08-11', '2023-09-15 11:42:10.364-03', '2023-09-15 11:42:10.364-03', 2, 7),
-	(4, 'false', '2023-09-11', '2023-09-15 11:42:21.393-03', '2023-09-15 11:42:21.393-03', 1, 9);
 
 INSERT INTO "servicio" ("id_servicio", "nombre", "descripcion", "activo", "createdAt", "updatedAt", "id_organizacion") VALUES
 	(1, 'pediatria', 'descripcion servicio', 'true', '2023-09-12 09:31:14.869-03', '2023-09-12 09:31:14.869-03', 2),
@@ -57,9 +60,9 @@ INSERT INTO "serv_realizado" ("id_serv_realizado", "ubicacion", "createdAt", "up
 	(3, 'posadas', '2023-09-15 08:47:13.248-03', '2023-09-15 08:47:13.248-03', 4, 1, 3),
 	(4, 'posadas', '2023-09-15 08:50:39.756-03', '2023-09-15 08:50:39.756-03', 5, 2, 1);
 
-INSERT INTO "usuario" ("id_usuario", "username", "password", "email", "rol", "token", "confirmado", "activo", "createdAt", "updatedAt") VALUES
-	(2, 'ramon', '$2b$10$f7c6TFSwny0xvIOhiTIj0eCJHOcisx8lYElsR7eNMXFLmFktS1E7q', 'ramon@data', 'data-entry', '0.62700046751299681694520222030', 'false', 'true', '2023-09-12 09:03:41.856-03', '2023-09-12 09:03:42.189-03'),
-	(3, 'fernando', '$2b$10$RcgT/i7aJw9c/M/sigWJRecGc9Jco9mQLFWY2LiQAvT.mLLeQSdqa', 'fer@fideo', 'consultor', '', 'true', 'true', '2023-09-12 09:05:37.402-03', '2023-09-12 09:06:56.863-03'),
-	(4, 'federico', '$2b$10$37LT.4tUh4NFRsIX2KPIou.7v8G/EKUudBxK0cF5aRS4mM0FRxU1.', 'fede@admin', 'data-entry', '', 'true', 'true', '2023-09-12 09:50:54.997-03', '2023-09-12 09:51:55.4-03'),
-	(1, 'admin', '$2b$10$fTk.lt2DMBtnZYPM0Mxpuen9LtgeQtkX0BhVkxNYZs53ubcj27Elu', 'admin@admin.com', 'admin', '', 'true', 'true', '2023-09-12 09:01:01.8-03', '2023-09-12 09:08:59.592-03'),
-	(5, 'vicegob', '$2b$10$eEQefu0dVYWZ4xAzZD6pc.nQKZNqQU3Nyy/Wh3Kxb2jTjJlu5Vs6q', 'vicegob@admin.com', 'admin', '0.42134875694560671695042156236', 'false', 'true', '2023-09-18 10:02:36.04-03', '2023-09-18 10:02:36.397-03');
+
+INSERT INTO "prod_entreg" ("id_prod_entreg", "entregado", "fecha_entrega", "createdAt", "updatedAt", "id_serv_realizado", "id_producto") VALUES
+	(1, 'false', '2023-09-01', '2023-09-15 11:36:28.577-03', '2023-09-15 11:36:28.577-03', 4, 3),
+	(2, 'false', '2023-08-11', '2023-09-15 11:42:01.544-03', '2023-09-15 11:42:01.544-03', 3, 7),
+	(3, 'true', '2023-08-11', '2023-09-15 11:42:10.364-03', '2023-09-15 11:42:10.364-03', 2, 7),
+	(4, 'false', '2023-09-11', '2023-09-15 11:42:21.393-03', '2023-09-15 11:42:21.393-03', 1, 9);
