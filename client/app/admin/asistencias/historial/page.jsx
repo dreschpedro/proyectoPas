@@ -21,7 +21,7 @@ const HistorialServicios = () => {
       // cantidadRealizaciones: 3,
     },
     {
-      nombreServicio: 'Servicio 2',
+      nombreServicio: 'Servicio 1',
       fecha: '2023-07-16',
       hora: '10:00',
       ubicacion: 'Santiago, Chile',

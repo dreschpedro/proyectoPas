@@ -176,6 +176,36 @@ Link {
 
 }
 
+
+.buttonNav{
+  font-style: bold;
+  border: none;
+  height: 2.5rem;
+  border-radius: 10px;
+  color: #ffffff;
+  background-color: #22096F;
+  border-color: #22096F;
+  width: 170px;
+  font: bold;
+  transition: background-color 0.3s ease;
+  height: 48px;
+  width: 180px;
+ padding-left: 20px;
+
+ margin-top: 15px;
+
+  &:hover {
+    background-color: #1a0752;
+    /* Cambia el color en el hover */
+  }
+
+  &:active {
+    background-color: #150644;
+    /* Cambia el color al hacer clic */
+  }
+
+}
+
 .comboboxrol {
   width: 100%;
 }
@@ -481,3 +511,36 @@ Link {
 .chatMessage{
   margin: 20px;
 }
+
+
+
+.layout {
+  display: flex;
+  height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+  overflow: hidden; /* Evita el desplazamiento horizontal */
+
+  /* Puedes ajustar el ancho de la barra lateral según tus necesidades */
+}
+
+.sidebar {
+  width: 230px; /* Ancho de la barra lateral */
+  background-color: #101488; /* Color de fondo de la barra lateral */
+  color: white; /* Color del texto en la barra lateral */
+  /* Puedes agregar más estilos según tus necesidades */
+
+  
+}
+
+/* Media query para pantallas más estrechas que 991px */
+@media (max-width: 991.5px) {
+  .sidebar {
+    display: none;
+  }}
+
+.content {
+  flex-grow: 1; /* El contenido principal ocupa el espacio restante */
+  padding: 20px; /* Espaciado interno para el contenido principal */
+  overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
+  /* Puedes agregar más estilos según tus necesidades */
+}
+

@@ -18,19 +18,46 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = () => {
   return (
-    <div className="sidebar mt-5 pt-5  fixed-start h-100 " style={{ backgroundColor: '#101488', width: '230px' }}>
+    <div className="sidebar mt-5 pt-5 " style={{ backgroundColor: '#101488', width: '230px' }}>
       <Nav className='d-flex flex-column justify-content-center align-items-center' style={{ backgroundColor: '#101488' }}>
 
-
-        <div className='buttoncito'>
-          <Link href={"/admin/consultas"} className='custom-link d-flex align-items-center'>
+      <Link href={"/admin/consultas"} className='custom-link d-flex align-items-center'>
+        <button className='buttonNav custom-link d-flex align-items-center'>
             <FontAwesomeIcon icon={faComment} style={{ color: "#ffffff", marginRight: '15px' }} />
             <b>Consultas</b>
-          </Link>
-        </div>
+        </button>
+        </Link>
+
+        <Link href={"/admin/estadisticas"} className='custom-link d-flex align-items-center'>
+        <button className='buttonNav custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faChartLine} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Estadísticas</b>
+        </button>
+        </Link>
+
+        <Link href={"/admin/asistencias"} className='custom-link d-flex align-items-center'>
+        <button className='buttonNav custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Asistencias</b>
+        </button>
+        </Link>
+
+        <Link href={"/admin/registros"} className='custom-link d-flex align-items-center'>
+        <button className='buttonNav custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Registros</b>
+        </button>
+        </Link>
+
+        <Link href={"/admin/registros"} className='custom-link d-flex align-items-center'>
+        <button className='buttonNav custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Ordenes</b>
+        </button>
+        </Link>
 
 
-        <div className='buttoncito'>
+        {/* <div className='buttoncito'>
           <Link href={"/admin/estadisticas"} className='custom-link d-flex align-items-center'>
             <FontAwesomeIcon icon={faChartLine} style={{ color: "#ffffff", marginRight: '15px' }} />
             <b>Estadísticas</b>
@@ -45,8 +72,8 @@ const Sidebar = () => {
             <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff", marginRight: '15px' }} />
             <b>Asistencias</b>
           </Link>
-        </div>
-
+        </div> */}
+{/* 
         <div className='buttoncito'>
           <Link href={"/admin/registros"} className='custom-link d-flex  align-items-center'>
             <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff", marginRight: '15px' }} />
@@ -59,7 +86,7 @@ const Sidebar = () => {
             <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff", marginRight: '15px' }} />
             <b>Ordenes</b>
           </Link>
-        </div>
+        </div> */}
 
 
       </Nav>
