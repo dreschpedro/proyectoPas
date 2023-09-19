@@ -25,21 +25,42 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  // return (
+  //   <html lang="en">
+  //     <body className={inter.className}>
+  //     <Nav/>  
+
+  //     <Row className='vh-100'>
+  //       <Col sm={2} className='d-none d-lg-block'>
+  //       <Nav2 className="mt-5 pt-5 fixed-start "/>
+  //       </Col>
+  //       <Col className='mt-5' style={{marginLeft:'70px', marginRight:'70px'}}>
+  //       {children}
+  //       </Col>
+  //     </Row>      
+      
+  //     </body>
+  //   </html>
+  // )
+
+
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Nav/>  
+     <Nav/>  
 
-      <Row className='vh-100'>
-        <Col sm={2} className='d-none d-lg-block'>
-        <Nav2 className="mt-5 pt-5 fixed-start "/>
-        </Col>
-        <Col className='mt-5' style={{marginLeft:'70px', marginRight:'70px'}}>
+    <div className="layout">
+      <div className="sidebar">
+        {/* Contenido de la barra lateral */}
+        {/* Puedes agregar menús, enlaces, o cualquier otro contenido aquí */}
+        <Nav2 />
+      </div>
+      <div className="content">
+        {/* Contenido principal */}
         {children}
-        </Col>
-      </Row>      
-      
-      </body>
-    </html>
-  )
+      </div>
+    </div>
+    </body>
+  </html>
+  );
 }

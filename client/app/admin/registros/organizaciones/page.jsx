@@ -1,7 +1,7 @@
 //front
 "use client";
 import React, { useState, useEffect } from 'react';
-import { FormControl, Modal, Form, Table, Button, InputGroup } from 'react-bootstrap';
+import { FormControl, Modal, Form, Table, Button, InputGroup, Container } from 'react-bootstrap';
 import dynamic from 'next/dynamic'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -150,7 +150,7 @@ const ListaOrganizaciones = () => {
 
   return (
 
-    <div>
+    <Container>
       <h1 className='titulo'>Lista de Organizaciones</h1>
 
       <div >
@@ -171,20 +171,7 @@ const ListaOrganizaciones = () => {
               textDecoration: 'none',  // Para quitar el subrayado
                color: 'white' 
                }} href={"/admin/registros/organizaciones/organizacionCreate"}>
-            <button style={{
-              // whiteSpace: 'nowrap', backgroundColor: '#22096f', marginLeft: '3rem', fontStyle: 'bold',
-              // border: 'none',
-              // height: '2.5rem',
-              // borderRadius: '10px',
-              // color: '#ffffff',
-              // borderColor: '#22096F',
-              // width: '170px',
-              // font: 'bold',
-              // transition: 'background-color 0.3s ease',
-              // whiteSpace: 'nowrap',
-                 
-
-            }} className="buttonRegistrar" onClick={() => handleShowModal()}>
+            <button className="buttonRegistrar" onClick={() => handleShowModal()}>
               
               Crear Organización
               
@@ -238,14 +225,7 @@ const ListaOrganizaciones = () => {
         </tbody>
       </Table>
 
-
-      {/* <AlertaModal
-        titulo={'todo correcto'}
-        estado={'correcto'}
-        mensaje={'Se ha registrado correctamente'}
-      /> */}
-
-    </div>
+    </Container>
   );
 };
 

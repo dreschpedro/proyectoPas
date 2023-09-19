@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { Container, Table, InputGroup, Button, Modal, Form } from 'react-bootstrap';
 import instance, { serverURL } from '@/app/axiosConfig';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPencilAlt, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useRouter, useParams } from 'next/navigation'; 
 import axios from 'axios';
 
 const ProductsCrud = () => {
+  const [cantidadAgregada, setCantidadAgregada] = useState(0);
   const [datos, setDatos] = useState([]);
   const router = useRouter();
   const [products, setProducts] = useState([]); 
@@ -190,6 +191,7 @@ const ProductsCrud = () => {
             <th style={{ backgroundColor: '#101488', color: '#ffffff', borderTopLeftRadius: '5px' }}>Nombre</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Descripción</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Organización</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Cantidad</th>
             <th style={{ borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Acciones</th>
           </tr>
         </thead>
@@ -199,7 +201,16 @@ const ProductsCrud = () => {
               <td>{item.nombre}</td>
               <td>{item.descripcion}</td>
               <td>{item.organizacion}</td>
+              <td>{item.stock}</td>
               <td className="d-flex justify-content-center ">
+              <Button
+                variant="outline-success"
+                onClick={() => handleShowModal(item)}
+                style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
+                >
+                <FontAwesomeIcon icon={faPlus} />
+              </Button> 
+
                 <Button
                   style={{ width: '40px', fontWeight: 'bold', margin: '5px' }}
                   variant="outline-warning"
@@ -214,6 +225,7 @@ const ProductsCrud = () => {
                 >
                   <FontAwesomeIcon icon={faTrashAlt} />
                 </Button>
+                
               </td>
             </tr>
           ))}
