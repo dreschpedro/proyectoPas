@@ -216,7 +216,7 @@ function FormCliente() {
         <Row>
           <Col md>
 
-            <Input name={'dni'}
+            {/* <Input name={'dni'}
               type={'numero'}
               isComposed
               value={formData.dni}
@@ -224,7 +224,34 @@ function FormCliente() {
               onChange={handleInputChange}
               placeholder={'DNI'}
             >
-            </Input>
+            </Input> */}
+
+            <Form.Group controlId="formDNI">
+              <Form.Group className="mt-5 mb-5" controlId="exampleForm.ControlInput1">
+                <div className="input-group">
+                  <Form.Control
+                    className="border-secondary rounded rounded-1.1 shadow "
+                    type="number"
+                    as="input"
+                    name="dni"
+                    value={formData.dni}
+                    required={!searchInProgress}
+                    onChange={handleInputChange}
+                    placeholder="DNI"
+                  />
+
+                  <button
+                    style={{ marginLeft: '0.5rem', borderRadius: '5px' }}
+                    className="buscarbutton"
+                    onClick={() => searchByDNI(formData.dni)}
+                  >
+
+                    <FontAwesomeIcon icon={faSearch} style={{ color: "#FFFF", }} />
+
+                  </button>
+                </div>
+              </Form.Group>
+            </Form.Group>
 
             <Input name={'apellido'}
               type={'string'}

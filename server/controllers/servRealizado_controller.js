@@ -1,19 +1,57 @@
 import { buscar_cliente_dni_servicio } from "./cliente_controller.js";
 import ServRealizado_model from "../models/ServRealizado_model.js";
+import Usuario_model from "../models/Usuario_model.js";
+import Servicio_model from "../models/Servicio_model.js";
+import Cliente_model from "../models/Cliente_model.js";
 
 
 // FUNCIONALIDADES
 // consulta de todos los registros
+
+/* 
+    "id_servicio": 1,
+    "id_cliente": 1,
+    "id_usuario": 1
+*/
+//controller
 const listar_servReal = async (req, res) => {
   try {
-    const servReal = await ServRealizado_model.findAll();
-    return res.status(200).json(servReal);
+    const servReal = await ServRealizado_model.findAll({
+      include: [
+        {
+          model: Servicio_model,
+          attributes: ["nombre"],
+          raw: true,
+        },
+        {
+          model: Cliente_model,
+          attributes: ["apellido", "nombre"],
+          raw: true
+        },
+        {
+          model: Usuario_model,
+          attributes: ["username"],
+          raw: true
+        }
+      ],
+    });
+    
+    // Mapear y ajustar la estructura de salida
+    const servRealConUsuario = servReal.map((servReal) => ({
+      ...servReal.get(),
+      servicio: servReal.servicio.nombre,
+      cliente: `${servReal.cliente.apellido} ${servReal.cliente.nombre}`, // Concatenar nombre y apellido del cliente
+      usuario: servReal.usuario.username
+    }));
+
+    return res.status(200).json(servRealConUsuario);
   } catch (error) {
     console.log(error);
     const mensaje_error = "Ocurrió un error al obtener los registros de servReal";
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
 
 // consulta por un registro (por id)
 const obtener_servReal = async (req, res) => {
@@ -69,7 +107,6 @@ const registrar_servReal_con_cliente = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
-
 
 // modifica los datos buscando por id
 const modificar_servReal = async (req, res) => {
