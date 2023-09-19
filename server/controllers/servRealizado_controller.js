@@ -3,17 +3,11 @@ import ServRealizado_model from "../models/ServRealizado_model.js";
 import Usuario_model from "../models/Usuario_model.js";
 import Servicio_model from "../models/Servicio_model.js";
 import Cliente_model from "../models/Cliente_model.js";
+import sequelize from "../config/db.js";
 
 
 // FUNCIONALIDADES
 // consulta de todos los registros
-
-/* 
-    "id_servicio": 1,
-    "id_cliente": 1,
-    "id_usuario": 1
-*/
-//controller
 const listar_servReal = async (req, res) => {
   try {
     const servReal = await ServRealizado_model.findAll({
@@ -35,7 +29,7 @@ const listar_servReal = async (req, res) => {
         }
       ],
     });
-    
+
     // Mapear y ajustar la estructura de salida
     const servRealConUsuario = servReal.map((servReal) => ({
       ...servReal.get(),
@@ -51,7 +45,6 @@ const listar_servReal = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
-
 
 // consulta por un registro (por id)
 const obtener_servReal = async (req, res) => {
@@ -84,7 +77,7 @@ const registrar_servReal_con_cliente = async (req, res) => {
       let id_cliente = cliente.id_cliente;
 
       // Obtener el valor máximo actual de id_servRealizado
-      const maxIdResult = await sequelize.query('SELECT MAX(id_servRealizado) AS max_id FROM ServRealizado', {
+      const maxIdResult = await sequelize.query('SELECT MAX(id_serv_realizado) AS max_id FROM serv_realizado', {
         type: sequelize.QueryTypes.SELECT
       });
 
@@ -94,7 +87,7 @@ const registrar_servReal_con_cliente = async (req, res) => {
       const nuevoId = maxId + 1;
 
       // Crea el registro de servicioRealizado con el nuevo id, id_cliente, id_servicio y id_usuario
-      const servReal_body = { id_servRealizado: nuevoId, id_cliente, id_servicio, id_usuario, ubicacion };
+      const servReal_body = { id_serv_realizado: nuevoId, id_cliente, id_servicio, id_usuario, ubicacion };
       const servReal_almacenado = await ServRealizado_model.create(servReal_body);
 
       return res.status(200).json({ message: "Registro creado exitosamente", servReal_almacenado });
