@@ -60,13 +60,12 @@ const autenticar = async (req, res) => {
     if (passwordValido) {
       const token = generarJWT(usuario.id_usuario);
       return res.status(200).json({
-        message: "Autenticación Exitosa",
-        data: {
+       
           id_usuario: usuario.id_usuario,
           username: usuario.username,
           email: usuario.email,
           token: token
-        }
+        
       });
     } else {
       return res.status(403).json({ msg: "Contraseña incorrecta" });
