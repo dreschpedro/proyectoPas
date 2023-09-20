@@ -47,10 +47,8 @@ const obtener_organizacion = async (req, res) => {
   }
 };
 
-// Registro de organizacion
+// Registrar una organización
 const registrar_organizacion = async (req, res) => {
-  let imagen_path = getDefaultImagePath('organizacion', 'default_organizacion.png');
-
   try {
     // Obtener los datos de la organización del cuerpo de la solicitud
     const { nombre, direccion, telefono, email, descripcion } = req.body;
@@ -60,16 +58,12 @@ const registrar_organizacion = async (req, res) => {
       return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
+    let imagen_path = getDefaultImagePath('organizacion', 'default_organizacion.png');
+
     // Verificar si se proporcionó una imagen en la solicitud
     if (req.file) {
       // Si se proporcionó una imagen, guardarla y obtener su ruta
-      imagen_path = saveImageAndGetPath(req, 'organizacion', req.file.filename);
-    }
-
-    const organizacionExistente = await organizacion_model.findOne({ where: { email } });
-
-    if (organizacionExistente) {
-      return res.status(400).json({ error: "Ya existe una organización con este email" });
+      imagen_path = saveImageAndGetPath(req, 'organizacion', req.file.originalname);
     }
 
     // Obtener el valor máximo actual de id_organizacion
@@ -82,7 +76,7 @@ const registrar_organizacion = async (req, res) => {
     // Asignar el nuevo id sumando 1 al valor máximo actual
     const nuevoId = maxId + 1;
 
-    // Crear la organización con el nuevo id
+    // Resto del código para registrar la organización en la base de datos
     const organizacion_almacenado = await organizacion_model.create({
       id_organizacion: nuevoId,
       nombre,
@@ -101,6 +95,9 @@ const registrar_organizacion = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
+
+export default registrar_organizacion;
+
 
 // modifica los datos buscando por id
 const modificar_organizacion = async (req, res) => {

@@ -6,8 +6,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 
-
-
 function home() {
   return (
     <>
@@ -27,7 +25,7 @@ function home() {
 
             />
           </div>
-          <div class="d-flex  align-items-center">
+          <div className="d-flex  align-items-center">
             <h3 className="text-white text-center  d-none d-sm-block d-md-block ">Programa de <br /> Asistencia Solidaria</h3>
           </div>
         </div>
