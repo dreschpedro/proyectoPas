@@ -1,10 +1,14 @@
 "use client"
 import React, { useState } from 'react';
 import { Table, Form, Button, InputGroup } from 'react-bootstrap';
+import instance, { serverURL } from '@/app/axiosConfig';
+import axios from 'axios';
+
 
 const HistorialServicios = () => {
   // State para manejar los filtros de búsqueda
   const [searchTerm, setSearchTerm] = useState('');
+  const [datos, setDatos] = useState([]);
   const [filteredData, setFilteredData] = useState(null);
 
   // Datos de ejemplo para el historial de servicios
@@ -71,9 +75,33 @@ const HistorialServicios = () => {
     window.open(`https://www.google.com/maps/search/${encodeURIComponent(ubicacion)}`, '_blank');
   };
 
+
+const organizacion = ""
+
+  useState(() => {
+    axios.get(`${serverURL}/serv_real${organizacion}`) // Cambio de servicios a productos
+      .then(response => {
+        setDatos(response.data);
+      })
+      .catch(error => {
+        console.error("Error: ", error);
+      })
+  }, []);
+
+  const updateData = () => {
+    axios.get(`${serverURL}/serv_real${organizacion}`) // Cambio de servicios a productos
+      .then(response => {
+        setDatos(response.data);
+      })
+      .catch(error => {
+        console.error("Error: ", error);
+      });
+  };
+
+
   return (
     <>
-      <h1 style={{ marginTop: '20px' }}>Historial de Servicios</h1>
+      <h1 className='titulo'>Historial de Servicios</h1>
       <br />
 
       {/* Filtros de búsqueda asistida */}
@@ -101,52 +129,33 @@ const HistorialServicios = () => {
       <Table striped bordered hover responsive style={{ borderRadius: '1  5px' }}>
         <thead  >
           <tr>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff',borderTopLeftRadius: '5px' }}>Nombre del Servicio</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff',borderTopLeftRadius: '5px' }}>Servicio</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Producto</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Organización</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Fecha</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Hora</th>
             <th style={{ backgroundColor: '#101488', color: '#ffffff' }} onClick={() => handleOpenGoogleMaps('Ciudad Autónoma de Buenos Aires, Argentina')}>Ubicación</th>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Organización</th>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Usuario Registro</th>
-            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Nombre Beneficiario</th>
-            <th style={{borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>DNI</th>
-            {/* <th style={{borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Cantidad de Realizaciones</th> */}
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>Nombre beneficiado</th>
+            <th style={{ backgroundColor: '#101488', color: '#ffffff' }}>DNI beneficiado</th>
+            <th style={{borderTopRightRadius: '5px', backgroundColor: '#101488', color: '#ffffff' }}>Registrado por</th>
           </tr>
         </thead>
         <tbody>
-          {filteredData ? (
-            filteredData.map((servicio, index) => (
-              <tr key={index}>
-                <td>{servicio.nombreServicio}</td>
-                <td>{servicio.fecha}</td>
-                <td>{servicio.hora}</td>
-                <td onClick={() => handleOpenGoogleMaps(servicio.ubicacion)} style={{ cursor: 'pointer' }}>
-                  {servicio.ubicacion}
+        {datos.map((item) => (
+              <tr key={item.id_serv_realizado}>
+                <td>{item.servicio}</td>
+                <td>{item.fecha}</td>
+                <td>{item.cliente}</td>
+                <td onClick={() => handleOpenGoogleMaps(item.ubicacion)} style={{ cursor: 'pointer' }}>
+                  {item.ubicacion}
                 </td>
-                <td>{servicio.organizacion}</td>
-                <td>{servicio.usuarioRegistro}</td>
-                <td>{servicio.beneficiario}</td>
-                <td>{servicio.dni}</td>
+                {/* <td>{item.organizacion}</td>
+                <td>{item.usuarioRegistro}</td>
+                <td>{item.beneficiario}</td>
+                <td>{item.dni}</td> */}
                 {/* <td >{servicio.cantidadRealizaciones}</td> */}
               </tr>
-            ))
-          ) : (
-            // Mostrar datos de ejemplo si no hay datos filtrados
-            historialServicios.map((servicio, index) => (
-              <tr key={index}>
-                <td>{servicio.nombreServicio}</td>
-                <td>{servicio.fecha}</td>
-                <td>{servicio.hora}</td>
-                <td onClick={() => handleOpenGoogleMaps(servicio.ubicacion)} style={{ cursor: 'pointer' }}>
-                  {servicio.ubicacion}
-                </td>
-                <td>{servicio.organizacion}</td>
-                <td>{servicio.usuarioRegistro}</td>
-                <td>{servicio.beneficiario}</td>
-                <td>{servicio.dni}</td>
-                {/* <td>{servicio.cantidadRealizaciones}</td> */}
-              </tr>
-            ))
-          )}
+            ))}
         </tbody>
       </Table>
     </>

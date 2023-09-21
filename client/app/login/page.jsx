@@ -50,6 +50,8 @@ function Login() {
   // };
 
 
+  const frontURL = "http://localhost:3000"
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -70,8 +72,9 @@ function Login() {
       });
       console.log('este es el correo', formData.email)
       if (response.status === 200) {
-        console.log('funciona');
-        window.location.href = 'http://localhost:/admin';
+        const responseData = response.data;
+        console.log('funciona', responseData);
+        // window.location.href = `${frontURL}/admin`;
       } else {
         console.log('Login failed');
       }
@@ -90,7 +93,7 @@ function Login() {
               {/* <Form.Label>Email*</Form.Label> */}
               <Form.Control
                 type="text"
-                name='username'
+                name='email'
                 required
                 placeholder="Nombre de Usuario"
                 value={formData.email}
@@ -119,7 +122,9 @@ function Login() {
         <div style={{ display: 'flex', flexDirection: 'column', marginTop: '49px' }}>
           <button className='buttonLogin' type="submit">
             {/* <Link href={"/admin"}style={{color:'#ffffff'}}>Iniciar Sesión</Link> */}
-            protegenos señor con tu espiritu
+            <b>
+            Iniciar Sesión
+            </b>
           </button>
           <div className='mt-5 mb-3 d-flex align-items-center justify-content-center'>
             <Link style={{ color: '#22096F' }} href={"/login/recuperar"}><b>Recuperar Contraseña</b></Link>

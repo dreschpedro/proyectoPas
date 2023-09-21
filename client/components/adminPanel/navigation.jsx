@@ -158,37 +158,41 @@ function Navigation2() {
                 <Nav className="d-flex justify-content-center align-items-center flex-grow-1 pe-3 d-lg-none">
 
 
-                  <div className='buttoncito'>
-                    <Link href={"/admin/consultas"} className='custom-link d-flex align-items-center'>
-                      <FontAwesomeIcon icon={faComment} style={{ color: "#ffffff", marginRight: '15px' }} />
-                      <b>Consultas</b>
-                    </Link>
-                  </div>
+                  
+      <Link href={"/admin/consultas"} className='custom-link d-flex align-items-center'>
+        <button className='buttonNav custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faComment} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Consultas</b>
+        </button>
+        </Link>
 
+        <Link href={"/admin/estadisticas"} className='custom-link d-flex align-items-center'>
+        <button className='buttonNav custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faChartLine} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Estadísticas</b>
+        </button>
+        </Link>
 
-                  <div className='buttoncito'>
-                    <Link href={"/admin/estadisticas"} className='custom-link d-flex align-items-center'>
-                      <FontAwesomeIcon icon={faChartLine} style={{ color: "#ffffff", marginRight: '15px' }} />
-                      <b>Estadísticas</b>
-                    </Link>
-                  </div>
+        <Link href={"/admin/asistencias"} className='custom-link d-flex align-items-center'>
+        <button className='buttonNav custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Asistencias</b>
+        </button>
+        </Link>
 
+        <Link href={"/admin/registros"} className='custom-link d-flex align-items-center'>
+        <button className='buttonNav custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Registros</b>
+        </button>
+        </Link>
 
-
-
-                  <div className='buttoncito'>
-                    <Link href={"/admin/asistencias"} className='custom-link d-flex  align-items-center'>
-                      <FontAwesomeIcon icon={faExchangeAlt} style={{ color: "#ffffff", marginRight: '15px' }} />
-                      <b>Asistencias</b>
-                    </Link>
-                  </div>
-
-                  <div className='buttoncito'>
-                    <Link href={"/admin/registros"} className='custom-link d-flex  align-items-center'>
-                      <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff", marginRight: '15px' }} />
-                      <b>Registros</b>
-                    </Link>
-                  </div>
+        <Link href={"/admin/registros"} className='custom-link d-flex align-items-center'>
+        <button className='buttonNav custom-link d-flex align-items-center'>
+            <FontAwesomeIcon icon={faEdit} style={{ color: "#ffffff", marginRight: '15px' }} />
+            <b>Ordenes</b>
+        </button>
+        </Link>
                 </Nav>
                 <MenuModal />
               </Offcanvas.Body>
