@@ -1,30 +1,56 @@
 import fs from 'fs';
 import path from 'path';
+import multer from 'multer';
+
+// Configurar el almacenamiento de multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Define la carpeta de destino según la entidad proporcionada (organizacion, usuario, etc.)
+    const entityName = req.body.entityName || 'default'; // Puedes definir un valor predeterminado aquí
+
+    // La carpeta de destino será '/uploads/[entityName]/'
+    cb(null, `./uploads/${entityName}/`);
+  },
+  filename: (req, file, cb) => {
+    // Usa el nombre original del archivo
+    cb(null, file.originalname);
+  },
+});
+
+// Configurar las opciones de multer
+const upload = multer({ storage });
 
 // Función de utilidad para obtener la ruta de la imagen por defecto
-const getDefaultImagePath = (entityType, defaultImageFilename) => {
-  const defaultImagePath = `/uploads/${entityType}/${defaultImageFilename}`;
+const getDefaultImagePath = (entityName, defaultImageFilename) => {
+  const defaultImagePath = `/uploads/${entityName}/${defaultImageFilename}`;
   return defaultImagePath;
 };
 
 // Función de utilidad para guardar la imagen y devolver su ruta
-const saveImageAndGetPath = (req, entityType) => {
+const saveImageAndGetPath = (req, entityName, defaultImageFilename, organizationName) => {
   let imagePath = '';
 
-  // Obtén el nombre original del archivo
-  const originalFilename = req.file.originalname;
-
+  // Verificar si se proporcionó una imagen en la solicitud
   if (req.file) {
-    // Define la ruta donde se guardará la imagen
-    imagePath = `/uploads/${entityType}/${originalFilename}`;
+    const folderPath = `./uploads/${entityName}/${organizationName}`;
+    const fullPath = `${folderPath}/${req.file.originalname}`;
 
-    // Mueve el archivo subido al directorio deseado
-    fs.renameSync(req.file.path, path.join(__dirname, `../public${imagePath}`));
+    // Crear la carpeta de la organización si no existe
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath, { recursive: true });
+    }
+
+    // Mover la imagen al directorio de la organización
+    fs.renameSync(req.file.path, fullPath);
+
+    // Establecer la ruta de la imagen
+    imagePath = fullPath;
   } else {
     // Si no se proporcionó una imagen, obtén la ruta de la imagen por defecto
-    imagePath = getDefaultImagePath(entityType, 'default_organizacion.png');
+    imagePath = getDefaultImagePath(entityName, defaultImageFilename);
   }
 
+  console.log("Ruta de la imagen generada:", imagePath);
   return imagePath;
 };
 
@@ -38,6 +64,7 @@ const deleteTempImage = (imagePath, defaultImagePath) => {
 };
 
 export {
+  upload,
   getDefaultImagePath,
   saveImageAndGetPath,
   deleteTempImage

@@ -1,6 +1,6 @@
 import organizacion_model from "../models/Organizacion_model.js";
 import sequelize from '../config/db.js';
-import { getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from '../helpers/imagen.js';
+import { upload, getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from '../helpers/imagen.js';
 
 // FUNCIONALIDADES
 // consulta de todos los registros
@@ -48,23 +48,26 @@ const obtener_organizacion = async (req, res) => {
 };
 
 // Registrar una organización
+// organizacionController.js
 const registrar_organizacion = async (req, res) => {
   try {
     // Obtener los datos de la organización del cuerpo de la solicitud
-    const { nombre, direccion, telefono, email, descripcion } = req.body;
+    const { nombre, direccion, telefono, email, descripcion, id_organizacion } = req.body;
 
     // Verificar que los campos obligatorios no estén vacíos
     if (!nombre || !direccion || !telefono || !email) {
       return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
-    let imagen_path = getDefaultImagePath('organizacion', 'default_organizacion.png');
+    let imagen_path = saveImageAndGetPath(req, 'organizacion', 'default_organizacion.png', nombre);
 
     // Verificar si se proporcionó una imagen en la solicitud
     if (req.file) {
-      // Si se proporcionó una imagen, guardarla y obtener su ruta
-      imagen_path = saveImageAndGetPath(req, 'organizacion', req.file.originalname);
+      // Si se proporcionó una imagen, la ruta se obtendrá automáticamente desde multer
+      imagen_path = req.file.path; // La ruta de la imagen se obtiene de req.file.path
     }
+
+    console.log("Ruta de la imagen recibida en el controlador:", imagen_path); // Agregado para verificar la ruta de la imagen
 
     // Obtener el valor máximo actual de id_organizacion
     const maxIdResult = await sequelize.query('SELECT MAX(id_organizacion) AS max_id FROM organizacion', {
@@ -87,16 +90,13 @@ const registrar_organizacion = async (req, res) => {
       imagen: imagen_path
     });
 
-    return res.status(200).json({ message: "Organización creada", organizacion_almacenado });
-
+    return res.status(200).json({ message: "Organización creada", organizacion_almacenado, imagen: imagen_path });
   } catch (error) {
     console.log(error);
     const mensaje_error = "Ocurrió un error al registrar la organización";
     return res.status(500).json({ error: mensaje_error });
   }
 };
-
-export default registrar_organizacion;
 
 
 // modifica los datos buscando por id

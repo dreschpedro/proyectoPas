@@ -37,6 +37,35 @@ function RegistroOrganizacions() {
       .catch((error) => console.error('Error al obtener las Organizaciones:', error));
   }, []);
 
+
+  const handleInputChange = (e) => {
+    const file = e.target.files; // Obtener el primer archivo de la lista
+
+    if (file) {
+      console.log('Archivo seleccionado:', file);
+
+      // Crear un FormData para manejar correctamente la carga de archivos
+      const formData = new FormData();
+      formData.append('imagen', file);
+      formData.append('id_organizacion', formData.id_organizacion); // Agregar el ID de la organización
+
+      setSelectedFile(file);
+
+      // Actualizar formData con el archivo seleccionado
+      setFormData((prevData) => ({
+        ...prevData,
+        imagen: formData,
+      }));
+    }
+
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -59,35 +88,11 @@ function RegistroOrganizacions() {
       console.error('Error al registrar la Organizacion:', error);
     }
   };
-  const handleImageChange = (e) => {
-    console.log("Imagen seleccionada"); // Agrega esto para verificar si la función se ejecuta
-
-    const file = e.target.files;
-    setSelectedFile(file);
-    setFormData((prevData) => ({
-      ...prevData,
-      imagen: file,
-    }));
-  };
-
-
-
-  const handleInputChange = (e) => {
-
-    const file = e.target.files;
-    setSelectedFile(file);
-
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
 
   return (
     <>
       <h1 className='titulo'>Crear cuenta</h1>
-      <Form onSubmit={handleSubmit} className='bordesito' >
+      <Form onSubmit={handleSubmit} className='bordesito' encType="multipart/form-data" >
 
         <Row>
           <Col md>
@@ -164,7 +169,7 @@ function RegistroOrganizacions() {
               </Form.Group>
             </Form.Group>
 
-            <Imagen />
+            {/* <Imagen /> */}
 
           </Col>
           <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
@@ -172,18 +177,19 @@ function RegistroOrganizacions() {
             {/* imagen de la Organización */}
 
             <Form.Group controlId="formFile">
-              <Form.Group className="d-flex align-items-center imagebutton">
+              {/* Label personalizado que actúa como un botón */}
+              <label className="d-flex align-items-center imagebutton">
                 <FontAwesomeIcon
                   icon={faFileImage}
                   className="imageIcon" />
+                {/* El input de tipo archivo está oculto, pero se activa haciendo clic en el label */}
                 <Form.Control
                   name="imagen"
-                  className="d-none shadow border border-secondary rounded rounded-1.1 shadow mb-4"
+                  className="d-none"
                   type="file"
-                  onChange={handleImageChange} // Agrega una nueva función para manejar la carga de imágenes
+                  onChange={handleInputChange}
                 />
-
-              </Form.Group>
+              </label>
               <Form.Label className='d-flex justify-content-center mb-5'>Seleccionar imagen del Organismo</Form.Label>
             </Form.Group>
 
