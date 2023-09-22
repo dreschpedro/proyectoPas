@@ -1,6 +1,6 @@
 import organizacion_model from "../models/Organizacion_model.js";
 import sequelize from '../config/db.js';
-import { upload, getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from '../helpers/imagen.js';
+import { getDefaultImagePath, saveImageAndGetPath, deleteTempImage } from '../helpers/imagen.js';
 
 // FUNCIONALIDADES
 // consulta de todos los registros

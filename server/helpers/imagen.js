@@ -1,24 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import multer from 'multer';
-
-// Configurar el almacenamiento de multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    // Define la carpeta de destino según la entidad proporcionada (organizacion, usuario, etc.)
-    const entityName = req.body.entityName || 'default'; // Puedes definir un valor predeterminado aquí
-
-    // La carpeta de destino será '/uploads/[entityName]/'
-    cb(null, `./uploads/${entityName}/`);
-  },
-  filename: (req, file, cb) => {
-    // Usa el nombre original del archivo
-    cb(null, file.originalname);
-  },
-});
-
-// Configurar las opciones de multer
-const upload = multer({ storage });
+import storage from 'multer'
 
 // Función de utilidad para obtener la ruta de la imagen por defecto
 const getDefaultImagePath = (entityName, defaultImageFilename) => {
@@ -64,7 +46,7 @@ const deleteTempImage = (imagePath, defaultImagePath) => {
 };
 
 export {
-  upload,
+  storage, // Exporta la configuración de multer para su uso en otras partes del proyecto
   getDefaultImagePath,
   saveImageAndGetPath,
   deleteTempImage
