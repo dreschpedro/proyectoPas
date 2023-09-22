@@ -18,6 +18,7 @@
     "eslint": "^8.45.0",
     "eslint-config-next": "13.4.10",
     "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "next": "13.4.10",
     "next-auth": "^4.22.5",
     "openai-edge": "^1.2.2",

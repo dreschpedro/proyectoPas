@@ -19,7 +19,11 @@ import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import  Cookies from 'js-cookie';
 
+
+
+const frontURL = "http://localhost:3000"
 const Navigation = () => {
   const router = useRouter();
 
@@ -43,18 +47,23 @@ const MenuModal = () => {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
+    
     setShowModal(!showModal);
+    
   };
 
   const handleCerrarSesion = () => {
     // Aquí agregar la lógica para cerrar sesión
     // Por ejemplo, redireccionar a la página de inicio de sesión
+    Cookies.remove('authToken');
+    window.location.href = `${frontURL}/inicio`;
     console.log('Cerrando sesión...');
     toggleModal(); // Cerramos la modal después de hacer clic en "Cerrar Sesión"
 
   };
 
-
+  const authToken = Cookies.get('authToken');
+  
 
   return (
     <>
@@ -66,7 +75,7 @@ const MenuModal = () => {
 
       <Modal show={showModal} onHide={toggleModal} >
         <Modal.Header closeButton>
-          <Modal.Title>[Username]</Modal.Title>
+          <Modal.Title>[username]</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form className='d-flex flex-column justify-content-center align-items-center '>
@@ -85,7 +94,9 @@ const MenuModal = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <button className='bouttoncancel' onClick={toggleModal}>
+          <button className='bouttoncancel'
+           onClick={handleCerrarSesion}
+           >
             Cerrar Sesion
           </button>
         </Modal.Footer>

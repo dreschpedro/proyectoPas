@@ -8,6 +8,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 // import RootLayout from './layout';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
+import { cookies } from 'next/dist/client/components/headers';
 
 
 
@@ -49,7 +51,7 @@ function Login() {
   //     .catch((error) => console.error('Error al registrar el usuario:', error));
   // };
 
-
+  
   const frontURL = "http://localhost:3000"
 
   const [formData, setFormData] = useState({
@@ -74,7 +76,18 @@ function Login() {
       if (response.status === 200) {
         const responseData = response.data;
         console.log('funciona', responseData);
-        // window.location.href = `${frontURL}/admin`;
+        const token = responseData.token
+
+
+        const secretKey = 'lkjadslfk';
+
+
+          
+
+
+
+        Cookies.set('authToken', token, { expires: 1 });
+        window.location.href = `${frontURL}/admin`;
       } else {
         console.log('Login failed');
       }
