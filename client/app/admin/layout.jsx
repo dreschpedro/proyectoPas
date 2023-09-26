@@ -11,10 +11,14 @@ import dynamic from "next/dynamic";
 // import Sidebar from '@/components/sidebar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Cookies from "js-cookie";
+// import { cookies } from "next/dist/client/components/headers";
+import jwtValidation from "../jwtValidation";
 
 const Nav = dynamic(() => import("../../components/adminPanel/navigation"), { ssr: false });
 const Nav2 = dynamic(() => import("../../components/adminPanel/sidebar"), { ssr: false });
 
+jwtValidation();
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -42,7 +46,8 @@ export default function RootLayout({ children }) {
   //     </body>
   //   </html>
   // )
-
+  const authToken = Cookies.get('authToken');
+  console.log('aca estan las cookies papaaaaaa:', authToken);
 
   return (
     <html lang="en">
