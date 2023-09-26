@@ -13,12 +13,26 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Cookies from "js-cookie";
 // import { cookies } from "next/dist/client/components/headers";
-import jwtValidation from "../jwtValidation";
+import { getDecodedToken } from '../auth';
+
+
+
+const authToken = Cookies.get('authToken');
+  console.log('aca esta el jwt desde las cookies', authToken);
+
+const decodedToken = getDecodedToken(authToken);
+console.log('token decodificado desde el layout: ',decodedToken);
+
+  if (decodedToken) {
+    // Ahora puedes acceder a las propiedades del token decodificado
+    console.log('aca estan descrifrados los datos del jwt:', decodedToken); // Reemplaza 'usuario' con la propiedad real que quieras acceder
+  }
+
 
 const Nav = dynamic(() => import("../../components/adminPanel/navigation"), { ssr: false });
 const Nav2 = dynamic(() => import("../../components/adminPanel/sidebar"), { ssr: false });
 
-jwtValidation();
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,25 +43,8 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
-  // return (
-  //   <html lang="en">
-  //     <body className={inter.className}>
-  //     <Nav/>  
 
-  //     <Row className='vh-100'>
-  //       <Col sm={2} className='d-none d-lg-block'>
-  //       <Nav2 className="mt-5 pt-5 fixed-start "/>
-  //       </Col>
-  //       <Col className='mt-5' style={{marginLeft:'70px', marginRight:'70px'}}>
-  //       {children}
-  //       </Col>
-  //     </Row>      
-      
-  //     </body>
-  //   </html>
-  // )
-  const authToken = Cookies.get('authToken');
-  console.log('aca estan las cookies papaaaaaa:', authToken);
+  
 
   return (
     <html lang="en">
