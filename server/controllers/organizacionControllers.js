@@ -48,7 +48,6 @@ const obtener_organizacion = async (req, res) => {
 };
 
 // Registrar una organización
-// organizacionController.js
 const registrar_organizacion = async (req, res) => {
   try {
     // Obtener los datos de la organización del cuerpo de la solicitud
@@ -59,15 +58,17 @@ const registrar_organizacion = async (req, res) => {
       return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
-    let imagen_path = saveImageAndGetPath(req, 'organizacion', 'default_organizacion.png', nombre);
+    // Verificar si ya existe una organización con el mismo correo
+    const organizacionExistente = await organizacion_model.findOne({
+      where: { email: email },
+    });
 
-    // Verificar si se proporcionó una imagen en la solicitud
-    if (req.file) {
-      // Si se proporcionó una imagen, la ruta se obtendrá automáticamente desde multer
-      imagen_path = req.file.path; // La ruta de la imagen se obtiene de req.file.path
+    if (organizacionExistente) {
+      return res.status(409).json({ error: "Ya existe una organización con este correo" });
     }
 
-    console.log("Ruta de la imagen recibida en el controlador:", imagen_path); // Agregado para verificar la ruta de la imagen
+    // Obtener la ruta de la imagen desde la función saveImageAndGetPath
+    let imagen_path = await saveImageAndGetPath(req, 'organizacion', 'default_organizacion.png', nombre);
 
     // Obtener el valor máximo actual de id_organizacion
     const maxIdResult = await sequelize.query('SELECT MAX(id_organizacion) AS max_id FROM organizacion', {
@@ -87,7 +88,7 @@ const registrar_organizacion = async (req, res) => {
       telefono,
       email,
       descripcion,
-      imagen: imagen_path
+      imagen: imagen_path // Usa la ruta relativa obtenida de la función saveImageAndGetPath
     });
 
     return res.status(200).json({ message: "Organización creada", organizacion_almacenado, imagen: imagen_path });
@@ -97,7 +98,6 @@ const registrar_organizacion = async (req, res) => {
     return res.status(500).json({ error: mensaje_error });
   }
 };
-
 
 // modifica los datos buscando por id
 const modificar_organizacion = async (req, res) => {

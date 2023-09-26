@@ -7,29 +7,36 @@ import Col from 'react-bootstrap/Col';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileImage } from '@fortawesome/free-solid-svg-icons';
-import Imagen from '@/components/pruebaImagen/imagen';
-
+import AlertaModal from '@/components/modales/alertaModal';
 
 function RegistroOrganizacions() {
-
-
   const [selectedRol, setSelectedRol] = useState('');
   const [Organizaciones, setOrganizaciones] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedFile, setSelectedFile] = useState((""));
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [showModal, setShowModal] = useState(false); // Nuevo estado para controlar la visibilidad del modal
+  const [previewImage, setPreviewImage] = useState('');
+  const [conflict, setConflict] = useState(false);
 
 
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
-    imagen: '',
+    imagen: null,
     telefono: '',
     direccion: '',
-    descripcion: ''
+    descripcion: '',
   });
 
+  // Agrega el estado y la función para manejar el modal de alerta
+  const [alerta, setAlerta] = useState(null);
+
+  // Agrega un estado para controlar la visibilidad del botón de abrir modal
+  const [showAlertButton, setShowAlertButton] = useState(false);
+
   useEffect(() => {
-    instance.get('/organizaciones/')
+    instance
+      .get('/organizaciones/')
       .then((response) => {
         console.log('Respuesta del backend:', response.data);
         setOrganizaciones(response.data);
@@ -37,27 +44,7 @@ function RegistroOrganizacions() {
       .catch((error) => console.error('Error al obtener las Organizaciones:', error));
   }, []);
 
-
   const handleInputChange = (e) => {
-    const file = e.target.files; // Obtener el primer archivo de la lista
-
-    if (file) {
-      console.log('Archivo seleccionado:', file);
-
-      // Crear un FormData para manejar correctamente la carga de archivos
-      const formData = new FormData();
-      formData.append('imagen', file);
-      formData.append('id_organizacion', formData.id_organizacion); // Agregar el ID de la organización
-
-      setSelectedFile(file);
-
-      // Actualizar formData con el archivo seleccionado
-      setFormData((prevData) => ({
-        ...prevData,
-        imagen: formData,
-      }));
-    }
-
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -65,35 +52,84 @@ function RegistroOrganizacions() {
     }));
   };
 
+  const onFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      if (file.type.includes('image')) {
+        setSelectedFile(file);
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+          setPreviewImage(reader.result);
+        };
+      } else {
+        console.log('El archivo seleccionado no es una imagen.');
+      }
+    }
+  };
+
+  const limpiarCampos = () => {
+    setFormData({
+      nombre: '',
+      email: '',
+      imagen: null,
+      telefono: '',
+      direccion: '',
+      descripcion: '',
+    });
+    setPreviewImage('');
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Agregar console.log para verificar los datos antes de enviarlos
-    console.log('Datos a enviar al backend:', formData);
+    if (!formData.email) {
+      console.error('El campo de correo electrónico es obligatorio.');
+      return;
+    }
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('nombre', formData.nombre);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('telefono', formData.telefono);
+    formDataToSend.append('direccion', formData.direccion);
+    formDataToSend.append('descripcion', formData.descripcion);
+
+    if (selectedFile) {
+      formDataToSend.append('imagen', selectedFile);
+    }
 
     try {
-      // Registrar una nueva Organizacion
-      const userResponse = await instance.post('/organizaciones/registrar', {
-        nombre: formData.nombre,
-        email: formData.email,
-        imagen: formData.imagen,
-        telefono: formData.telefono,
-        direccion: formData.direccion,
-        descripcion: formData.descripcion,
-      });
+      const userResponse = await instance.post('/organizaciones/registrar', formDataToSend);
 
-      console.log('Organizacion registrada exitosamente:', userResponse.data);
+      console.log('Organización registrada exitosamente:', userResponse.data);
+
+      limpiarCampos();
+
+      // Mostrar el modal de alerta con un estado "success" y un mensaje personalizado
+      setAlerta({ estado: 'success', mensaje: 'Organización registrada exitosamente' });
+      setShowModal(true); // Mostrar el modal
     } catch (error) {
-      console.error('Error al registrar la Organizacion:', error);
+      console.error('Error al registrar la Organización:', error);
+
+      // Verificar si el error es debido a una violación de clave única (estado 409)
+      if (error.response && error.response.status === 409) {
+        // Mostrar un mensaje de conflicto
+        setConflict(true);
+      } else {
+        // Mostrar el modal de alerta con un estado "error" y un mensaje de error
+        setAlerta({ estado: 'error', mensaje: 'Error al registrar la Organización' });
+        setShowModal(true); // Mostrar el modal
+      }
     }
-  };
+  }
 
   return (
     <>
-      <h1 className='titulo'>Crear cuenta</h1>
-      <Form onSubmit={handleSubmit} className='bordesito' encType="multipart/form-data" >
-
+      <h1 className='titulo'>Crear Organización</h1>
+      <Form onSubmit={handleSubmit} className='bordesito' encType="multipart/form-data">
         <Row>
           <Col md>
 
@@ -170,7 +206,6 @@ function RegistroOrganizacions() {
             </Form.Group>
 
             {/* <Imagen /> */}
-
           </Col>
           <Col md={{ order: 'last' }} xs={{ order: 'first' }}>
 
@@ -179,28 +214,34 @@ function RegistroOrganizacions() {
             <Form.Group controlId="formFile">
               {/* Label personalizado que actúa como un botón */}
               <label className="d-flex align-items-center imagebutton">
-                <FontAwesomeIcon
-                  icon={faFileImage}
-                  className="imageIcon" />
+                {previewImage ? (
+                  <img src={previewImage} alt="Vista previa de la imagen" className="imageIcon" />
+                ) : (
+                  <FontAwesomeIcon icon={faFileImage} className="imageIcon" />
+                )}
                 {/* El input de tipo archivo está oculto, pero se activa haciendo clic en el label */}
                 <Form.Control
                   name="imagen"
                   className="d-none"
                   type="file"
-                  onChange={handleInputChange}
+                  onChange={onFileChange}
                 />
               </label>
+              {/* Vista previa de la imagen */}
               <Form.Label className='d-flex justify-content-center mb-5'>Seleccionar imagen del Organismo</Form.Label>
             </Form.Group>
 
+
           </Col>
         </Row>
-
         <div style={{ display: 'flex', justifyContent: 'end', marginTop: '49px' }}>
-          <Link style={{
-            textDecoration: 'none',
-            color: '#22096F',
-          }} href={"/admin/registros/organizaciones"}>
+          <Link
+            style={{
+              textDecoration: 'none',
+              color: '#22096F',
+            }}
+            href={"/admin/registros/organizaciones"}
+          >
             <button className='bouttoncancel' style={{}}>
               Cancelar
             </button>
@@ -209,11 +250,34 @@ function RegistroOrganizacions() {
           <button
             className='buttonRegistrar'
             style={{ whiteSpace: 'nowrap', width: '190px' }}
-            type="submit">
+            type="submit"
+          >
             Registrar Organización
           </button>
         </div>
-      </Form >
+      </Form>
+      {/* Mostrar el modal de conflicto */}
+      {conflict && (
+        <AlertaModal
+          titulo="Error de conflicto"
+          estado="error"
+          mensaje="Ya existe una organización con este correo."
+          show={conflict} // Controla la visibilidad del modal de conflicto
+          onHide={() => setConflict(false)} // Oculta el modal de conflicto al hacer clic en el botón de cerrar
+        />
+      )}
+
+      {/* Mostrar el modal de alerta */}
+      {alerta && (
+        <AlertaModal
+          titulo={alerta.estado === 'success' ? 'Éxito' : 'Error'}
+          estado={alerta.estado}
+          mensaje={alerta.mensaje}
+          show={showModal} // Controla la visibilidad del modal
+          onHide={() => setShowModal(false)} // Oculta el modal al hacer clic en el botón de cerrar
+        />
+      )}
+
     </>
   );
 }

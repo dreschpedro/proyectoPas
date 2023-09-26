@@ -9,13 +9,13 @@ const getDefaultImagePath = (entityName, defaultImageFilename) => {
 };
 
 // Función de utilidad para guardar la imagen y devolver su ruta
-const saveImageAndGetPath = (req, entityName, defaultImageFilename, organizationName) => {
+const saveImageAndGetPath = (req, entityName, defaultImageFilename, elementName) => {
   let imagePath = '';
 
   // Verificar si se proporcionó una imagen en la solicitud
   if (req.file) {
-    const folderPath = `./uploads/${entityName}/${organizationName}`;
-    const fullPath = `${folderPath}/${req.file.originalname}`;
+    const folderPath = `./uploads/${entityName}/${elementName}`;
+    const relativePath = `/uploads/${entityName}/${elementName}/${req.file.originalname}`;
 
     // Crear la carpeta de la organización si no existe
     if (!fs.existsSync(folderPath)) {
@@ -23,10 +23,10 @@ const saveImageAndGetPath = (req, entityName, defaultImageFilename, organization
     }
 
     // Mover la imagen al directorio de la organización
-    fs.renameSync(req.file.path, fullPath);
+    fs.renameSync(req.file.path, `.${relativePath}`);
 
-    // Establecer la ruta de la imagen
-    imagePath = fullPath;
+    // Establecer la ruta de la imagen como la ruta relativa desde /uploads
+    imagePath = relativePath;
   } else {
     // Si no se proporcionó una imagen, obtén la ruta de la imagen por defecto
     imagePath = getDefaultImagePath(entityName, defaultImageFilename);
