@@ -82,11 +82,8 @@ function Login() {
         const secretKey = 'lkjadslfk';
 
 
-          
 
-
-
-        Cookies.set('authToken', token, { expires: 1 });
+        Cookies.set('authToken', token.toString(), { expires: 1 });
         window.location.href = `${frontURL}/admin`;
       } else {
         console.log('Login failed');
