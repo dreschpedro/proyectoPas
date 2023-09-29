@@ -3,6 +3,7 @@ import generarId from "../helpers/generarId.js";
 import sequelize from '../config/db.js';
 import generarJWT from "../helpers/generarJWT.js";
 import bcrypt from 'bcrypt';
+import { serialize } from "cookie";
 
 const registrar = async (req, res) => {
   const { email } = req.body;
@@ -58,14 +59,21 @@ const autenticar = async (req, res) => {
     const passwordValido = await bcrypt.compare(password, usuario.password);
 
     if (passwordValido) {
-      const token = generarJWT(usuario.id_usuario);
+
+      // desempaquetado de las variables
+      const { id_usuario, username, email, rol } = usuario
+
+      const token = generarJWT(id_usuario, username, rol);
+
+      const serialized = serialize('myToken', token)
+
       return res.status(200).json({
         message: "Autenticación Exitosa",
-        id_usuario: usuario.id_usuario,
-        username: usuario.username,
-        email: usuario.email,
+        id_usuario: id_usuario,
+        username: username,
+        email: email,
+        rol: rol,
         token: token
-
       });
     } else {
       return res.status(403).json({ msg: "Contraseña incorrecta" });
@@ -120,7 +128,6 @@ const perfil = async (req, res) => {
     return res.status(500).json({ msg: "Ocurrió un error al obtener el perfil del usuario" });
   }
 };
-
 
 export {
   registrar,
