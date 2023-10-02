@@ -1,20 +1,17 @@
-import React, { createContext, useState} from "react";
-import { jwtVerify } from "jose";
+import React, { createContext, useState } from "react";
 
 export const UserContext = createContext();
 
-const usuario = payload
+export const UserProvider = ({ children, initialPayload }) => {
+  // Usar un nombre de variable más claro, como "userData", en lugar de "user", para evitar confusiones
+  const [userData, setUserData] = useState(initialPayload);
 
-export const UserProvider = ({ children }) => {
-    const [user, serUser] = useState(usuario);
-
-    return (
-        <UserContext.Provider value={{
-            user,
-            serUser
-        }}>
-
-            { children }
-        </UserContext.Provider>
-    )
-}
+  return (
+    <UserContext.Provider value={{
+      userData, 
+      setUserData 
+    }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
