@@ -35,10 +35,8 @@ export async function middleware(request) {
     return NextResponse.next();
   } catch (error) {
     return NextResponse.redirect(new URL("/inicio", request.url));
-    // console.error(error,'el valor de la cookie: ', jwt, 'el secret key:', SECRET_KEY)
   }
 }
-
 
 export const config = {
   matcher: ["/admin/:path*","/consultor/:path*","/data-entry/:path*"],
