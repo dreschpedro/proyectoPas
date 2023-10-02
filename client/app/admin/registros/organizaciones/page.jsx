@@ -64,7 +64,7 @@ const ListaOrganizaciones = () => {
   }, [searchTerm, listaOrganizaciones]);
 
   const handleShowModal = () => {
-    
+
     setShowModal(true);
   };
 
@@ -165,18 +165,18 @@ const ListaOrganizaciones = () => {
           />
 
           <div className="ml-auto" style={{ display: 'flex', marginLeft: 'auto' }}>
-            
-            
-          <Link style={{
+
+
+            <Link style={{
               textDecoration: 'none',  // Para quitar el subrayado
-               color: 'white' 
-               }} href={"/admin/registros/organizaciones/organizacionCreate"}>
-            <button className="buttonRegistrar" onClick={() => handleShowModal()}>
-              
-              Crear Organización
-              
+              color: 'white'
+            }} href={"/admin/registros/organizaciones/organizacionCreate"}>
+              <button className="buttonRegistrar" onClick={() => handleShowModal()}>
+
+                Crear Organización
+
               </button>
-              </Link>
+            </Link>
           </div>
         </Form>
       </div>

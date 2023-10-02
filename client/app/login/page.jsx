@@ -51,32 +51,34 @@ function Login() {
   //     .catch((error) => console.error('Error al registrar el usuario:', error));
   // };
 
-  
+
   const frontURL = "http://localhost:3000"
 
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-  
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     try {
       const response = await instance.post('/usuarios/login', {
         email: formData.email,
         password: formData.password,
-        
+
       });
       console.log('este es el correo', formData.email)
       if (response.status === 200) {
         const responseData = response.data;
+
+        const { token, username, rol } = responseData
+        // const token = responseData.token
         console.log('funciona', responseData);
-        const token = responseData.token
 
 
         const secretKey = 'lkjadslfk';
@@ -133,7 +135,7 @@ function Login() {
           <button className='buttonLogin' type="submit">
             {/* <Link href={"/admin"}style={{color:'#ffffff'}}>Iniciar Sesión</Link> */}
             <b>
-            Iniciar Sesión
+              Iniciar Sesión
             </b>
           </button>
           <div className='mt-5 mb-3 d-flex align-items-center justify-content-center'>

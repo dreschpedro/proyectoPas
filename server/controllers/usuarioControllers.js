@@ -1,4 +1,5 @@
 import Usuario_model from "../models/Usuario_model.js";
+import organizacion_model from '../models/Organizacion_model.js'
 import generarId from "../helpers/generarId.js";
 import sequelize from '../config/db.js';
 import generarJWT from "../helpers/generarJWT.js";
@@ -64,8 +65,6 @@ const autenticar = async (req, res) => {
       const { id_usuario, username, email, rol } = usuario
 
       const token = generarJWT(id_usuario, username, rol);
-
-      const serialized = serialize('myToken', token)
 
       return res.status(200).json({
         message: "Autenticación Exitosa",
